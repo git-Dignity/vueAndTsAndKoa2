@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var dbInfo = require('./dbInfo.js')
+var dbInfo = require('../config/dbInfo.js')
 
 var dbSql = mysql.createPool(dbInfo);
 var db = function(sql,callback){
