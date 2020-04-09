@@ -289,18 +289,21 @@ redisDB.sdiff  = function (obj1, obj2, callback, dbNum) {
 
 // clientA订阅了main_chat_room，这时clientA捕获到订阅事件，执行回调函数，clientB向main_chat_room发送了一条信息Hello world!
 // clientA接受到信息后，在控制台打印出了相关信息。
-var clientA = redis.createClient(redisInfo.RDS_PORT, redisInfo.RDS_HOST)
-var clientB = redis.createClient(redisInfo.RDS_PORT, redisInfo.RDS_HOST)
-clientA.auth(redisInfo.RDS_PASS);
-clientB.auth(redisInfo.RDS_PASS);
 
-clientA.on('message', function(channel, message) {
-  console.log('Client A got message from channel %s: %s', channel, message);
-});
-clientA.on('subscribe', function(channel, count) {
-  clientB.publish('main_chat_room', 'Hello world!');
-});
-clientA.subscribe('main_chat_room');
+// var clientA = redis.createClient(redisInfo.RDS_PORT, redisInfo.RDS_HOST)
+// var clientB = redis.createClient(redisInfo.RDS_PORT, redisInfo.RDS_HOST)
+// clientA.auth(redisInfo.RDS_PASS);
+// clientB.auth(redisInfo.RDS_PASS);
+
+// clientA.on('message', function(channel, message) {
+//   console.log('Client A got message from channel %s: %s', channel, message);
+// });
+// clientA.on('subscribe', function(channel, count) {
+//   clientB.publish('main_chat_room', 'Hello world!');
+// });
+
+// clientA.subscribe('main_chat_room');
+
 // result => Client A got message from channel main_chat_room: Hello world!
 
 
