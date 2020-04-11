@@ -11,6 +11,7 @@ router.get('/', function (ctx, next) {
 })
 
 router.post('/login', function (ctx, next) {
+  console.log('come on')
   const data = {
     code:20000,
     data:{

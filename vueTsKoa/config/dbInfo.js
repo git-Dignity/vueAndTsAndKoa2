@@ -26,4 +26,3 @@ module.exports = {
 //     database: 'qynbgl' //连接的数据库
 // };
 
-
