@@ -9,6 +9,7 @@ var db = function(sql,callback){
         if(err){
             callback(err,null);
         }else{
+            console.log(xss(sql))
             conn.query(xss(sql),function(err,results){
                 callback(err,results);
             });
@@ -21,6 +22,9 @@ var db = function(sql,callback){
 
  
 module.exports = db;
+
+
+// 400错误请求：由于格式错误，服务器无法理解请求。 客户端不应该在没有修改的情况下重复请求。
 
 
 

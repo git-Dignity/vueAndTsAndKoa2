@@ -1,32 +1,57 @@
 const router = require('koa-router')()
+var uuid = require('node-uuid');
 var db = require('../../utils/db')
 
 router.prefix('/role')
 
 
 router.post('/save', async (ctx, next) => {
+    let result = {}
     const req = ctx.request.body.article
-    //   console.log(req);
+   
 
     roleName = escape(req.roleName) // 格式化 预防sql注入
     enName = escape(req.enName)     // 格式化 预防sql注入
+
+    if(req.id==undefined){  // 添加
+        if(req.roleName != '' && req.enName != '' && req.roleType != '' && req.isSys != '' ){
+            await db(`insert into sys_role(id,name,enName,roleType,isSys,remarks)
+            values('${uuid.v4()}','${req.roleName}','${req.enName}','${req.roleType}','${req.isSys}','${req.remarks}')`,(err,data)=>{
+                    
+                if(err){
+                    console.log(err);
+                }else{
+                  
+                    result = {
+                    code:20000,
+                    data:[
+                        user = data
+                    ]
+                   }
+                   console.log(result)
+                   ctx.response.body = result
+                }
+            })
+        }else{
+            ctx.response.body = {
+                code:400,
+                data:[
+                    user = []
+                ]
+            }
+        }
+    }else{
+        //修改、更新
+
+    }
    
 
-    db(`select * from login where username = '${roleName}' and password = '${enName}'`,(err,data)=>{
+   
+
+//    console.log(result)
         	
-        if(err){
-            console.log(err);
-        }else{
-           console.log(data)
-        }
-    })
-    ctx.response.body = 'success'
-    // const sql = `
-    //     select * from login where username='${roleName}' and password = '${enName}'
-    // `
- 
-    // const rows = await exec(sql)
-    // ctx.response.body = rows[0]
+    ctx.response.body = []
+   
 
   })
 
