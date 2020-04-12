@@ -215,6 +215,25 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   {
+    path: '/personal',
+    component: Layout,
+    meta: {
+      title: 'personal',
+      icon: 'example',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+      {
+        path: 'personal-photo',
+        component: () => import(/* webpackChunkName: "personal-photo" */ '@/views/personal/personal-photo.vue'),
+        name: 'personalPhoto',
+        meta: { title: 'personalPhoto' }
+      }
+    ]
+  },
+  {
     path: '/icon',
     component: Layout,
     children: [

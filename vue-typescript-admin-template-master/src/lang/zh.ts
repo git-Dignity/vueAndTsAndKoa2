@@ -67,7 +67,9 @@ export default {
     sys:'系统设置',
     sysUser:'用户管理',
     sysMenu:'菜单管理',
-    sysRole:'角色管理'
+    sysRole:'角色管理',
+    personal:'个人资料',
+    personalPhoto:'相关证件'
   },
   navbar: {
     logOut: '退出登录',

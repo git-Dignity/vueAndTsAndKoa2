@@ -49,5 +49,5 @@ export interface ISysRoleData {
   enName: string
   roleType: string
   isSys: string
-  remarks: string
-}
+  remarks: string 
+} 

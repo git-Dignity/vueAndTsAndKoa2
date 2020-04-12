@@ -3,14 +3,14 @@ var xss = require('node-xss').clean;
 var dbInfo = require('../config/dbInfo.js')
 
 var dbSql = mysql.createPool(dbInfo);
-var db = function(sql,callback){
+var db =  function(sql,callback){
 
-    dbSql.getConnection(function(err,conn){
+    dbSql.getConnection(  function(err,conn){
         if(err){
             callback(err,null);
         }else{
-            console.log(xss(sql))
-            conn.query(xss(sql),function(err,results){
+            // console.log(xss(sql))
+             conn.query(xss(sql),function(err,results){
                 callback(err,results);
             });
             conn.release();
@@ -34,7 +34,7 @@ module.exports = db;
 
 // SQL 注入
 // 符号 ‘--’ 后面的语句相当于被注释了
-// select username from users where username='cedric -- ' and password='111';
+// select username from users where username='test -- ' and password='111';
 // 对方输入username对上了，密码随便输，就可以登录成功
 // 预防 sql 注入，escape(username)
 

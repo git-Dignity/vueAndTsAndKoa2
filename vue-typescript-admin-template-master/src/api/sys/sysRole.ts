@@ -3,8 +3,8 @@ import { ISysRoleData } from '../types'
 
 export const defaultSysRoleData: ISysRoleData = {
   id: '',
-  roleName:'',
-  enName:'',
+  roleName: '',
+  enName: '',
   roleType: '',
   isSys: '否',
   remarks: ''
@@ -12,7 +12,7 @@ export const defaultSysRoleData: ISysRoleData = {
 
 export const getSysRole = (params: any) =>
   request({
-    url: '/SysRole',
+    url: '/role/getRole',
     method: 'get',
     params
   })

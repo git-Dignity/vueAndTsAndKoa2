@@ -1,8 +1,8 @@
 const router = require('koa-router')()
 var db = require('../utils/db')
-var redisDB =require('../utils/redis/redis');
+// var redisDB =require('../utils/redis/redis');
 // const publish = require('../utils/redis/publish')   // 发布订阅消息
-const redis = require('redis')
+// const redis = require('redis')
 
 router.prefix('/users')
 
