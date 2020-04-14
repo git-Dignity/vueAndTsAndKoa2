@@ -42,7 +42,7 @@
     "tinymce": "^5.2.1",
     "tui-editor": "^1.4.10",
     "vue": "^2.6.11",
-    "vue-class-component": "^7.2.3", 
+    "vue-class-component": "^7.2.3",
     "vue-count-to": "^1.0.13",
     "vue-i18n": "^8.16.0",
     "vue-image-crop-upload": "^2.5.0",
@@ -112,6 +112,7 @@
     "typescript": "^3.8.3",
     "vue-cli-plugin-element": "^1.0.1",
     "vue-cli-plugin-style-resources-loader": "^0.1.4",
+    "vue-cropper": "^0.5.2",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.1"
   },

@@ -64,12 +64,14 @@ export default {
     externalLink: '外链',
     profile: '个人中心',
     // 系统设置
-    sys:'系统设置',
-    sysUser:'用户管理',
-    sysMenu:'菜单管理',
-    sysRole:'角色管理',
-    personal:'个人资料',
-    personalPhoto:'相关证件'
+    sys: '系统设置',
+    sysUser: '用户管理',
+    sysMenu: '菜单管理',
+    sysRole: '角色管理',
+    personal: '个人资料',
+    personalView: '个人证件',
+    certificate: '证件',
+    certificateAuthentication: '指定人证件'
   },
   navbar: {
     logOut: '退出登录',
@@ -140,7 +142,7 @@ export default {
     cancel: '取 消',
     confirm: '确 定'
   },
-  sys:{
+  sys: {
     roleName: '角色名称',
     enName: '英文名称',
     roleType: '角色类型',

@@ -217,6 +217,8 @@ export const asyncRoutes: RouteConfig[] = [
   {
     path: '/personal',
     component: Layout,
+    redirect: '/personal/personal-view',
+    name: 'personal',
     meta: {
       title: 'personal',
       icon: 'example',
@@ -226,10 +228,31 @@ export const asyncRoutes: RouteConfig[] = [
     },
     children: [
       {
-        path: 'personal-photo',
-        component: () => import(/* webpackChunkName: "personal-photo" */ '@/views/personal/personal-photo.vue'),
-        name: 'personalPhoto',
-        meta: { title: 'personalPhoto' }
+        path: 'personal-view',   
+        component: () => import(/* webpackChunkName: "personal-view" */ '@/views/personal/personal-view/index.vue'),
+        name: 'personalView',
+        redirect: '/personal/personal-view/certificate',
+        meta: { title: 'personalView', noCache: true },
+        children: [
+          {
+            path: 'certificate',
+            component: () => import(/* webpackChunkName: "certificate" */ '@/views/personal/personal-view/certificate.vue'),
+            name: 'certificate',
+            meta: { title: 'certificate', noCache: true }
+          },
+          {
+            path: 'certificate-authentication',
+            component: () => import(/* webpackChunkName: "certificate-authentication" */ '@/views/personal/personal-view/certificate-authentication.vue'),
+            name: 'certificateAuthentication',
+            meta: { title: 'certificateAuthentication', noCache: true }
+          }
+        ]
+      },
+      {
+        path: 'menu2',
+        component: () => import(/* webpackChunkName: "menu2" */ '@/views/nested/menu2/index.vue'),
+        name: 'Menu2',
+        meta: { title: 'menu2' }
       }
     ]
   },

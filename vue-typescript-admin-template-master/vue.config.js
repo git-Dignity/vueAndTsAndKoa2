@@ -20,18 +20,28 @@ module.exports = {
       errors: true
     },
     progress: false,
+
     proxy: {
-      // change xxx-api/login => /mock-api/v1/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:${mockServerPort}/mock-api/v1`,
-        changeOrigin: true, // needed for virtual hosted sites
-        ws: true, // proxy websockets
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: ''
-        }
+      '/certificateAuthentication': {
+        target: 'http://localhost:3000/', //对应自己的接口
+        changeOrigin: true,
+        ws: true
       }
     }
+
+  
+    // proxy: {
+    //   // change xxx-api/login => /mock-api/v1/login
+    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
+    //   [process.env.VUE_APP_BASE_API]: {
+    //     target: `http://localhost:${mockServerPort}/mock-api/v1`, 
+    //     changeOrigin: true, // needed for virtual hosted sites
+    //     ws: true, // proxy websockets
+    //     pathRewrite: {
+    //       ['^' + process.env.VUE_APP_BASE_API]: ''
+    //     }
+    //   }
+    // }
   },
   pwa: {
     name: name,

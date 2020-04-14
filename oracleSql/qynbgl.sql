@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : bokeMusic
-Source Server Version : 50540
+Source Server         : bokeFormal
+Source Server Version : 50528
 Source Host           : localhost:3306
-Source Database       : boke
+Source Database       : qynbgl
 
 Target Server Type    : MYSQL
-Target Server Version : 50540
+Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2020-04-12 23:23:05
+Date: 2020-04-14 18:17:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1904,6 +1904,33 @@ INSERT INTO `music` VALUES ('102', '好想爱这个世界啊.mp3', 'onlyOnePlayi
 INSERT INTO `music` VALUES ('103', '爸，我回来了-华晨宇.mp3', 'onlyOnePlaying', '华晨宇', '2019/12/20');
 INSERT INTO `music` VALUES ('104', '疯人院.mp3', 'onlyOnePlaying', '华晨宇', '2019/12/20');
 INSERT INTO `music` VALUES ('105', '不能说的秘密 - 周杰伦.flac', 'onlyOnePlaying', '周杰伦', '2020/3/15');
+
+-- ----------------------------
+-- Table structure for `qiniu_photo`
+-- ----------------------------
+DROP TABLE IF EXISTS `qiniu_photo`;
+CREATE TABLE `qiniu_photo` (
+  `id` varchar(255) COLLATE utf8_bin NOT NULL,
+  `file_hash` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_key` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_type` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_size` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `is_sucess` int(3) DEFAULT NULL COMMENT '1:上传成功；0:上传失败',
+  `upload_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of qiniu_photo
+-- ----------------------------
+INSERT INTO `qiniu_photo` VALUES ('44dcdfb0-7e2f-11ea-953f-6d0c6c6a6c41', 'FsYQxZjvCxnLIbXZX8LMgl9xJZHd', '44dcdfb0-7e2f-11ea-953f-6d0c6c6a6c41.png', 'aaa', 'image/png', '7d68cf76c8dde6e0cd30ea1a1c7c68f.png', '13833', '1', '2020-04-14 17:06:47');
+INSERT INTO `qiniu_photo` VALUES ('94e0e520-7e33-11ea-a583-952b2a8457e4', 'Fj6Zcx1eGcYaaraiKF-NPmgE0RXS', '94e0e520-7e33-11ea-a583-952b2a8457e4.txt', 'aaa', 'text/plain', '数据库.txt', '187', '1', '2020-04-14 17:37:39');
+INSERT INTO `qiniu_photo` VALUES ('94e35620-7e33-11ea-a583-952b2a8457e4', 'FlopOmjI-3Z3odpJBNwfGWlLeyG2', '94e35620-7e33-11ea-a583-952b2a8457e4.png', 'aaa', 'image/png', '向日葵16.png', '53748', '1', '2020-04-14 17:37:39');
+INSERT INTO `qiniu_photo` VALUES ('94e37d30-7e33-11ea-a583-952b2a8457e4', 'FhoqxkAo8k5WwcSXiMsxzvdpGnvW', '94e37d30-7e33-11ea-a583-952b2a8457e4.png', 'aaa', 'image/png', '向日葵14.png', '38190', '1', '2020-04-14 17:37:39');
+INSERT INTO `qiniu_photo` VALUES ('a5347cd0-7e2d-11ea-953f-6d0c6c6a6c41', 'FsYQxZjvCxnLIbXZX8LMgl9xJZHd', 'a5347cd0-7e2d-11ea-953f-6d0c6c6a6c41.png', 'aaa', 'image/png', '7d68cf76c8dde6e0cd30ea1a1c7c68f.png', '13833', '1', '2020-04-14 16:55:10');
+INSERT INTO `qiniu_photo` VALUES ('a534f200-7e2d-11ea-953f-6d0c6c6a6c41', 'FqFePrPITQaQdICCis_u0Ad2wi4V', 'a534f200-7e2d-11ea-953f-6d0c6c6a6c41.jpg', 'aaa', 'image/jpeg', '7f6cfe07689a650e36ea310a69ad111.jpg', '168979', '1', '2020-04-14 16:55:10');
 
 -- ----------------------------
 -- Table structure for `sys_role`

@@ -151,7 +151,7 @@ import Pagination from '@/components/Pagination/index.vue'
 const calendarTypeOptions = [
   { key: 'assignment', displayName: '任务分配' },
   { key: 'security-role', displayName: '管理角色' },
-  { key: 'user', displayName: '普通角色' }
+  { key: 'user', displayName: '普通角色' } 
 ]
 
 

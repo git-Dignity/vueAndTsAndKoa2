@@ -16,7 +16,7 @@
       tyle="position: absolute;bottom: 15px;margin-left: 40px;"
       @click="toggleShow"
     >
-      Change Avatar
+      Change Avatar 
     </el-button>
     <avatar-upload
       v-model="showImageUpload"

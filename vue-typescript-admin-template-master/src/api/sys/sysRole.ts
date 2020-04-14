@@ -19,7 +19,7 @@ export const getSysRole = (params: any) =>
 
 export const getArticle = (id: number, params: any) =>
   request({
-    url: `/SysRole/${id}`,
+    url: `/SysRole/${id}`, 
     method: 'get',
     params
   })
