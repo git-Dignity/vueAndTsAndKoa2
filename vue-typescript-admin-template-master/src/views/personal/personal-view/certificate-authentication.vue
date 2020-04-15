@@ -35,6 +35,15 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[10, 20, 50, 100]"
+      :page-size="6"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 
@@ -58,6 +67,8 @@ export default class extends Vue {
   private certificateData = [];
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
+   private currentPage =  1;    //当前页码
+   private total = 0;    //全部多少条
 
 
   created() {
@@ -65,16 +76,21 @@ export default class extends Vue {
   }
 
   private async initPhoto() {
-    let { data } = await getCertificate(UserModule.name);
-    data.forEach(element => {
+    const { data } = await getCertificate({
+      username: UserModule.name,
+      pageNum: this.currentPage
+    });
+    
+    data.data.forEach((element: any) => {
       element.imgUrl = qiniuUrl + element.file_key;
     });
-    this.certificateData = data;
+    this.total = data.total
+    this.certificateData = data.data;
   }
 
 
-  private async uoload(e) {
-    let param = new FormData();
+  private async uoload(e: any) {
+    const param = new FormData();
     param.append("username", UserModule.name);
     param.append("file", e.file);
 
@@ -88,20 +104,28 @@ export default class extends Vue {
   }
 
   // 文件上传之前做处理
-      beforeAvatarUpload(file) {
-        console.log(file)
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+     private beforeAvatarUpload(file: any) {
+        // console.log(file)
+        const isLt20M = file.size / 1024 / 1024 < 20;
         // 图片格式
-        if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+        if (file.type !== 'image/jpeg' && file.type !== 'image/jpg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+          this.$message.error('只能上传图片格式文件!');
           return false;
         }
         // 图片大小
-        // if (!isLt2M) {
-        //   this.$message.error('上传头像图片大小不能超过 2MB!');
-        //   return false;
-        // }
+        if (!isLt20M) {
+          this.$message.error('上传头像图片大小不能超过 20MB!');
+          return false;
+        }
+      }
+
+     private handleSizeChange(val: number) {
+        console.log(`每页 ${val} 条`);
+      }
+    private  handleCurrentChange(val: number) {
+        console.log(`当前页: ${val}`);
+        this.currentPage = val
+        this.initPhoto();
       }
 
 

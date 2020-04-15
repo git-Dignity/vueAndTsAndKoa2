@@ -65,7 +65,7 @@ export default class extends Vue {
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
 
-  private filess;
+  private filess: any;
   private unfile = "未选择任何文件";
 
   created() {
@@ -73,16 +73,16 @@ export default class extends Vue {
   }
 
   private async initPhoto() {
-    console.log(UserModule.name);
+    // console.log(UserModule.name);
     let { data } = await getCertificate(UserModule.name);
-    data.forEach(element => {
+    data.forEach((element: any) => {
       element.imgUrl = qiniuUrl + element.file_key;
     });
-    console.log(data);
+    // console.log(data);
     this.certificateData = data;
   }
 
-  private getfilename(e) {
+  private getfilename(e: any) {
     this.filess = e.target.files;
 
     var _el = e.target.files;
@@ -107,7 +107,7 @@ export default class extends Vue {
       let param = new FormData();
       param.append("username", UserModule.name);
 
-      this.filess.forEach((element, index) => {
+      this.filess.forEach((element: any, index: number) => {
         param.append("file" + index, element);
       });
 

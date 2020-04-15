@@ -3,7 +3,7 @@ import axios from 'axios'
 
 
 //获取证件
-export const getCertificate = (data: string) =>
+export const getCertificate = (data: any) =>
   request({
     url: '/certificateAuthentication/getCertificate',
     method: 'post',

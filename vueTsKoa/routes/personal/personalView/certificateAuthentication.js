@@ -5,6 +5,7 @@ const formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
 var DB = require('../../../utils/mysqlDB')
+const sqlModel = require('../../common')
 
 router.prefix('/certificateAuthentication')
 
@@ -12,14 +13,23 @@ router.prefix('/certificateAuthentication')
 router.post('/getCertificate', async (ctx, next) => {
   const req = ctx.request.body
   let reqArr = Object.entries(req)
+  console.log(reqArr)
+  // 6-(2-1)   6*2
 
   let result = await DB.query(`
-        select * from qiniu_photo where username = '${reqArr[0][0]}'
+        select * from qiniu_photo where username = '${reqArr[0][1]}' limit ${6 * (reqArr[1][1] - 1)},${6 * (reqArr[1][1])}
     `)
 
-    data = {
-      code: 20000,
-      data: result
+  let sqlM = new sqlModel("qiniu_photo")
+  let total = await sqlM.getTotal()
+  console.log(total);
+
+  data = {
+    code: 20000,
+    data: {
+      total:total,
+      data:result
+    }
   }
 
   ctx.body = data
@@ -78,7 +88,7 @@ router.post('/upload', async (ctx, next) => {
   }
 
   ctx.body = {
-    code:20000,
+    code: 20000,
     result
   }
 })
