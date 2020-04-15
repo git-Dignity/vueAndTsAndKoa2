@@ -12,7 +12,6 @@ router.prefix('/certificateAuthentication')
 router.post('/getCertificate', async (ctx, next) => {
   const req = ctx.request.body
   let reqArr = Object.entries(req)
- 
 
   let result = await DB.query(`
         select * from qiniu_photo where username = '${reqArr[0][0]}'
@@ -78,7 +77,10 @@ router.post('/upload', async (ctx, next) => {
     ctx.response.body = "err"
   }
 
-  ctx.body = result
+  ctx.body = {
+    code:20000,
+    result
+  }
 })
 
 

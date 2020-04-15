@@ -1,55 +1,51 @@
 <template>
   <div class="app-container">
     <el-row :gutter="15">
-      <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-        <form id="sendAppealForm">
-          <a href="javascript:void(0);" class="upload">
-            选择文件 >
-            <span class="unfile">{{unfile}}</span>
-            <input
-              class="replyFileid"
-              @change="getfilename($event)"
-              name="appealFile"
-              id="appealFile"
-              type="file"
-              accept="*"
-              multiple="multiple"
-            />
-          </a>
-        </form>
-      </el-col>
-      <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
-        <div class="component-item">
-          <el-button v-waves type="primary" v-on:click.prevent="uoload()">上传</el-button>
+      <el-upload
+        class="upload-demo"
+        drag
+        action="/certificateAuthentication/upload"
+        :http-request="uoload"
+        accept=".png,.jpg,.gif"
+        :before-upload="beforeAvatarUpload"
+        multiple
+      >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">
+          将文件拖到此处，或
+          <em>点击上传</em>
         </div>
-      </el-col>
+        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+      </el-upload>
     </el-row>
 
     <!-- <pan-thumb :image="image" /> -->
 
     <el-row>
-        <el-col :span="8" v-for="data in certificateData" :key="data.id" :offset="index > 0 ? 2 : 0">
-            <el-card :body-style="{ padding: '0px' }">
-            <!-- <img :src="data.imgUrl" class="image"> -->
-            <el-avatar shape="square" :size="200" fit="fill" :src="data.imgUrl"></el-avatar>
-            <div style="padding: 14px;">
-                <span>{{data.file_name}}</span>
-                <div class="bottom clearfix">
-                <time class="time">{{data.upload_time}}</time>
-                </div>
+      <el-col :span="8" v-for="data in certificateData" :key="data.id" :offset="2">
+        <el-card :body-style="{ padding: '0px' }">
+          <!-- <img :src="data.imgUrl" class="image"> -->
+          <el-avatar shape="square" :size="200" fit="fill" :src="data.imgUrl"></el-avatar>
+          <div style="padding: 14px;">
+            <span>{{data.file_name}}</span>
+            <div class="bottom clearfix">
+              <time class="time">{{data.upload_time}}</time>
             </div>
-            </el-card>
-        </el-col>
+          </div>
+        </el-card>
+      </el-col>
     </el-row>
-
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import PanThumb from "@/components/PanThumb/index.vue";
-import { UserModule } from '@/store/modules/user'
-import { getCertificate, uploadFile } from "@/api/personal/personal-view/certificateAuthentication";
+import { UserModule } from "@/store/modules/user";
+import {
+  getCertificate,
+  uploadFile
+} from "@/api/personal/personal-view/certificateAuthentication";
 import { qiniuUrl } from "@/api/common";
 
 @Component({
@@ -59,67 +55,58 @@ import { qiniuUrl } from "@/api/common";
   }
 })
 export default class extends Vue {
-  private certificateData = []
+  private certificateData = [];
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
 
-  private filess;
-  private unfile = "未选择任何文件";
 
   created() {
-    this.initPhoto()
+    this.initPhoto();
   }
 
-  private async initPhoto(){
-    console.log(UserModule.name)
-     let {data} = await getCertificate(UserModule.name)
-     data.forEach(element => {
-       element.imgUrl = qiniuUrl+element.file_key
-     });
-     console.log(data)
-     this.certificateData = data
+  private async initPhoto() {
+    let { data } = await getCertificate(UserModule.name);
+    data.forEach(element => {
+      element.imgUrl = qiniuUrl + element.file_key;
+    });
+    this.certificateData = data;
   }
 
 
-  private getfilename(e) {
-    this.filess = e.target.files;
+  private async uoload(e) {
+    let param = new FormData();
+    param.append("username", UserModule.name);
+    param.append("file", e.file);
 
-    var _el = e.target.files;
-    var _name = "";
-    for (var i = 0; i < _el.length; i++) {
-      if (i == _el.length - 1) {
-        _name += _el[i].name;
-      } else {
-        _name += _el[i].name + "、";
+    await uploadFile(param);
+
+    this.$message({
+      message: "上传成功",
+      type: "success"
+    });
+    this.initPhoto();
+  }
+
+  // 文件上传之前做处理
+      beforeAvatarUpload(file) {
+        console.log(file)
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        // 图片格式
+        if (file.type != 'image/jpeg' && file.type != 'image/jpg' && file.type != 'image/png' && file.type != 'image/gif') {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+          return false;
+        }
+        // 图片大小
+        // if (!isLt2M) {
+        //   this.$message.error('上传头像图片大小不能超过 2MB!');
+        //   return false;
+        // }
       }
-      this.unfile = _name;
-    }
-  }
-
-  private async uoload() {
-    if (!this.filess) {
-      this.$message({
-        message: "亲，请上传文件",
-        type: "warning"
-      });
-    } else {
-      let param = new FormData();
-      param.append("username", UserModule.name);
-    
-      this.filess.forEach((element,index) => {
-        param.append("file"+index, element);
-      });
 
 
-      uploadFile(param).then(res => {
-        this.$message({
-          message: "上传成功",
-          type: "success"
-        });
-        this.initPhoto()
-      });
-    }
-  }
+   
+
 }
 </script>
 

@@ -166,7 +166,7 @@ Javascript 版本:
 ├── tests                      # 测试
 ├── .circleci/                 # 自动化 CI 配置
 ├── .browserslistrc            # browserslistrc 配置文件 (用于支持 Autoprefixer)
-├── .editorconfig              # 编辑相关配置
+├── .editorconfig              # 编辑相关配置 
 ├── .env.xxx                   # 环境变量配置
 ├── .eslintrc.js               # eslint 配置
 ├── babel.config.js            # babel-loader 配置

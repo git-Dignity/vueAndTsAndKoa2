@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node bin/www",
+    "start": "nodemon node bin/www",
     "dev": "./node_modules/.bin/nodemon bin/www",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -30,7 +30,7 @@
     "mysql": "^2.18.1",
     "node-uuid": "^1.4.8",
     "node-xss": "0.0.1",
-    "nodemon": "^1.19.1",
+    "nodemon": "^1.19.4",
     "qiniu": "^7.3.0",
     "redis": "^3.0.2"
   }
