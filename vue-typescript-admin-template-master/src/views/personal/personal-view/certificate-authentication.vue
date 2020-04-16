@@ -1,12 +1,34 @@
 <template>
   <div class="app-container">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+      <el-form-item label="圖片名">
+        <el-input v-model="formInline.fileName" placeholder="圖片名"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-date-picker
+          v-model="formInline.date"
+          type="daterange"
+          align="right"
+          unlink-panels
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          value-format="yyyy-MM-dd"
+          :picker-options="pickerOptions"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+      </el-form-item>
+    </el-form>
+
     <el-row :gutter="15">
       <el-upload
         class="upload-demo"
         drag
         action="/certificateAuthentication/upload"
         :http-request="uoload"
-        accept=".png,.jpg,.gif"
+        accept=".png, .jpg, .gif"
         :before-upload="beforeAvatarUpload"
         multiple
       >
@@ -42,8 +64,8 @@
       :page-sizes="[10, 20, 50, 100]"
       :page-size="6"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
-    </el-pagination>
+      :total="total"
+    ></el-pagination>
   </div>
 </template>
 
@@ -67,31 +89,85 @@ export default class extends Vue {
   private certificateData = [];
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
-   private currentPage =  1;    //当前页码
-   private total = 0;    //全部多少条
-
+  private currentPage = 1; //当前页码
+  private total = 0; //查出来这个条件全部多少条
+  formInline = {
+    fileName: "",
+    date: ""
+  };
+  pickerOptions = {
+    shortcuts: [
+      {
+        text: "最近一周",
+        onClick(picker) {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+          picker.$emit("pick", [start, end]);
+        }
+      },
+      {
+        text: "最近一个月",
+        onClick(picker) {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+          picker.$emit("pick", [start, end]);
+        }
+      },
+      {
+        text: "最近三个月",
+        onClick(picker) {
+          const end = new Date();
+          const start = new Date();
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+          picker.$emit("pick", [start, end]);
+        }
+      }
+    ]
+  };
 
   created() {
     this.initPhoto();
   }
 
-  private async initPhoto() {
+  private async onSubmit() {
+    console.log(this.formInline);
     const { data } = await getCertificate({
-      username: UserModule.name,
-      pageNum: this.currentPage
+      username: JSON.parse(localStorage.getItem("user")).username,
+      pageNum: this.currentPage,
+      form: this.formInline
     });
     
+    this.$message({
+      message: "查询成功",
+      type: "success"
+    });
     data.data.forEach((element: any) => {
       element.imgUrl = qiniuUrl + element.file_key;
     });
-    this.total = data.total
+
+    this.total = data.total;
     this.certificateData = data.data;
   }
 
+  private async initPhoto() {
+    console.log(UserModule.name);
+    const { data } = await getCertificate({
+      username: JSON.parse(localStorage.getItem("user")).username,
+      pageNum: this.currentPage
+    });
+
+    data.data.forEach((element: any) => {
+      element.imgUrl = qiniuUrl + element.file_key;
+    });
+    this.total = data.total;
+    this.certificateData = data.data;
+  }
 
   private async uoload(e: any) {
     const param = new FormData();
-    param.append("username", UserModule.name);
+    param.append("username", JSON.parse(localStorage.getItem("user")).username);
     param.append("file", e.file);
 
     await uploadFile(param);
@@ -104,33 +180,34 @@ export default class extends Vue {
   }
 
   // 文件上传之前做处理
-     private beforeAvatarUpload(file: any) {
-        // console.log(file)
-        const isLt20M = file.size / 1024 / 1024 < 20;
-        // 图片格式
-        if (file.type !== 'image/jpeg' && file.type !== 'image/jpg' && file.type !== 'image/png' && file.type !== 'image/gif') {
-          this.$message.error('只能上传图片格式文件!');
-          return false;
-        }
-        // 图片大小
-        if (!isLt20M) {
-          this.$message.error('上传头像图片大小不能超过 20MB!');
-          return false;
-        }
-      }
+  private beforeAvatarUpload(file: any) {
+    // console.log(file)
+    const isLt20M = file.size / 1024 / 1024 < 20;
+    // 图片格式
+    if (
+      file.type !== "image/jpeg" &&
+      file.type !== "image/jpg" &&
+      file.type !== "image/png" &&
+      file.type !== "image/gif"
+    ) {
+      this.$message.error("只能上传图片格式文件!");
+      return false;
+    }
+    // 图片大小
+    if (!isLt20M) {
+      this.$message.error("上传头像图片大小不能超过 20MB!");
+      return false;
+    }
+  }
 
-     private handleSizeChange(val: number) {
-        console.log(`每页 ${val} 条`);
-      }
-    private  handleCurrentChange(val: number) {
-        console.log(`当前页: ${val}`);
-        this.currentPage = val
-        this.initPhoto();
-      }
-
-
-   
-
+  private handleSizeChange(val: number) {
+    console.log(`每页 ${val} 条`);
+  }
+  private handleCurrentChange(val: number) {
+    console.log(`当前页: ${val}`);
+    this.currentPage = val;
+    this.initPhoto();
+  }
 }
 </script>
 

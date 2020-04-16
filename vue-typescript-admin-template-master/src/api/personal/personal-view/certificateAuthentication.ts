@@ -10,12 +10,12 @@ export const getCertificate = (data: any) =>
     data
   })
 
-  export const uploadFile = (data: any) => 
+export const uploadFile = (data: any) =>
   request({
     url: '/certificateAuthentication/upload',
     method: 'post',
     data
   })
-  
+
 
 

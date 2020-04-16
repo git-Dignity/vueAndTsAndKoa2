@@ -12,25 +12,77 @@ router.prefix('/certificateAuthentication')
 
 router.post('/getCertificate', async (ctx, next) => {
   const req = ctx.request.body
-  let reqArr = Object.entries(req)
-  console.log(reqArr)
+  let data = {}
+  // let reqArr = Object.entries(req)
+  console.log(req)
+  // console.log(reqArr)
   // 6-(2-1)   6*2
 
-  let result = await DB.query(`
-        select * from qiniu_photo where username = '${reqArr[0][1]}' limit ${6 * (reqArr[1][1] - 1)},${6 * (reqArr[1][1])}
-    `)
+  let result 
+  let sqlM 
 
-  let sqlM = new sqlModel("qiniu_photo")
-  let total = await sqlM.getTotal()
-  console.log(total);
+  if(req.form){
+    startDate =  req.form.date[0]==undefined?'':req.form.date[0]
+    endDate =  req.form.date[1]==undefined?'':req.form.date[1]
 
-  data = {
-    code: 20000,
-    data: {
-      total:total,
-      data:result
-    }
+     result = await DB.query(`
+    select * from qiniu_photo where username = '${req.username}' 
+    and ( file_name = '${req.form.fileName}' or '${req.form.fileName}'='')
+    and ( upload_time > STR_TO_DATE('${startDate}','%Y-%m-%d') or '${startDate}'='')
+    and ( upload_time < STR_TO_DATE('${endDate}','%Y-%m-%d') or '${endDate}'='')
+    limit ${6 * (req.pageNum - 1)},${6 * (req.pageNum)}
+`)
+
+ sqlM = new sqlModel("qiniu_photo",`
+ username = '${req.username}' 
+    and ( file_name = '${req.form.fileName}' or '${req.form.fileName}'='')
+    and ( upload_time > STR_TO_DATE('${startDate}','%Y-%m-%d') or '${startDate}'='')
+    and ( upload_time < STR_TO_DATE('${endDate}','%Y-%m-%d') or '${endDate}'='')
+ `)
+  }else{
+     result = await DB.query(`
+    select * from qiniu_photo where username = '${req.username}' 
+    limit ${6 * (req.pageNum - 1)},${6 * (req.pageNum)}
+`)
+
+ sqlM = new sqlModel("qiniu_photo",`
+ username = '${req.username}' 
+ `)
   }
+
+
+  
+//   SELECT * from qiniu_photo where username = 'zheng' 
+//   and ( file_type = 'image/png' or 'image/png'='')
+
+
+
+
+// select *
+// from (select t.*,case when '7d68cf76c8dde6e0cd30ea1a1c7c68f.png' = t.file_name then 1
+// when '7d68cf76c8dde6e0cd30ea1a1c7c68f.png' = '' then 1 else 0 end idx
+// from qiniu_photo t) view1
+// where view1.username = 'zheng'
+// and view1.idx = 1;
+
+// SELECT * from qiniu_photo where username = 'zheng' 
+// and upload_time > STR_TO_DATE('2020-04-10','%Y-%m-%d') AND upload_time < STR_TO_DATE('2020-04-17','%Y-%m-%d') 
+
+    
+
+    
+    let total = await sqlM.getTotal()
+    console.log(total);
+
+    data = {
+      code: 20000,
+      data: {
+        total: total,
+        data: result
+      }
+    }
+ 
+
 
   ctx.body = data
 })
