@@ -61,7 +61,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[10, 20, 50, 100]"
+      :page-sizes="[6, 12, 18, 100]"
       :page-size="6"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
@@ -89,6 +89,7 @@ export default class extends Vue {
   private certificateData = [];
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
+    public userLocal: any = localStorage.getItem("user")
   private currentPage = 1; //当前页码
   private total = 0; //查出来这个条件全部多少条
   formInline = {
@@ -99,7 +100,7 @@ export default class extends Vue {
     shortcuts: [
       {
         text: "最近一周",
-        onClick(picker) {
+        onClick(picker: any) {
           const end = new Date();
           const start = new Date();
           start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
@@ -108,7 +109,7 @@ export default class extends Vue {
       },
       {
         text: "最近一个月",
-        onClick(picker) {
+        onClick(picker: any) {
           const end = new Date();
           const start = new Date();
           start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
@@ -117,7 +118,7 @@ export default class extends Vue {
       },
       {
         text: "最近三个月",
-        onClick(picker) {
+        onClick(picker: any) {
           const end = new Date();
           const start = new Date();
           start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
@@ -132,9 +133,10 @@ export default class extends Vue {
   }
 
   private async onSubmit() {
-    console.log(this.formInline);
+    // console.log(this.formInline);
+    
     const { data } = await getCertificate({
-      username: JSON.parse(localStorage.getItem("user")).username,
+      username: JSON.parse(this.userLocal).username,
       pageNum: this.currentPage,
       form: this.formInline
     });
@@ -154,7 +156,7 @@ export default class extends Vue {
   private async initPhoto() {
     console.log(UserModule.name);
     const { data } = await getCertificate({
-      username: JSON.parse(localStorage.getItem("user")).username,
+      username: JSON.parse(this.userLocal).username,
       pageNum: this.currentPage
     });
 
@@ -167,7 +169,7 @@ export default class extends Vue {
 
   private async uoload(e: any) {
     const param = new FormData();
-    param.append("username", JSON.parse(localStorage.getItem("user")).username);
+    param.append("username", JSON.parse(this.userLocal).username);
     param.append("file", e.file);
 
     await uploadFile(param);

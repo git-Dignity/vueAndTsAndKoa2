@@ -71,7 +71,7 @@ router.post('/login', async (ctx, next) => {
 })
 
 router.post('/info', async (ctx, next) => {
-  console.log(ctx.request.body)
+  // console.log(ctx.request.body)
 //   console.log('ooo')
 //   redisDB.get('usersLogin',function(err,result){
 //     if(err){
@@ -84,9 +84,13 @@ router.post('/info', async (ctx, next) => {
 // })
 //   console.log('ooo')
 
+const result = await DB.query(`
+    select * from login where username = '${ctx.request.body.username}'
+  `)
+
+  // console.log(result)
 
 
-  // async(ctx) => {
     const user = {
         avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
         email: "editor@test.com",
@@ -106,7 +110,6 @@ router.post('/info', async (ctx, next) => {
         data :userInfo
       }
       ctx.body = data
-  // }
 });
 
 module.exports = router

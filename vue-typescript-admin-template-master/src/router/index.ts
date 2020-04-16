@@ -257,6 +257,22 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   {
+    path: '/music',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import(/* webpackChunkName: "music" */ '@/views/music/index.vue'),
+        name: 'music',
+        meta: {
+          title: 'music',
+          icon: 'icon',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
     path: '/icon',
     component: Layout,
     children: [

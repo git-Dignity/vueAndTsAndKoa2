@@ -18,7 +18,7 @@ exports.query=function(sql,parmas=null){
    return new Promise(function(reject,resolve){
    
    //2执行sql语句
- console.log('sql' + sql)
+//  console.log('sql' + sql)
    connection.query(sql,parmas, function (error, results, fields) {
        if (error) throw error;
        reject(results);

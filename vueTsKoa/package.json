@@ -27,6 +27,7 @@
     "koa-body": "^4.1.1",
     "koa-cors": "0.0.16",
     "koa-multipart": "0.0.1",
+    "minio": "^7.0.15",
     "mysql": "^2.18.1",
     "node-uuid": "^1.4.8",
     "node-xss": "0.0.1",

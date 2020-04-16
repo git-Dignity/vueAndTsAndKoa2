@@ -12,6 +12,7 @@ const index = require('./routes/index')
 const users = require('./routes/users')
 const role = require('./routes/sys/role')
 const certificateAuthentication = require('./routes/personal/personalView/certificateAuthentication')
+const music = require('./routes/music/index')
 
 // error handler
 onerror(app)
@@ -57,6 +58,7 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(role.routes(), role.allowedMethods())
 app.use(certificateAuthentication.routes(), certificateAuthentication.allowedMethods())
+app.use(music.routes(), music.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

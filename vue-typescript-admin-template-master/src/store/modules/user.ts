@@ -64,9 +64,7 @@ class User extends VuexModule implements IUserState {
     this.SET_NAME(username)
 
 
-    localStorage.setItem('user', JSON.stringify({
-      "username": username
-    }))
+    
   }
 
   @Action
@@ -81,8 +79,12 @@ class User extends VuexModule implements IUserState {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
     }
-    const { data } = await getUserInfo({ username: this.name })
+    const { data } = await getUserInfo({ username: this.name })  
     console.log(data)
+    localStorage.setItem('user', JSON.stringify({
+      "username": data.user.name
+    }))
+
     if (!data) {
       throw Error('Verification failed, please Login again.')
     }
