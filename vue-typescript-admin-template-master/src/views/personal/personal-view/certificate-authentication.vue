@@ -154,7 +154,6 @@ export default class extends Vue {
   }
 
   private async initPhoto() {
-    console.log(UserModule.name);
     const { data } = await getCertificate({
       username: JSON.parse(this.userLocal).username,
       pageNum: this.currentPage

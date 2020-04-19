@@ -8,7 +8,7 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >
-        {{ $t('table.add') }}
+        {{ $t('table.add') }} 
       </el-button>
     </div>
 

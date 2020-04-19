@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : bokeFormal
-Source Server Version : 50528
+Source Server         : bokeMusic
+Source Server Version : 50540
 Source Host           : localhost:3306
-Source Database       : qynbgl
+Source Database       : boke
 
 Target Server Type    : MYSQL
-Target Server Version : 50528
+Target Server Version : 50540
 File Encoding         : 65001
 
-Date: 2020-04-14 18:17:10
+Date: 2020-04-19 16:20:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1811,16 +1811,18 @@ CREATE TABLE `login` (
   `username` varchar(20) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
+  `photo_name` varchar(255) DEFAULT NULL,
+  `photo_key` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('1', 'zheng', 'zheng', '9c0801c39a73fd3b5d6fc1deebc3cb4.png');
-INSERT INTO `login` VALUES ('2', '阿泽', '123', null);
-INSERT INTO `login` VALUES ('3', 'xl', 'xl', null);
-INSERT INTO `login` VALUES ('4', 'test', 'test', 'aze.jpg');
+INSERT INTO `login` VALUES ('1', 'zheng', 'zhengzemin', '9c0801c39a73fd3b5d6fc1deebc3cb4.png', 'aze.jpg', 'd5687080-7fd3-11ea-a1e8-e9c785eec5f0.jpg');
+INSERT INTO `login` VALUES ('2', '阿泽', '123', null, null, null);
+INSERT INTO `login` VALUES ('3', 'xl', 'xl', null, 'xl.jpg', 'd5690cc0-7fd3-11ea-a1e8-e9c785eec5f0.jpg');
+INSERT INTO `login` VALUES ('4', 'test', 'test', 'aze.jpg', null, null);
 
 -- ----------------------------
 -- Table structure for `music`
@@ -1906,6 +1908,28 @@ INSERT INTO `music` VALUES ('104', '疯人院.mp3', 'onlyOnePlaying', '华晨宇
 INSERT INTO `music` VALUES ('105', '不能说的秘密 - 周杰伦.flac', 'onlyOnePlaying', '周杰伦', '2020/3/15');
 
 -- ----------------------------
+-- Table structure for `qiniu_music`
+-- ----------------------------
+DROP TABLE IF EXISTS `qiniu_music`;
+CREATE TABLE `qiniu_music` (
+  `id` varchar(255) COLLATE utf8_bin NOT NULL,
+  `file_hash` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_key` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_type` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `file_size` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `is_sucess` int(3) DEFAULT NULL COMMENT '1:上传成功；0:上传失败',
+  `upload_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of qiniu_music
+-- ----------------------------
+INSERT INTO `qiniu_music` VALUES ('ecd77950-8181-11ea-b2b7-1d4822f9e617', 'ljfFHCWsaWnjX0R5o9ut0VaQSYmX', 'ecd77950-8181-11ea-b2b7-1d4822f9e617.mp3', 'zheng', 'audio/mp3', 'amazarashi - 季節は次々死んでいく.mp3', '13687519', '1', '2020-04-18 22:36:05');
+
+-- ----------------------------
 -- Table structure for `qiniu_photo`
 -- ----------------------------
 DROP TABLE IF EXISTS `qiniu_photo`;
@@ -1925,12 +1949,32 @@ CREATE TABLE `qiniu_photo` (
 -- ----------------------------
 -- Records of qiniu_photo
 -- ----------------------------
-INSERT INTO `qiniu_photo` VALUES ('44dcdfb0-7e2f-11ea-953f-6d0c6c6a6c41', 'FsYQxZjvCxnLIbXZX8LMgl9xJZHd', '44dcdfb0-7e2f-11ea-953f-6d0c6c6a6c41.png', 'aaa', 'image/png', '7d68cf76c8dde6e0cd30ea1a1c7c68f.png', '13833', '1', '2020-04-14 17:06:47');
-INSERT INTO `qiniu_photo` VALUES ('94e0e520-7e33-11ea-a583-952b2a8457e4', 'Fj6Zcx1eGcYaaraiKF-NPmgE0RXS', '94e0e520-7e33-11ea-a583-952b2a8457e4.txt', 'aaa', 'text/plain', '数据库.txt', '187', '1', '2020-04-14 17:37:39');
+INSERT INTO `qiniu_photo` VALUES ('6a9c4f70-7fd2-11ea-a1e8-e9c785eec5f0', 'FqBbGdXhnvxE3sHtrC2qyXRJlrR8', '6a9c4f70-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '3.png', '173991', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6aa1f4c0-7fd2-11ea-a1e8-e9c785eec5f0', 'FvUFwsCCPtQ09NIKJ5VSqBwVdiBv', '6aa1f4c0-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '1.png', '128473', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6aa30630-7fd2-11ea-a1e8-e9c785eec5f0', 'FiU9KJZ0h5EhTkkRSP9ngXb5dPCM', '6aa30630-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '2.png', '205286', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6aa43eb0-7fd2-11ea-a1e8-e9c785eec5f0', 'FnOU6K1QFcTvBbMPTeAqx6F7KKgr', '6aa43eb0-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '4.png', '226661', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6aa61370-7fd2-11ea-a1e8-e9c785eec5f0', 'Fu5nPKjBDSGRf_8WcHm6OSBBdwyn', '6aa61370-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '6.png', '171368', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6aa724e0-7fd2-11ea-a1e8-e9c785eec5f0', 'Ftq_1MMpIDPaorzYVZFgY6tG7WzT', '6aa724e0-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '5.png', '245561', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6b132d20-7fd2-11ea-a1e8-e9c785eec5f0', 'Fl94eMO_ws8F9K_rlhnlG6EGJxEJ', '6b132d20-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '7.png', '103440', '1', '2020-04-16 19:07:10');
+INSERT INTO `qiniu_photo` VALUES ('6b15ec40-7fd2-11ea-a1e8-e9c785eec5f0', 'FtT37GPEdLHkvT4RKLTRrfkUNyhr', '6b15ec40-7fd2-11ea-a1e8-e9c785eec5f0.png', 'zheng', 'image/png', '8.png', '145218', '1', '2020-04-16 19:07:10');
 INSERT INTO `qiniu_photo` VALUES ('94e35620-7e33-11ea-a583-952b2a8457e4', 'FlopOmjI-3Z3odpJBNwfGWlLeyG2', '94e35620-7e33-11ea-a583-952b2a8457e4.png', 'aaa', 'image/png', '向日葵16.png', '53748', '1', '2020-04-14 17:37:39');
 INSERT INTO `qiniu_photo` VALUES ('94e37d30-7e33-11ea-a583-952b2a8457e4', 'FhoqxkAo8k5WwcSXiMsxzvdpGnvW', '94e37d30-7e33-11ea-a583-952b2a8457e4.png', 'aaa', 'image/png', '向日葵14.png', '38190', '1', '2020-04-14 17:37:39');
+INSERT INTO `qiniu_photo` VALUES ('a2df6970-7e52-11ea-9cd2-f35980fae0db', 'FqBbGdXhnvxE3sHtrC2qyXRJlrR8', 'a2df6970-7e52-11ea-9cd2-f35980fae0db.png', 'undefined', 'image/png', '3.png', '173991', '1', '2020-04-14 21:19:57');
 INSERT INTO `qiniu_photo` VALUES ('a5347cd0-7e2d-11ea-953f-6d0c6c6a6c41', 'FsYQxZjvCxnLIbXZX8LMgl9xJZHd', 'a5347cd0-7e2d-11ea-953f-6d0c6c6a6c41.png', 'aaa', 'image/png', '7d68cf76c8dde6e0cd30ea1a1c7c68f.png', '13833', '1', '2020-04-14 16:55:10');
 INSERT INTO `qiniu_photo` VALUES ('a534f200-7e2d-11ea-953f-6d0c6c6a6c41', 'FqFePrPITQaQdICCis_u0Ad2wi4V', 'a534f200-7e2d-11ea-953f-6d0c6c6a6c41.jpg', 'aaa', 'image/jpeg', '7f6cfe07689a650e36ea310a69ad111.jpg', '168979', '1', '2020-04-14 16:55:10');
+INSERT INTO `qiniu_photo` VALUES ('afc20fb0-7f30-11ea-81da-5957ead92b98', 'FvUFwsCCPtQ09NIKJ5VSqBwVdiBv', 'afc20fb0-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '1.png', '128473', '1', '2020-04-15 23:49:27');
+INSERT INTO `qiniu_photo` VALUES ('afcb1060-7f30-11ea-81da-5957ead92b98', 'FqBbGdXhnvxE3sHtrC2qyXRJlrR8', 'afcb1060-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '3.png', '173991', '1', '2020-04-15 23:49:27');
+INSERT INTO `qiniu_photo` VALUES ('afcc21d0-7f30-11ea-81da-5957ead92b98', 'FiU9KJZ0h5EhTkkRSP9ngXb5dPCM', 'afcc21d0-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '2.png', '205286', '1', '2020-04-15 23:49:27');
+INSERT INTO `qiniu_photo` VALUES ('afcf7d30-7f30-11ea-81da-5957ead92b98', 'Fu5nPKjBDSGRf_8WcHm6OSBBdwyn', 'afcf7d30-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '6.png', '171368', '1', '2020-04-15 23:49:27');
+INSERT INTO `qiniu_photo` VALUES ('afd12ae0-7f30-11ea-81da-5957ead92b98', 'FnOU6K1QFcTvBbMPTeAqx6F7KKgr', 'afd12ae0-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '4.png', '226661', '1', '2020-04-15 23:49:27');
+INSERT INTO `qiniu_photo` VALUES ('afd326b0-7f30-11ea-81da-5957ead92b98', 'Ftq_1MMpIDPaorzYVZFgY6tG7WzT', 'afd326b0-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '5.png', '245561', '1', '2020-04-15 23:49:27');
+INSERT INTO `qiniu_photo` VALUES ('b01c64b0-7f30-11ea-81da-5957ead92b98', 'FgQzqPneLTqTn5RDkhoG2cOczWYH', 'b01c64b0-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '49191b699da1bbeb3f601499be94d5d.png', '46792', '1', '2020-04-15 23:49:28');
+INSERT INTO `qiniu_photo` VALUES ('b0227f30-7f30-11ea-81da-5957ead92b98', 'Fl94eMO_ws8F9K_rlhnlG6EGJxEJ', 'b0227f30-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '7.png', '103440', '1', '2020-04-15 23:49:28');
+INSERT INTO `qiniu_photo` VALUES ('b023dec0-7f30-11ea-81da-5957ead92b98', 'FtT37GPEdLHkvT4RKLTRrfkUNyhr', 'b023dec0-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '8.png', '145218', '1', '2020-04-15 23:49:28');
+INSERT INTO `qiniu_photo` VALUES ('b024c920-7f30-11ea-81da-5957ead92b98', 'FoaieZuU3SBtbmS4lxCyX9yijvfv', 'b024c920-7f30-11ea-81da-5957ead92b98.png', 'aaa', 'image/png', '15b79e42ce97ed40cc63859b8be0aab.png', '399029', '1', '2020-04-15 23:49:28');
+INSERT INTO `qiniu_photo` VALUES ('d5687080-7fd3-11ea-a1e8-e9c785eec5f0', 'Fqj5lNYwIFEfh-FgA83UWk5j6aNm', 'd5687080-7fd3-11ea-a1e8-e9c785eec5f0.jpg', 'zheng', 'image/jpeg', 'aze.jpg', '37508', '1', '2020-04-16 19:17:18');
+INSERT INTO `qiniu_photo` VALUES ('d5690cc0-7fd3-11ea-a1e8-e9c785eec5f0', 'FtmomQJSMgRcR7F5CYHL92lOSZeM', 'd5690cc0-7fd3-11ea-a1e8-e9c785eec5f0.jpg', 'zheng', 'image/jpeg', 'xl.jpg', '34836', '1', '2020-04-16 19:17:18');
+INSERT INTO `qiniu_photo` VALUES ('d57eb390-7e52-11ea-9cd2-f35980fae0db', 'FqBbGdXhnvxE3sHtrC2qyXRJlrR8', 'd57eb390-7e52-11ea-9cd2-f35980fae0db.png', 'undefined', 'image/png', '3.png', '173991', '1', '2020-04-14 21:21:22');
 
 -- ----------------------------
 -- Table structure for `sys_role`

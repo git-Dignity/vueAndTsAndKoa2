@@ -16,9 +16,51 @@
           将文件拖到此处，或
           <em>点击上传</em>
         </div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div class="el-upload__tip" slot="tip">~</div>
       </el-upload>
     </el-row>
+
+
+      <el-row>
+     <el-table
+    :data="musicData"
+    border
+    style="width: 100%"
+    :default-sort = "{prop: 'isSys', order: 'descending'}"
+    >
+    <el-table-column
+      prop="file_name"
+      label="歌曲标题"
+      width="380">
+    </el-table-column>
+    <el-table-column
+      prop="file_size"
+      label="時長"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="username"
+      label="歌手"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      label="音頻"
+     >
+      <template slot-scope="scope">
+        <audio :src="scope.row.musicUrl" controls="controls"></audio>
+      </template>
+    </el-table-column>
+  </el-table>
+    </el-row>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-sizes="[6, 12, 18, 100]"
+      :page-size="6"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    ></el-pagination>
 
   </div>
 </template>
@@ -31,17 +73,19 @@ import {
   getMusic,
   uploadMusic
 } from "@/api/music/index";
-
+import { qiniuUrl } from "@/api/common";
 
 @Component({
   name: 'music'
  
 })
 export default class extends Vue {
+   private musicData = [];
   private tableKey = 0
   private currentDate = new Date()
   public userLocal: any = localStorage.getItem("user")
    private currentPage = 1; //当前页码
+  private total = 0; //查出来这个条件全部多少条
 
   private photoEnter(){
    
@@ -51,19 +95,22 @@ export default class extends Vue {
     this.init();
   }
 
+aaa(e){
+  console.log(e)
+}   
+
     private async init() {
-  
-    const { data } = await getMusic({
-     
+  const { data } = await getMusic({
+      username: JSON.parse(this.userLocal).username,
+      pageNum: this.currentPage
     });
 
-    console.log(data)
-
-    // data.data.forEach((element: any) => {
-    //   element.imgUrl = qiniuUrl + element.file_key;
-    // });
-    // this.total = data.total;
-    // this.certificateData = data.data;
+    data.data.forEach((element: any) => {
+      element.musicUrl = qiniuUrl + element.file_key;
+    });
+    this.total = data.total;
+    this.musicData = data.data;
+    console.log(this.musicData)
   }
 
 
@@ -74,11 +121,20 @@ export default class extends Vue {
 
     await uploadMusic(param);
 
-    // this.$message({
-    //   message: "上传成功",
-    //   type: "success"
-    // });
-    // this.init();
+    this.$message({
+      message: "上传成功",
+      type: "success"
+    });
+    this.init();
+  }
+
+   private handleSizeChange(val: number) {
+    console.log(`每页 ${val} 条`);
+  }
+  private handleCurrentChange(val: number) {
+    console.log(`当前页: ${val}`);
+    this.currentPage = val;
+    this.initPhoto();
   }
 
   // 文件上传之前做处理
