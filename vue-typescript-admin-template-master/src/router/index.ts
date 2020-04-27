@@ -249,10 +249,10 @@ export const asyncRoutes: RouteConfig[] = [
         ]
       },
       {
-        path: 'menu2',
-        component: () => import(/* webpackChunkName: "menu2" */ '@/views/nested/menu2/index.vue'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'ttt',
+        component: () => import(/* webpackChunkName: "ttt" */ '@/views/personal/personal-view/ttt.vue'),
+        name: 'TTT',
+        meta: { title: 'ttt' }
       }
     ]
   },
