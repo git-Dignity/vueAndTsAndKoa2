@@ -7,7 +7,7 @@
         drag
         action="/music/upload"
         :http-request="uoload"
-        accept=".mp4, .mp3, .flac, .wima"
+        accept=".mp4, .m4a, .mp3, .flac, .wima"
         :before-upload="beforeAvatarUpload"
         multiple
       >
@@ -116,6 +116,7 @@ aaa(e){
       username: JSON.parse(this.userLocal).username,
       pageNum: this.currentPage
     });
+   
 
     data.data.forEach((element: any) => {
       element.musicUrl = qiniuUrl + element.file_key;
