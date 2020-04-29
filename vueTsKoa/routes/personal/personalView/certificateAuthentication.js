@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 let func = require('../../../utils/qianniuyun');  /*导入七牛文件   */
 const formidable = require('formidable');
 var fs = require('fs');

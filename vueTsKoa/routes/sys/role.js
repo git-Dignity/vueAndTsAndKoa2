@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-var uuid = require('node-uuid');
+var uuid = require('uuid');
 // var db = require('../../utils/db')
 var DB = require('../../utils/mysqlDB')
 const sqlModel = require('../common')

@@ -47,7 +47,11 @@
       label="音頻"
      >
       <template slot-scope="scope">
-        <audio :src="scope.row.musicUrl" controls="controls"></audio>
+        <div
+          class="slider"
+          @click="music_btn(scope.row.musicUrl)"
+        >播放</div>
+        <!-- <audio :src="scope.row.musicUrl" controls="controls"></audio> -->
       </template>
     </el-table-column>
   </el-table>
@@ -73,6 +77,7 @@ import {
   getMusic,
   uploadMusic
 } from "@/api/music/index";
+import { MusicModule } from '@/store/modules/music'
 import { qiniuUrl } from "@/api/common";
 
 @Component({
@@ -94,6 +99,13 @@ export default class extends Vue {
   created() {
     this.init();
   }
+
+  music_btn(url) {
+    console.log(this.$store)
+      this.$store.commit("MusicPage", { 
+        url: url
+      });
+    }
 
 aaa(e){
   console.log(e)
