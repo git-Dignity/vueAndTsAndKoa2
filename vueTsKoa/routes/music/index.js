@@ -11,6 +11,8 @@ const sqlModel = require('../common')
 router.prefix('/music')
 
 
+
+
 router.post('/get', async (ctx, next) => {
 const req = ctx.request.body
 let data = {}
@@ -321,6 +323,13 @@ router.post('/minio/upload', async (ctx, next) => {
     ctx.response.body = data
 })
 
+
+
+//歌手
+const { singerGet, singerUpload} = require('./singer/index')
+
+router.post('/singer/get', singerGet)
+router.post('/singer/upload', singerUpload)
 
 
 

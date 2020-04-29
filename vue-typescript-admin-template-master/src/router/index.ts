@@ -247,31 +247,56 @@ export const asyncRoutes: RouteConfig[] = [
             meta: { title: 'certificateAuthentication', noCache: true }
           }
         ]
-      },
-      {
-        path: 'ttt',
-        component: () => import(/* webpackChunkName: "ttt" */ '@/views/personal/personal-view/ttt.vue'),
-        name: 'TTT',
-        meta: { title: 'ttt' }
       }
     ]
   },
+
   {
     path: '/music',
     component: Layout,
+    redirect: '/music/music-singer',
+    name: 'music',
+    meta: {
+      title: 'music',
+      icon: 'example',
+      roles: ['admin', 'editor'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
     children: [
-      {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "music" */ '@/views/music/index.vue'),
-        name: 'music',
-        meta: {
-          title: 'music',
-          icon: 'icon',
-          noCache: true
-        }
-      }
+          {
+            path: 'music-singer',
+            component: () => import(/* webpackChunkName: "music-singer" */ '@/views/music/music-singer.vue'),
+            name: 'musicSinger',
+            meta: { title: 'musicSinger', noCache: true }
+          },
+          {
+            path: 'singer-song-list',
+            component: () => import(/* webpackChunkName: "singer-song-list" */ '@/views/music/singer-song-list.vue'),
+            name: 'singerSongList',
+            meta: { title: 'singerSongList', noCache: true }
+          }
+        
     ]
   },
+
+
+  // {
+  //   path: '/music',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import(/* webpackChunkName: "music" */ '@/views/music/index.vue'),
+  //       name: 'music',
+  //       meta: {
+  //         title: 'music',
+  //         icon: 'icon',
+  //         noCache: true
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/icon',
     component: Layout,

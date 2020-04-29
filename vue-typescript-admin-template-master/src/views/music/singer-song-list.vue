@@ -39,24 +39,6 @@
         </div>
         <div class="el-upload__tip" slot="tip">请上传.mp4, .m4a, .mp3, .flac, .wima文件格式</div>
       </el-upload>
-
-      <!--       
-   <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-      <br />-->
-
-      <!-- 
-      <el-upload
-  class="upload-demo"
-  ref="upload"
-  action="/music/upload"
-        :http-request="uoload"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :auto-upload="false">
-  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>-->
     </el-row>
 
     <el-row>
@@ -119,7 +101,7 @@ import { MusicModule } from "@/store/modules/music";
 import { qiniuUrl } from "@/api/common";
 
 @Component({
-  name: "music"
+  name: "singerSongList"
 })
 export default class extends Vue {
   private musicData = [];
@@ -156,7 +138,9 @@ export default class extends Vue {
   private photoEnter() {}
 
   created() {
+      console.log(this.$route.query)
     this.init();
+    
   }
 
   async musicPlay_btn(row: any, url, uploader) {

@@ -72,7 +72,9 @@ export default {
     personalView: '个人证件',
     certificate: '证件',
     certificateAuthentication: '指定人证件',
-    music:'音乐'
+    music:'音乐',
+    musicSinger: '歌手',
+    singerSongList: '歌手清单'
   },
   navbar: {
     logOut: '退出登录',
