@@ -23,7 +23,7 @@ if(req.form){
   endDate =  req.form.date[1]==undefined?'':req.form.date[1]
 
    result = await DB.query(`
-  select * from qiniu_music where username = '${req.username}' 
+  select * from qiniu_music where singer_name = '${req.singerName}' 
   and ( file_name = '${req.form.fileName}' or '${req.form.fileName}'='')
   and ( upload_time > STR_TO_DATE('${startDate}','%Y-%m-%d') or '${startDate}'='')
   and ( upload_time < STR_TO_DATE('${endDate}','%Y-%m-%d') or '${endDate}'='')
@@ -31,21 +31,21 @@ if(req.form){
 `)
 
 sqlM = new sqlModel("qiniu_music",`
-username = '${req.username}' 
+singer_name = '${req.singerName}' 
   and ( file_name = '${req.form.fileName}' or '${req.form.fileName}'='')
   and ( upload_time > STR_TO_DATE('${startDate}','%Y-%m-%d') or '${startDate}'='')
   and ( upload_time < STR_TO_DATE('${endDate}','%Y-%m-%d') or '${endDate}'='')
 `)
 }else{
    result = await DB.query(`
-  select * from qiniu_music where username = '${req.username}' 
+  select * from qiniu_music where singer_name = '${req.singerName}' 
   limit ${6 * (req.pageNum - 1)},${6 * (req.pageNum)}
 `)
 
 sqlM = new sqlModel("qiniu_music",`
-username = '${req.username}' 
+singer_name = '${req.singerName}' 
 `)
-}
+} 
 
   let total = await sqlM.getTotal()
   console.log(total);
@@ -193,6 +193,8 @@ router.post('/minio/get', async (ctx, next) => {
 
 
 router.post('/upload', async (ctx, next) => {
+
+  const musicInfo = JSON.parse(ctx.request.body.musicInfo);
     
       let result = {}
     
@@ -208,8 +210,8 @@ router.post('/upload', async (ctx, next) => {
           result.forEach(async element => {
     
             await DB.query(`
-                insert into qiniu_music(id,file_hash,file_key,username,file_type,file_name,file_size,is_sucess)
-                values('${element.id}','${element.hash}','${element.key}','${ctx.request.body.username}','${element.fileType}','${element.fileName}','${element.fileSize}','${element.isSucess}')
+                insert into qiniu_music(id,file_hash,file_key,username,file_type,file_name,file_size,is_sucess, song_name, singer_name, song_type)
+                values('${element.id}','${element.hash}','${element.key}','${ctx.request.body.username}','${element.fileType}','${element.fileName}','${element.fileSize}','${element.isSucess}', '${musicInfo.songName}', '${musicInfo.singerName}', '${musicInfo.songType}')
             `)
           });
     

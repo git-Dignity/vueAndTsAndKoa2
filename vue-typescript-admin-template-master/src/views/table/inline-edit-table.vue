@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-table
-      v-loading="listLoading"
+      v-loading="listLoading" 
       :data="list"
       border
       fit
