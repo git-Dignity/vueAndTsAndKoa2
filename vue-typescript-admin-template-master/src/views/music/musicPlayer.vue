@@ -1,6 +1,5 @@
  <template>
   <div class="app-container">
-   
     <div
       class="el-icon-service"
       icon="el-icon-search"
@@ -8,13 +7,14 @@
       :style="{animation:audioani}"
     ></div>
 
-    <div id="containe_audio">
+    <div id="containe_audio" v-show="audioshow" class="vueAudio">
       <div v-for="(item, index) in item" :key="index" v-show="audioshow" class="vueAudio">
         <VueAudio
           :theUrl="item.url"
           :theControlList="item.controlList"
-          :theUploader="item.uploader"
+          :theSingerName="item.singerName"
           :theUploadTime="item.uploadTime"
+          :theSongName="item.songName"
           @musicClose="closeMusic"
           @audioState="audioState($event)"
           @onTimeupdate="onTimeupdate"
@@ -40,17 +40,27 @@ import VueAudio from "@/components/Music/VueAudio.vue";
   }
 })
 export default class extends Vue {
-  private item = [
+  public item = [
     {
       url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
       controlList: "onlyOnePlaying",
-      uploader: "周杰伦",
+      singerName: "周杰伦",
+      songName:'稻香',
       uploadTime: "2019/05/20"
     }
-  ];
+    ]
+
+  // private item = [
+  //   {
+  //     url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
+  //     controlList: "onlyOnePlaying",
+  //     uploader: "周杰伦",
+  //     uploadTime: "2019/05/20"
+  //   }
+  // ];
   private audioshow = false;
   private audioani = "";
-  private isAllOrSingle = 2;
+  private isAllOrSingle = 1;  //随机播放
   private audioIndex = 1; //当前的歌曲在vuex的audiosPage排在第几位
   private audioRandomIndex = 1;
   private asd = [
@@ -78,9 +88,11 @@ export default class extends Vue {
 
   @Watch("musicp")
   private onRoutesChange(data) {
-    // console.log(data);
+    console.log(data);
+    // console.log(this.item)
+    // console.log('----')
     var containeAudio = document.getElementById("containe_audio");
- 
+
     for (var i = 0; i < containeAudio.childNodes.length; i++) {
       containeAudio.removeChild(containeAudio.childNodes[i]);
     }
@@ -88,9 +100,31 @@ export default class extends Vue {
     this.item.push({
       url: data.url,
       controlList: "onlyOnePlaying",
-      uploader: data.uploader,
+      singerName: data.singerName,
+      songName: data.songName,
       uploadTime: "2019/05/20"
+     
     });
+   
+  //  this.$set(this.item,'url',data.url);
+
+//   this.item.url= data.url;
+//  this.item = Object.assign({}, this.item)
+
+// Vue.set(this.item,'url', data.url);
+// this.url = data.url;
+// console.log(this.url)
+// this.$store.commit("SET_MUSIC_URL", data.url);
+
+
+
+    // this.item = {
+    //   url: data.url,
+    //   controlList: "onlyOnePlaying",
+    //   uploader: data.uploader,
+    //   uploadTime: "2019/05/20"
+    // };
+    console.log(this.item)
   }
 
   // musicPage() {
@@ -105,19 +139,18 @@ export default class extends Vue {
     }
     // console.log(data);
   }
-   async audioState(data) {
+  async audioState(data) {
     //  console.log(data)
-      // console.log(this.$store.state.music.musicPage)
+    // console.log(this.$store.state.music.musicPage)
     if (data === "play") {
       this.audioani = "audioani 3s ease infinite";
     } else {
-
-      this.$store.commit('SET_MUSIC_STATE',false)
-    // await MusicModule.MusicPage({
-    //   url: this.item[this.item.length-1].url,
-    //   uploader: this.item[this.item.length-1].uploader,
-    //   play:false
-    // });
+      this.$store.commit("SET_MUSIC_STATE", false);
+      // await MusicModule.MusicPage({
+      //   url: this.item[this.item.length-1].url,
+      //   uploader: this.item[this.item.length-1].uploader,
+      //   play:false
+      // });
 
       this.audioani = "";
     }
@@ -126,28 +159,32 @@ export default class extends Vue {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   findThisAudioIndex() {
-    return this.$store.state.audiosPage.findIndex(
-      n => n.url === this.$store.state.musicPage.url
+    return this.$store.state.music.audiosPage.findIndex(
+      n => n.musicUrl === this.$store.state.music.musicPage.url
     );
   }
   audioRandomIsThisAudio(audioRandomIndex, thisAudioIndex) {
     if (audioRandomIndex === thisAudioIndex) {
       return this.audioRandomIsThisAudio(
-        this.random(0, this.$store.state.audiosPage.length),
+        this.random(0, this.$store.state.music.audiosPage.length),
         thisAudioIndex
       );
     } else {
       return audioRandomIndex;
     }
   }
-  onTimeupdate(data) {
+  
+  async onTimeupdate(data) {
     if (data == 100) {
+      // console.log(this.isAllOrSingle)
       if (this.isAllOrSingle === 1) {
+       
+   
         this.findThisAudioIndex();
-        console.log(this.audioIndex);
+        // console.log(this.audioIndex);
         this.audioRandomIndex = this.random(
           0,
-          this.$store.state.audiosPage.length
+          this.$store.state.music.audiosPage.length
         );
         //使用递归，这样才不会当前播放和下一曲的索引会相同
         this.audioRandomIndex = this.audioRandomIsThisAudio(
@@ -155,17 +192,30 @@ export default class extends Vue {
           this.findThisAudioIndex()
         );
 
-        console.log(this.findThisAudioIndex());
-        console.log(this.audioRandomIndex);
-        this.$store.commit(
-          "musicPage",
-          this.$store.state.audiosPage[this.audioRandomIndex]
-        );
-        console.log(this.$store.state.musicPage);
+        // console.log(this.findThisAudioIndex());
+        // console.log(this.$store.state.music.audiosPage[this.audioRandomIndex]);
+        await MusicModule.MusicPage({
+          url: this.$store.state.music.audiosPage[this.audioRandomIndex].musicUrl,
+          singerName: this.$store.state.music.audiosPage[this.audioRandomIndex].singer_name,
+          songName: this.$store.state.music.audiosPage[this.audioRandomIndex].song_name,
+          play: true
+        });
+        // // this.$store.commit(
+        // //   "musicPage",
+        // //   this.$store.state.audiosPage[this.audioRandomIndex]
+        // // );
+        // console.log(this.$store.state.music.musicPage);
       } else if (this.isAllOrSingle === 2) {
         // console.log(this.item[1])
         //  console.log(this.$store.state.musicPage)
-        this.$store.commit("musicPage", this.$store.state.musicPage);
+        // console.log(MusicModule.musicPage);
+        await MusicModule.MusicPage({
+          url: MusicModule.musicPage.url,
+          singerName: MusicModule.musicPage.singerName,
+          songName:MusicModule.musicPage.songName,
+          play: true
+        });
+        // this.$store.commit("musicPage", this.$store.state.musicPage);
       }
     }
   }
@@ -181,7 +231,6 @@ export default class extends Vue {
     this.isAllOrSingle = data;
     // console.log(data);
   }
-
 }
 </script>
 

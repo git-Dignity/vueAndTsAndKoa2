@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : boke
+Source Server         : bokeFormal
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : qynbgl
@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2020-04-30 00:32:54
+Date: 2020-04-30 17:42:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for boke
+-- Table structure for `boke`
 -- ----------------------------
 DROP TABLE IF EXISTS `boke`;
 CREATE TABLE `boke` (
@@ -98,7 +98,7 @@ INSERT INTO `boke` VALUES ('177', 'undefined', 'undefined', 'undefined', 'undefi
 INSERT INTO `boke` VALUES ('178', '菜单栏和右侧内容框还没做分区显示吗？', '利用position:fixed左侧固定，右边的上面可以z-index和fixed固定，右边的下面可以滚动', '知识', 'Min', '2020/3/5');
 
 -- ----------------------------
--- Table structure for comments
+-- Table structure for `comments`
 -- ----------------------------
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
@@ -164,7 +164,7 @@ INSERT INTO `comments` VALUES ('63', '178', '灵感：模仿百度的样式的',
 INSERT INTO `comments` VALUES ('64', '178', '就算右边下面的滚动到上面去，要右边上面的div遮住z-index', 'zheng说：', '2020/3/5', null, null);
 
 -- ----------------------------
--- Table structure for file_upload
+-- Table structure for `file_upload`
 -- ----------------------------
 DROP TABLE IF EXISTS `file_upload`;
 CREATE TABLE `file_upload` (
@@ -184,7 +184,7 @@ CREATE TABLE `file_upload` (
 INSERT INTO `file_upload` VALUES ('1', '1', '=SELECT CEILING(RAND()*900000+100000)', '1', '1', '1', '2020-01-07 00:18:57');
 
 -- ----------------------------
--- Table structure for like_table
+-- Table structure for `like_table`
 -- ----------------------------
 DROP TABLE IF EXISTS `like_table`;
 CREATE TABLE `like_table` (
@@ -216,7 +216,7 @@ INSERT INTO `like_table` VALUES ('108', '9', 'zheng');
 INSERT INTO `like_table` VALUES ('109', '55', 'zheng');
 
 -- ----------------------------
--- Table structure for log
+-- Table structure for `log`
 -- ----------------------------
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
@@ -1803,7 +1803,7 @@ INSERT INTO `log` VALUES ('1562', '周杰伦', '112.93.94.61', 'undefined', 'und
 INSERT INTO `log` VALUES ('1563', '周杰伦', '112.93.94.61', 'undefined', 'undefined', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '2020/3/5/21:24:20', '1', '操作菜单/singerSong/华晨宇', '1', '/music', '/singerSong/华晨宇');
 
 -- ----------------------------
--- Table structure for login
+-- Table structure for `login`
 -- ----------------------------
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
@@ -1825,7 +1825,7 @@ INSERT INTO `login` VALUES ('3', 'xl', 'xl', null, 'xl.jpg', 'd5690cc0-7fd3-11ea
 INSERT INTO `login` VALUES ('4', 'test', 'test', 'aze.jpg', null, null);
 
 -- ----------------------------
--- Table structure for music
+-- Table structure for `music`
 -- ----------------------------
 DROP TABLE IF EXISTS `music`;
 CREATE TABLE `music` (
@@ -1908,7 +1908,7 @@ INSERT INTO `music` VALUES ('104', '疯人院.mp3', 'onlyOnePlaying', '华晨宇
 INSERT INTO `music` VALUES ('105', '不能说的秘密 - 周杰伦.flac', 'onlyOnePlaying', '周杰伦', '2020/3/15');
 
 -- ----------------------------
--- Table structure for qiniu_music
+-- Table structure for `qiniu_music`
 -- ----------------------------
 DROP TABLE IF EXISTS `qiniu_music`;
 CREATE TABLE `qiniu_music` (
@@ -1937,12 +1937,14 @@ INSERT INTO `qiniu_music` VALUES ('746d8250-89f8-11ea-bd8c-13dd2c0f6f4c', 'lnH67
 INSERT INTO `qiniu_music` VALUES ('76c00100-89fc-11ea-ac26-7523bed4f157', 'ln704itzPm-42BV1d_C3o5Rt17Zp', '76c00100-89fc-11ea-ac26-7523bed4f157.mp3', 'undefined', 'audio/mpeg', '简单爱-周杰伦.mp3', '4336871', '1', '简单爱', '周杰伦', '0', '2020-04-29 17:33:23');
 INSERT INTO `qiniu_music` VALUES ('81f185d0-8a1f-11ea-9726-bdceb190a407', 'FgEn3XzxKZ_MzOUz4m33ER-6e-8Q', '81f185d0-8a1f-11ea-9726-bdceb190a407.mp3', 'undefined', 'audio/mpeg', 'Björn Isfält - My Life As A Dog (Theme).mp3', '859708', '1', '周杰伦', '周杰伦', '1', '2020-04-29 21:44:12');
 INSERT INTO `qiniu_music` VALUES ('b35da090-89f2-11ea-bd8c-13dd2c0f6f4c', 'FqFePrPITQaQdICCis_u0Ad2wi4V', 'b35da090-89f2-11ea-bd8c-13dd2c0f6f4c.jpg', 'zheng', 'image/jpeg', '7f6cfe07689a650e36ea310a69ad111.jpg', '168979', '1', null, null, null, '2020-04-29 16:23:29');
+INSERT INTO `qiniu_music` VALUES ('caf47ec0-8ac6-11ea-b59b-b7afb05dcf46', 'lqlmrs5WTe5LAoDk58V-gSYjVFer', 'caf47ec0-8ac6-11ea-b59b-b7afb05dcf46.mp3', 'undefined', 'audio/mpeg', '周杰伦 - 晴天.mp3', '31430510', '1', '晴天', '周杰伦', '1', '2020-04-30 17:41:43');
+INSERT INTO `qiniu_music` VALUES ('cc77bba0-8a7f-11ea-b59b-b7afb05dcf46', 'Fq-7NDw2jCv2hnRZZbgBwVuouKtI', 'cc77bba0-8a7f-11ea-b59b-b7afb05dcf46.mp3', 'undefined', 'audio/mpeg', '2529963611551596038_hd.mp3', '279233', '1', '测试', '周杰伦', '民族', '2020-04-30 09:13:28');
 INSERT INTO `qiniu_music` VALUES ('cd1a8cc0-89fa-11ea-ae8a-c9b69147a166', 'Fp5wo2MkxPKmShf_EwSo7it5bKcS', 'cd1a8cc0-89fa-11ea-ae8a-c9b69147a166.mp3', 'undefined', 'audio/mpeg', '稻香-周杰伦.mp3', '3576603', '1', '什么什么什么什么什么什么什么什么什么', '周杰伦', '0', '2020-04-29 17:21:28');
 INSERT INTO `qiniu_music` VALUES ('dbbf5440-89fa-11ea-ae8a-c9b69147a166', 'lqEEW692eSHDUQT3EVrkBh4KHA8w', 'dbbf5440-89fa-11ea-ae8a-c9b69147a166.mp3', 'undefined', 'audio/mpeg', '布拉格广场-蔡依林、周杰伦.mp3', '4714706', '1', '什么', '周杰伦', '2', '2020-04-29 17:21:54');
 INSERT INTO `qiniu_music` VALUES ('df79eb70-8a1f-11ea-9726-bdceb190a407', 'lhXw91S56zSyJW8-ljvqZILb1Tmu', 'df79eb70-8a1f-11ea-9726-bdceb190a407.mp3', 'undefined', 'audio/mpeg', 'Brian Crain - Butterfly Waltz.mp3', '8779697', '1', 'a', '周杰伦', '民族', '2020-04-29 21:46:50');
 
 -- ----------------------------
--- Table structure for qiniu_music_singer
+-- Table structure for `qiniu_music_singer`
 -- ----------------------------
 DROP TABLE IF EXISTS `qiniu_music_singer`;
 CREATE TABLE `qiniu_music_singer` (
@@ -1962,16 +1964,11 @@ CREATE TABLE `qiniu_music_singer` (
 -- Records of qiniu_music_singer
 -- ----------------------------
 INSERT INTO `qiniu_music_singer` VALUES ('1dfc6a10-8a36-11ea-8038-610efd65bbf4', 'FpplalFhR68tzFynqmDaE-LnYKrd', '1dfc6a10-8a36-11ea-8038-610efd65bbf4.jpeg', 'image/jpeg', '华晨宇.jpeg', '27515', '1', '华晨宇', '2020-04-30 00:26:02');
-INSERT INTO `qiniu_music_singer` VALUES ('2c3e6300-8a34-11ea-8038-610efd65bbf4', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', '2c3e6300-8a34-11ea-8038-610efd65bbf4.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', 's', '2020-04-30 00:12:07');
-INSERT INTO `qiniu_music_singer` VALUES ('50e6b1d0-8a34-11ea-8038-610efd65bbf4', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', '50e6b1d0-8a34-11ea-8038-610efd65bbf4.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', 'sd', '2020-04-30 00:13:09');
-INSERT INTO `qiniu_music_singer` VALUES ('5fb36920-8a33-11ea-8038-610efd65bbf4', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', '5fb36920-8a33-11ea-8038-610efd65bbf4.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', 'a', '2020-04-30 00:06:24');
-INSERT INTO `qiniu_music_singer` VALUES ('64076480-8a34-11ea-8038-610efd65bbf4', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', '64076480-8a34-11ea-8038-610efd65bbf4.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', 's', '2020-04-30 00:13:41');
-INSERT INTO `qiniu_music_singer` VALUES ('8b3b35a0-8a33-11ea-8038-610efd65bbf4', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', '8b3b35a0-8a33-11ea-8038-610efd65bbf4.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', 'hcy ', '2020-04-30 00:07:37');
-INSERT INTO `qiniu_music_singer` VALUES ('901961e0-8a2f-11ea-a7a3-fb2c5ac99197', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', '901961e0-8a2f-11ea-a7a3-fb2c5ac99197.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', '华晨宇', '2020-04-29 23:39:07');
 INSERT INTO `qiniu_music_singer` VALUES ('d79e0730-8a31-11ea-8038-610efd65bbf4', 'Fvr475MJSRwZ2nZ7iWwWuYebub_g', 'd79e0730-8a31-11ea-8038-610efd65bbf4.jpg', 'image/jpeg', '95376a6cdbc8de774987e68b69d6676.jpg', '278480', '1', '华晨宇', '2020-04-29 23:55:26');
+INSERT INTO `qiniu_music_singer` VALUES ('f4837630-8a7e-11ea-b59b-b7afb05dcf46', 'FhXrso-hgLdQshPvTo-LPezo_EaK', 'f4837630-8a7e-11ea-b59b-b7afb05dcf46.jpg', 'image/jpeg', '周杰伦.jpg', '36504', '1', '周杰伦', '2020-04-30 09:07:26');
 
 -- ----------------------------
--- Table structure for qiniu_photo
+-- Table structure for `qiniu_photo`
 -- ----------------------------
 DROP TABLE IF EXISTS `qiniu_photo`;
 CREATE TABLE `qiniu_photo` (
@@ -2019,7 +2016,7 @@ INSERT INTO `qiniu_photo` VALUES ('d5690cc0-7fd3-11ea-a1e8-e9c785eec5f0', 'Ftmom
 INSERT INTO `qiniu_photo` VALUES ('d57eb390-7e52-11ea-9cd2-f35980fae0db', 'FqBbGdXhnvxE3sHtrC2qyXRJlrR8', 'd57eb390-7e52-11ea-9cd2-f35980fae0db.png', 'undefined', 'image/png', '3.png', '173991', '1', '2020-04-14 21:21:22');
 
 -- ----------------------------
--- Table structure for sys_role
+-- Table structure for `sys_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
@@ -2043,7 +2040,7 @@ INSERT INTO `sys_role` VALUES ('70cbd8e4-cf86-4607-b368-caefe12d3cce', 'tesst', 
 INSERT INTO `sys_role` VALUES ('e039c9eb-0def-4e03-92ea-025c03314b18', '管理员', 'editor', 'security-role', '1', '', '0');
 
 -- ----------------------------
--- Table structure for temporarilyrun
+-- Table structure for `temporarilyrun`
 -- ----------------------------
 DROP TABLE IF EXISTS `temporarilyrun`;
 CREATE TABLE `temporarilyrun` (

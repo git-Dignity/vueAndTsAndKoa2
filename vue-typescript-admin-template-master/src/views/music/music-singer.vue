@@ -13,7 +13,7 @@
     <el-row :gutter="15">
       <el-upload
         class="avatar-uploader"
-        action="/certificateAuthentication/upload"
+        action="/certificateAuthentication/upload" 
         :http-request="uoload"
         accept=".png, .jpg, .gif, .jpeg"
         :show-file-list="false"
@@ -70,7 +70,7 @@ export default class extends Vue {
   }
 
   private photoEnter(singerName) {
-      console.log(singerName);
+      // console.log(singerName);
     this.$router.push({
       path: "/music/singer-song-list",
       query:{

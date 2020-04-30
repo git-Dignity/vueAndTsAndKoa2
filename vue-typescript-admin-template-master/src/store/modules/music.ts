@@ -7,35 +7,47 @@ import { TagsViewModule } from './tags-view'
 import store from '@/store'
 
 export interface IMusicState {
-  // audiosPage: [] 
+  audiosPage: IAudiosPage[] 
   // musicPage: IMusicPage[]
   musicPage: {
     url: string,
-    uploader: string,
+    songName: string,
+    singerName: string,
     play: boolean
   }
   playasb: boolean
+  url:string
 }
 
 interface IMusicPage {
   url: string,
-  uploader: string,
+  songName: string,
+  singerName: string,
+  play: boolean
+}
+
+interface IAudiosPage {
+  url: string,
+  songName: string,
+  singerName: string,
   play: boolean
 }
 
 @Module({ dynamic: true, store, name: 'music' })
 class Music extends VuexModule implements IMusicState {
   public token = getToken() || ''
-  //   public audiosPage = []  // 音乐的内容 
+    public audiosPage = [] // 音乐的内容 
   //   public musicPage = []
   // public musicPage: IMusicPage[] = []
 
   public musicPage = {
     url: '',
-    uploader: '',
+    singerName: '',
+    songName: '',
     play: false
   }
   public playasb = true;
+  public url = ''
 
 
   @Mutation
@@ -56,9 +68,26 @@ class Music extends VuexModule implements IMusicState {
     // console.log(this.playasb)
   }
 
+  @Mutation
+  SET_MUSIC_URL(data: any) {
+    // console.log(data)
+    this.url = data;
+    // console.log(this.playasb)
+  }
+
+  @Mutation
+  SET_AudiosPage(data: any){
+    this.audiosPage = data;
+  }
+
   @Action
   public async MusicPage(data: any) {
     this.SET_MusicPage(data)
+  }
+
+  @Action
+  public async AudiosPage(data: any) {
+    this.SET_AudiosPage(data)
   }
 
   @Action

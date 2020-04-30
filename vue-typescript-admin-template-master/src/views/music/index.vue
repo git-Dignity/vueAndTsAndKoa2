@@ -87,7 +87,7 @@
               circle
             ></el-button>
           </template>
-          <!-- <template slot-scope="scope">
+          <!-- <template slot-scope="scope"> 
          <el-button 
           type="primary" 
           :icon="viedoPlay" 

@@ -16,7 +16,7 @@
             <el-option label="轻音乐" value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item> 
           <el-button type="primary" @click="submitUpload">上传</el-button>
         </el-form-item>
       </el-form>
@@ -65,7 +65,7 @@
               v-else
               type="primary"
               icon="el-icon-video-play"
-              @click="musicPlay_btn(row, row.musicUrl, row.username)"
+              @click="musicPlay_btn(row, row.musicUrl, row.singer_name, row.song_name)"
               circle
             ></el-button>
           </template>
@@ -138,12 +138,12 @@ export default class extends Vue {
   private photoEnter() {}
 
   created() {
-      console.log(this.$route.query)
+     
     this.init();
     
   }
-
-  async musicPlay_btn(row: any, url, uploader) {
+  
+  async musicPlay_btn(row: any, url, singerName: string, songName: string) {
     // console.log(row);
     this.musicData.forEach((element: any) => {
       element.play = false;
@@ -153,7 +153,8 @@ export default class extends Vue {
 
     await MusicModule.MusicPage({
       url: url,
-      uploader: uploader,
+      singerName: singerName,
+      songName: songName,
       play: true
     });
   }
@@ -189,7 +190,7 @@ export default class extends Vue {
   private async init() {
     const { data } = await getMusic({
       // username: JSON.parse(this.userLocal).username,
-      singerName: "周杰伦",
+      singerName: this.$route.query.singerName,
       pageNum: this.currentPage
     });
 
@@ -200,6 +201,8 @@ export default class extends Vue {
     });
     this.total = data.total;
     this.musicData = data.data;
+
+    await MusicModule.AudiosPage(this.musicData);
     // console.log(this.musicData);
   }
 
