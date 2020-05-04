@@ -88,7 +88,7 @@ export default class extends Vue {
 
   @Watch("musicp")
   private onRoutesChange(data) {
-    console.log(data);
+    // console.log(data);
     // console.log(this.item)
     // console.log('----')
     var containeAudio = document.getElementById("containe_audio");
@@ -124,7 +124,7 @@ export default class extends Vue {
     //   uploader: data.uploader,
     //   uploadTime: "2019/05/20"
     // };
-    console.log(this.item)
+    // console.log(this.item)
   }
 
   // musicPage() {
@@ -160,10 +160,10 @@ export default class extends Vue {
   }
   findThisAudioIndex() {
     return this.$store.state.music.audiosPage.findIndex(
-      n => n.musicUrl === this.$store.state.music.musicPage.url
+      (n: any) => n.musicUrl === this.$store.state.music.musicPage.url
     );
   }
-  audioRandomIsThisAudio(audioRandomIndex, thisAudioIndex) {
+  audioRandomIsThisAudio(audioRandomIndex:number, thisAudioIndex:number) {
     if (audioRandomIndex === thisAudioIndex) {
       return this.audioRandomIsThisAudio(
         this.random(0, this.$store.state.music.audiosPage.length),
@@ -174,7 +174,7 @@ export default class extends Vue {
     }
   }
   
-  async onTimeupdate(data) {
+  async onTimeupdate(data: any) {
     if (data == 100) {
       // console.log(this.isAllOrSingle)
       if (this.isAllOrSingle === 1) {
@@ -220,13 +220,13 @@ export default class extends Vue {
     }
   }
   //随机播放
-  playAll(data) {
+  playAll(data: any) {
     // 1
     this.isAllOrSingle = data;
     // console.log(data)
   }
   //单曲循环
-  playSingle(data) {
+  playSingle(data: any) {
     // 2
     this.isAllOrSingle = data;
     // console.log(data);

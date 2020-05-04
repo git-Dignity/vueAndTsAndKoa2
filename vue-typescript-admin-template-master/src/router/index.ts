@@ -274,29 +274,19 @@ export const asyncRoutes: RouteConfig[] = [
             path: 'singer-song-list',
             component: () => import(/* webpackChunkName: "singer-song-list" */ '@/views/music/singer-song-list.vue'),
             name: 'singerSongList',
-            meta: { title: 'singerSongList', noCache: true }
+            meta: { title: 'singerSongList', noCache: true } 
+          },
+          {
+            // path: 'singer-song-lyric/:row',  
+            path: 'singer-song-lyric',  
+            component: () => import(/* webpackChunkName: "singer-song-lyric" */ '@/views/music/singer-song-lyric.vue'),
+            name: 'singerSongLyric',
+            meta: { title: 'singerSongLyric', noCache: true, hidden:true } 
           }
         
     ]
   },
 
-
-  // {
-  //   path: '/music',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import(/* webpackChunkName: "music" */ '@/views/music/index.vue'),
-  //       name: 'music',
-  //       meta: {
-  //         title: 'music',
-  //         icon: 'icon',
-  //         noCache: true
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: '/icon',
     component: Layout,

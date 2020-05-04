@@ -103,6 +103,7 @@
     "fibers": "^4.0.2",
     "jest": "^25.2.7",
     "lint-staged": "^10.1.1",
+    "lrc-file-parser": "^1.0.3",
     "node-sass": "^4.14.0",
     "sass": "^1.26.3",
     "sass-loader": "^8.0.2",

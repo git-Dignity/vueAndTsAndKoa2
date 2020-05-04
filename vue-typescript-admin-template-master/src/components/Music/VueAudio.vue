@@ -181,7 +181,7 @@ export default {
   },
   created() {
     // console.log(this.$store.state)
-    console.log(this.audioName)
+    // console.log(this.audioName)
 
     //显示歌曲名字
     // if (this.url != null || this.url != "") {

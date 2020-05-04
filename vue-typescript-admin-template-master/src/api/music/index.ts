@@ -15,3 +15,5 @@ export const getMusic = (data: any) =>
     method: 'post',
     data
   })
+
+

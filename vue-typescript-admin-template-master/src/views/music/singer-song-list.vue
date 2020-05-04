@@ -2,11 +2,12 @@
   <div class="app-container">
     <el-row :gutter="15">
       <el-form :inline="true" :model="musicInfo" class="demo-form-inline">
+        <el-form-item label="歌手名">
+          <!-- readonly="true" -->
+          <el-input v-model="musicInfo.singerName" placeholder="歌手名"></el-input>
+        </el-form-item>
         <el-form-item label="歌曲名">
           <el-input v-model="musicInfo.songName" placeholder="歌曲名"></el-input>
-        </el-form-item>
-        <el-form-item label="歌手名">
-          <el-input v-model="musicInfo.singerName" placeholder="歌手名"></el-input>
         </el-form-item>
         <el-form-item label="歌曲类型">
           <el-select v-model="musicInfo.songType" placeholder="歌曲类型">
@@ -16,29 +17,54 @@
             <el-option label="轻音乐" value="3"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item> 
+        <el-form-item>
           <el-button type="primary" @click="submitUpload">上传</el-button>
         </el-form-item>
       </el-form>
 
-      <el-upload
-        class="upload-demo"
-        drag
-        action="/music/upload"
-        :http-request="uoload"
-        :before-upload="beforeAvatarUpload"
-        accept=".mp4, .m4a, .mp3, .flac, .wima"
-        multiple
-        ref="upload"
-        :auto-upload="false"
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">
-          将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">请上传.mp4, .m4a, .mp3, .flac, .wima文件格式</div>
-      </el-upload>
+      <el-col :span="7">
+        <el-upload
+          class="upload-demo"
+          drag
+          action="/music/upload"
+          :http-request="uoload"
+          :before-upload="beforeAvatarUpload"
+          accept=".mp4, .m4a, .mp3, .flac, .wima"
+          multiple
+          ref="upload"
+          :auto-upload="false"
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">
+            上传歌曲文件
+            <p></p>将文件拖到此处，或
+            <em>点击上传</em>
+          </div>
+          <div class="el-upload__tip" slot="tip">请上传.mp4, .m4a, .mp3, .flac, .wima文件格式</div>
+        </el-upload>
+      </el-col>
+
+      <el-col :span="7">
+        <el-upload
+          class="upload-demo"
+          drag
+          action="/music/upload"
+          :http-request="singerImgUpload"
+          :before-upload="beforeAvatarUpload"
+          accept=".png, .jpg, .gif, .jpeg"
+          multiple
+          ref="singerImg_upload"
+          :auto-upload="false"
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">
+            上传歌曲图片文件
+            <p></p>将文件拖到此处，或
+            <em>点击上传</em>
+          </div>
+          <div class="el-upload__tip" slot="tip">请上传.png, .jpg, .gif, .jpeg文件格式</div>
+        </el-upload>
+      </el-col>
     </el-row>
 
     <el-row>
@@ -48,6 +74,15 @@
         style="width: 100%; margin-top: 3%"
         :default-sort="{prop: 'isSys', order: 'descending'}"
       >
+        <el-table-column width="120" label="歌曲图片">
+          <template slot-scope="{row}">
+            <!-- <router-link :to="'/music/singer-song-lyric/'+row.singer_name"> -->
+            <button @click="songLyric(row)">
+              <el-avatar shape="square" :size="80" fit="fill" :src="row.songImg"></el-avatar>
+            </button>
+            <!-- </router-link> -->
+          </template>
+        </el-table-column>
         <el-table-column prop="song_name" label="歌曲名" width="380"></el-table-column>
         <el-table-column prop="singer_name" label="歌手名" width="180"></el-table-column>
         <el-table-column prop="songT" label="歌曲类型" width="150"></el-table-column>
@@ -99,7 +134,6 @@ import { cloneDeep } from "lodash";
 import { getMusic, uploadMusic } from "@/api/music/index";
 import { MusicModule } from "@/store/modules/music";
 import { qiniuUrl } from "@/api/common";
-
 @Component({
   name: "singerSongList"
 })
@@ -110,47 +144,46 @@ export default class extends Vue {
   public userLocal: any = localStorage.getItem("user");
   private currentPage = 1; //当前页码
   private total = 0; //查出来这个条件全部多少条
-  musicInfo = {
+  private musicInfo = {
     songName: "",
     singerName: "",
     songType: "民族"
   };
+  private file_list: any = [];
+
+  songLyric(row: any) {
+    this.$router.push({
+      path: "/music/singer-song-lyric",
+      query: {
+        singerName: row.singer_name,
+        songName: row.song_name
+      }
+    });
+  }
 
   submitUpload() {
     if (
       this.musicInfo.songName != "" &&
-      this.musicInfo.singerName != "" &&
       this.$refs.upload.uploadFiles.length != 0
     ) {
+      // 一定要先上传歌曲，再来上传歌曲的图片，这样才可以一起进入一个方法insert到同一张表中
       this.$refs.upload.submit();
+      this.$refs.singerImg_upload.submit();
       return;
     }
-
     this.$message.error("请检查上传参数是否齐全!");
   }
-  handleRemove(file, fileList) {
-    console.log(file, fileList);
-  }
-  handlePreview(file) {
-    console.log(file);
-  }
-
   private photoEnter() {}
-
   created() {
-     
     this.init();
-    
   }
-  
-  async musicPlay_btn(row: any, url, singerName: string, songName: string) {
+
+  async musicPlay_btn(row: any, url: string, singerName: string, songName: string) {
     // console.log(row);
     this.musicData.forEach((element: any) => {
       element.play = false;
     });
-
     row.play = true;
-
     await MusicModule.MusicPage({
       url: url,
       singerName: singerName,
@@ -158,26 +191,19 @@ export default class extends Vue {
       play: true
     });
   }
-
-  async musicPause_btn(row) {
+  async musicPause_btn(row: any) {
     row.play = false;
   }
-
   get musicpa() {
     return MusicModule.playasb;
   }
-
   @Watch("musicpa")
-  private onRoutesChange(data) {
+  private onRoutesChange(data: any) {
     console.log(data);
     console.log("拿不到playasb的store，应该是缓存");
   }
-
-  aaa(e) {
-    console.log(e);
-  }
-
-  getSongType(type) {
+ 
+  getSongType(type: string) {
     let songTypeMap = new Map([
       ["0", "民族"],
       ["1", "流行"],
@@ -186,38 +212,50 @@ export default class extends Vue {
     ]);
     return songTypeMap.get(type) ? songTypeMap.get(type) : "民族";
   }
-
   private async init() {
+    this.musicInfo.singerName = this.$route.query.singerName + "";
+
     const { data } = await getMusic({
-      // username: JSON.parse(this.userLocal).username,
-      singerName: this.$route.query.singerName,
+      singerName: this.musicInfo.singerName,
       pageNum: this.currentPage
     });
-
     data.data.forEach((element: any) => {
       element.musicUrl = qiniuUrl + element.file_key;
+      element.songImg = qiniuUrl + element.songFileKey;
       element.songT = this.getSongType(element.song_type);
       element.play = false;
     });
     this.total = data.total;
     this.musicData = data.data;
-
     await MusicModule.AudiosPage(this.musicData);
     // console.log(this.musicData);
   }
-
   private async uoload(e: any) {
-    const param = new FormData();
-    param.append("musicInfo", JSON.stringify(this.musicInfo));
-    param.append("file", e.file);
+    this.file_list.push(e);
+  }
 
-    await uploadMusic(param);
+  private async singerImgUpload(e: any) {
+    this.file_list.push(e);
+    // console.log(this.file_list);
+   
 
-    this.$message({
-      message: "上传成功",
-      type: "success"
-    });
-    this.init();
+    if (this.file_list.length === 2) {
+      const param = new FormData();
+      param.append("musicInfo", JSON.stringify(this.musicInfo));
+      param.append("song_file", this.file_list[0].file);
+      param.append("singerImg_file", this.file_list[1].file);
+      await uploadMusic(param);
+      this.$message({
+        message: "上传成功",
+        type: "success"
+      });
+      this.init();
+    } else {
+      this.$message({
+        message: "请检查歌曲和歌曲图片是否有上传",
+        type: "success"
+      });
+    }
   }
 
   private handleSizeChange(val: number) {
@@ -228,10 +266,9 @@ export default class extends Vue {
     this.currentPage = val;
     this.init();
   }
-
   // 文件上传之前做处理
   private beforeAvatarUpload(file: any) {
-    // console.log(file); 
+    // console.log(file);
     // const isLt20M = file.size / 1024 / 1024 < 20;
     // // 图片格式
     // if (

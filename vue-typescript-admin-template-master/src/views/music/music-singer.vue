@@ -19,7 +19,7 @@
         :show-file-list="false"
         ref="upload"
         :auto-upload="false"
-        :on-success="handleAvatarSuccess"
+        :on-change="changeSingerImg"
         :before-upload="beforeAvatarUpload"
       >
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
@@ -36,7 +36,7 @@
             <div class="bottom clearfix">
               <time class="time">{{ single.upload_time }}</time>
               <el-button type="text" class="button" @click="photoEnter(single.singer_name)">进入歌单</el-button>
-            </div>
+            </div> 
           </div>
         </el-card>
       </el-col>
@@ -65,6 +65,8 @@ export default class extends Vue {
   };
 
   
+
+  
   created() {
     this.init();
   }
@@ -80,23 +82,24 @@ export default class extends Vue {
   }
 
   private beforeAvatarUpload(file: any) {
+      console.log(111)
     // console.log(file)
-    // const isLt20M = file.size / 1024 / 1024 < 20;
-    // // 图片格式
-    // if (
-    //   file.type !== "image/jpeg" &&
-    //   file.type !== "image/jpg" &&
-    //   file.type !== "image/png" &&
-    //   file.type !== "image/gif"
-    // ) {
-    //   this.$message.error("只能上传图片格式文件!");
-    //   return false;
-    // }
-    // // 图片大小
-    // if (!isLt20M) {
-    //   this.$message.error("上传头像图片大小不能超过 20MB!");
-    //   return false;
-    // }
+    const isLt20M = file.size / 1024 / 1024 < 20;
+    // 图片格式
+    if (
+      file.type !== "image/jpeg" &&
+      file.type !== "image/jpg" &&
+      file.type !== "image/png" &&
+      file.type !== "image/gif"
+    ) {
+      this.$message.error("只能上传图片格式文件!");
+      return false;
+    }
+    // 图片大小
+    if (!isLt20M) {
+      this.$message.error("上传头像图片大小不能超过 20MB!");
+      return false;
+    }
   }
 
   private async onSubmit() {
@@ -135,13 +138,19 @@ export default class extends Vue {
       element.musicUrl = qiniuUrl + element.file_key;
     });
     this.singleList = data.items;
-    console.log(this.singleList);
+    // console.log(this.singleList);
   }
 
    handleAvatarSuccess(res, file) {
        console.log(file)
         this.imageUrl = URL.createObjectURL(file.raw);
       }
+
+      changeSingerImg(file, fileList){
+    //   console.log(file)
+      this.imageUrl = URL.createObjectURL(file.raw);
+      this.$message('歌手图片已选中');
+  }
 
    private async uoload(e: any) {
     const param = new FormData();

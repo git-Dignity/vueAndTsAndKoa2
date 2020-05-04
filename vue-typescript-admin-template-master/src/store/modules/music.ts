@@ -90,6 +90,7 @@ class Music extends VuexModule implements IMusicState {
     this.SET_AudiosPage(data)
   }
 
+
   @Action
   public async Login(userInfo: { username: string, password: string }) {
     let { username, password } = userInfo

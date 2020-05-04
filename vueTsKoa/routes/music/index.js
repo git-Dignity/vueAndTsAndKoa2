@@ -40,7 +40,8 @@ singer_name = '${req.singerName}'
 `)
 }else{
    result = await DB.query(`
-  select * from qiniu_music where singer_name = '${req.singerName}' 
+   select m.file_key, m.file_size, m.song_name, m.singer_name, m.song_type, s.file_key as songFileKey  from qiniu_music m inner join qiniu_song_img s on m.id=s.id 
+    where m.singer_name = '${req.singerName}' 
   limit ${6 * (req.pageNum - 1)},${6 * (req.pageNum)}
 `)
 
@@ -197,6 +198,7 @@ router.post('/minio/get', async (ctx, next) => {
 router.post('/upload', async (ctx, next) => {
 
   const musicInfo = JSON.parse(ctx.request.body.musicInfo);
+ 
     
       let result = {}
     
@@ -209,13 +211,28 @@ router.post('/upload', async (ctx, next) => {
         if (fileArr.length != 0) {
           result = await uploadToQiniu(fileArr)
     
-          result.forEach(async element => {
+          console.log(result)
+          // 因为我现在是想插入到同一行，所以就不循环了
+          // result.forEach(async element => {
     
+          //   await DB.query(`
+          //       insert into qiniu_music(id,file_hash,file_key,username,file_type,file_name,file_size,is_sucess, song_name, singer_name, song_type)
+          //       values('${element.id}','${element.hash}','${element.key}','${ctx.request.body.username}','${element.fileType}','${element.fileName}','${element.fileSize}','${element.isSucess}', '${musicInfo.songName}', '${musicInfo.singerName}', '${musicInfo.songType}')
+          //   `)
+          // });
+
+          // 插入到同一行
+          // qiniu_music和qiniu_song_img，两个表的id是一样的，所以到时候可以做下关联
             await DB.query(`
                 insert into qiniu_music(id,file_hash,file_key,username,file_type,file_name,file_size,is_sucess, song_name, singer_name, song_type)
-                values('${element.id}','${element.hash}','${element.key}','${ctx.request.body.username}','${element.fileType}','${element.fileName}','${element.fileSize}','${element.isSucess}', '${musicInfo.songName}', '${musicInfo.singerName}', '${musicInfo.songType}')
+                values('${result[0].id}','${result[0].hash}','${result[0].key}','${ctx.request.body.username}','${result[0].fileType}','${result[0].fileName}','${result[0].fileSize}','${result[0].isSucess}', '${musicInfo.songName}', '${musicInfo.singerName}', '${musicInfo.songType}')
             `)
-          });
+
+            await DB.query(`
+                insert into qiniu_song_img(id,file_hash,file_key,file_type,file_name,file_size,is_sucess)
+                values('${result[0].id}','${result[1].hash}','${result[1].key}','${result[1].fileType}','${result[1].fileName}','${result[1].fileSize}','${result[1].isSucess}')
+            `)
+
     
     
           if (result) {
