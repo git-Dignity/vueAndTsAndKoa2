@@ -33,9 +33,16 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "./typings-custom/**/*.ts"
   ],
   "exclude": [
     "node_modules"
   ]
 }
+
+
+// 在typescript中import第三方类库lrc-file-parser报错:
+// https://stackoverflow.com/questions/38224232/how-to-consume-npm-modules-from-typescript
+
+

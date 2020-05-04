@@ -50,6 +50,7 @@ export default class extends Vue {
     }
     ]
 
+
   // private item = [
   //   {
   //     url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
@@ -87,11 +88,12 @@ export default class extends Vue {
   }
 
   @Watch("musicp")
-  private onRoutesChange(data) {
+  private onRoutesChange(data: any) {
     // console.log(data);
     // console.log(this.item)
     // console.log('----')
-    var containeAudio = document.getElementById("containe_audio");
+    let containeAudio: any = document.getElementById("containe_audio");
+   
 
     for (var i = 0; i < containeAudio.childNodes.length; i++) {
       containeAudio.removeChild(containeAudio.childNodes[i]);
@@ -132,14 +134,14 @@ export default class extends Vue {
   //   return this.$store.state.musicPage;
   // }
 
-  closeMusic(data) {
+  closeMusic(data: string) {
     // console.log(data)
     if (data === "0") {
       this.audioshow = !this.audioshow;
     }
     // console.log(data);
   }
-  async audioState(data) {
+  async audioState(data: string) {
     //  console.log(data)
     // console.log(this.$store.state.music.musicPage)
     if (data === "play") {
@@ -155,7 +157,7 @@ export default class extends Vue {
       this.audioani = "";
     }
   }
-  random(min, max) {
+  random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
   findThisAudioIndex() {
@@ -163,15 +165,25 @@ export default class extends Vue {
       (n: any) => n.musicUrl === this.$store.state.music.musicPage.url
     );
   }
-  audioRandomIsThisAudio(audioRandomIndex:number, thisAudioIndex:number) {
-    if (audioRandomIndex === thisAudioIndex) {
-      return this.audioRandomIsThisAudio(
-        this.random(0, this.$store.state.music.audiosPage.length),
-        thisAudioIndex
-      );
-    } else {
-      return audioRandomIndex;
-    }
+ private audioRandomIsThisAudio(audioRandomIndex:number, thisAudioIndex:number)  {
+
+   return audioRandomIndex === thisAudioIndex?
+          (this.audioRandomIsThisAudio as any)(
+            this.random(0, this.$store.state.music.audiosPage.length),
+            thisAudioIndex
+          ) 
+          :  audioRandomIndex
+
+
+
+    // if (audioRandomIndex === thisAudioIndex) {
+    //   return this.audioRandomIsThisAudio(
+    //     this.random(0, this.$store.state.music.audiosPage.length),
+    //     thisAudioIndex
+    //   );
+    // } else {
+    //   return audioRandomIndex;  
+    // }
   }
   
   async onTimeupdate(data: any) {

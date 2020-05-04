@@ -15,3 +15,4 @@ export const getSinger = (data: any) =>
     method: 'post',
     data
   })
+ 

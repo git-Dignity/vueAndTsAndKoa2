@@ -164,11 +164,11 @@ export default class extends Vue {
   submitUpload() {
     if (
       this.musicInfo.songName != "" &&
-      this.$refs.upload.uploadFiles.length != 0
+      (this.$refs.upload as any).uploadFiles.length != 0
     ) {
       // 一定要先上传歌曲，再来上传歌曲的图片，这样才可以一起进入一个方法insert到同一张表中
-      this.$refs.upload.submit();
-      this.$refs.singerImg_upload.submit();
+      (this.$refs.upload as any).submit();
+      (this.$refs.singerImg_upload as any).submit();
       return;
     }
     this.$message.error("请检查上传参数是否齐全!");

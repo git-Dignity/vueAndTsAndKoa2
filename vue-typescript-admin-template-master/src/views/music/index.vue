@@ -138,18 +138,18 @@ export default class extends Vue {
     if (
       this.musicInfo.songName != "" &&
       this.musicInfo.singerName != "" &&
-      this.$refs.upload.uploadFiles.length != 0
+      (this.$refs.upload as any).uploadFiles.length != 0
     ) {
-      this.$refs.upload.submit();
+      (this.$refs.upload as any).submit();
       return;
     }
 
     this.$message.error("请检查上传参数是否齐全!");
   }
-  handleRemove(file, fileList) {
+  handleRemove(file: any, fileList: any) {
     console.log(file, fileList);
   }
-  handlePreview(file) {
+  handlePreview(file: any) {
     console.log(file);
   }
 
@@ -159,7 +159,7 @@ export default class extends Vue {
     this.init();
   }
 
-  async musicPlay_btn(row: any, url, uploader) {
+  async musicPlay_btn(row: any, url: string, uploader: string) {
     // console.log(row);
     this.musicData.forEach((element: any) => {
       element.play = false;
@@ -174,7 +174,7 @@ export default class extends Vue {
     });
   }
 
-  async musicPause_btn(row) {
+  async musicPause_btn(row: any) {
     row.play = false;
   }
 
@@ -183,16 +183,13 @@ export default class extends Vue {
   }
 
   @Watch("musicpa")
-  private onRoutesChange(data) {
+  private onRoutesChange(data: any) {
     console.log(data);
     console.log("拿不到playasb的store，应该是缓存");
   }
 
-  aaa(e) {
-    console.log(e);
-  }
 
-  getSongType(type) {
+  getSongType(type: string) {
     let songTypeMap = new Map([
       ["0", "民族"],
       ["1", "流行"],

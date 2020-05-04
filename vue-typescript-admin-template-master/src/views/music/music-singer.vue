@@ -13,7 +13,7 @@
     <el-row :gutter="15">
       <el-upload
         class="avatar-uploader"
-        action="/certificateAuthentication/upload" 
+        action="/certificateAuthentication/upload"
         :http-request="uoload"
         accept=".png, .jpg, .gif, .jpeg"
         :show-file-list="false"
@@ -28,15 +28,20 @@
     </el-row>
 
     <el-row>
-      <el-col :span="6" v-for="(single, index) in singleList" :key="index" :offset="index > 0 ? 2 : 0">
+      <el-col
+        :span="6"
+        v-for="(single, index) in singleList"
+        :key="index"
+        :offset="index > 0 ? 2 : 0"
+      >
         <el-card :body-style="{ padding: '0px' }">
-            <el-avatar shape="square"  :size="150" fit="fill" :src="single.musicUrl"></el-avatar>
+          <el-avatar shape="square" :size="150" fit="fill" :src="single.musicUrl"></el-avatar>
           <div style="padding: 14px;">
             <span>{{single.singer_name}}</span>
             <div class="bottom clearfix">
               <time class="time">{{ single.upload_time }}</time>
               <el-button type="text" class="button" @click="photoEnter(single.singer_name)">进入歌单</el-button>
-            </div> 
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -57,32 +62,29 @@ import { getSinger, uploadSinger } from "@/api/music/singer/index";
 export default class extends Vue {
   private tableKey = 0;
   private currentDate = new Date();
-  private singleList = []
+  private singleList = [];
   private imageUrl = "";
 
   private singerInfo = {
     singerName: ""
   };
 
-  
-
-  
   created() {
     this.init();
   }
 
-  private photoEnter(singerName) {
-      // console.log(singerName);
+  private photoEnter(singerName: string) {
+    // console.log(singerName);
     this.$router.push({
       path: "/music/singer-song-list",
-      query:{
-          singerName: singerName
+      query: {
+        singerName: singerName
       }
     });
   }
 
   private beforeAvatarUpload(file: any) {
-      console.log(111)
+    console.log(111);
     // console.log(file)
     const isLt20M = file.size / 1024 / 1024 < 20;
     // 图片格式
@@ -103,11 +105,11 @@ export default class extends Vue {
   }
 
   private async onSubmit() {
-      if (
+    if (
       this.singerInfo.singerName != "" &&
-      this.$refs.upload.uploadFiles.length != 0
+      (this.$refs.upload as any).uploadFiles.length != 0
     ) {
-      this.$refs.upload.submit();
+      (this.$refs.upload as any).submit();
       return;
     }
 
@@ -130,8 +132,8 @@ export default class extends Vue {
     // this.certificateData = data.data;
   }
 
-   private async init() {
-    const { data } = await getSinger();
+  private async init() {
+    const { data } = await getSinger({});
     // console.log(data)
 
     data.items.forEach((element: any) => {
@@ -141,18 +143,18 @@ export default class extends Vue {
     // console.log(this.singleList);
   }
 
-   handleAvatarSuccess(res, file) {
-       console.log(file)
-        this.imageUrl = URL.createObjectURL(file.raw);
-      }
-
-      changeSingerImg(file, fileList){
-    //   console.log(file)
-      this.imageUrl = URL.createObjectURL(file.raw);
-      this.$message('歌手图片已选中');
+  handleAvatarSuccess(res: any, file: any) {
+    // console.log(file);
+    this.imageUrl = URL.createObjectURL(file.raw);
   }
 
-   private async uoload(e: any) {
+  changeSingerImg(file: any, fileList: any) {
+    //   console.log(file)
+    this.imageUrl = URL.createObjectURL(file.raw);
+    this.$message("歌手图片已选中");
+  }
+
+  private async uoload(e: any) {
     const param = new FormData();
     param.append("singerInfo", JSON.stringify(this.singerInfo));
     param.append("file", e.file);
@@ -165,7 +167,6 @@ export default class extends Vue {
     });
     this.init();
   }
-
 }
 </script>
 

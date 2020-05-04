@@ -30,7 +30,7 @@ import {
   getLyric
 } from "@/api/music/singer/lyric";
 import { MusicModule } from "@/store/modules/music";
-import Lyric from "lrc-file-parser";
+import Lyric from "lrc-file-parser"; 
 
 @Component({
   name: "song-lyric"
