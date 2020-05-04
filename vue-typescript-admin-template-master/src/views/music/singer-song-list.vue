@@ -202,12 +202,8 @@ export default class extends Vue {
     console.log(data);
     console.log("拿不到playasb的store，应该是缓存");
   }
-<<<<<<< HEAD
- 
-=======
 
 
->>>>>>> 拉取
   getSongType(type: string) {
     let songTypeMap = new Map([
       ["0", "民族"],
