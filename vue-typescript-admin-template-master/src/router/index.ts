@@ -53,6 +53,11 @@ export const constantRoutes: RouteConfig[] = [
     ]
   },
   {
+    path: '/registe',
+    component: () => import(/* webpackChunkName: "registe" */ '@/views/registe/index.vue'),
+    meta: { hidden: true }
+  },
+  {
     path: '/login',
     component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
     meta: { hidden: true }
@@ -281,7 +286,7 @@ export const asyncRoutes: RouteConfig[] = [
             path: 'singer-song-lyric',  
             component: () => import(/* webpackChunkName: "singer-song-lyric" */ '@/views/music/singer-song-lyric.vue'),
             name: 'singerSongLyric',
-            meta: { title: 'singerSongLyric', noCache: true, hidden:true } 
+            meta: { title: 'singerSongLyric', noCache: true } 
           }
         
     ]

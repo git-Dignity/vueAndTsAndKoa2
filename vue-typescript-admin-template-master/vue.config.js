@@ -6,14 +6,15 @@ const path = require('path')
 // For example, on Mac: sudo npm run / sudo yarn
 const devServerPort = 9527 // TODO: get this variable from setting.ts
 const mockServerPort = 9528 // TODO: get this variable from setting.ts
-const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
+const name = '音乐博客' // TODO: get this variable from setting.ts
 
 module.exports = {
   publicPath:  '/',
-  // publicPath: process.env.NODE_ENV === 'production' ? '/vue-typescript-admin-template/' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/' : '/vue-typescript-admin-template/',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: { 
+    host: 'localhost',
     port: devServerPort,
     open: true,
     overlay: {
@@ -26,9 +27,10 @@ module.exports = {
       '/certificateAuthentication': {
         target: 'http://localhost:3000/', //对应自己的接口
         changeOrigin: true,
-        ws: true
+        ws: true   
       }
     }
+   
 
   
     // proxy: {

@@ -2,6 +2,10 @@
   <img width="120" src="public/img/icons/android-chrome-512x512.png">
 </p>
 
+<p>
+  前端LRC歌词解析播放插件:https://segmentfault.com/a/1190000018789057
+</p>
+
 <p align="center">
   <a href="https://github.com/vuejs/vue">
     <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg" alt="vue">

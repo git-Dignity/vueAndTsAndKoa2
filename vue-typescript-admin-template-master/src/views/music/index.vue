@@ -76,14 +76,14 @@
               v-if="row.play"
               type="danger"
               icon="el-icon-video-pause"
-              @click="musicPause_btn(row)"
+              @click="musicPauseBtn(row)"
               circle
             ></el-button>
             <el-button
               v-else
               type="primary"
               icon="el-icon-video-play"
-              @click="musicPlay_btn(row, row.musicUrl, row.username)"
+              @click="musicPlayBtn(row, row.musicUrl, row.username)"
               circle
             ></el-button>
           </template>
@@ -99,13 +99,14 @@
       </el-table>
     </el-row>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      
       :current-page="currentPage"
       :page-sizes="[6, 12, 18, 100]"
       :page-size="6"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
     ></el-pagination>
   </div>
 </template>
@@ -153,13 +154,12 @@ export default class extends Vue {
     console.log(file);
   }
 
-  private photoEnter() {}
 
   created() {
     this.init();
   }
 
-  async musicPlay_btn(row: any, url: string, uploader: string) {
+  async musicPlayBtn(row: any, url: string, uploader: string) {
     // console.log(row);
     this.musicData.forEach((element: any) => {
       element.play = false;
@@ -174,7 +174,7 @@ export default class extends Vue {
     });
   }
 
-  async musicPause_btn(row: any) {
+  async musicPauseBtn(row: any) {
     row.play = false;
   }
 
@@ -190,7 +190,7 @@ export default class extends Vue {
 
 
   getSongType(type: string) {
-    let songTypeMap = new Map([
+    const songTypeMap = new Map([
       ["0", "民族"],
       ["1", "流行"],
       ["2", "摇滚"],

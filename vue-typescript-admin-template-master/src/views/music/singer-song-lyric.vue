@@ -4,16 +4,7 @@
       <!-- <el-button type="primary" @click="refresh">刷新</el-button> -->
     </el-row>
     <el-row class="lyric-content">
-      <el-input type="textarea"  v-html="input_lyric" autosize></el-input>
-
-      <!-- <div v-for="lyric in singerData.lyric" :key="lyric.time">
-        <p v-if="lyric.class">
-          <span style="color:red">{{lyric.text}}</span>
-        </p>
-        <p v-else>
-          <span >{{lyric.text}}</span>
-        </p>
-      </div>-->
+      <el-input type="textarea" v-html="input_lyric" autosize></el-input>
     </el-row>
   </div>
 </template>
@@ -30,7 +21,7 @@ import {
   getLyric
 } from "@/api/music/singer/lyric";
 import { MusicModule } from "@/store/modules/music";
-import Lyric from "lrc-file-parser"; 
+import Lyric from "lrc-file-parser";
 
 @Component({
   name: "song-lyric"
@@ -46,12 +37,10 @@ export default class extends Vue {
   input_lyric = "";
 
   timer: any = "";
-  lrc:any = []
+  lrc: any = [];
 
   mounted() {
     //  this.timer =  setInterval(this.move,300);
-
-   
   }
 
   created() {
@@ -61,22 +50,27 @@ export default class extends Vue {
       songName: this.$route.query.songName + "",
       lyric: []
     };
+
     this.init();
-     this.timer = setInterval(() => {
+    this.timer = setInterval(() => {
       this.move();
     }, 300);
   }
 
   move() {
-    // console.log("你怎么you");
     const elTextarea = <HTMLElement>document.querySelector(".el-textarea");
     const lyricContent = <HTMLElement>document.querySelector(".lyric-content");
 
-    if (lyricContent.scrollTop >= elTextarea.offsetHeight) {
-      lyricContent.scrollTop = 0;
-    } else {
-      lyricContent.scrollTop = lyricContent.scrollTop + 5;
-    }
+    lyricContent.scrollTop =
+      lyricContent.scrollTop >= elTextarea.offsetHeight
+        ? 0
+        : lyricContent.scrollTop + 5;
+
+    // if (lyricContent.scrollTop >= elTextarea.offsetHeight) {
+    //   lyricContent.scrollTop = 0;
+    // } else {
+    //   lyricContent.scrollTop = lyricContent.scrollTop + 5;
+    // }
   }
 
   async init() {
@@ -86,55 +80,61 @@ export default class extends Vue {
       limit: 100,
       singerName: this.$route.query.singerName,
       songName: this.$route.query.songName
-    }).then((res: any) => {
-      var _this = this;
-      console.log(res.lrc);
-      // this.singerData.lyric = res.lrc.lyric;
+    })
+      .then((res: any) => {
+        var _this = this;
+        // console.log(res);
+        // this.singerData.lyric = res.lrc.lyric;
 
-      this.lrc = new Lyric({
-        onPlay: function(line: number, text: string) {
-          // 歌词播放时的回调
-          // console.log(line, text); // line 是当前播放行, text 是当前播放的歌词
+        this.lrc = new Lyric({
+          onPlay: function(line: number, text: string) {
+            // 歌词播放时的回调
+            // console.log(line, text); // line 是当前播放行, text 是当前播放的歌词
 
-          if(_this.singerData.lyric.length<line+2){
-            clearInterval(_this.timer)
-          }
-         
+            if (_this.singerData.lyric.length < line + 2) {
+              clearInterval(_this.timer);
+            }
 
-          _this.input_lyric = _this.input_lyric.replace("active-lyric", "");
+            _this.input_lyric = _this.input_lyric.replace("active-lyric", "");
 
-          _this.input_lyric += `
+            _this.input_lyric += `
           <p class="active-lyric">${text}</p>
           `;
 
-          // console.log(_this.singerData.lyric);
-        },
-        onSetLyric: function(lines: any) {
-          // 监听歌词设置事件。当设置歌词时，歌词解析完毕会触发此回调。
-          // console.log(lines); // lines 是一个数组[{time,text}]，里面包含播放时间及对应的歌词文本。
-          _this.singerData.lyric = lines;
-          // console.log(_this.singerData.lyric);
-        },
-        offset: 150 // 歌词偏移时间单位毫秒, 默认 150 ms
-      });
+            // console.log(_this.singerData.lyric);
+          },
+          onSetLyric: function(lines: any) {
+            // 监听歌词设置事件。当设置歌词时，歌词解析完毕会触发此回调。
+            // console.log(lines); // lines 是一个数组[{time,text}]，里面包含播放时间及对应的歌词文本。
+            _this.singerData.lyric = lines;
+            // console.log(_this.singerData.lyric);
+          },
+          offset: 150 // 歌词偏移时间单位毫秒, 默认 150 ms
+        });
 
-      this.lrc.setLyric(res.lrc.lyric); // 设置歌词，此处传入lrc文件的文本内容
-      // 注意：设置歌词将自动暂停歌词播放
-      this.lrc.play(0); // 播放歌词，传入开始播放时间，30000是播放时间，单位：ms
-      // lrc.pause(); // 暂停播放歌词
-    });
+        this.lrc.setLyric(res.lrc.lyric); // 设置歌词，此处传入lrc文件的文本内容
+        // 注意：设置歌词将自动暂停歌词播放
+        this.lrc.play(0); // 播放歌词，传入开始播放时间，30000是播放时间，单位：ms
+        // lrc.pause(); // 暂停播放歌词
+      })
+      .catch((err: any) => {
+        // console.log(err);
+        this.input_lyric = `
+        <p class="active-lyric">${err}</p>
+      `;
+      })
   }
 
   beforeDestroy() {
     //清除定时器
-    clearInterval(this.timer);
+    if(this.timer) {
+      clearInterval(this.timer);
+    }
+
     this.lrc.pause();
-    // console.log("beforeDestroy");
   }
 
-  refresh() {
-   
-  }
+  refresh() {}
 }
 </script>
 

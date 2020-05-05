@@ -1,71 +1,97 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="15">
-      <el-form :inline="true" :model="musicInfo" class="demo-form-inline">
-        <el-form-item label="歌手名">
-          <!-- readonly="true" -->
-          <el-input v-model="musicInfo.singerName" placeholder="歌手名"></el-input>
-        </el-form-item>
-        <el-form-item label="歌曲名">
-          <el-input v-model="musicInfo.songName" placeholder="歌曲名"></el-input>
-        </el-form-item>
-        <el-form-item label="歌曲类型">
-          <el-select v-model="musicInfo.songType" placeholder="歌曲类型">
-            <el-option label="民族" value="0"></el-option>
-            <el-option label="流行" value="1"></el-option>
-            <el-option label="摇滚" value="2"></el-option>
-            <el-option label="轻音乐" value="3"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitUpload">上传</el-button>
-        </el-form-item>
-      </el-form>
+    <el-collapse accordion v-model="activeNames">
+      <el-collapse-item name="search">
+        <template slot="title">
+          搜索歌手清单 &nbsp;
+          <i class="el-icon-search"></i>
+        </template>
 
-      <el-col :span="7">
-        <el-upload
-          class="upload-demo"
-          drag
-          action="/music/upload"
-          :http-request="uoload"
-          :before-upload="beforeAvatarUpload"
-          accept=".mp4, .m4a, .mp3, .flac, .wima"
-          multiple
-          ref="upload"
-          :auto-upload="false"
-        >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">
-            上传歌曲文件
-            <p></p>将文件拖到此处，或
-            <em>点击上传</em>
-          </div>
-          <div class="el-upload__tip" slot="tip">请上传.mp4, .m4a, .mp3, .flac, .wima文件格式</div>
-        </el-upload>
-      </el-col>
+        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+          <el-form-item label="歌曲名">
+            <el-input v-model="searchForm.song" placeholder="歌曲名"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSongSubmit">查询</el-button>
+            <el-button @click="resetForm()">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-collapse-item>
 
-      <el-col :span="7">
-        <el-upload
-          class="upload-demo"
-          drag
-          action="/music/upload"
-          :http-request="singerImgUpload"
-          :before-upload="beforeAvatarUpload"
-          accept=".png, .jpg, .gif, .jpeg"
-          multiple
-          ref="singerImg_upload"
-          :auto-upload="false"
-        >
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">
-            上传歌曲图片文件
-            <p></p>将文件拖到此处，或
-            <em>点击上传</em>
-          </div>
-          <div class="el-upload__tip" slot="tip">请上传.png, .jpg, .gif, .jpeg文件格式</div>
-        </el-upload>
-      </el-col>
-    </el-row>
+      <el-collapse-item name="upload" v-permission="['admin','editor']">
+        <template slot="title">
+          上传歌手清单 &nbsp;
+          <i class="el-icon-upload2"></i>
+        </template>
+
+        <el-row :gutter="15">
+          <el-form :inline="true" :model="musicInfo" class="demo-form-inline">
+            <el-form-item label="歌手名">
+              <!-- readonly="true" -->
+              <el-input v-model="musicInfo.singerName" placeholder="歌手名"></el-input>
+            </el-form-item>
+            <el-form-item label="歌曲名">
+              <el-input v-model="musicInfo.songName" placeholder="歌曲名"></el-input>
+            </el-form-item>
+            <el-form-item label="歌曲类型">
+              <el-select v-model="musicInfo.songType" placeholder="歌曲类型">
+                <el-option label="民族" value="0"></el-option>
+                <el-option label="流行" value="1"></el-option>
+                <el-option label="摇滚" value="2"></el-option>
+                <el-option label="轻音乐" value="3"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitUpload">上传</el-button>
+            </el-form-item>
+          </el-form>
+
+          <el-col :span="7">
+            <el-upload
+              class="upload-demo"
+              drag
+              action="/music/upload"
+              :http-request="uoload"
+              :before-upload="beforeAvatarUpload"
+              accept=".mp4, .m4a, .mp3, .flac, .wima"
+              multiple
+              ref="upload"
+              :auto-upload="false"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                上传歌曲文件
+                <p></p>将文件拖到此处，或
+                <em>点击上传</em>
+              </div>
+              <div class="el-upload__tip" slot="tip">请上传.mp4, .m4a, .mp3, .flac, .wima文件格式</div>
+            </el-upload>
+          </el-col>
+
+          <el-col :span="7">
+            <el-upload
+              class="upload-demo"
+              drag
+              action="/music/upload"
+              :http-request="singerImgUpload"
+              :before-upload="beforeAvatarUpload"
+              accept=".png, .jpg, .gif, .jpeg"
+              multiple
+              ref="singerImg_upload"
+              :auto-upload="false"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                上传歌曲图片文件
+                <p></p>将文件拖到此处，或
+                <em>点击上传</em>
+              </div>
+              <div class="el-upload__tip" slot="tip">请上传.png, .jpg, .gif, .jpeg文件格式</div>
+            </el-upload>
+          </el-col>
+        </el-row>
+      </el-collapse-item>
+    </el-collapse>
 
     <el-row>
       <el-table
@@ -93,14 +119,14 @@
               v-if="row.play"
               type="danger"
               icon="el-icon-video-pause"
-              @click="musicPause_btn(row)"
+              @click="musicPauseBtn(row)"
               circle
             ></el-button>
             <el-button
               v-else
               type="primary"
               icon="el-icon-video-play"
-              @click="musicPlay_btn(row, row.musicUrl, row.singer_name, row.song_name)"
+              @click="musicPlayBtn(row, row.musicUrl, row.singer_name, row.song_name)"
               circle
             ></el-button>
           </template>
@@ -116,13 +142,14 @@
       </el-table>
     </el-row>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
+      
+      :current-page="page.currentPage"
       :page-sizes="[6, 12, 18, 100]"
       :page-size="6"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
+      :total="page.total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
     ></el-pagination>
   </div>
 </template>
@@ -134,6 +161,8 @@ import { cloneDeep } from "lodash";
 import { getMusic, uploadMusic } from "@/api/music/index";
 import { MusicModule } from "@/store/modules/music";
 import { qiniuUrl } from "@/api/common";
+import { checkPermission } from "@/utils/permission"; // Use permission directly
+
 @Component({
   name: "singerSongList"
 })
@@ -142,14 +171,48 @@ export default class extends Vue {
   private tableKey = 0;
   private currentDate = new Date();
   public userLocal: any = localStorage.getItem("user");
-  private currentPage = 1; //当前页码
-  private total = 0; //查出来这个条件全部多少条
+
+  private page = {
+    currentPage: 1, //当前页码
+    total: 0, //查出来这个条件全部多少条
+    size: 6 // 每页显示几条
+  };
   private musicInfo = {
     songName: "",
     singerName: "",
     songType: "民族"
   };
   private file_list: any = [];
+  activeNames = ["search"];
+  searchForm = {
+    song: ""
+  };
+
+  async onSongSubmit() {
+    const { data } = await getMusic({
+      form: {
+        song: this.searchForm.song
+      },
+      pageNum: 1,
+      pageSize: this.page.size,
+      singerName: this.musicInfo.singerName
+    });
+
+    data.data.forEach((element: any) => {
+      element.musicUrl = qiniuUrl + element.file_key;
+      element.songImg = qiniuUrl + element.songFileKey;
+      element.songT = this.getSongType(element.song_type);
+      element.play = false;
+    });
+    this.page.total = data.total;
+    this.musicData = data.data;
+    await MusicModule.AudiosPage(this.musicData);
+  }
+
+  resetForm() {
+    this.searchForm.song = "";
+    this.init();
+  }
 
   songLyric(row: any) {
     this.$router.push({
@@ -173,12 +236,22 @@ export default class extends Vue {
     }
     this.$message.error("请检查上传参数是否齐全!");
   }
-  private photoEnter() {}
   created() {
     this.init();
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        username: "zheng"
+      })
+    );
   }
 
-  async musicPlay_btn(row: any, url: string, singerName: string, songName: string) {
+  async musicPlayBtn(
+    row: any,
+    url: string,
+    singerName: string,
+    songName: string
+  ) {
     // console.log(row);
     this.musicData.forEach((element: any) => {
       element.play = false;
@@ -191,7 +264,7 @@ export default class extends Vue {
       play: true
     });
   }
-  async musicPause_btn(row: any) {
+  async musicPauseBtn(row: any) {
     row.play = false;
   }
   get musicpa() {
@@ -203,9 +276,8 @@ export default class extends Vue {
     console.log("拿不到playasb的store，应该是缓存");
   }
 
-
   getSongType(type: string) {
-    let songTypeMap = new Map([
+    const songTypeMap = new Map([
       ["0", "民族"],
       ["1", "流行"],
       ["2", "摇滚"],
@@ -218,7 +290,8 @@ export default class extends Vue {
 
     const { data } = await getMusic({
       singerName: this.musicInfo.singerName,
-      pageNum: this.currentPage
+      pageNum: this.page.currentPage,
+      pageSize: this.page.size
     });
     data.data.forEach((element: any) => {
       element.musicUrl = qiniuUrl + element.file_key;
@@ -226,7 +299,7 @@ export default class extends Vue {
       element.songT = this.getSongType(element.song_type);
       element.play = false;
     });
-    this.total = data.total;
+    this.page.total = data.total;
     this.musicData = data.data;
     await MusicModule.AudiosPage(this.musicData);
     // console.log(this.musicData);
@@ -238,7 +311,6 @@ export default class extends Vue {
   private async singerImgUpload(e: any) {
     this.file_list.push(e);
     // console.log(this.file_list);
-   
 
     if (this.file_list.length === 2) {
       const param = new FormData();
@@ -260,11 +332,13 @@ export default class extends Vue {
   }
 
   private handleSizeChange(val: number) {
-    console.log(`每页 ${val} 条`);
+    this.page.size = val;
+    this.page.currentPage = 1;
+    this.init();
   }
   private handleCurrentChange(val: number) {
     console.log(`当前页: ${val}`);
-    this.currentPage = val;
+    this.page.currentPage = val;
     this.init();
   }
   // 文件上传之前做处理

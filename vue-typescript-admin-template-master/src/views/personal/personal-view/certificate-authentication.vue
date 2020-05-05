@@ -58,13 +58,14 @@
       </el-col>
     </el-row>
     <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      
       :current-page="currentPage"
       :page-sizes="[6, 12, 18, 100]"
       :page-size="6"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
     ></el-pagination>
   </div>
 </template>
@@ -72,7 +73,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import PanThumb from "@/components/PanThumb/index.vue";
-import { UserModule } from "@/store/modules/user";
 import {
   getCertificate,
   uploadFile

@@ -1,31 +1,41 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" :model="singerInfo" class="demo-form-inline">
-      <el-form-item label="歌手名">
-        <el-input v-model="singerInfo.singerName" placeholder="歌手名"></el-input>
-      </el-form-item>
+    <el-collapse accordion>
+      <el-collapse-item v-permission="['admin','editor']">
+        <template slot="title">
+          歌手上传 &nbsp;
+          <i class="el-icon-upload2"></i>
+        </template>
 
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">上传</el-button>
-      </el-form-item>
-    </el-form>
+        <el-form :inline="true" :model="singerInfo" class="demo-form-inline">
+          <el-form-item label="歌手名">
+            <el-input v-model="singerInfo.singerName" placeholder="歌手名"></el-input>
+          </el-form-item>
 
-    <el-row :gutter="15">
-      <el-upload
-        class="avatar-uploader"
-        action="/certificateAuthentication/upload"
-        :http-request="uoload"
-        accept=".png, .jpg, .gif, .jpeg"
-        :show-file-list="false"
-        ref="upload"
-        :auto-upload="false"
-        :on-change="changeSingerImg"
-        :before-upload="beforeAvatarUpload"
-      >
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-      </el-upload>
-    </el-row>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">上传</el-button>
+          </el-form-item>
+        </el-form>
+
+        <el-row :gutter="15">
+          <el-upload
+            class="avatar-uploader"
+            action="/certificateAuthentication/upload"
+            :http-request="uoload"
+            accept=".png, .jpg, .gif, .jpeg"
+            :show-file-list="false"
+            ref="upload"
+            :auto-upload="false"
+            :on-change="changeSingerImg"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-row>
+
+      </el-collapse-item>
+    </el-collapse>
 
     <el-row>
       <el-col

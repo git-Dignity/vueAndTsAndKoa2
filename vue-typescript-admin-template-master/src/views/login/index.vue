@@ -9,9 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">
-          {{ $t('login.title') }}
-        </h3>
+        <h3 class="title">{{ $t('login.title') }}</h3>
         <lang-select class="set-language" />
       </div>
 
@@ -30,12 +28,7 @@
         />
       </el-form-item>
 
-      <el-tooltip
-        v-model="capsTooltip"
-        content="Caps lock is On"
-        placement="right"
-        manual
-      >
+      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon name="password" />
@@ -53,69 +46,62 @@
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
-          <span
-            class="show-pwd"
-            @click="showPwd"
-          >
+          <span class="show-pwd" @click="showPwd">
             <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
           </span>
         </el-form-item>
       </el-tooltip>
 
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width:100%; margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
-      >
-        {{ $t('login.logIn') }}
-      </el-button>
+      <el-button-group style="width: -webkit-fill-available;">
+        <el-button
+          type="danger"
+          style="width:50%; margin-bottom:30px;"
+          @click.native.prevent="handleRegiste"
+        >{{ $t('login.registe') }}</el-button>
+        <el-button
+          :loading="loading"
+          type="primary"
+          style="width:50%; margin-bottom:30px;"
+          @click.native.prevent="handleLogin"
+        >{{ $t('login.logIn') }}</el-button>
+      </el-button-group>
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ $t('login.username') }} : admin </span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }} </span>
-        </div>
-        <div class="tips">
-          <span>{{ $t('login.username') }} : editor </span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }} </span>
+          <span>{{ $t('login.username') }} : 自己去注册吧</span>
+          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
         </div>
 
         <el-button
           class="thirdparty-button"
-          type="primary"
+          type="info"
           @click="showDialog=true"
-        >
-          {{ $t('login.thirdparty') }}
-        </el-button>
+        >{{ $t('login.thirdparty') }}</el-button>
       </div>
     </el-form>
 
-    <el-dialog
-      :title="$t('login.thirdparty')"
-      :visible.sync="showDialog"
-    >
+    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
       {{ $t('login.thirdpartyTips') }}
-      <br>
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
       <social-sign />
     </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Route } from 'vue-router'
-import { Dictionary } from 'vue-router/types/router'
-import { Form as ElForm, Input } from 'element-ui'
-import { UserModule } from '@/store/modules/user'
-import { isValidUsername } from '@/utils/validate'
-import LangSelect from '@/components/LangSelect/index.vue'
-import SocialSign from './components/SocialSignin.vue'
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { Route } from "vue-router";
+import { Dictionary } from "vue-router/types/router";
+import { Form as ElForm, Input } from "element-ui";
+import { UserModule } from "@/store/modules/user";
+import { isValidUsername } from "@/utils/validate";
+import LangSelect from "@/components/LangSelect/index.vue";
+import SocialSign from "./components/SocialSignin.vue";
 
 @Component({
-  name: 'Login',
+  name: "Login",
   components: {
     LangSelect,
     SocialSign
@@ -124,98 +110,107 @@ import SocialSign from './components/SocialSignin.vue'
 export default class extends Vue {
   private validateUsername = (rule: any, value: string, callback: Function) => {
     if (!isValidUsername(value)) {
-      callback(new Error('Please enter the correct user name'))
+      callback(new Error("Please enter the correct user name"));
     } else {
-      callback()
+      callback();
     }
-  }
+  };
 
   private validatePassword = (rule: any, value: string, callback: Function) => {
     if (value.length < 6) {
-      callback(new Error('The password can not be less than 6 digits'))
+      callback(new Error("The password can not be less than 6 digits"));
     } else {
-      callback()
+      callback();
     }
-  }
+  };
 
   private loginForm = {
-    username: 'zheng',
-    password: 'zhengzemin'
-  }
+    username: "zheng",
+    password: "zhengzemin"
+  };
 
   private loginRules = {
-    username: [{ validator: this.validateUsername, trigger: 'blur' }],
-    password: [{ validator: this.validatePassword, trigger: 'blur' }]
-  }
+    username: [{ validator: this.validateUsername, trigger: "blur" }],
+    password: [{ validator: this.validatePassword, trigger: "blur" }]
+  };
 
-  private passwordType = 'password'
-  private loading = false
-  private showDialog = false
-  private capsTooltip = false
-  private redirect?: string
-  private otherQuery: Dictionary<string> = {}
+  private passwordType = "password";
+  private loading = false;
+  private showDialog = false;
+  private capsTooltip = false;
+  private redirect?: string;
+  private otherQuery: Dictionary<string> = {};
 
-  @Watch('$route', { immediate: true })
+  @Watch("$route", { immediate: true })
   private onRouteChange(route: Route) {
     // TODO: remove the "as Dictionary<string>" hack after v4 release for vue-router
     // See https://github.com/vuejs/vue-router/pull/2050 for details
-    const query = route.query as Dictionary<string>
+    const query = route.query as Dictionary<string>;
     if (query) {
-      this.redirect = query.redirect
-      this.otherQuery = this.getOtherQuery(query)
+      this.redirect = query.redirect;
+      this.otherQuery = this.getOtherQuery(query);
     }
   }
 
   mounted() {
-    if (this.loginForm.username === '') {
-      (this.$refs.username as Input).focus()
-    } else if (this.loginForm.password === '') {
-      (this.$refs.password as Input).focus()
+    if (this.loginForm.username === "") {
+      (this.$refs.username as Input).focus();
+    } else if (this.loginForm.password === "") {
+      (this.$refs.password as Input).focus();
     }
   }
 
   private checkCapslock(e: KeyboardEvent) {
-    const { key } = e
-    this.capsTooltip = key !== null && key.length === 1 && (key >= 'A' && key <= 'Z')
+    const { key } = e;
+    this.capsTooltip =
+      key !== null && key.length === 1 && key >= "A" && key <= "Z";
   }
 
   private showPwd() {
-    if (this.passwordType === 'password') {
-      this.passwordType = ''
+    if (this.passwordType === "password") {
+      this.passwordType = "";
     } else {
-      this.passwordType = 'password'
+      this.passwordType = "password";
     }
     this.$nextTick(() => {
-      (this.$refs.password as Input).focus()
-    })
+      (this.$refs.password as Input).focus();
+    });
+  }
+
+  private handleRegiste() {
+    console.log(44)
+    this.$router.push({
+      path: "/registe",
+      query: {}
+    });
   }
 
   private handleLogin() {
-    (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
+    (this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
       if (valid) {
-        this.loading = true
-        await UserModule.Login(this.loginForm)
+        this.loading = true;
+        await UserModule.Login(this.loginForm);
         this.$router.push({
-          path: this.redirect || '/',
+          path: this.redirect || "/",
           query: this.otherQuery
-        })
+        });
         // Just to simulate the time of the request
         setTimeout(() => {
-          this.loading = false
-        }, 0.5 * 1000)
+          this.loading = false;
+        }, 0.5 * 1000);
       } else {
-        return false
+        return false;
       }
-    })
+    });
   }
 
   private getOtherQuery(query: Dictionary<string>) {
     return Object.keys(query).reduce((acc, cur) => {
-      if (cur !== 'redirect') {
-        acc[cur] = query[cur]
+      if (cur !== "redirect") {
+        acc[cur] = query[cur];
       }
-      return acc
-    }, {} as Dictionary<string>)
+      return acc;
+    }, {} as Dictionary<string>);
   }
 }
 </script>
@@ -224,8 +219,12 @@ export default class extends Vue {
 // References: https://www.zhangxinxu.com/wordpress/2018/01/css-caret-color-first-line/
 @supports (-webkit-mask: none) and (not (cater-color: $loginCursorColor)) {
   .login-container .el-input {
-    input { color: $loginCursorColor; }
-    input::first-line { color: $lightGray; }
+    input {
+      color: $loginCursorColor;
+    }
+    input::first-line {
+      color: $lightGray;
+    }
   }
 }
 
