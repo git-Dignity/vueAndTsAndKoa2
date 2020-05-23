@@ -31,7 +31,7 @@
       </fieldset>
 
       <blockquote class="layui-elem-quote layui-quote-nm">
-        <el-button type="text" @click="startPlayOrPause">{{audio.playing | transPlayPause}}</el-button>
+        <el-button ref="btn_play_pause" type="text" @click="startPlayOrPause">{{audio.playing | transPlayPause}}</el-button>
 
         <el-tag type="info">{{ audio.currentTime | formatSecond}}</el-tag>
 
@@ -145,7 +145,7 @@ export default {
       songName: this.theSongName || "",
       uploadTime: this.theUploadTime || "admin",
       singerName: this.theSingerName,
-      url: this.theUrl || "http://devtest.qiniudn.com/secret base~.mp3",
+      url: this.theUrl || "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
       audio: {
         currentTime: 0, // 音频当前播放时长
         maxTime: 0, // 音频最大播放时长
@@ -192,6 +192,7 @@ export default {
     //     this.audioName.lastIndexOf(".")
     //   );
     // }
+    
 
     this.setControlList();
     if (this.url == "https://zhengzemin.cn/nodeJs/audio/说好不哭-周杰伦.m4a") {
@@ -268,13 +269,13 @@ export default {
       );
     },
     startPlayOrPause() {
+    //  console.log(this.audio.playing)
       return this.audio.playing ? this.pausePlay() : this.startPlay();
     },
     AllPlayOrSingle() {
       return this.playIsAll ? this.playAll() : this.playSingle();
     },
     // 开始播放
-
     startPlay() {
       this.$refs.audio.play();
       this.$emit("audioState", "play");
@@ -322,6 +323,7 @@ export default {
           item.pause();
         }
       });
+     
     },
     // 当timeupdate事件大概每秒一次，用来更新音频流的当前播放时间
     // 当音频当前时间改变后，进度条也要改变
@@ -375,6 +377,7 @@ export default {
     },
     // 使用组件过滤器来动态改变按钮的显示
     transPlayPause(value) {
+      // console.log(value);
       return value ? "暂停" : "播放";
     },
     transMutedOrNot(value) {
@@ -389,7 +392,8 @@ export default {
   },
   mounted() {
     // console.log(this.url)
-    // console.log('dy')
+   
+    
 
     this.$refs.audio.play();
 

@@ -25,7 +25,11 @@ module.exports = {
       }],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': ["error", {
+      "anonymous": "never",
+      "named": "never",     // 函数后面不加空格
+      "asyncArrow": "always"  // 是用于异步箭头函数表达式（例如async () => {}）  前后加空格
+    }],
     'vue/array-bracket-spacing': 'error',
     'vue/arrow-spacing': 'error',
     'vue/block-spacing': 'error',
@@ -36,7 +40,10 @@ module.exports = {
     'vue/eqeqeq': 'error',
     'vue/key-spacing': 'error',
     'vue/match-component-file-name': 'error',
-    'vue/object-curly-spacing': 'error'
+    'vue/object-curly-spacing': 'error',
+    'semi': ["error", "always"],
+    'quotes': [1, "double"],
+    'linebreak-style': [0, 'error', 'windows']
   },
   overrides: [
     {

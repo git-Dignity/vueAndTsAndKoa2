@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-collapse accordion>
-      <el-collapse-item v-permission="['admin','editor']">
+      <el-collapse-item v-permission="['admin']">
         <template slot="title">
           歌手上传 &nbsp;
           <i class="el-icon-upload2"></i>
@@ -33,7 +33,6 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-row>
-
       </el-collapse-item>
     </el-collapse>
 
@@ -45,12 +44,12 @@
         :offset="index > 0 ? 2 : 0"
       >
         <el-card :body-style="{ padding: '0px' }">
-          <el-avatar shape="square" :size="150" fit="fill" :src="single.musicUrl"></el-avatar>
+          <el-avatar shape="square" :size="150" fit="fill" :src="single.fileUrl"></el-avatar>
           <div style="padding: 14px;">
-            <span>{{single.singer_name}}</span>
+            <span>{{single.singerName}}</span>
             <div class="bottom clearfix">
-              <time class="time">{{ single.upload_time }}</time>
-              <el-button type="text" class="button" @click="photoEnter(single.singer_name)">进入歌单</el-button>
+              <time class="time">{{ single.createDate }}</time>
+              <el-button type="text" class="button" @click="photoEnter(single.singerName)">进入歌单</el-button>
             </div>
           </div>
         </el-card>
@@ -64,7 +63,9 @@ import { Component, Vue } from "vue-property-decorator";
 import { Form } from "element-ui";
 import { cloneDeep } from "lodash";
 import { qiniuUrl } from "@/api/common";
+import { UserModule } from "@/store/modules/user";  
 import { getSinger, uploadSinger } from "@/api/music/singer/index";
+import { Module } from "module";
 
 @Component({
   name: "musicSinger"
@@ -143,14 +144,13 @@ export default class extends Vue {
   }
 
   private async init() {
-    const { data } = await getSinger({});
-    // console.log(data)
+    const data: any = await getSinger({});
+    console.log(data);
 
-    data.items.forEach((element: any) => {
-      element.musicUrl = qiniuUrl + element.file_key;
-    });
-    this.singleList = data.items;
-    // console.log(this.singleList);
+    // data.items.forEach((element: any) => {
+    //   element.musicUrl = qiniuUrl + element.file_key;
+    // });
+    this.singleList = data[1].items;
   }
 
   handleAvatarSuccess(res: any, file: any) {
@@ -166,16 +166,27 @@ export default class extends Vue {
 
   private async uoload(e: any) {
     const param = new FormData();
-    param.append("singerInfo", JSON.stringify(this.singerInfo));
+    const dataInfo = Object.assign(
+      { username: UserModule.name },
+      this.singerInfo
+    );
+    param.append("info", JSON.stringify(dataInfo));
+    param.append("fileType", "0");
     param.append("file", e.file);
 
-    await uploadSinger(param);
-
-    this.$message({
-      message: "上传成功",
-      type: "success"
-    });
-    this.init();
+    // await uploadSinger(param);
+    uploadSinger(param)
+      .then(res => {
+        // console.log(res);
+        this.$message({
+          message: "上传成功",
+          type: "success"
+        });
+        this.init();
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 }
 </script>

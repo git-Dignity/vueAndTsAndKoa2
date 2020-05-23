@@ -87,7 +87,7 @@ async function singerUpload(ctx, next) {
     }
 }
 
-
+ 
 
     // 支持多文件上传到千牛云
     const uploadToQiniu = (fileArr) => {

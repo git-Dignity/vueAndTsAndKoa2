@@ -93,7 +93,13 @@ export default {
     any: '随便填',
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！',
-    registe: '注册'
+    
+  },
+  registe:{
+    title: '系统注册',
+    registeIn: '注册',
+    phone: '请输入手机号码',
+    postbox: '请输入邮箱'
   },
   documentation: {
     documentation: '文档',

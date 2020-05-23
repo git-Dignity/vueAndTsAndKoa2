@@ -12,7 +12,7 @@ export interface IMusicState {
   musicPage: {
     url: string,
     songName: string,
-    singerName: string,
+    singerName: string, 
     play: boolean
   }
   playasb: boolean
@@ -87,6 +87,7 @@ class Music extends VuexModule implements IMusicState {
 
   @Action
   public async AudiosPage(data: any) {
+    console.log(data)
     this.SET_AudiosPage(data)
   }
 

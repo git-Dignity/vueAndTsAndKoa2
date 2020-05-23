@@ -14,7 +14,7 @@ export const getUserInfo = (data: any) =>
     data
   })
 
-export const getUserByName = (username: string) =>
+export const getUserByName = (username: string) => 
   request({
     url: `/users/${username}`,
     method: 'get'
@@ -49,6 +49,6 @@ export const logout = () =>
 export const register = (data: any) =>
   request({
     url: '/users/register',
-    method: 'post',
+    method: 'post', 
     data
   })

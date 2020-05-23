@@ -10,7 +10,7 @@ import settings from './settings'
 
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login', '/auth-redirect']
+const whiteList = ['/login', '/auth-redirect', '/registe']
 
 const getPageTitle = (key: string) => {
   const hasKey = i18n.te(`route.${key}`)

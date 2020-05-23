@@ -18,7 +18,7 @@
         </el-form>
       </el-collapse-item>
 
-      <el-collapse-item name="upload" v-permission="['admin','editor']">
+      <el-collapse-item name="upload" v-permission="['admin']">
         <template slot="title">
           上传歌手清单 &nbsp;
           <i class="el-icon-upload2"></i>
@@ -43,6 +43,7 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="submitUpload">上传</el-button>
+              <el-button @click="resetUpload()">重置</el-button>
             </el-form-item>
           </el-form>
 
@@ -52,11 +53,10 @@
               drag
               action="/music/upload"
               :http-request="uoload"
-              :before-upload="beforeAvatarUpload"
+              :file-list="fileSongList"
+              :on-change="handleSongChange"
               accept=".mp4, .m4a, .mp3, .flac, .wima"
-              multiple
               ref="upload"
-              :auto-upload="false"
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
@@ -74,11 +74,10 @@
               drag
               action="/music/upload"
               :http-request="singerImgUpload"
-              :before-upload="beforeAvatarUpload"
+              :file-list="fileSongImgList"
+              :on-change="handleSongImgChange"
               accept=".png, .jpg, .gif, .jpeg"
-              multiple
               ref="singerImg_upload"
-              :auto-upload="false"
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
@@ -104,15 +103,15 @@
           <template slot-scope="{row}">
             <!-- <router-link :to="'/music/singer-song-lyric/'+row.singer_name"> -->
             <button @click="songLyric(row)">
-              <el-avatar shape="square" :size="80" fit="fill" :src="row.songImg"></el-avatar>
+              <el-avatar shape="square" :size="80" fit="fill" :src="row.img_url"></el-avatar>
             </button>
             <!-- </router-link> -->
           </template>
         </el-table-column>
-        <el-table-column prop="song_name" label="歌曲名" width="380"></el-table-column>
-        <el-table-column prop="singer_name" label="歌手名" width="180"></el-table-column>
-        <el-table-column prop="songT" label="歌曲类型" width="150"></el-table-column>
-        <el-table-column prop="file_size" label="時長" width="180"></el-table-column>
+        <el-table-column prop="singerSongName" label="歌曲名" width="380"></el-table-column>
+        <el-table-column prop="singerName" label="歌手名" width="180"></el-table-column>
+        <el-table-column prop="singerSongType" label="歌曲类型" width="150"></el-table-column>
+        <el-table-column prop="fileSize" label="時長" width="180"></el-table-column>
         <el-table-column label="音頻">
           <template slot-scope="{row}">
             <el-button
@@ -126,7 +125,7 @@
               v-else
               type="primary"
               icon="el-icon-video-play"
-              @click="musicPlayBtn(row, row.musicUrl, row.singer_name, row.song_name)"
+              @click="musicPlayBtn(row, row.song_url, row.singerName, row.singerSongName)"
               circle
             ></el-button>
           </template>
@@ -142,7 +141,6 @@
       </el-table>
     </el-row>
     <el-pagination
-      
       :current-page="page.currentPage"
       :page-sizes="[6, 12, 18, 100]"
       :page-size="6"
@@ -160,6 +158,8 @@ import { Form } from "element-ui";
 import { cloneDeep } from "lodash";
 import { getMusic, uploadMusic } from "@/api/music/index";
 import { MusicModule } from "@/store/modules/music";
+import { UserModule } from "@/store/modules/user";
+import QS from 'qs'
 import { qiniuUrl } from "@/api/common";
 import { checkPermission } from "@/utils/permission"; // Use permission directly
 
@@ -170,7 +170,7 @@ export default class extends Vue {
   private musicData = [];
   private tableKey = 0;
   private currentDate = new Date();
-  public userLocal: any = localStorage.getItem("user");
+  // public userLocal: any = localStorage.getItem("user");
 
   private page = {
     currentPage: 1, //当前页码
@@ -182,30 +182,71 @@ export default class extends Vue {
     singerName: "",
     songType: "民族"
   };
-  private file_list: any = [];
+  private file_list: any = {
+    song_file: [],
+    songImg_file: []
+  };
   activeNames = ["search"];
   searchForm = {
     song: ""
   };
+  fileSongList = [];
+  fileSongImgList = [];
 
-  async onSongSubmit() {
-    const { data } = await getMusic({
-      form: {
-        song: this.searchForm.song
-      },
-      pageNum: 1,
-      pageSize: this.page.size,
-      singerName: this.musicInfo.singerName
-    });
+  handleSongChange(file, list) {
+    if (list.length > 0) {
+      this.fileSongList = [list[list.length - 1]];
+    }
+  }
 
-    data.data.forEach((element: any) => {
-      element.musicUrl = qiniuUrl + element.file_key;
-      element.songImg = qiniuUrl + element.songFileKey;
-      element.songT = this.getSongType(element.song_type);
+  handleSongImgChange(file, list) {
+    if (list.length > 0) {
+      this.fileSongImgList = [list[list.length - 1]];
+    }
+  }
+
+  
+  private async init() {
+    this.musicInfo.singerName = this.$route.query.singerName + "";
+
+    const { data } = await getMusic(QS.stringify({
+      singerName: this.musicInfo.singerName,
+      singerSongName: this.searchForm.song,
+      current: this.page.currentPage,
+      size: this.page.size
+    }));
+    // console.log(data)
+   
+    data[1].records.forEach((element: any) => {
+      // element.musicUrl = qiniuUrl + element.file_key;
+      // element.songImg = qiniuUrl + element.songFileKey;
+      // element.songT = this.getSongType(element.song_type);
       element.play = false;
     });
-    this.page.total = data.total;
-    this.musicData = data.data;
+    this.page.total = data[1].total;
+    this.musicData = data[1].records;
+    await MusicModule.AudiosPage(this.musicData);
+    // console.log(this.musicData);
+  }
+
+  async onSongSubmit() {
+    const { data } = await getMusic(QS.stringify({
+      singerSongName: this.searchForm.song,
+      current: 1,
+      size: this.page.size,
+      singerName: this.musicInfo.singerName
+    }));
+
+    // console.log(data);
+
+    data[1].records.forEach((element: any) => {
+      // element.musicUrl = qiniuUrl + element.file_key;
+      // element.songImg = qiniuUrl + element.songFileKey;
+      // element.songT = this.getSongType(element.song_type);
+      element.play = false;
+    });
+    this.page.total = data[1].total;
+    this.musicData = data[1].records;
     await MusicModule.AudiosPage(this.musicData);
   }
 
@@ -214,36 +255,75 @@ export default class extends Vue {
     this.init();
   }
 
+  resetUpload(){
+    this.clearUploadData();
+  }
+
   songLyric(row: any) {
     this.$router.push({
       path: "/music/singer-song-lyric",
       query: {
-        singerName: row.singer_name,
-        songName: row.song_name
+        singerName: row.singerName,
+        songName: row.singerSongName
       }
     });
   }
 
-  submitUpload() {
+  async submitUpload() {
     if (
       this.musicInfo.songName != "" &&
-      (this.$refs.upload as any).uploadFiles.length != 0
+      this.file_list.song_file.length !== 0 &&
+      this.file_list.songImg_file.length !== 0
     ) {
       // 一定要先上传歌曲，再来上传歌曲的图片，这样才可以一起进入一个方法insert到同一张表中
-      (this.$refs.upload as any).submit();
-      (this.$refs.singerImg_upload as any).submit();
-      return;
+      // (this.$refs.upload as any).submit();
+      // (this.$refs.singerImg_upload as any).submit();
+      // return;
+
+      const param = new FormData();
+
+      const dataInfo = Object.assign(
+        { username: UserModule.name },
+        this.musicInfo
+      );
+      param.append("info", JSON.stringify(dataInfo));
+      param.append("song_file", this.file_list.song_file.file);
+      param.append("singerImg_file", this.file_list.songImg_file.file);
+      const result = await uploadMusic(param);
+      if (result.Success === "true") {
+        this.$message({
+          message: "上传成功",
+          type: "success"
+        });
+        // 清空上传数据
+        this.clearUploadData();
+
+        this.init();
+      } else {
+        this.$message.error("上传失败!");
+      }
+    } else {
+      this.$message.error("请检查歌曲和歌曲图片是否有上传!");
     }
-    this.$message.error("请检查上传参数是否齐全!");
   }
+
+  // 清空上传组件数据
+  clearUploadData() {
+    (this.$refs.upload as any).clearFiles(); // 文件列表清空
+    (this.$refs.singerImg_upload as any).clearFiles();
+    this.file_list.song_file = [];
+    this.file_list.songImg_file = [];
+    this.musicInfo.songName = "";
+  }
+
   created() {
     this.init();
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        username: "zheng"
-      })
-    );
+    // localStorage.setItem(
+    //   "user",
+    //   JSON.stringify({
+    //     username: "zheng"
+    //   })
+    // );
   }
 
   async musicPlayBtn(
@@ -252,7 +332,7 @@ export default class extends Vue {
     singerName: string,
     songName: string
   ) {
-    // console.log(row);
+    // console.log(url);
     this.musicData.forEach((element: any) => {
       element.play = false;
     });
@@ -285,50 +365,42 @@ export default class extends Vue {
     ]);
     return songTypeMap.get(type) ? songTypeMap.get(type) : "民族";
   }
-  private async init() {
-    this.musicInfo.singerName = this.$route.query.singerName + "";
+  
 
-    const { data } = await getMusic({
-      singerName: this.musicInfo.singerName,
-      pageNum: this.page.currentPage,
-      pageSize: this.page.size
-    });
-    data.data.forEach((element: any) => {
-      element.musicUrl = qiniuUrl + element.file_key;
-      element.songImg = qiniuUrl + element.songFileKey;
-      element.songT = this.getSongType(element.song_type);
-      element.play = false;
-    });
-    this.page.total = data.total;
-    this.musicData = data.data;
-    await MusicModule.AudiosPage(this.musicData);
-    // console.log(this.musicData);
-  }
   private async uoload(e: any) {
-    this.file_list.push(e);
+    this.file_list.song_file = e;
   }
 
   private async singerImgUpload(e: any) {
-    this.file_list.push(e);
+    this.file_list.songImg_file = e;
+    // this.file_list.push(e);
+
     // console.log(this.file_list);
 
-    if (this.file_list.length === 2) {
-      const param = new FormData();
-      param.append("musicInfo", JSON.stringify(this.musicInfo));
-      param.append("song_file", this.file_list[0].file);
-      param.append("singerImg_file", this.file_list[1].file);
-      await uploadMusic(param);
-      this.$message({
-        message: "上传成功",
-        type: "success"
-      });
-      this.init();
-    } else {
-      this.$message({
-        message: "请检查歌曲和歌曲图片是否有上传",
-        type: "success"
-      });
-    }
+    // if (this.file_list.length === 2) {
+    //   const param = new FormData();
+
+    //   const dataInfo = Object.assign(
+    //     { username: UserModule.name },
+    //     this.musicInfo
+    //   );
+    //   const fileTypeArr = [1, 0];
+    //   param.append("info", JSON.stringify(dataInfo));
+    //   param.append("fileTypeList",fileTypeArr.toString());
+    //   param.append("song_file", this.file_list[0].file);
+    //   param.append("singerImg_file", this.file_list[1].file);
+    //   await uploadMusic(param);
+    //   this.$message({
+    //     message: "上传成功",
+    //     type: "success"
+    //   });
+    //   this.init();
+    // } else {
+    //   this.$message({
+    //     message: "请检查歌曲和歌曲图片是否有上传",
+    //     type: "success"
+    //   });
+    // }
   }
 
   private handleSizeChange(val: number) {
@@ -341,28 +413,23 @@ export default class extends Vue {
     this.page.currentPage = val;
     this.init();
   }
-  // 文件上传之前做处理
-  private beforeAvatarUpload(file: any) {
-    // console.log(file);
-    // const isLt20M = file.size / 1024 / 1024 < 20;
-    // // 图片格式
-    // if (
-    //   file.type !== "image/jpeg" &&
-    //   file.type !== "image/jpg" &&
-    //   file.type !== "image/png" &&
-    //   file.type !== "image/gif"
-    // ) {
-    //   this.$message.error("只能上传图片格式文件!");
-    //   return false;
-    // }
-    // // 图片大小
-    // if (!isLt20M) {
-    //   this.$message.error("上传头像图片大小不能超过 20MB!");
-    //   return false;
-    // }
-  }
 }
 </script>
 
-<style  scope>
+<style lang="scss"  scope>
+// css中的 /deep/ 是干嘛的，其实是修改elementui等第三方组件内部样式，做的渗透。如果不用scss， 可以使用 >>> 符号来修改第三方组件内部样式。
+// 有一个样式问题，因为是认为改变file-list，取最后一项，因此，用户选择第二个文件后，从第一个文件到第二个文件，有动态切换的效果，这不是我想要的，
+// 我想要的是 用户点击“上传文件”，本地电脑 选择文件，点击“确定”，页面上直接展示所选文件，不要动态切换。
+.el-list-enter-active,
+.el-list-leave-active {
+  transition: none;
+}
+
+.el-list-enter,
+.el-list-leave-active {
+  opacity: 0;
+}
+.el-upload-list {
+  height: 40px;
+}
 </style>

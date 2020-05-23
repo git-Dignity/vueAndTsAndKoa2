@@ -44,12 +44,11 @@ export default class extends Vue {
     {
       url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
       controlList: "onlyOnePlaying",
-      singerName: "周杰伦",
-      songName:'稻香',
+      singerName: "华晨宇",
+      songName: "疯人院",
       uploadTime: "2019/05/20"
     }
-    ]
-
+  ];
 
   // private item = [
   //   {
@@ -61,7 +60,7 @@ export default class extends Vue {
   // ];
   private audioshow = false;
   private audioani = "";
-  private isAllOrSingle = 1;  //随机播放
+  private isAllOrSingle = 1; //随机播放
   private audioIndex = 1; //当前的歌曲在vuex的audiosPage排在第几位
   private audioRandomIndex = 1;
   private asd = [
@@ -93,7 +92,6 @@ export default class extends Vue {
     // console.log(this.item)
     // console.log('----')
     let containeAudio: any = document.getElementById("containe_audio");
-   
 
     for (var i = 0; i < containeAudio.childNodes.length; i++) {
       containeAudio.removeChild(containeAudio.childNodes[i]);
@@ -105,20 +103,17 @@ export default class extends Vue {
       singerName: data.singerName,
       songName: data.songName,
       uploadTime: "2019/05/20"
-     
     });
-   
-  //  this.$set(this.item,'url',data.url);
 
-//   this.item.url= data.url;
-//  this.item = Object.assign({}, this.item)
+    //  this.$set(this.item,'url',data.url);
 
-// Vue.set(this.item,'url', data.url);
-// this.url = data.url;
-// console.log(this.url)
-// this.$store.commit("SET_MUSIC_URL", data.url);
+    //   this.item.url= data.url;
+    //  this.item = Object.assign({}, this.item)
 
-
+    // Vue.set(this.item,'url', data.url);
+    // this.url = data.url;
+    // console.log(this.url)
+    // this.$store.commit("SET_MUSIC_URL", data.url);
 
     // this.item = {
     //   url: data.url,
@@ -162,19 +157,19 @@ export default class extends Vue {
   }
   findThisAudioIndex() {
     return this.$store.state.music.audiosPage.findIndex(
-      (n: any) => n.musicUrl === this.$store.state.music.musicPage.url
+      (n: any) => n.musicUrl === this.$store.state.music.musicPage.song_url
     );
   }
- private audioRandomIsThisAudio(audioRandomIndex:number, thisAudioIndex:number)  {
-
-   return audioRandomIndex === thisAudioIndex?
-          (this.audioRandomIsThisAudio as any)(
-            this.random(0, this.$store.state.music.audiosPage.length),
-            thisAudioIndex
-          ) 
-          :  audioRandomIndex
-
-
+  private audioRandomIsThisAudio(
+    audioRandomIndex: number,
+    thisAudioIndex: number
+  ) {
+    return audioRandomIndex === thisAudioIndex
+      ? (this.audioRandomIsThisAudio as any)(
+          this.random(0, this.$store.state.music.audiosPage.length),
+          thisAudioIndex
+        )
+      : audioRandomIndex;
 
     // if (audioRandomIndex === thisAudioIndex) {
     //   return this.audioRandomIsThisAudio(
@@ -182,16 +177,14 @@ export default class extends Vue {
     //     thisAudioIndex
     //   );
     // } else {
-    //   return audioRandomIndex;  
+    //   return audioRandomIndex;
     // }
   }
-  
+
   async onTimeupdate(data: any) {
     if (data == 100) {
       // console.log(this.isAllOrSingle)
       if (this.isAllOrSingle === 1) {
-       
-   
         this.findThisAudioIndex();
         // console.log(this.audioIndex);
         this.audioRandomIndex = this.random(
@@ -205,11 +198,15 @@ export default class extends Vue {
         );
 
         // console.log(this.findThisAudioIndex());
+        // console.log(this.$store.state.music.audiosPage)
         // console.log(this.$store.state.music.audiosPage[this.audioRandomIndex]);
         await MusicModule.MusicPage({
-          url: this.$store.state.music.audiosPage[this.audioRandomIndex].musicUrl,
-          singerName: this.$store.state.music.audiosPage[this.audioRandomIndex].singer_name,
-          songName: this.$store.state.music.audiosPage[this.audioRandomIndex].song_name,
+          url: this.$store.state.music.audiosPage[this.audioRandomIndex]
+            .song_url,
+          singerName: this.$store.state.music.audiosPage[this.audioRandomIndex]
+            .singerName,
+          songName: this.$store.state.music.audiosPage[this.audioRandomIndex]
+            .singerSongName,
           play: true
         });
         // // this.$store.commit(
@@ -221,12 +218,23 @@ export default class extends Vue {
         // console.log(this.item[1])
         //  console.log(this.$store.state.musicPage)
         // console.log(MusicModule.musicPage);
-        await MusicModule.MusicPage({
+
+        // 为什么要使用定时器，因为在data为100的时候，就是一首歌唱完了，然后他100，会出打印两次，
+        // 进度条不是说，每加1就打印一次，可能会打印两次，就会报下面这个错
+        // 未捕获（按承诺）DOMException：play（）请求被对pause（）的调用中断了
+        // 我有音乐视频播放器。但是，当我改变质量时，它给出了这个错误
+        // 意思就是开始播放，然后之后又来一次，被中段了，就会歌在放，下面的操作就操作不了
+         setTimeout(async() =>{
+          await MusicModule.MusicPage({
           url: MusicModule.musicPage.url,
           singerName: MusicModule.musicPage.singerName,
-          songName:MusicModule.musicPage.songName,
+          songName: MusicModule.musicPage.songName,
           play: true
         });
+        },1000)
+
+       
+
         // this.$store.commit("musicPage", this.$store.state.musicPage);
       }
     }

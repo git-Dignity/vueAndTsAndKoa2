@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : bk
+Source Server         : boke
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : qynbgl
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2020-05-05 20:12:26
+Date: 2020-05-22 23:56:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -233,7 +233,7 @@ CREATE TABLE `log` (
   `oldOperation` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `operation` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1564 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='{\r\n  login_state{\r\n    1:成功\r\n    0：密码错误\r\n  }\r\n}\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=1565 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='{\r\n  login_state{\r\n    1:成功\r\n    0：密码错误\r\n  }\r\n}\r\n';
 
 -- ----------------------------
 -- Records of log
@@ -1801,6 +1801,7 @@ INSERT INTO `log` VALUES ('1560', 'zheng', '113.71.40.244', 'undefined', 'undefi
 INSERT INTO `log` VALUES ('1561', '周杰伦', '112.93.94.61', 'undefined', 'undefined', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '2020/3/5/21:24:14', '1', '操作菜单/index', '1', '/', '/index');
 INSERT INTO `log` VALUES ('1562', '周杰伦', '112.93.94.61', 'undefined', 'undefined', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '2020/3/5/21:24:18', '1', '操作菜单/music', '1', '/index', '/music');
 INSERT INTO `log` VALUES ('1563', '周杰伦', '112.93.94.61', 'undefined', 'undefined', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36', '2020/3/5/21:24:20', '1', '操作菜单/singerSong/华晨宇', '1', '/music', '/singerSong/华晨宇');
+INSERT INTO `log` VALUES ('1564', 'zheng', '::1', 'undefined', 'undefined', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4128.3 Safari/537.36', '2020/4/6/23:07:35', '1', '操作菜单/index', '1', '/', '/index');
 
 -- ----------------------------
 -- Table structure for login
@@ -1812,17 +1813,24 @@ CREATE TABLE `login` (
   `password` varchar(50) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
   `photo_name` varchar(255) DEFAULT NULL,
+  `random_num` int(4) DEFAULT NULL,
   `photo_key` varchar(255) DEFAULT NULL,
+  `phone` varchar(11) DEFAULT NULL,
+  `postbox` varchar(255) DEFAULT NULL,
+  `roles` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `upload_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('1', 'zheng', 'zhengzemin', '9c0801c39a73fd3b5d6fc1deebc3cb4.png', 'aze.jpg', 'd5687080-7fd3-11ea-a1e8-e9c785eec5f0.jpg');
-INSERT INTO `login` VALUES ('2', '阿泽', '123', null, null, null);
-INSERT INTO `login` VALUES ('3', 'xl', 'xl', null, 'xl.jpg', 'd5690cc0-7fd3-11ea-a1e8-e9c785eec5f0.jpg');
-INSERT INTO `login` VALUES ('4', 'test', 'test', 'aze.jpg', null, null);
+INSERT INTO `login` VALUES ('1', 'zheng', 'zhengzemin', 'D:/rj/dev/github/code/vueAndTsAndKoa2/vueTsKoa/public/upload/image/user/1633_告白气球.jpg', 'aze.jpg', null, 'd5687080-7fd3-11ea-a1e8-e9c785eec5f0.jpg', null, null, 'admin', 'fbbe48f0-9c06-11ea-92bd-bda6343e06co', '2020-05-22 17:05:13');
+INSERT INTO `login` VALUES ('2', '阿泽', '123', null, null, null, null, null, null, null, null, null);
+INSERT INTO `login` VALUES ('3', 'xl', 'xl', null, 'xl.jpg', null, 'd5690cc0-7fd3-11ea-a1e8-e9c785eec5f0.jpg', null, null, null, null, null);
+INSERT INTO `login` VALUES ('4', 'test', 'test', 'aze.jpg', null, null, null, null, null, null, null, null);
+INSERT INTO `login` VALUES ('11', 'admin', 'admin1', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', null, null, null, null, null, 'admin', null, '2020-05-22 17:06:13');
 
 -- ----------------------------
 -- Table structure for music

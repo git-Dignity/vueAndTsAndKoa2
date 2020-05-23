@@ -5,6 +5,7 @@ import router, { resetRouter } from '@/router'
 import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
+import { getUserSessionName, setUserSessionName } from '@/cache/session/modules/user'
 
 export interface IUserState {
   token: string
@@ -18,11 +19,13 @@ export interface IUserState {
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule implements IUserState {
   public token = getToken() || ''
-  public name = ''
+  public name = '' || getUserSessionName()
   public avatar = ''
   public introduction = ''
   public roles: string[] = []
   public email = ''
+
+
 
   @Mutation
   private SET_TOKEN(token: string) {
@@ -31,7 +34,8 @@ class User extends VuexModule implements IUserState {
 
   @Mutation
   private SET_NAME(name: string) {
-    this.name = name
+    this.name = name;
+    setUserSessionName(name);
   }
 
   @Mutation
@@ -59,13 +63,13 @@ class User extends VuexModule implements IUserState {
     let { username, password } = userInfo
     username = username.trim()
     const { data } = await login({ username, password })
+    // console.log(data)
     setToken(data.accessToken)
     this.SET_TOKEN(data.accessToken)
     this.SET_NAME(username)
-
-
-    
   }
+
+
 
   @Action
   public ResetToken() {
@@ -79,11 +83,14 @@ class User extends VuexModule implements IUserState {
     if (this.token === '') {
       throw Error('GetUserInfo: token is undefined!')
     }
-    const { data } = await getUserInfo({ username: this.name })  
-    console.log(data)
-    localStorage.setItem('user', JSON.stringify({
-      "username": data.user.name
-    }))
+
+    const { data } = await getUserInfo({ username:this.name })  
+
+    
+   
+    // localStorage.setItem('user', JSON.stringify({
+    //   "username": data.user.name 
+    // }))
 
     if (!data) {
       throw Error('Verification failed, please Login again.')
@@ -113,7 +120,7 @@ class User extends VuexModule implements IUserState {
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)
     // Reset visited views and cached views
-    TagsViewModule.delAllViews()
+    TagsViewModule.delAllViews() 
   }
 
   @Action

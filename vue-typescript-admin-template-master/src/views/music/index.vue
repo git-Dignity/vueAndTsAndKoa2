@@ -126,7 +126,7 @@ export default class extends Vue {
   private musicData = [];
   private tableKey = 0;
   private currentDate = new Date();
-  public userLocal: any = localStorage.getItem("user");
+  // public userLocal: any = localStorage.getItem("user");
   private currentPage = 1; //当前页码
   private total = 0; //查出来这个条件全部多少条
   musicInfo = {

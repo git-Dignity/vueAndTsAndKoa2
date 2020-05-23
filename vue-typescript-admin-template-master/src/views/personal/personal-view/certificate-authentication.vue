@@ -73,6 +73,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import PanThumb from "@/components/PanThumb/index.vue";
+import { UserModule } from '@/store/modules/user'
 import {
   getCertificate,
   uploadFile
@@ -89,7 +90,7 @@ export default class extends Vue {
   private certificateData = [];
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
-    public userLocal: any = localStorage.getItem("user")
+    // public userLocal: any = localStorage.getItem("user")
   private currentPage = 1; //当前页码
   private total = 0; //查出来这个条件全部多少条
   formInline = {
@@ -136,7 +137,8 @@ export default class extends Vue {
     // console.log(this.formInline);
     
     const { data } = await getCertificate({
-      username: JSON.parse(this.userLocal).username,
+      // username: JSON.parse(this.userLocal).username,
+      username: UserModule.name,
       pageNum: this.currentPage,
       form: this.formInline
     });
@@ -155,7 +157,8 @@ export default class extends Vue {
 
   private async initPhoto() {
     const { data } = await getCertificate({
-      username: JSON.parse(this.userLocal).username,
+      // username: JSON.parse(this.userLocal).username,
+      username: UserModule.name,
       pageNum: this.currentPage
     });
 
@@ -168,7 +171,7 @@ export default class extends Vue {
 
   private async uoload(e: any) {
     const param = new FormData();
-    param.append("username", JSON.parse(this.userLocal).username);
+    param.append("username", UserModule.name);
     param.append("file", e.file);
 
     await uploadFile(param);

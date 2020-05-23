@@ -11,7 +11,7 @@ class sqlModel{
     }
 
     async getTotal(){
-        console.log(this.tableWhere)
+        // console.log(this.tableWhere)
         let _sql = `select count(*) as count from ${this.tableName} where ${this.tableWhere}`
         // console.log(_sql)
         let result_sql = await DB.query( _sql)

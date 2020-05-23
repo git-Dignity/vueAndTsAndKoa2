@@ -1,3 +1,5 @@
+var uuid = require('uuid');
+var fs = require('fs');
 // 上传到七牛
 let qiniu = require('qiniu'); // 需要加载qiniu模块的
 // 引入key文件
@@ -35,6 +37,51 @@ const upToQiniu = (filePath, key) => {
     })
   }
 
+
+  
+
+// 支持多文件上传到千牛云
+const uploadToQiniu = (fileArr) => {
+  var promiseTmp = []
+  fileArr.forEach(element => {
+
+    promiseTmp.push(new Promise((resolve, reject) => {
+      // 命名文件
+      const fileName = uuid.v1();
+      // 创建文件可读流
+      const reader = fs.createReadStream(element[1].path);
+      // 获取上传文件扩展名
+      const ext = element[1].name.split(".").pop();
+      // 命名文件以及拓展名
+      const fileUrl = `${fileName}.${ext}`;
+
+      // 调用方法(封装在utils文件夹内)
+      upToQiniu(reader, fileUrl).then(res => {
+        let tmp = {
+          id: fileName,
+          hash: res.hash,
+          key: res.key,
+          fileType: element[1].type,
+          fileName: element[1].name,
+          fileSize: element[1].size,
+          isSucess: 1
+        }
+
+        resolve(tmp)
+      })
+    }));
+
+  });
+
+
+  return Promise.all(promiseTmp).then((result) => {
+    return result
+  })
+}
+
+
   module.exports = {
-    upToQiniu
+    upToQiniu,
+    uploadToQiniu
+    
 }

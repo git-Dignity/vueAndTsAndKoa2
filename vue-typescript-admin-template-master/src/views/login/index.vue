@@ -57,7 +57,7 @@
           type="danger"
           style="width:50%; margin-bottom:30px;"
           @click.native.prevent="handleRegiste"
-        >{{ $t('login.registe') }}</el-button>
+        >{{ $t('registe.registeIn') }}</el-button>
         <el-button
           :loading="loading"
           type="primary"
@@ -109,11 +109,18 @@ import SocialSign from "./components/SocialSignin.vue";
 })
 export default class extends Vue {
   private validateUsername = (rule: any, value: string, callback: Function) => {
-    if (!isValidUsername(value)) {
-      callback(new Error("Please enter the correct user name"));
+    if (value.length < 3) {
+      callback(new Error("The username can not be less than 3 digits"));
     } else {
       callback();
     }
+
+    // 管理员页面请使用
+    // if (!isValidUsername(value)) {
+    //   callback(new Error("Please enter the correct user name"));
+    // } else {
+    //   callback();
+    // }
   };
 
   private validatePassword = (rule: any, value: string, callback: Function) => {
@@ -125,8 +132,8 @@ export default class extends Vue {
   };
 
   private loginForm = {
-    username: "zheng",
-    password: "zhengzemin"
+    username: "",
+    password: ""
   };
 
   private loginRules = {
@@ -178,7 +185,7 @@ export default class extends Vue {
   }
 
   private handleRegiste() {
-    console.log(44)
+  
     this.$router.push({
       path: "/registe",
       query: {}

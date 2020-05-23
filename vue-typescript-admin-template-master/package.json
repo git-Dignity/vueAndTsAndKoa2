@@ -101,6 +101,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.2.2",
     "fibers": "^3.0.2",
+    "javascript-state-machine": "^3.1.0",
+    "javascript-tool-class": "^1.0.35",
     "jest": "^25.2.7",
     "lint-staged": "^10.1.1",
     "lrc-file-parser": "^1.0.3",

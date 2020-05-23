@@ -194,7 +194,7 @@ export const asyncRoutes: RouteConfig[] = [
     meta: {
       title: 'sys',
       icon: 'example',
-      roles: ['admin', 'editor'], // you can set roles in root nav
+      roles: ['admin'], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
@@ -264,7 +264,6 @@ export const asyncRoutes: RouteConfig[] = [
     meta: {
       title: 'music',
       icon: 'example',
-      roles: ['admin', 'editor'], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
