@@ -15,3 +15,15 @@ export const articleStatusFilter = (status: string) => {
 export const uppercaseFirstChar = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+// 千分位过滤器
+// 使用：<div>{{ ssss | thousandBitSeparator }}</div>
+export const thousandBitSeparator = (value: string) => {
+  return value && (value.toString().indexOf('.') !== -1 ?
+    value.toString().replace(/(\d)(?=(\d{3})+\.)/g, function ($0, $1) {
+      return $1 + ',';
+    }) :
+    value.toString().replace(/(\d)(?=(\d{3})+$)/g, function ($0, $1) {
+      return $1 + ',';
+    }));
+}

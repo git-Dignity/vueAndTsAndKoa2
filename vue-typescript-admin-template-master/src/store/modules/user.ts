@@ -69,7 +69,7 @@ class User extends VuexModule implements IUserState {
     this.SET_NAME(username)
   }
 
-
+ 
 
   @Action
   public ResetToken() {

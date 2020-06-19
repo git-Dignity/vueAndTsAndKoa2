@@ -124,7 +124,7 @@ export default class extends Vue {
   private uploadFile = (param: any) => {
     return new Promise((resolve, reject) => {
       axios
-        .post("http://localhost:3000/certificateAuthentication/upload", param, {
+        .post("http://localhost:3333/certificateAuthentication/upload", param, {
           headers: { "Content-Type": "multipart/form-data" }
         })
         .then(res => {

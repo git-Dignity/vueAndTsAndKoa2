@@ -89,7 +89,7 @@ import BookTypeOption from './components/BookTypeOption.vue'
 @Component({
   name: 'ExportExcel',
   components: {
-    AutoWidthOption,
+    AutoWidthOption, 
     BookTypeOption,
     FilenameOption
   }

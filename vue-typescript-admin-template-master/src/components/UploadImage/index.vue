@@ -49,7 +49,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
-  name: 'UploadImage'
+  name: 'UploadImage' 
 })
 export default class extends Vue {
   @Prop({ default: '' }) private value!: string

@@ -11,3 +11,31 @@
 * 所有的 svg 组件都是由 `vue-svgicon` 生成的
 * 每当在 `icons/svg` 文件夹内添加 icon 之后，可以通过执行 `yarn svg` 来重新生成所有组件 (在此之前需要全局安装 `vue-svgicon` 或使用 `npx`)
 * 详细文档请见：[https://github.com/MMF-FE/vue-svgicon](https://github.com/MMF-FE/vue-svgicon)
+ 
+## 添加svg
+* 在@/icon/svg下，创建svg文件，path去iconfont阿里巴巴图标下载svg，把path复制到这里面，格式如下：
+ <svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+  <path>去阿里巴巴复制svg代码</path>
+</svg>
+
+* 在@/icon/components下，创建ts文件，path一样复制到下面，格式如下：
+* 有个疑问就是阿里巴巴图标下载下来的viewBox="0 0 1024 1024"，但是我里面是0 0 128 128，不知道怎么改
+* 如果默认下载是1024放在页面是没问题，但是一到菜单显示，就看起来有点压缩的感觉
+/* eslint-disable */
+/* tslint:disable */
+// @ts-ignore
+import icon from 'vue-svgicon'
+icon.register({
+  '404': {
+    width: 128,
+    height: 128,
+    viewBox: '0 0 128 128',
+    data: '<path/>'
+  }
+})
+
+* 最后在@/icon/components/index.ts文件，添加需要导入的文件
+import './singer'
+
+* 关于SVG的viewBox：https://blog.csdn.net/weixin_33979363/article/details/91586796
+

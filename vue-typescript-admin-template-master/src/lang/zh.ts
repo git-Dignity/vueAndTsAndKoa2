@@ -73,6 +73,7 @@ export default {
     certificate: '证件',
     certificateAuthentication: '指定人证件',
     music:'音乐',
+    songList: '歌单',
     musicSinger: '歌手',
     singerSongList: '歌手清单',
     singerSongLyric: '歌曲歌词'

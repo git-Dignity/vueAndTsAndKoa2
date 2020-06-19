@@ -14,7 +14,7 @@
       @timeupdate="onTimeupdate"
       @loadedmetadata="onLoadedmetadata"
     ></audio>
-    <!--      @waiting="onWaiting"-->
+    <!--      @waiting="onWaiting"--> 
 
     <!-- 音频播放控件 -->
     <div>
@@ -160,7 +160,7 @@ export default {
       volume: 100, // 音频音量控制
       speeds: this.theSpeeds,
 
-      playIsAll: false, //随机或者单曲
+      playIsAll: (this.$store.state.music.musicPlayerState && this.$store.state.music.musicPlayerState.playIsAll) || false, //随机或者单曲
       disPlayIsAllBtn: true, //是否显示随机按钮
 
       controlList: {
@@ -192,6 +192,7 @@ export default {
     //     this.audioName.lastIndexOf(".")
     //   );
     // }
+    // console.log(this.$store.state.music.musicPlayerState)
     
 
     this.setControlList();
@@ -387,6 +388,7 @@ export default {
       return "快进: x" + value;
     },
     allOrSingle(value) {
+      // console.log(value)
       return value ? "随机" : "单曲";
     }
   },

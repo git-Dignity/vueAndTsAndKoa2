@@ -5,6 +5,18 @@
 <p>
   前端LRC歌词解析播放插件:https://segmentfault.com/a/1190000018789057
 </p>
+<p>
+  components/global下是全局组件
+</p>
+<p>
+  mock
+</p>
+<p>
+  $t为了做国际语言
+</p>
+<p>
+  jsx写饿了么组件：https://blog.csdn.net/weixin_30687587/article/details/97988234
+</p>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue">

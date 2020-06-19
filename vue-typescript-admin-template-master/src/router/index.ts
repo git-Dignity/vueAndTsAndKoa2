@@ -263,29 +263,35 @@ export const asyncRoutes: RouteConfig[] = [
     name: 'music',
     meta: {
       title: 'music',
-      icon: 'example',
+      icon: 'music',
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
-          {
+          { 
+            path: 'song-list',
+            component: () => import(/* webpackChunkName: "song-list" */ '@/views/music/index.vue'),
+            name: 'songList',
+            meta: { title: 'songList', noCache: true, icon: 'singer' }
+          },
+          { 
             path: 'music-singer',
             component: () => import(/* webpackChunkName: "music-singer" */ '@/views/music/music-singer.vue'),
             name: 'musicSinger',
-            meta: { title: 'musicSinger', noCache: true }
+            meta: { title: 'musicSinger', noCache: true, icon: 'singer' }
           },
           {
             path: 'singer-song-list',
             component: () => import(/* webpackChunkName: "singer-song-list" */ '@/views/music/singer-song-list.vue'),
             name: 'singerSongList',
-            meta: { title: 'singerSongList', noCache: true } 
+            meta: { title: 'singerSongList', noCache: false, icon: 'singer-song-list' } 
           },
           {
             // path: 'singer-song-lyric/:row',  
             path: 'singer-song-lyric',  
             component: () => import(/* webpackChunkName: "singer-song-lyric" */ '@/views/music/singer-song-lyric.vue'),
             name: 'singerSongLyric',
-            meta: { title: 'singerSongLyric', noCache: true } 
+            meta: { title: 'singerSongLyric', icon: 'singer-song-lyric' } 
           }
         
     ]
@@ -548,7 +554,7 @@ export const asyncRoutes: RouteConfig[] = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
+  mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
       return savedPosition

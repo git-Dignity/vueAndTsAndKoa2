@@ -7,6 +7,9 @@ import SvgIcon from 'vue-svgicon'
 import '@/styles/element-variables.scss'
 import '@/styles/index.scss'
 
+// 公共样式
+import '@/styles/utils.scss'
+
 import App from '@/App.vue'
 import store from '@/store'
 import { AppModule } from '@/store/modules/app'
@@ -18,6 +21,11 @@ import '@/utils/error-log'
 import '@/pwa/register-service-worker'
 import * as directives from '@/directives'
 import * as filters from '@/filters'
+
+// 全局引用基础组件
+import appButton from '@/components/Global/index.vue'
+Vue.component("app-button", appButton);
+
 
 
 Vue.use(ElementUI, {
@@ -37,15 +45,19 @@ Object.keys(directives).forEach(key => {
 })
 
 // Register global filter functions
+// 遍历过滤属性值，一次性全部注册
 Object.keys(filters).forEach(key => {
   Vue.filter(key, (filters as { [key: string ]: Function })[key])
 })
 
 Vue.config.productionTip = false
 
-new Vue({
+new Vue({ 
   router,
   store,
   i18n,
-  render: (h) => h(App)
+  render: (h) => h(App),
+  mounted () {
+    document.dispatchEvent(new Event('render-event'))   // 预编译
+  }
 }).$mount('#app')

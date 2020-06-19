@@ -174,7 +174,7 @@ export default class extends Vue {
       console.log(param)
     return new Promise((resolve, reject) => {
       axios
-        .post("http://localhost:3000/users/register", param, {
+        .post("http://localhost:3333/users/register", param, {
           headers: { "Content-Type": "multipart/form-data" }
         })
         .then(res => {

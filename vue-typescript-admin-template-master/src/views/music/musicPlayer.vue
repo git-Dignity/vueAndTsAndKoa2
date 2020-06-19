@@ -30,6 +30,9 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { Form } from "element-ui";
 import { cloneDeep } from "lodash";
+import { getMusic } from "@/api/music/index";
+import QS from "qs";
+
 import { MusicModule } from "@/store/modules/music";
 import VueAudio from "@/components/Music/VueAudio.vue";
 
@@ -129,6 +132,27 @@ export default class extends Vue {
   //   return this.$store.state.musicPage;
   // }
 
+  /**
+   * 因为有时候播放播着就 this.$store.state.music.musicPage为空
+   * 因为用户刷新页面，所以store为空
+   * 所以歌曲播完，发现store的musicPage为空，就重新获取set进去state
+   */
+  async initAudiosPage() {
+    const data: any = await getMusic(
+      QS.stringify({
+        singerName: this.$route.query.singerName + "",
+        current: 1,
+        size: 6
+      })
+    );
+
+    data[1].records.forEach((element: any) => {
+      element.play = false;
+    });
+
+    await MusicModule.AudiosPage(data[1].records);
+  }
+
   closeMusic(data: string) {
     // console.log(data)
     if (data === "0") {
@@ -182,8 +206,17 @@ export default class extends Vue {
   }
 
   async onTimeupdate(data: any) {
-    if (data == 100) {
-      // console.log(this.isAllOrSingle)
+    // 发现有些歌曲播放完，并不会自动下一曲，然后就不播放了
+    // 一开始以为等于100就是这首歌曲播完了，结果有些歌曲是不会刚好等于100，如：99、101直接跳过100
+    // 那就写大于等于100就好了
+    if (data >= 100) {
+      // console.log(this.isAllOrSingle);
+      // 如果发现audiosPage为空，则初始化重新赋值（因为刷新，所以state为空）
+      if (this.$store.state.music.audiosPage.length === 0) {
+        console.log("audiosPage为空");
+        this.initAudiosPage();
+      }
+
       if (this.isAllOrSingle === 1) {
         this.findThisAudioIndex();
         // console.log(this.audioIndex);
@@ -198,7 +231,7 @@ export default class extends Vue {
         );
 
         // console.log(this.findThisAudioIndex());
-        // console.log(this.$store.state.music.audiosPage)
+        // console.log(this.$store.state.music.audiosPage);
         // console.log(this.$store.state.music.audiosPage[this.audioRandomIndex]);
         await MusicModule.MusicPage({
           url: this.$store.state.music.audiosPage[this.audioRandomIndex]
@@ -224,31 +257,43 @@ export default class extends Vue {
         // 未捕获（按承诺）DOMException：play（）请求被对pause（）的调用中断了
         // 我有音乐视频播放器。但是，当我改变质量时，它给出了这个错误
         // 意思就是开始播放，然后之后又来一次，被中段了，就会歌在放，下面的操作就操作不了
-         setTimeout(async() =>{
+        setTimeout(async () => {
           await MusicModule.MusicPage({
-          url: MusicModule.musicPage.url,
-          singerName: MusicModule.musicPage.singerName,
-          songName: MusicModule.musicPage.songName,
-          play: true
-        });
-        },1000)
-
-       
+            url: MusicModule.musicPage.url,
+            singerName: MusicModule.musicPage.singerName,
+            songName: MusicModule.musicPage.songName,
+            play: true
+          });
+        }, 1000);
 
         // this.$store.commit("musicPage", this.$store.state.musicPage);
       }
     }
   }
   //随机播放
-  playAll(data: any) {
+  async playAll(data: any) {
     // 1
     this.isAllOrSingle = data;
+    await MusicModule.MusicPlayerState({
+      isPlay: false,
+      muted: false,
+      speed: 1,
+      volume: 100,
+      playIsAll: false
+    });
     // console.log(data)
   }
   //单曲循环
-  playSingle(data: any) {
+  async playSingle(data: any) {
     // 2
     this.isAllOrSingle = data;
+    await MusicModule.MusicPlayerState({
+      isPlay: false,
+      muted: false,
+      speed: 1,
+      volume: 100,
+      playIsAll: true
+    });
     // console.log(data);
   }
 }

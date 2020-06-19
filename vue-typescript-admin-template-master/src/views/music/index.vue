@@ -1,266 +1,234 @@
 <template>
   <div class="app-container">
-    <el-row :gutter="15">
-      <el-form :inline="true" :model="musicInfo" class="demo-form-inline">
-        <el-form-item label="歌曲名">
-          <el-input v-model="musicInfo.songName" placeholder="歌曲名"></el-input>
-        </el-form-item>
-        <el-form-item label="歌手名">
-          <el-input v-model="musicInfo.singerName" placeholder="歌手名"></el-input>
-        </el-form-item>
-        <el-form-item label="歌曲类型">
-          <el-select v-model="musicInfo.songType" placeholder="歌曲类型">
-            <el-option label="民族" value="0"></el-option>
-            <el-option label="流行" value="1"></el-option>
-            <el-option label="摇滚" value="2"></el-option>
-            <el-option label="轻音乐" value="3"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitUpload">上传</el-button>
-        </el-form-item>
-      </el-form>
+    <el-col
+      :span="6"
+      v-for="(song, index) in songeList"
+      :key="index"
+      class="mb4"
+      :offset="index > 0 ? 2 : 0"
+    >
+      <el-row>
+        <router-link :to="{ path: song.link.path, query: song.link.query}">
+          <el-card class="box-card" ref="songHead">
+            <div slot="header" class="clearfix text-white">
+              <songeListHeader :header="song.header"></songeListHeader>
+              <span
+                style="padding: 3px 0"
+                v-if="song.header.play"
+                class="el-icon-video-play f40 fr"
+              ></span>
+            </div>
 
-      <el-upload
-        class="upload-demo"
-        drag
-        action="/music/upload"
-        :http-request="uoload"
-        :before-upload="beforeAvatarUpload"
-        accept=".mp4, .m4a, .mp3, .flac, .wima"
-        multiple
-        ref="upload"
-        :auto-upload="false"
-      >
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">
-          将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">请上传.mp4, .m4a, .mp3, .flac, .wima文件格式</div>
-      </el-upload>
-
-      <!--       
-   <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-      <br />-->
-
-      <!-- 
-      <el-upload
-  class="upload-demo"
-  ref="upload"
-  action="/music/upload"
-        :http-request="uoload"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :auto-upload="false">
-  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-      </el-upload>-->
-    </el-row>
-
-    <el-row>
-      <el-table
-        :data="musicData"
-        border
-        style="width: 100%; margin-top: 3%"
-        :default-sort="{prop: 'isSys', order: 'descending'}"
-      >
-        <el-table-column prop="song_name" label="歌曲名" width="380"></el-table-column>
-        <el-table-column prop="singer_name" label="歌手名" width="180"></el-table-column>
-        <el-table-column prop="songT" label="歌曲类型" width="150"></el-table-column>
-        <el-table-column prop="file_size" label="時長" width="180"></el-table-column>
-        <el-table-column label="音頻">
-          <template slot-scope="{row}">
-            <el-button
-              v-if="row.play"
-              type="danger"
-              icon="el-icon-video-pause"
-              @click="musicPauseBtn(row)"
-              circle
-            ></el-button>
-            <el-button
-              v-else
-              type="primary"
-              icon="el-icon-video-play"
-              @click="musicPlayBtn(row, row.musicUrl, row.username)"
-              circle
-            ></el-button>
-          </template>
-          <!-- <template slot-scope="scope"> 
-         <el-button 
-          type="primary" 
-          :icon="viedoPlay" 
-          @click="music_btn(scope.row, scope.row.musicUrl, scope.row.username)"
-          circle>
-          </el-button>
-          </template>-->
-        </el-table-column>
-      </el-table>
-    </el-row>
-    <el-pagination
-      
-      :current-page="currentPage"
-      :page-sizes="[6, 12, 18, 100]"
-      :page-size="6"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    ></el-pagination>
+            <div
+              v-for="(songList, songListIndex) in song.list"
+              :key="songList.index"
+              class="text item"
+            >
+              <span class="f20 num3-color" v-if="songListIndex<3">{{songListIndex+1}}</span>
+              <span class="f20 num-color" v-else>{{songListIndex+1}}</span>
+              <span class="ml4 mr4">-</span>
+              <span>{{ songList.songer }}</span>
+              <span class="fr" v-if="songList.singer">{{ songList.singer }}</span>
+            </div>
+          </el-card>
+        </router-link>
+      </el-row>
+    </el-col>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { Form } from "element-ui";
 import { cloneDeep } from "lodash";
-import { getMusic, uploadMusic } from "@/api/music/index";
-import { MusicModule } from "@/store/modules/music";
 import { qiniuUrl } from "@/api/common";
+import { UserModule } from "@/store/modules/user";
+import { getSinger, uploadSinger } from "@/api/music/singer/index";
+import { getMusic, uploadMusic } from "@/api/music/index";
+import { Module } from "module";
+import QS from "qs";
+import songeListHeader from "./components/Header";
+import { randomSort } from "@/utils/tool";
 
 @Component({
-  name: "music"
+  name: "songList",
+  components: {
+    songeListHeader
+  }
 })
 export default class extends Vue {
-  private musicData = [];
   private tableKey = 0;
   private currentDate = new Date();
-  // public userLocal: any = localStorage.getItem("user");
-  private currentPage = 1; //当前页码
-  private total = 0; //查出来这个条件全部多少条
-  musicInfo = {
-    songName: "",
-    singerName: "",
-    songType: "民族"
+  private singleList = [];
+  private imageUrl = "";
+
+  private singerInfo = {
+    singerName: ""
   };
 
-  submitUpload() {
-    if (
-      this.musicInfo.songName != "" &&
-      this.musicInfo.singerName != "" &&
-      (this.$refs.upload as any).uploadFiles.length != 0
-    ) {
-      (this.$refs.upload as any).submit();
-      return;
+  private songeList = [
+    {
+      header: {
+        unique: "歌",
+        rightText: "手榜",
+        time: "05月31日更新",
+        play: false
+      },
+      link: {
+        path: "/music/music-singer",
+        query: {}
+      },
+      bg: "linear-gradient(141deg,#9948ca 0%,#924fcb 51%,#9948ca 75%)",
+      list: [{ songer: "", singer: "" }]
+    },
+    {
+      header: {
+        unique: "轻",
+        rightText: "音乐榜",
+        time: "05月31日更新",
+        play: true
+      },
+      link: {
+        path: "/music/singer-song-list",
+        query: {
+          singerName: "轻"
+        }
+      },
+      bg: "linear-gradient(141deg,#149AB4 0%,#46B8C3 51%,#30B3C3 75%)",
+      list: [{ songer: "小朋友，你是否有很多问号？", singer: "周杰伦" }]
+    },
+    {
+      header: {
+        unique: "音",
+        rightText: "乐馆",
+        time: "06月17日更新",
+        play: true
+      },
+      link: {
+        path: "/music/singer-song-list",
+        query: {
+          singerName: ""
+        }
+      },
+      bg: "linear-gradient(141deg,#E64D7A 0%,#DC4673 51%,#CC446C 75%)",
+      list: [{ songer: "暂无数据", singer: "阿泽" }]
     }
-
-    this.$message.error("请检查上传参数是否齐全!");
-  }
-  handleRemove(file: any, fileList: any) {
-    console.log(file, fileList);
-  }
-  handlePreview(file: any) {
-    console.log(file);
-  }
-
+  ];
 
   created() {
     this.init();
   }
+  mounted() {
+    // 给歌单上色，因为不能在for那加颜色，所以只能在js处理
+    const clearfix: any = document.getElementsByClassName("clearfix");
 
-  async musicPlayBtn(row: any, url: string, uploader: string) {
-    // console.log(row);
-    this.musicData.forEach((element: any) => {
-      element.play = false;
+    clearfix.forEach((element, index) => {
+      element.parentNode.style.backgroundImage = this.songeList[index].bg;
     });
-
-    row.play = true;
-
-    await MusicModule.MusicPage({
-      url: url,
-      uploader: uploader,
-      play: true
-    });
-  }
-
-  async musicPauseBtn(row: any) {
-    row.play = false;
-  }
-
-  get musicpa() {
-    return MusicModule.playasb;
-  }
-
-  @Watch("musicpa")
-  private onRoutesChange(data: any) {
-    console.log(data);
-    console.log("拿不到playasb的store，应该是缓存");
-  }
-
-
-  getSongType(type: string) {
-    const songTypeMap = new Map([
-      ["0", "民族"],
-      ["1", "流行"],
-      ["2", "摇滚"],
-      ["3", "轻音乐"]
-    ]);
-    return songTypeMap.get(type) ? songTypeMap.get(type) : "民族";
   }
 
   private async init() {
-    const { data } = await getMusic({
-      // username: JSON.parse(this.userLocal).username,
-      singerName: "周杰伦",
-      pageNum: this.currentPage
+    // 初始化歌榜
+    this.initSingerList();
+    this.initQingList();
+    this.initAllSongList();
+  }
+
+  private async initSingerList() {
+    const singerData: any = await getSinger({
+      current: 1,
+      size: 8
     });
 
-    data.data.forEach((element: any) => {
-      element.musicUrl = qiniuUrl + element.file_key;
-      element.songT = this.getSongType(element.song_type);
-      element.play = false;
-    });
-    this.total = data.total;
-    this.musicData = data.data;
-    // console.log(this.musicData);
+    const arrTmp = [];
+    for (var i in singerData[1].items) {
+      arrTmp.push({
+        songer: singerData[1].items[i].singerName,
+        index: i
+      });
+    }
+    this.songeList[0].list = arrTmp;
   }
 
-  private async uoload(e: any) {
-    const param = new FormData();
-    param.append("musicInfo", JSON.stringify(this.musicInfo));
-    param.append("file", e.file);
+  private async initQingList() {
+    const qingData: any = await getMusic(
+      QS.stringify({
+        singerName: this.songeList[1].header.unique,
+        singerSongName: "",
+        current: 1,
+        size: 8
+      })
+    );
 
-    await uploadMusic(param);
+    const arrTmp = [];
+    for (var i in qingData[1].records) {
+      arrTmp.push({
+        songer: qingData[1].records[i].singerSongName,
+        singer: qingData[1].records[i].singerName,
+        index: i
+      });
+    }
 
-    this.$message({
-      message: "上传成功",
-      type: "success"
-    });
-    this.init();
+    this.songeList[1].list = arrTmp;
   }
 
-  private handleSizeChange(val: number) {
-    console.log(`每页 ${val} 条`);
-  }
-  private handleCurrentChange(val: number) {
-    console.log(`当前页: ${val}`);
-    this.currentPage = val;
-    this.init();
-  }
+  private async initAllSongList() {
+    const allSongData: any = await getMusic(
+      QS.stringify({
+        singerName: "",
+        singerSongName: "",
+        current: 1,
+        size: 1000
+      })
+    );
+    const tmp = allSongData[1].records.sort(randomSort).slice(0, 8);
 
-  // 文件上传之前做处理
-  private beforeAvatarUpload(file: any) {
-    // console.log(file); 
-    // const isLt20M = file.size / 1024 / 1024 < 20;
-    // // 图片格式
-    // if (
-    //   file.type !== "image/jpeg" &&
-    //   file.type !== "image/jpg" &&
-    //   file.type !== "image/png" &&
-    //   file.type !== "image/gif"
-    // ) {
-    //   this.$message.error("只能上传图片格式文件!");
-    //   return false;
-    // }
-    // // 图片大小
-    // if (!isLt20M) {
-    //   this.$message.error("上传头像图片大小不能超过 20MB!");
-    //   return false;
-    // }
+    const arrTmp = [];
+    for (var i in tmp) {
+      arrTmp.push({
+        songer: tmp[i].singerSongName,
+        singer: tmp[i].singerName,
+        index: i
+      });
+    }
+
+    this.songeList[2].list = arrTmp;
   }
 }
 </script>
 
-<style  scope>
+
+
+
+
+<style lang="scss"  scope>
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.box-card {
+  //   width: 480px;
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both;
+  }
+}
+
+.el-card__header {
+  cursor: pointer;
+  //   background-image: linear-gradient(
+  //     141deg,
+  //     #9948ca 0%,
+  //     #924fcb 51%,
+  //     #9948ca 75%
+  //   );
+}
 </style>
