@@ -162,6 +162,7 @@ Understanding and learning these knowledge in advance will greatly help you on u
 │   ├── api                    # api service
 │   ├── assets                 # module assets like fonts, images (processed by webpack)
 │   ├── components             # global components
+|   |—— const                  # 系统常量
 │   ├── directives             # global directives
 │   ├── filters                # global filter
 │   ├── icons                  # svg icons

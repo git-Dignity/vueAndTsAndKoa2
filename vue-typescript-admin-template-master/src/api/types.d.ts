@@ -46,8 +46,9 @@ export interface IUserData {
 export interface ISysRoleData {
   id: string
   roleName: string
-  enName: string
+  roleKey: string
   roleType: string
-  isSys: string
+  isSys: number
   remarks: string 
+  routes: Array<any>
 } 

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view  />
     <service-worker-update-popup />
 
     <div>
@@ -35,6 +35,9 @@ export default class extends Vue {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
     });
   }
+
+ 
+ 
 }
 </script>
 

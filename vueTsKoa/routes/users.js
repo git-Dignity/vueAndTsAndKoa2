@@ -130,6 +130,8 @@ router.post('/info', async (ctx, next) => {
     select * from login where username = '${username}'
   `)
 
+  console.log(result)
+
 
   const user = {
     // avatar: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
@@ -140,9 +142,8 @@ router.post('/info', async (ctx, next) => {
     name: username,
     password: "any",
     phone: "1234567890",
-    roles: ['admin'],
     roles: [`${result[0].roles}`],
-    username: "editor"
+    username: result[0].username
   }
   const userInfo = {
     user: user

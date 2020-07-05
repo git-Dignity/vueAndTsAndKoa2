@@ -74,9 +74,9 @@ export default class extends Vue {
 
   // 显示在上传组件那的文件列表信息
   private handleFileChange(file: any, list: Array<any>) {
+   
     if ((this.childrenUploadFileData as any).type == "image_avatar") {
       this.imageUrl = URL.createObjectURL(file.raw);
-      this.$message("歌手图片已选中");
     } else {
       this.fileList = list.length > 0 ? [list[list.length - 1]] : [];
     }

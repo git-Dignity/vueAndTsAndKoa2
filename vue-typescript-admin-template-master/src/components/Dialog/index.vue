@@ -5,17 +5,12 @@
       :visible.sync="childrenData.show"
       :width="childrenData.width"
       :center="childrenData.center"
+      :close-on-click-modal = "childrenData.isCloseModal"
     >
-    <div v-if="childrenData.type==='edit'">
-        <slot name="childTemplate" ></slot>
-    </div>
-    <div v-else class="tc">
-        {{childrenData.info.singerSongName}}  {{childrenData.info.singerName}}
-    </div>
-      <!-- <div v-html="childrenData.template">{{childrenData.template}}</div> -->
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="submit">确 定</el-button>
+      <slot name="childTemplate"></slot>
+      <span slot="footer" class="dialog-footer" v-if="childrenData.isShowSubmit"> 
+        <el-button @click="cancel">{{ $t('table.cancel') }}</el-button>
+        <el-button type="primary" @click="submit">{{ $t('table.confirm') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -25,12 +20,13 @@
 import {
   Component,
   Prop,
-  InjectReactive, 
+  InjectReactive,
   Watch,
   Vue
 } from "vue-property-decorator";
 import { EventBus } from "@/eventBus/index";
 import { symbol } from "@/utils/symBol";
+import { clearEventBus } from "@/eventBus/modules/clearEventBus";
 
 @Component({
   name: "Dialog"
@@ -42,61 +38,38 @@ export default class extends Vue {
   })
   childrenData!: object;
 
+  private parentDialogEmit = {};
 
-  singerDialogFileData = {};
 
   submit() {
-    if ((this.childrenData as any).type == "edit") {
-      this.$emit("update:parentDialogEditSubmit", this.singerDialogFileData);
-    } else if ((this.childrenData as any).type == "del") {
-      this.$emit("update:parentDialogSubmit", true);
-    }
+    this.$emit("update:parentDialogSubmit", this.parentDialogEmit);
   }
 
   cancel() {
     (this.childrenData as any).show = false;
-    this.singerDialogFileData = {};
-
-    if ((this.childrenData as any).type == "edit") {
-      this.$emit("update:parentDialogEditCancel", "edit");
-    } else if ((this.childrenData as any).type == "del") {
-      this.$emit("update:parentDialogEditCancel", "del");
-    }
-  }
-
-  aaa() {
-    console.log(222);
-  }
-
-  singerDialogData() {
-    console.log(99);
+    this.parentDialogEmit = {};
+    this.$emit("update:parentDialogCancel", true);
   }
 
   mounted() {
     // 因为EventBus是重新new一个vue实例，所以可以写在mounted函数里面，而不需要watch监听
-    EventBus.$on("isCloseDialog", msg => {
+    EventBus.$on("isCloseDialog", (msg: boolean) => {
       if (msg) {
         (this.childrenData as any).show = false;
-        // 用完之后便销毁
-        EventBus.$off("isCloseDialog", {});
+        clearEventBus("isCloseDialog");  // 用完之后便销毁
       }
     });
 
-    EventBus.$on("singerDialogFile", msg => {
+    EventBus.$on("parentDialogEmit", (msg: any) => {
       // console.log(msg)
-      this.singerDialogFileData = msg;
-      //   if (msg) {
-      //     (this.childrenData as any).show = false;
-      //     // 用完之后便销毁
-      EventBus.$off("singerDialogFile", {});
-      //   }
+      this.parentDialogEmit = msg;
+      clearEventBus("parentDialogEmit");  // 用完之后便销毁
     });
 
-    EventBus.$on("isShowDialog", msg => {
+    EventBus.$on("isShowDialog", (msg: boolean) => {
       if (msg) {
         (this.childrenData as any).show = false;
-        // 用完之后便销毁
-        EventBus.$off("isShowDialog", {});
+        clearEventBus("isShowDialog");  // 用完之后便销毁
       }
     });
   }
@@ -127,7 +100,9 @@ import SingerDialog from "@/components/Dialog/index";
 <SingerDialog 
     :childrenData="childrenDialogData" 
     @update:parentDialogSubmit="parentDialogData">
+    <div slot="childTemplate"></div>
 </SingerDialog>
+
 
 
 ## 参数说明
@@ -138,7 +113,7 @@ import SingerDialog from "@/components/Dialog/index";
     show: false,                    // 是否显示
     width: "35%",                   
     center: true,             // 是否对头部和底部采用居中布局  
-    singleData: []              // 对话框内容需要显示的数据
+    info: []              // 对话框内容需要显示的数据
   };
 
 ## 参数说明
@@ -147,7 +122,7 @@ import SingerDialog from "@/components/Dialog/index";
     show: false | true,         // 是否显示
     width: "35%",                   
     center: true | false,         // 是否对头部和底部采用居中布局  
-    singleData: [
+    info: [
         a1:"aaa",
         a2:"aa2"
     ]                           // 对话框内容需要显示的数据
@@ -156,7 +131,7 @@ import SingerDialog from "@/components/Dialog/index";
 
 // 子组件给父组件传，告诉父组件我已经被点击确定了，父组件就做确定的逻辑
 submit() {
-    this.$emit("update:parentDialogSubmit", true);
+    this.$emit("update:parentDialogSubmit", this.parentDialogEmit);
   }
 
 

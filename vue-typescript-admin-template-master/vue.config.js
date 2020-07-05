@@ -10,6 +10,11 @@ const devServerPort = 9527 // TODO: get this variable from setting.ts
 const mockServerPort = 9548 // TODO: get this variable from setting.ts
 const name = '音乐博客' // TODO: get this variable from setting.ts
 
+
+function resolve (dir) {
+    return path.join(__dirname, dir)
+}
+
 module.exports = {
   publicPath: '/',  // 打包后的静态文件路径
   // publicPath: process.env.NODE_ENV === 'production' ? '/' : '/vue-typescript-admin-template/',
@@ -71,6 +76,12 @@ module.exports = {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     config.set('name', name)
+
+    // set Alias
+    config.resolve.alias
+      .set('@v', resolve('src/views'))
+      .set('components', resolve('src/components'))
+     
 
     // https://webpack.js.org/configuration/devtool/#development
     config
@@ -142,9 +153,6 @@ module.exports = {
       ],
     };
   },
-
-
-  
 
 
 }

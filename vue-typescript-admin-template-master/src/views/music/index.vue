@@ -47,8 +47,9 @@ import { getSinger, uploadSinger } from "@/api/music/singer/index";
 import { getMusic, uploadMusic } from "@/api/music/index";
 import { Module } from "module";
 import QS from "qs";
-import songeListHeader from "./components/Header";
-import { randomSort } from "@/utils/tool";
+import songeListHeader from "./components/Header.vue";
+import { randomSort } from "@/utils/tool/index";
+import { songeList } from "./modules/songeList";
 
 @Component({
   name: "songList",
@@ -57,74 +58,10 @@ import { randomSort } from "@/utils/tool";
   }
 })
 export default class extends Vue {
-  private tableKey = 0;
-  private currentDate = new Date();
-  private singleList = [];
-  private imageUrl = "";
-
-  private singerInfo = {
-    singerName: ""
-  };
-
-  private songeList = [
-    {
-      header: {
-        unique: "歌",
-        rightText: "手榜",
-        time: "05月31日更新",
-        play: false
-      },
-      link: {
-        path: "/music/music-singer",
-        query: {}
-      },
-      bg: "linear-gradient(141deg,#9948ca 0%,#924fcb 51%,#9948ca 75%)",
-      list: [{ songer: "", singer: "" }]
-    },
-    {
-      header: {
-        unique: "轻",
-        rightText: "音乐榜",
-        time: "05月31日更新",
-        play: true
-      },
-      link: {
-        path: "/music/singer-song-list",
-        query: {
-          singerName: "轻"
-        }
-      },
-      bg: "linear-gradient(141deg,#149AB4 0%,#46B8C3 51%,#30B3C3 75%)",
-      list: [{ songer: "小朋友，你是否有很多问号？", singer: "周杰伦" }]
-    },
-    {
-      header: {
-        unique: "音",
-        rightText: "乐馆",
-        time: "06月17日更新",
-        play: true
-      },
-      link: {
-        path: "/music/singer-song-list",
-        query: {
-          singerName: ""
-        }
-      },
-      bg: "linear-gradient(141deg,#E64D7A 0%,#DC4673 51%,#CC446C 75%)",
-      list: [{ songer: "暂无数据", singer: "阿泽" }]
-    }
-  ];
+  private songeList = songeList;
 
   created() {
     this.init();
-  }
-  mounted() {
-    // 给歌单上色，因为不能在for那加颜色，所以只能在js处理
-    const clearfix: any = document.getElementsByClassName("clearfix");
-
-    clearfix.forEach((element, index) => {
-      element.parentNode.style.backgroundImage = this.songeList[index].bg;
-    });
   }
 
   private async init() {
@@ -134,22 +71,31 @@ export default class extends Vue {
     this.initAllSongList();
   }
 
+  /**
+   * 初始化歌手榜
+   */
   private async initSingerList() {
-    const singerData: any = await getSinger({
+    let { items } = await getSinger({
       current: 1,
       size: 8
     });
+    items = JSON.parse(items);
 
-    const arrTmp = [];
-    for (var i in singerData[1].items) {
+    const arrTmp: Array<any> = [];
+    for (var i in items) {
       arrTmp.push({
-        songer: singerData[1].items[i].singerName,
+        songer: items[i].singerName,
+        singer: "",
         index: i
       });
     }
+
     this.songeList[0].list = arrTmp;
   }
 
+  /**
+   * 初始化轻音乐榜
+   */
   private async initQingList() {
     const qingData: any = await getMusic(
       QS.stringify({
@@ -160,7 +106,7 @@ export default class extends Vue {
       })
     );
 
-    const arrTmp = [];
+    const arrTmp: Array<any> = [];
     for (var i in qingData[1].records) {
       arrTmp.push({
         songer: qingData[1].records[i].singerSongName,
@@ -172,6 +118,9 @@ export default class extends Vue {
     this.songeList[1].list = arrTmp;
   }
 
+  /**
+   * 初始化音乐馆
+   */
   private async initAllSongList() {
     const allSongData: any = await getMusic(
       QS.stringify({
@@ -181,9 +130,9 @@ export default class extends Vue {
         size: 1000
       })
     );
-    const tmp = allSongData[1].records.sort(randomSort).slice(0, 8);
+    const tmp: any = allSongData[1].records.sort(randomSort).slice(0, 8);
 
-    const arrTmp = [];
+    const arrTmp: any = [];
     for (var i in tmp) {
       arrTmp.push({
         songer: tmp[i].singerSongName,
@@ -194,11 +143,17 @@ export default class extends Vue {
 
     this.songeList[2].list = arrTmp;
   }
+
+  mounted() {
+    // 给歌单上色，因为不能在for那加颜色，所以只能在js处理
+    const clearfix: any = document.getElementsByClassName("clearfix");
+
+    clearfix.forEach((element: any, index: number) => {
+      element.parentNode.style.backgroundImage = this.songeList[index].bg;
+    });
+  }
 }
 </script>
-
-
-
 
 
 <style lang="scss"  scope>

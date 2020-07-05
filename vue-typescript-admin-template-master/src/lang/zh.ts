@@ -155,11 +155,15 @@ export default {
     confirm: '确 定'
   },
   sys: {
-    roleName: '角色名称',
-    enName: '英文名称',
+    name: '角色名称',
+    roleKey: '角色key',
     roleType: '角色类型',
     isSys: '是否系统数据',
-    remarks: '备注'
+    remarks: '备注',
+    routes: '路由'
+  },
+  music: {
+    singerName: "歌手名"
   },
   example: {
     warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'

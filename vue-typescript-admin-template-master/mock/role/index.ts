@@ -4,6 +4,9 @@ import { asyncRoutes, constantRoutes } from './routes'
 import { IRoleData } from '../../src/api/types'
 
 const routes = [...constantRoutes, ...asyncRoutes]
+
+
+
 const roles: IRoleData[] = [
   {
     key: 'admin',

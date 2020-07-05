@@ -18,7 +18,7 @@
         width="220"
       >
         <template slot-scope="scope">
-          {{ scope.row.key }}
+          {{ scope.row.roleKey }}
         </template>
       </el-table-column>
       <el-table-column
@@ -32,10 +32,10 @@
       </el-table-column>
       <el-table-column
         align="header-center"
-        label="Description"
+        label="remarks"
       >
         <template slot-scope="scope">
-          {{ scope.row.description }}
+          {{ scope.row.remarks }}
         </template>
       </el-table-column>
       <el-table-column
@@ -78,10 +78,10 @@
         </el-form-item>
         <el-form-item label="Desc">
           <el-input
-            v-model="role.description"
+            v-model="role.remarks"
             :autosize="{minRows: 2, maxRows: 4}"
             type="textarea"
-            placeholder="Role Description"
+            placeholder="Role remarks"
           />
         </el-form-item>
         <el-form-item label="Menus">
@@ -121,11 +121,21 @@ import { Component, Vue } from 'vue-property-decorator'
 import { RouteConfig } from 'vue-router'
 import { Tree } from 'element-ui'
 import { getRoutes, getRoles, createRole, deleteRole, updateRole } from '@/api/roles'
-
+import {constantRoutes, asyncRoutes} from "@/router/index";
+import {
+  getSysRole,
+  getPageviews,
+  createSysRole,
+  updateSysRole,
+  delSysRole,
+  defaultSysRoleData 
+} from "@/api/sys/sysRole";
+ 
+ 
 interface IRole {
-  key: number
-  name: string
-  description: string
+  roleKey: number
+  name: string 
+  remarks: string
   routes: RouteConfig[]
 }
 
@@ -136,9 +146,9 @@ interface IRoutesTreeData {
 }
 
 const defaultRole: IRole = {
-  key: 0,
+  roleKey: 0,
   name: '',
-  description: '',
+  remarks: '',
   routes: []
 }
 
@@ -157,8 +167,16 @@ export default class extends Vue {
     children: 'children',
     label: 'title'
   }
+  private listQuery =  {
+      page: 1,
+      limit: 8,
+      total: 0,
+      pageSize: [8, 16, 50, 100, 1000],
+      sort: "+id"
+    }
 
   get routesTreeData() {
+   
     return this.generateTreeData(this.reshapedRoutes)
   }
 
@@ -169,14 +187,24 @@ export default class extends Vue {
   }
 
   private async getRoutes() {
-    const { data } = await getRoutes({ /* Your params here */ })
-    this.serviceRoutes = data.routes
-    this.reshapedRoutes = this.reshapeRoutes(data.routes)
+    // const { data } = await getRoutes({ /* Your params here */ })
+    // console.log(data)
+   
+    
+    // this.serviceRoutes = data.routes
+    // this.reshapedRoutes = this.reshapeRoutes(data.routes)
+
+    this.serviceRoutes = [ ...asyncRoutes];
+    this.reshapedRoutes = this.reshapeRoutes([ ...asyncRoutes])
   }
 
   private async getRoles() {
-    const { data } = await getRoles({ /* Your params here */ })
-    this.rolesList = data.items
+    const { data } = await getSysRole(this.listQuery);
+    this.rolesList = data.items;
+
+
+    // const { data } = await getRoles({ /* Your params here */ })
+    // this.rolesList = data.items
   }
 
   private generateTreeData(routes: RouteConfig[]) {
@@ -209,6 +237,7 @@ export default class extends Vue {
       if (route.children && onlyOneShowingChild && (!route.meta || !route.meta.alwaysShow)) {
         route = onlyOneShowingChild
       }
+     
       const data: RouteConfig = {
         path: path.resolve(basePath, route.path),
         meta: {
@@ -221,6 +250,7 @@ export default class extends Vue {
       }
       reshapedRoutes.push(data)
     }
+   
     return reshapedRoutes
   }
 
@@ -249,9 +279,13 @@ export default class extends Vue {
 
   private handleEdit(scope: any) {
     this.dialogType = 'edit'
-    this.dialogVisible = true
-    this.checkStrictly = true
+    this.dialogVisible = true;
+    this.checkStrictly = true;
+  
     this.role = cloneDeep(scope.row)
+
+    // console.log(this.role);
+   
     this.$nextTick(() => {
       const routes = this.flattenRoutes(this.reshapeRoutes(this.role.routes))
       const treeData = this.generateTreeData(routes)
@@ -298,32 +332,35 @@ export default class extends Vue {
   private async confirmRole() {
     const isEdit = this.dialogType === 'edit'
     const checkedKeys = (this.$refs.tree as Tree).getCheckedKeys()
+   
 
     this.role.routes = this.generateTree(cloneDeep(this.serviceRoutes), '/', checkedKeys)
-
+    console.log(this.generateTree(cloneDeep(this.serviceRoutes), '/', checkedKeys))
+   
+   
     if (isEdit) {
-      await updateRole(this.role.key, { role: this.role })
+      await updateSysRole({ role: this.role })
       for (let index = 0; index < this.rolesList.length; index++) {
-        if (this.rolesList[index].key === this.role.key) {
+        if (this.rolesList[index].roleKey === this.role.roleKey) {
           this.rolesList.splice(index, 1, Object.assign({}, this.role))
           break
         }
       }
     } else {
       const { data } = await createRole({ role: this.role })
-      this.role.key = data.key
+      this.role.roleKey = data.roleKey
       this.rolesList.push(this.role)
     }
 
-    const { description, key, name } = this.role
+    const { remarks, roleKey, name } = this.role
     this.dialogVisible = false
     this.$notify({
       title: 'Success',
       dangerouslyUseHTMLString: true,
       message: `
-          <div>Role Key: ${key}</div>
+          <div>Role Key: ${roleKey}</div>
           <div>Role Name: ${name}</div>
-          <div>Description: ${description}</div>
+          <div>remarks: ${remarks}</div>
         `,
       type: 'success'
     })

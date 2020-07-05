@@ -115,7 +115,7 @@
               ></el-button>
               <el-button
                 type="danger"
-                @click="singerSongDel(row, row.song_url, row.singerName, row.singerSongName)"
+                @click="singerSongDel(row)"
                 icon="el-icon-delete"
                 v-permission="['admin']"
               ></el-button>
@@ -144,9 +144,8 @@
 
     <SingerDialog
       :childrenData="childrenDialogData"
-      @update:parentDialogSubmit="parentDialogData"
-      @update:parentDialogEditSubmit="parentDialogEditSubmit"
-      @update:parentDialogEditCancel="parentDialogEditCancel"
+      @update:parentDialogSubmit="parentDialogEditSubmit"
+      @update:parentDialogCancel="parentDialogCancel"
     >
       <div slot="childTemplate">
         <EditSingerSongDialog :info="childrenDialogData.info" @singerDialogData="singerDialogData"></EditSingerSongDialog>
@@ -165,12 +164,17 @@ import { UserModule } from "@/store/modules/user";
 import QS from "qs";
 // import { qiniuUrl } from "@/api/common";
 import { checkPermission } from "@/utils/permission"; // Use permission directly
-// import Point from './test'
+import Point from './test'
 import { symbol } from "@/utils/symBol";
 import { EventBus } from "@/eventBus/index";
-import SingerDialog from "@/components/Dialog/index";
-import UploadFile from "@/components/UploadFile/index";
-import EditSingerSongDialog from "./components/EditSingerSongDialog";
+import SingerDialog from "@/components/Dialog/index.vue";
+import UploadFile from "@/components/UploadFile/index.vue";
+import EditSingerSongDialog from "./components/EditSingerSongDialog.vue";
+import {
+  MessageSuccess,
+  MessageError,
+  MesssageBoxQuestion
+} from "@/utils/tool/message";
 
 @Component({
   name: "singerSongList",
@@ -182,10 +186,7 @@ import EditSingerSongDialog from "./components/EditSingerSongDialog";
 })
 export default class extends Vue {
   private musicData = [];
-  ssss = "54541455sd4";
-  private tableKey = 0;
-  private currentDate = new Date();
-  // private point = new Point("1","41");   //  //使用class
+  private point = new Point("1","41");   //  //使用class
 
   private page = {
     currentPage: 1, //当前页码
@@ -236,13 +237,11 @@ export default class extends Vue {
   };
 
   private childrenDialogData = {
-    title: "是否删除该歌手照片",
+    title: "修改歌手歌曲信息",
     show: false,
     width: "20%",
     center: true,
-    template: ``,
-    info: [],
-    type: "edit"
+    info: []
   };
 
   // 为了避免命名冲突, 可以使用 ES6 的 Symbol 特性作为 key
@@ -259,7 +258,8 @@ export default class extends Vue {
   }
 
   private async init() {
-    // console.log(this.point.toString())   //使用class
+    this.point.x = "5454545"
+    console.log(this.point)   //使用class
 
     this.musicInfo.singerName = this.$route.query.singerName + "";
     if (this.musicInfo.singerName == "轻") this.musicInfo.songType = "轻音乐";
@@ -386,54 +386,36 @@ export default class extends Vue {
     singerName: string,
     songName: string
   ) {
-    console.log(row);
+    // console.log(row);
     this.childrenDialogData.info = row;
-    this.childrenDialogData.title = "修改歌手歌曲信息";
     this.childrenDialogData.show = true;
-    this.childrenDialogData.type = "edit";
   }
 
-  singerSongDel(row: any, url: string, singerName: string, songName: string) {
-    this.childrenDialogData.info = row;
-    this.childrenDialogData.title = "是否删除该歌手歌曲";
-    this.childrenDialogData.show = true;
-    this.childrenDialogData.type = "del";
-  }
-
-  /**
-   * 删除歌手图片
-   */
-  private async parentDialogData(isDialogSubmit: boolean) {
-    console.log(this.childrenDialogData.info);
-    if (isDialogSubmit) {
-      const data = await delMusic(
+  singerSongDel(row: any) {
+    MesssageBoxQuestion("是否删除该歌手歌曲,是否继续").then(async () => {
+      const data: any = await delMusic(
         QS.stringify({
-          info: JSON.stringify(this.childrenDialogData.info)
+          info: JSON.stringify(row)
         })
       );
 
-      EventBus.$emit("isCloseDialog", true); // 关闭子组件对话框
-      console.log(data);
-
       if (data[1]) {
-        this.$message({
-          message: "删除成功",
-          type: "success"
-        });
-
+        MessageSuccess("删除成功!");
         this.init();
       }
-    }
+    });
   }
 
+
   private async parentDialogEditSubmit(data: any) {
-    console.log(data);
+    // console.log(data);
 
-
-    const result = await editMusic(QS.stringify({
-      id: data.id,
-      singerSongName: data.singerName
-    }));
+    const result: any = await editMusic(
+      QS.stringify({
+        id: data.id,
+        singerSongName: data.singerName
+      })
+    );
     // console.log(result);
     EventBus.$emit("isShowDialog", true);
     if (result.Success == "true") {
@@ -445,16 +427,15 @@ export default class extends Vue {
     }
   }
 
-  private parentDialogEditCancel(data: any) {
+  private parentDialogCancel(data: any) {
     // console.log(data);
     // (this as any).isCancel = data;
     EventBus.$emit("isCancel", data);
   }
 
-   singerDialogData(data) {
+  singerDialogData(data: any) {
     // console.log(data);
-    // console.log(11134234321521);
-    EventBus.$emit("singerDialogFile", data);
+    EventBus.$emit("parentDialogEmit", data);
   }
 
   async musicPlayBtn(

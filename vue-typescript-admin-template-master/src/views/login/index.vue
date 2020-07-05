@@ -132,8 +132,8 @@ export default class extends Vue {
   };
 
   private loginForm = {
-    username: "",
-    password: ""
+    username: "zheng",
+    password: "zhengzemin"
   };
 
   private loginRules = {
@@ -197,6 +197,8 @@ export default class extends Vue {
       if (valid) {
         this.loading = true;
         await UserModule.Login(this.loginForm);
+     
+     
         this.$router.push({
           path: this.redirect || "/",
           query: this.otherQuery

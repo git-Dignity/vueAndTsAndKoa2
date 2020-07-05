@@ -1,13 +1,14 @@
 import request from '@/utils/request'
-import { ISysRoleData } from '../types'
+import { ISysRoleData } from '@/api/types'
 
 export const defaultSysRoleData: ISysRoleData = {
   id: '',
-  roleName: '',
-  enName: '',
+  roleName: '', 
+  roleKey: '',
   roleType: '',
-  isSys: '否',
-  remarks: ''
+  isSys: 0,
+  remarks: '',
+  routes: []
 }
 
 export const getSysRole = (params: any) =>
@@ -31,9 +32,16 @@ export const createSysRole = (data: any) =>
     data
   })
 
-export const updateArticle = (id: number, data: any) =>
+  export const delSysRole = (data: any) =>
   request({
-    url: `/SysRole/${id}`,
+    url: '/role/del',
+    method: 'post',
+    data
+  })
+
+export const updateSysRole = (data: any) =>
+  request({
+    url: `/role/edit`,
     method: 'put',
     data
   })

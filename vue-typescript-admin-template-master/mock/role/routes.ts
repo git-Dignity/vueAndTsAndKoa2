@@ -64,7 +64,7 @@ export const constantRoutes = [
         }
       }
     ]
-  },
+  }, 
   {
     path: '/guide',
     component: 'Layout',

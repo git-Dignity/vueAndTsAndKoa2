@@ -37,7 +37,7 @@ m.singer_name = '${req.singerName}' and m.song_name like '%${req.form.song}%'
 
 
   } else {
-    
+
     result = await DB.query(`
    select m.file_key, m.file_size, m.song_name, m.singer_name, m.song_type, s.file_key as songFileKey  from qiniu_music m inner join qiniu_song_img s on m.id=s.id 
     where m.singer_name = '${req.singerName}' 
@@ -208,7 +208,7 @@ router.post('/upload', async (ctx, next) => {
     // 前端必须以formData格式进行文件的传递
     // const file = ctx.request.files.file0; // 获取上传文件
 
-    let fileArr = Object.entries(ctx.request.files) 
+    let fileArr = Object.entries(ctx.request.files)
 
     if (fileArr.length != 0) {
       result = await uploadToQiniu(fileArr)
@@ -235,7 +235,7 @@ router.post('/upload', async (ctx, next) => {
                 values('${result[0].id}','${result[1].hash}','${result[1].key}','${result[1].fileType}','${result[1].fileName}','${result[1].fileSize}','${result[1].isSucess}')
             `)
 
- 
+
 
       if (result) {
         console.log("上传成功")

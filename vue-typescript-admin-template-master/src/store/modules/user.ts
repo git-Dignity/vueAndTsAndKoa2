@@ -6,6 +6,8 @@ import { PermissionModule } from './permission'
 import { TagsViewModule } from './tags-view'
 import store from '@/store'
 import { getUserSessionName, setUserSessionName } from '@/cache/session/modules/user'
+import { removeSession } from "@/cache/session/index"
+import { removeLocal } from "@/cache/local/index"
 
 export interface IUserState {
   token: string
@@ -86,7 +88,7 @@ class User extends VuexModule implements IUserState {
 
     const { data } = await getUserInfo({ username:this.name })  
 
-    
+  
    
     // localStorage.setItem('user', JSON.stringify({
     //   "username": data.user.name 
@@ -131,6 +133,10 @@ class User extends VuexModule implements IUserState {
     await logout()
     removeToken()
     resetRouter()
+
+    removeSession()
+    removeLocal()
+
 
     // Reset visited views and cached views
     TagsViewModule.delAllViews()

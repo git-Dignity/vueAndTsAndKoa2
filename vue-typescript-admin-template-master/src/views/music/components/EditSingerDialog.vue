@@ -28,7 +28,7 @@ export default {
     console.log(this.info);
     EventBus.$on("isCancel", msg => {
       console.log(msg);
-      if (msg == "edit") {
+      if (msg === true) {
         console.log(45);
         this.singerId = "";
         this.text = "";
