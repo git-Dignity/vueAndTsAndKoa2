@@ -18,5 +18,15 @@ export interface ISysRoleData {
   }
 
 
+  export interface ISysUserData {
+    id: string
+    userName: string
+    photo: string
+    phone: string
+    roles: string
+    token: string
+  }
+
+
 
   

@@ -7,19 +7,18 @@
           :border="childrenTableData.border"
           :style="childrenTableData.tableWidth"
           :default-sort="childrenTableData.defaultSort"
-          
         >
           <template v-for="(column, index) in childrenTableData.column">
             <el-table-column
               :key="index"
-              v-if="column.prop == 'handleRole'"
+              v-if="column.prop == 'handSolt'"
               :prop="column.prop"
               :label="column.label"
               :width="column.width"
             >
               <template slot-scope="{row}">
-                  <slot :row = "row"></slot>
-               </template>
+                <slot :row="row"></slot>
+              </template>
             </el-table-column>
             <el-table-column
               :key="index"
@@ -32,6 +31,17 @@
               <template slot-scope="scope">
                 <span v-if="column.render" v-html="column.render(scope.row, column)"></span>
                 <span v-else>{{scope.row[column.prop]}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-else-if="column.isPhoto"
+              :key="index"
+              :width="column.width"
+              :prop="column.prop"
+              :label="column.label"
+            >
+              <template slot-scope="{row}">
+                <el-avatar shape="square" :size="80" fit="fill" :src="row.photo"></el-avatar>
               </template>
             </el-table-column>
             <el-table-column
@@ -94,8 +104,7 @@ export default class extends Vue {
   })
   childrenTableData!: object;
 
-  getList(val:Object) {
-   
+  getList(val: Object) {
     this.$emit("parentPagination", val);
   }
 

@@ -19,7 +19,7 @@ const sysRoleForm = {
         },
 
         "name": {
-            label: 'sys.name',
+            label: 'sys.role.name',
             name: "name",
             value: "",
             disabled: false,
@@ -30,7 +30,7 @@ const sysRoleForm = {
             }
         },
         "roleKey": {
-            label: 'sys.roleKey',
+            label: 'sys.role.roleKey',
             name: "roleKey",
             value: "",
             disabled: false,
@@ -40,7 +40,7 @@ const sysRoleForm = {
             }
         },
         "roleType": {
-            label: 'sys.roleType',
+            label: 'sys.role.roleType',
             name: "roleType",
             value: "",
             isSelect: true,

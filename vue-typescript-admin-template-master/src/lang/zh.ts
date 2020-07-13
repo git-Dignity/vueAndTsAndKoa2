@@ -45,7 +45,7 @@ export default {
     form: '表单',
     createArticle: '创建文章',
     editArticle: '编辑文章',
-    articleList: '文章列表',  
+    articleList: '文章列表',
     errorPages: '错误页面',
     page401: '401',
     page404: '404',
@@ -72,7 +72,7 @@ export default {
     personalView: '个人证件',
     certificate: '证件',
     certificateAuthentication: '指定人证件',
-    music:'音乐',
+    music: '音乐',
     songList: '歌单',
     musicSinger: '歌手',
     singerSongList: '歌手清单',
@@ -94,9 +94,9 @@ export default {
     any: '随便填',
     thirdparty: '第三方登录',
     thirdpartyTips: '本地不能模拟，请结合自己业务进行模拟！！！',
-    
+
   },
-  registe:{
+  registe: {
     title: '系统注册',
     registeIn: '注册',
     phone: '请输入手机号码',
@@ -155,12 +155,20 @@ export default {
     confirm: '确 定'
   },
   sys: {
-    name: '角色名称',
-    roleKey: '角色key',
-    roleType: '角色类型',
+    role: {
+      name: '角色名称',
+      roleKey: '角色key',
+      roleType: '角色类型',
+    },
+    user:{
+      name: '用户名'
+    },
+    photo: '头像',
+    phone: '手机号码',
     isSys: '是否系统数据',
     remarks: '备注',
     routes: '路由'
+
   },
   music: {
     singerName: "歌手名"

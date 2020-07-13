@@ -11,9 +11,7 @@ const mockServerPort = 9548 // TODO: get this variable from setting.ts
 const name = '音乐博客' // TODO: get this variable from setting.ts
 
 
-function resolve (dir) {
-    return path.join(__dirname, dir)
-}
+
 
 module.exports = {
   publicPath: '/',  // 打包后的静态文件路径
@@ -78,9 +76,9 @@ module.exports = {
     config.set('name', name)
 
     // set Alias
-    config.resolve.alias
-      .set('@v', resolve('src/views'))
-      .set('components', resolve('src/components'))
+    // config.resolve.alias
+    //   .set('@v', resolve('src/views'))
+    //   .set('components', resolve('src/components'))
      
 
     // https://webpack.js.org/configuration/devtool/#development
@@ -156,3 +154,8 @@ module.exports = {
 
 
 }
+
+
+// function resolve (dir) {
+//   return path.join(__dirname, dir)
+// }

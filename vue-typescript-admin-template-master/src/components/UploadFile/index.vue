@@ -162,6 +162,12 @@ export default class extends Vue {
 .el-collapse-item__wrap {
   padding: 10px;
 }
+ .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+
 </style>
 
 

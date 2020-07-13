@@ -89,8 +89,19 @@
                 autocomplete="off"
               ></el-input>
             </template>
-            <template v-else-if="item.isTree" >
-                <slot></slot>
+            <template v-else-if="item.isTree">
+              <slot></slot>
+            </template>
+            <template v-else-if="item.isPhoto">
+              <el-row :gutter="20" type="flex" class="row-bg" justify="start">
+                <el-col :span="6">
+                  <UploadFile
+                    :childrenUploadFileData="item.childrenUploadImgData"
+                    @parentUploadFileData="parentUploadImgData"
+                  ></UploadFile>
+                </el-col>
+              </el-row>
+              <!-- <el-avatar shape="square" :size="80" fit="fill" :src="item.value"></el-avatar> -->
             </template>
             <template v-else>
               <el-input
@@ -118,10 +129,13 @@ import {
 } from "vue-property-decorator";
 import { symbol } from "@/utils/symBol";
 import { EventBus } from "@/eventBus/index";
+import UploadFile from "@/components/UploadFile/index.vue";
 
 @Component({
   name: "ElemenetForm",
-  components: {}
+  components: {
+    UploadFile
+  }
 })
 export default class extends Vue {
   @Prop({
@@ -147,8 +161,11 @@ export default class extends Vue {
     this.$emit("selectChangeFormChild", { selectedName: e, item: item });
   }
 
-  inpBlurForm({ name, value }) {
+  inpBlurForm({ name, value }) {}
 
+  private parentUploadImgData(data: any) {
+    // console.log(data);
+    this.$emit("UploadImgDataChild", data);
   }
 
   mounted() {
@@ -161,8 +178,8 @@ export default class extends Vue {
 .el-form-item,
 .el-form-item--mini.el-form-item,
 .el-form-item--small.el-form-item {
-//   width: 90%;
-//   margin-left: 5%;
+  //   width: 90%;
+  //   margin-left: 5%;
 }
 </style>
 

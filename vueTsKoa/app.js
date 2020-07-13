@@ -10,6 +10,7 @@ const cors = require("koa-cors"); //可以写ajax实现实现异步跨域，在�
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const user = require('./routes/sys/user')
 const role = require('./routes/sys/role')
 const menu = require('./routes/sys/menu')
 const certificateAuthentication = require('./routes/personal/personalView/certificateAuthentication')
@@ -59,6 +60,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(role.routes(), role.allowedMethods())
+app.use(user.routes(), user.allowedMethods())
 app.use(menu.routes(), menu.allowedMethods())
 app.use(certificateAuthentication.routes(), certificateAuthentication.allowedMethods())
 app.use(music.routes(), music.allowedMethods())

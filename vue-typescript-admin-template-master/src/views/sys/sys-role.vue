@@ -78,9 +78,9 @@ import {
 import { ISysRoleData, IRoutesTreeData } from "@/api/sys/types/index";
 import { exportJson2Excel } from "@/utils/excel";
 import { formatJson } from "@/utils";
-import { roleTableColumns } from "@v/sys/modules/role/tableData";
-import ElemenetTable from "components/ElTable/index.vue";
-import ElemenetForm from "components/ElForm/index.vue";
+import { roleTableColumns } from "@/views/sys/modules/role/tableData";
+import ElemenetTable from "@/components/ElTable/index.vue";
+import ElemenetForm from "@/components/ElForm/index.vue";
 import { sysRoleForm, initSysRoleForm } from "./modules/role/formData";
 import {
   SysRole,

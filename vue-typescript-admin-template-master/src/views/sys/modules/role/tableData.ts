@@ -29,8 +29,8 @@ const roleTableColumns = {
         width: "180",
         label: "备注"
     },
-    "handleRole": {
-        prop: "handleRole",    
+    "handSolt": {
+        prop: "handSolt",    
         label: "操作"
     }
 }

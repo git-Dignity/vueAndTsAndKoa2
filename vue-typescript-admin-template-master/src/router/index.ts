@@ -208,7 +208,7 @@ export const asyncRoutes: RouteConfig[] = [
         component: () => import(/* webpackChunkName: "sys-user" */ '@/views/sys/sys-user.vue'),
         componentUrl: 'sys/sys-user',
         name: 'sysUser',
-        meta: { title: 'sysUser' }
+        meta: { title: 'sysUser', noCache: true }
       },
       {
         path: 'sys-menu',

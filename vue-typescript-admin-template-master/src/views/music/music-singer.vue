@@ -20,7 +20,7 @@
           <el-col :span="6">
             <UploadFile
               :childrenUploadFileData="childrenUploadImgData"
-              @parentUploadFileData="parentUploadImgData"
+              @parentUploadFileData="parentUploadImgData" 
             ></UploadFile>
           </el-col>
         </el-row>

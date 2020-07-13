@@ -20,12 +20,12 @@
       "@/*": [
         "src/*"
       ],
-      "@v/*": [
-        "src/views/*"
-      ],
-      "components/*": [
-        "src/components/*"
-      ]
+      // "@v/*": [
+      //   "src/views/*"
+      // ],
+      // "components/*": [
+      //   "src/components/*"
+      // ]
    
     },
     "lib": [
