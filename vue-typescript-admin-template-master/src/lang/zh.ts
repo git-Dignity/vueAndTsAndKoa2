@@ -76,7 +76,10 @@ export default {
     songList: '歌单',
     musicSinger: '歌手',
     singerSongList: '歌手清单',
-    singerSongLyric: '歌曲歌词'
+    singerSongLyric: '歌曲歌词',
+    // API接口
+    apiInterface: 'API接口',
+    phoneAttribution: '手机号码归属地查询'
   },
   navbar: {
     logOut: '退出登录',

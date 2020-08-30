@@ -8,7 +8,7 @@
     ></div>
 
     <div id="containe_audio" v-show="audioshow" class="vueAudio">
-      <div v-for="(item, index) in item" :key="index" v-show="audioshow" class="vueAudio">
+      <!-- <div v-for="(item, index) in item" :key="index" v-show="audioshow" class="vueAudio"> -->
         <VueAudio
           :theUrl="item.url"
           :theControlList="item.controlList"
@@ -21,7 +21,7 @@
           @playAll="playAll"
           @playSingle="playSingle"
         />
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -32,6 +32,7 @@ import { Form } from "element-ui";
 import { cloneDeep } from "lodash";
 import { getMusic } from "@/api/music/index";
 import QS from "qs";
+import vm from 'Vue'
 
 import { MusicModule } from "@/store/modules/music";
 import VueAudio from "@/components/Music/VueAudio.vue";
@@ -43,15 +44,16 @@ import VueAudio from "@/components/Music/VueAudio.vue";
   }
 })
 export default class extends Vue {
-  public item = [
+  public item = 
     {
       url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
       controlList: "onlyOnePlaying",
       singerName: "华晨宇",
       songName: "疯人院",
       uploadTime: "2019/05/20"
-    }
-  ];
+    };
+
+
 
   // private item = [
   //   {
@@ -89,31 +91,53 @@ export default class extends Vue {
     return MusicModule.musicPage;
   }
 
+  get musicItem() {
+    return this.item;
+  }
+
+  @Watch("musicItem")
+  private musicItemChange(data: any){
+    console.log('159' + data)
+  }
+
   @Watch("musicp")
   private onRoutesChange(data: any) {
-    // console.log(data);
+    console.log(data);
     // console.log(this.item)
     // console.log('----')
-    let containeAudio: any = document.getElementById("containe_audio");
+    // let containeAudio: any = document.getElementById("containe_audio");
 
-    for (var i = 0; i < containeAudio.childNodes.length; i++) {
-      containeAudio.removeChild(containeAudio.childNodes[i]);
-    }
+    // for (var i = 0; i < containeAudio.childNodes.length; i++) {
+    //   containeAudio.removeChild(containeAudio.childNodes[i]);
+    // }
 
-    this.item.push({
-      url: data.url,
+    this.item = {
+        url: data.url,
       controlList: "onlyOnePlaying",
       singerName: data.singerName,
       songName: data.songName,
       uploadTime: "2019/05/20"
-    });
+    }
+
+// 动态组件  v-show也可以实现  相当于重新渲染组件
+    // this.audioshow = !this.audioshow
+
+
+    // this.item.push({
+    //   url: data.url,
+    //   controlList: "onlyOnePlaying",
+    //   singerName: data.singerName,
+    //   songName: data.songName,
+    //   uploadTime: "2019/05/20"
+    // });
+
 
     //  this.$set(this.item,'url',data.url);
 
-    //   this.item.url= data.url;
+      // this.item.url= data.url;
     //  this.item = Object.assign({}, this.item)
 
-    // Vue.set(this.item,'url', data.url);
+    // vm.set(this.item,'url', data.url);
     // this.url = data.url;
     // console.log(this.url)
     // this.$store.commit("SET_MUSIC_URL", data.url);
@@ -124,7 +148,7 @@ export default class extends Vue {
     //   uploader: data.uploader,
     //   uploadTime: "2019/05/20"
     // };
-    // console.log(this.item)
+    console.log(this.item)
   }
 
   // musicPage() {

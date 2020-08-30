@@ -196,29 +196,58 @@ export default {
     
 
     this.setControlList();
-    if (this.url == "https://zhengzemin.cn/nodeJs/audio/说好不哭-周杰伦.m4a") {
-      this.disPlayIsAllBtn = false;
+    // if (this.url == "https://zhengzemin.cn/nodeJs/audio/说好不哭-周杰伦.m4a") {
+    //   this.disPlayIsAllBtn = false;
+    // }
+  },
+  computed: {
+    getUrl() {
+      return this.theUrl;
+      // return this.$store.state.music.url;
+    },
+    getSingerName(){
+      return this.theSingerName
+    },
+    getSongName(){
+      return this.theSongName
     }
   },
-  // computed: {
-  //   getUrl() {
-  //     return this.$store.state.music.url;
-  //   }
-  // },
-  // watch: {
-  //   getUrl: function(nl, ol) {
-  //     this.url = nl;
-  //     console.log(this.url,'-----')
-  //     // this.startPlayOrPause()
+ 
+  watch: {
+    getSingerName: function(nl,ol) {
+      console.log(nl)
+      this.singerName = nl
+    },
+    getSongName: function(nl, ol){
+      console.log(nl)
+      this.songName = nl
+    },
 
-  //     // this.setControlList();
-  //     // this.startPlay();
-  //     // this.$refs.audio.play();
+    getUrl: function(nl,ol) {
+      this.url = nl;
+      console.log(nl)
 
-  //     this.$refs.audio.play();
+      // setTimeout(() =>{
+      // this.$refs.audio.play();
+      // },1000)
 
-  //   }
-  // },
+     
+    this.$nextTick(() => {
+      this.$refs.audio.play();
+    })
+
+      // this.startPlayOrPause()
+
+      // this.setControlList();
+      // this.startPlay();
+      // this.$refs.audio.play();
+
+      // this.$refs.audio.play();
+    }
+  },
+  updated(){
+    // console.log(159)
+  },
   methods: {
     setControlList() {
       let controlList = this.theControlList.split(" ");
@@ -301,12 +330,12 @@ export default {
     },
     // 当音频开始等待
     onWaiting(res) {
-      console.log(res);
+      // console.log(res);
       this.$emit("audioState", "pause");
     },
     // 当音频开始播放
     onPlay(res) {
-      // console.log(res)
+      console.log(res)
       this.audio.playing = true;
       this.audio.loading = false;
 
@@ -393,8 +422,6 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.url)
-   
     
 
     this.$refs.audio.play();
@@ -417,7 +444,7 @@ export default {
       this.$emit("audioState", "play");
     }
 
-    // console.log('音乐燥起来');
+  
   }
 };
 </script>

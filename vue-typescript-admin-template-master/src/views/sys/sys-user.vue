@@ -122,7 +122,7 @@ export default class extends Vue {
     }
   };
   private sysUserForm = sysUserForm;
-  private refsForm = [];
+  private refsForm: any = [];
   private childrenDialogData = {
     title: "添加用户",
     show: false,
@@ -140,7 +140,9 @@ export default class extends Vue {
     label: "title"
   };
 
-  private role = Object.assign({}, ISysRoleData);
+  // private role: any = Object.assign({}, ISysRoleData);   //可能会遇到，ts报错才注释
+  private role:any = {};
+  
   private serviceRoutes: RouteConfig[] = [];
   private reshapedRoutes: RouteConfig[] = [];
   private downloadLoading = false
@@ -193,8 +195,8 @@ export default class extends Vue {
   }
 
  
-  private parentForm(data) {
-    console.log(data)
+  private parentForm(data: any) {
+    // console.log(data)
     this.refsForm.push(data);
   }
 

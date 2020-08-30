@@ -146,22 +146,24 @@ export default class extends Vue {
 
 
   // 只能输入数字
-  handleInput(e) {
+  handleInput(e: any) {
     let a = e.key.replace(/[^\d]/g, "");
     if (!a) {
       e.preventDefault();
     }
   }
 
-  linkMap(item) {
+  linkMap(item: any) {
     this.$emit("linkMapChild", item);
   }
 
-  selectChangeForm(e, item) {
+  selectChangeForm(e: any, item: any) {
     this.$emit("selectChangeFormChild", { selectedName: e, item: item });
   }
 
-  inpBlurForm({ name, value }) {}
+  inpBlurForm({ name, value }:any) {
+    console.log(name, value)
+  }
 
   private parentUploadImgData(data: any) {
     // console.log(data);

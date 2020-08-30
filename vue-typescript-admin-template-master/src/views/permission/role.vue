@@ -156,7 +156,7 @@ const defaultRole: IRole = {
   name: 'RolePermission'
 })
 export default class extends Vue {
-  private role = Object.assign({}, defaultRole)
+  private role: any = Object.assign({}, defaultRole)
   private reshapedRoutes: RouteConfig[] = []
   private serviceRoutes: RouteConfig[] = []
   private rolesList: IRole[] = []

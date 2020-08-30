@@ -75,7 +75,7 @@ export default class extends Vue {
    * 初始化歌手榜
    */
   private async initSingerList() {
-    let { items } = await getSinger({
+    let { items }:any = await getSinger({
       current: 1,
       size: 8
     });

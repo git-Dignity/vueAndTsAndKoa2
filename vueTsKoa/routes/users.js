@@ -23,7 +23,8 @@ router.post('/login', async (ctx, next) => {
 
 
   const result = await DB.query(`
-    select * from login where username = '${ctx.request.body.username}' and password = '${ctx.request.body.password}'
+    select * from login where username = '${ctx.request.body.username}' 
+    and password = '${ctx.request.body.password}'
   `)
 
   console.log(result)

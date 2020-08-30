@@ -1,6 +1,6 @@
 import { RouteConfig } from 'vue-router'
 import path from 'path'
-import { IDialogData } from 'component/Dialog/types/index'
+import { IDialogData } from '@/components/Dialog/types/index'
 
 
 // Reshape the routes structure so that it looks the same as the sidebar

@@ -316,6 +316,30 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   {
+    // 免费api接口调用
+    path: '/apiInterface',
+    component: Layout,
+    componentUrl: 'Layout',
+    redirect: '/apiInterface/phone-attribution',
+    name: 'apiInterface',
+    meta: {
+      title: 'apiInterface',
+      icon: 'music',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'apiInterface/phone-attribution',
+            component: () => import(/* webpackChunkName: "apiInterface/phone-attribution" */ '@/views/apiInterface/phone-attribution.vue'),
+            componentUrl: 'apiInterface/phone-attribution',
+            name: 'phoneAttribution',
+            meta: { title: 'phoneAttribution', noCache: true, icon: 'singer' }
+          },
+    ]
+  },
+  {
     path: '/icon',
     component: Layout,
     componentUrl: 'Layout',

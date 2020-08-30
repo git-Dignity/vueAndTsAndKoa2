@@ -119,7 +119,7 @@ import { getFormValue, validateForm } from "@/utils/tool/form";
   }
 })
 export default class extends Vue {
-  private refsForm = [];
+  private refsForm: any = [];
   private singleList = [];
   private fileList: Array<any> = [];
   private singerInfo = singerInfo;
@@ -145,7 +145,7 @@ export default class extends Vue {
   }
 
   private async init() {
-    const { items } = await getSinger({});
+    const { items }:any = await getSinger({});
     this.singleList = JSON.parse(items);
   }
 
@@ -168,7 +168,7 @@ export default class extends Vue {
     param.append("fileType", "0");
     param.append("file", data.filess[0]);
 
-    const { Success } = await editSinger(param);
+    const { Success }: any = await editSinger(param);
 
     EventBus.$emit("isShowDialog", true);
     if (Success == "true") {
@@ -177,7 +177,7 @@ export default class extends Vue {
     }
   }
 
-  private parentForm(data) {
+  private parentForm(data: any) {
     this.refsForm.push(data);
   }
 
@@ -206,7 +206,7 @@ export default class extends Vue {
   /**
    * 删除歌手图片
    */
-  private async singerDel({ id, 文件夹名字, fileUrl }) {
+  private async singerDel({ id, 文件夹名字, fileUrl }:any) {
     MesssageBoxQuestion("是否删除该歌手照片,是否继续")
       .then(async () => {
         if (id && 文件夹名字 && fileUrl) {
@@ -252,13 +252,16 @@ export default class extends Vue {
     param.append("fileType", "0");
     param.append("file", e.file);
 
-    const { Success } = await uploadSinger(param);
+    const { Success }:any = await uploadSinger(param);
+   
     if (Success === "true") {
       MessageSuccess("上传成功!");
       this.clearUploadData();
       this.init();
     }
   }
+
+ 
 
   changeActive($event: any, index: number) {
     // console.log($event)
