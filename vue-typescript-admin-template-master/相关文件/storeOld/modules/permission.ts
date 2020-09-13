@@ -1,13 +1,13 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
 import { RouteConfig } from 'vue-router'
-// import { asyncRoutes, constantRoutes } from '@/router'
-import {  constantRoutes, asyncRoutes as adminRoutes } from '@/router'
-import { asyncRoutes } from "@/router/asyncRoutes";
+import { asyncRoutes, constantRoutes } from '@/router'
 import store from '@/store'
 import { getSysRole } from "@/api/sys/sysRole";
 import Layout from '@/layout/index.vue'
+import Directive from '@/views/permission/directive.vue'
+import pathN from 'path'
 
-const hasPermission = (roles: string[], route: any) => {
+const hasPermission = (roles: string[], route: RouteConfig) => {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
@@ -15,8 +15,8 @@ const hasPermission = (roles: string[], route: any) => {
   }
 }
 
-export const filterAsyncRoutes = (routes: any[], roles: string[]) => {
-  const res: any[] = []
+export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
+  const res: RouteConfig[] = []
   routes.forEach(route => {
     const r = { ...route }
     if (hasPermission(roles, r)) {
@@ -30,8 +30,9 @@ export const filterAsyncRoutes = (routes: any[], roles: string[]) => {
 }
 
 
-const  filterAsyncRoutesComponentTmp = (routes: any) => {
-  const res: any[] = [];
+
+ const  filterAsyncRoutesComponentTmp = (routes: any) => {
+  const res: RouteConfig[] = [];
   routes.forEach(async (r:any) => {
    
     if (r.componentUrl) {
@@ -73,9 +74,9 @@ const  filterAsyncRoutesComponentTmp = (routes: any) => {
 }
 
 
-const filterAsyncRoutesComponent = (routes: any[]) => {
-  const res: any[] = []
-  routes.forEach((r: any) => {
+const filterAsyncRoutesComponent = (routes: RouteConfig[]) => {
+  const res: RouteConfig[] = []
+  routes.forEach(r => {
     // const r = { ...route }
     if (r.componentUrl) {
       r.component  = Layout
@@ -93,34 +94,31 @@ const filterAsyncRoutesComponent = (routes: any[]) => {
   return routes;
 }
 
-
 // const loadView = async (view:string) => {
 //   return import(`views/${view}`)
 // }
 
-// const loadView = async (view:string) => {
-//     try {
-//         return await import(`./src/views/${view}`)
-//     } catch (error) {
-//         return error
-//     }
-//   }
+const loadView = async (view:string) => {
+    try {
+        return await import(`./src/views/${view}`)
+    } catch (error) {
+        return error
+    }
+  }
 
 
-
-// sdsdsdsdsd
 export interface IPermissionState {
-  routes: any[]
-  dynamicRoutes: any[]
+  routes: RouteConfig[]
+  dynamicRoutes: RouteConfig[]
 }
 
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
-  public routes: any[] = []
-  public dynamicRoutes: any[] = []
+  public routes: RouteConfig[] = []
+  public dynamicRoutes: RouteConfig[] = []
 
   @Mutation
-  private SET_ROUTES(routes: any[]) {
+  private SET_ROUTES(routes: RouteConfig[]) {
     this.routes = constantRoutes.concat(routes)
     this.dynamicRoutes = routes
     // console.log(this.dynamicRoutes)
@@ -130,7 +128,7 @@ class Permission extends VuexModule implements IPermissionState {
   public async GenerateRoutes(roles: string[]) {
     let accessedRoutes
     if (roles.includes('admin')) {
-      accessedRoutes = adminRoutes
+      accessedRoutes = asyncRoutes
     } else {
       console.log(roles)
       
@@ -164,10 +162,8 @@ export const filterAsyncRouter = (asyncRouterMap: any) =>{ //遍历后台传来�
     if (route.componentUrl) {
      if (route.componentUrl === 'Layout') {//Layout组件特殊处理
         route.component = Layout
-        delete route.componentUrl
       } else {
         route.component = loadViewsd(route.componentUrl)
-        delete route.componentUrl
       }
     }
     if (route.children && route.children.length) {

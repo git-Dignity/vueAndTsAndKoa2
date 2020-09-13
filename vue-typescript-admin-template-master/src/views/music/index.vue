@@ -75,10 +75,12 @@ export default class extends Vue {
    * 初始化歌手榜
    */
   private async initSingerList() {
+   
     let { items }:any = await getSinger({
       current: 1,
       size: 8
     });
+    // console.log(items)
     items = JSON.parse(items);
 
     const arrTmp: Array<any> = [];

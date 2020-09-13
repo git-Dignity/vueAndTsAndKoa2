@@ -41,7 +41,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "./typings-custom/**/*.ts"
+    "./typings-custom/**/*.ts", "src/components/Table/index.js"
   ],
   "exclude": [
     "node_modules"

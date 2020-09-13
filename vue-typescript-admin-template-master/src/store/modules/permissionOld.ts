@@ -1,13 +1,12 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
 import { RouteConfig } from 'vue-router'
-// import { asyncRoutes, constantRoutes } from '@/router'
 import {  constantRoutes, asyncRoutes as adminRoutes } from '@/router'
 import { asyncRoutes } from "@/router/asyncRoutes";
 import store from '@/store'
 import { getSysRole } from "@/api/sys/sysRole";
 import Layout from '@/layout/index.vue'
 
-const hasPermission = (roles: string[], route: any) => {
+const hasPermission = (roles: string[], route: RouteConfig) => {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
   } else {
@@ -15,8 +14,8 @@ const hasPermission = (roles: string[], route: any) => {
   }
 }
 
-export const filterAsyncRoutes = (routes: any[], roles: string[]) => {
-  const res: any[] = []
+export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
+  const res: RouteConfig[] = []
   routes.forEach(route => {
     const r = { ...route }
     if (hasPermission(roles, r)) {
@@ -31,7 +30,7 @@ export const filterAsyncRoutes = (routes: any[], roles: string[]) => {
 
 
 const  filterAsyncRoutesComponentTmp = (routes: any) => {
-  const res: any[] = [];
+  const res: RouteConfig[] = [];
   routes.forEach(async (r:any) => {
    
     if (r.componentUrl) {
@@ -46,25 +45,9 @@ const  filterAsyncRoutesComponentTmp = (routes: any) => {
         }
 
       })
-       
-      
-    
-      // r.component = Directive
-      // r.component = loadView(r.componentUrl)
-      // console.log(r.component)
-
-   
-      // loadView(r.componentUrl).then(res=>{
-      //   console.log(res)
-      //   r.component = res
-      // }).catch(err =>{
-      //   console.log(err)
-      // })
     }
     if(r.children){
-      // r.children.forEach( (rr: any) => {
         filterAsyncRoutesComponentTmp(r.children);
-      // })
     }
   })
 
@@ -73,12 +56,12 @@ const  filterAsyncRoutesComponentTmp = (routes: any) => {
 }
 
 
-const filterAsyncRoutesComponent = (routes: any[]) => {
-  const res: any[] = []
-  routes.forEach((r: any) => {
+const filterAsyncRoutesComponent = (routes: RouteConfig[]) => {
+  const res: RouteConfig[] = []
+  routes.forEach((r:any) => {
     // const r = { ...route }
     if (r.componentUrl) {
-      r.component  = Layout
+      r.component  = Layout   
       // r.component = loadView(r.componentUrl)
     }
     if(r.children){
@@ -94,36 +77,28 @@ const filterAsyncRoutesComponent = (routes: any[]) => {
 }
 
 
-// const loadView = async (view:string) => {
-//   return import(`views/${view}`)
-// }
+const loadView = async (view:string) => {
+    try {
+        return await import(`./src/views/${view}`)
+    } catch (error) {
+        return error
+    }
+  }
 
-// const loadView = async (view:string) => {
-//     try {
-//         return await import(`./src/views/${view}`)
-//     } catch (error) {
-//         return error
-//     }
-//   }
-
-
-
-// sdsdsdsdsd
 export interface IPermissionState {
-  routes: any[]
-  dynamicRoutes: any[]
+  routes: RouteConfig[]
+  dynamicRoutes: RouteConfig[]
 }
 
 @Module({ dynamic: true, store, name: 'permission' })
 class Permission extends VuexModule implements IPermissionState {
-  public routes: any[] = []
-  public dynamicRoutes: any[] = []
+  public routes: RouteConfig[] = []
+  public dynamicRoutes: RouteConfig[] = []
 
   @Mutation
-  private SET_ROUTES(routes: any[]) {
+  private SET_ROUTES(routes: RouteConfig[]) {
     this.routes = constantRoutes.concat(routes)
     this.dynamicRoutes = routes
-    // console.log(this.dynamicRoutes)
   }
 
   @Action
@@ -139,7 +114,7 @@ class Permission extends VuexModule implements IPermissionState {
         limit: 8,
         roleKey: roles[0]
       })
-      // console.log(data.items[0].routes);
+      console.log(data.items[0].routes);
 
       // accessedRoutes = filterAsyncRoutesComponent(data.items[0].routes);
      
@@ -158,6 +133,7 @@ class Permission extends VuexModule implements IPermissionState {
 }
 
 
+
 export const filterAsyncRouter = (asyncRouterMap: any) =>{ //遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter((route: any) => {
     // console.log(route)
@@ -173,6 +149,7 @@ export const filterAsyncRouter = (asyncRouterMap: any) =>{ //遍历后台传来�
     if (route.children && route.children.length) {
       route.children = filterAsyncRouter(route.children)
     }
+   
     return route
   })
 
@@ -196,7 +173,6 @@ export const loadViewsd = (view: any) => {
 //     // 路由懒加载
 //     return () => import(`@/views/${view}`);
 // }
-
 
 
 export const PermissionModule = getModule(Permission)

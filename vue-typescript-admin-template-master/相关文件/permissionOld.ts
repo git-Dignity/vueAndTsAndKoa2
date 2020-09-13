@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css'
 import { Message } from 'element-ui'
 import { Route } from 'vue-router'
 import { UserModule } from '@/store/modules/user'
-import { PermissionModule, filterAsyncRouter } from '@/store/modules/permission'
+import { PermissionModule, filterAsyncRouter, loadViewsd } from '@/store/modules/permission'
 import i18n from '@/lang' // Internationalization
 import settings from './settings'
 import { getSysRole } from "@/api/sys/sysRole";
@@ -34,34 +34,40 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      console.log(UserModule.roles)
+
+
+console.log(UserModule.roles.length)
+      // Check whether the user has obtained his permission roles
       if (UserModule.roles.length === 0) {
         try {
           // Note: roles must be a object array! such as: ['admin'] or ['developer', 'editor']
           await UserModule.GetUserInfo()
+
           const roles = UserModule.roles
-          console.log(roles)
           // Generate accessible routes map based on role
           PermissionModule.GenerateRoutes(roles)
-        
           // Dynamically add accessible routes
+          console.log(PermissionModule.dynamicRoutes)
           if (PermissionModule.dynamicRoutes.length === 0) {
-            const { data } = await getSysRole({
+            const {data} = await getSysRole({
               page: 1,
               limit: 8,
               roleKey: roles[0]
             })
 
-            const aaa = filterAsyncRouter(data.items[0].routes)
-            console.log(aaa)
             PermissionModule.dynamicRoutes = filterAsyncRouter(data.items[0].routes)
-          }
-          console.log(PermissionModule.dynamicRoutes)
+
+            
+
+          } 
+          
           router.addRoutes(PermissionModule.dynamicRoutes)
+
           // Hack: ensure addRoutes is complete
           // Set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (err) {
+          console.log(err)
           // Remove token and redirect to login page
           UserModule.ResetToken()
           Message.error(err || 'Has Error')
@@ -69,9 +75,44 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
           NProgress.done()
         }
       } else {
-        next()
-      }
+       
 
+        // const hasComponent =  (routerMap: any) =>{ //遍历后台传来的路由字符串，转换为组件对象
+        //   const tmp:Array<string> = []
+        //     const routers = routerMap.filter((route: any) => {
+        //       if (route.path) {
+         
+        //           if(to.path === route.path){
+        //             tmp.push('true')
+        //           }else{
+        //             tmp.push('false')
+        //           }
+        //       }
+        //       if (route.children && route.children.length) {
+        //          hasComponent(route.children)
+        //       }
+        //     })
+        //     return tmp;
+        //   }
+
+          // console.log(to.path)
+        //   console.log(PermissionModule.dynamicRoutes)
+          // console.log(hasComponent(PermissionModule.dynamicRoutes));
+
+
+// if(to.path !== '/404'){
+//   if(!hasComponent(PermissionModule.dynamicRoutes).includes("true") ){
+//     next({ path: '/404' })
+//     NProgress.done()
+//   }else{
+//     next()
+//   }
+// }else{
+//   next()
+// }
+         
+          next()
+      }
     }
   } else {
 

@@ -3,7 +3,8 @@ import axios from 'axios';
 
 let blog_api = process.env.VUE_APP_BLOG_API;
 if (process.env.NODE_ENV !== 'development') {
-  blog_api = "http://file.dev.zhengzemin.cn:81";
+  // blog_api = "http://file.dev.zhengzemin.cn:81";
+  blog_api =  "http://zhengzemin.cn:8527";
 }
 
 

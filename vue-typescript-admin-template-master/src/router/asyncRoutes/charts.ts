@@ -1,10 +1,10 @@
 import { RouteConfig } from 'vue-router'
 import Layout from '@/layout/index.vue'
 
-const chartsRouter: RouteConfig = {
+const chartsRouter = {
   path: '/charts',
-  component: Layout,
-  // componentUrl: 'Layout',
+  // component: Layout,
+   componentUrl: 'Layout',
   redirect: 'noredirect',
   name: 'Charts',
   meta: {
@@ -14,8 +14,8 @@ const chartsRouter: RouteConfig = {
   children: [
     {
       path: 'bar-chart',
-      component: () => import(/* webpackChunkName: "bar-chart" */ '@/views/charts/bar-chart.vue'),
-      // componentUrl: 'charts/bar-chart',
+      // component: () => import(/* webpackChunkName: "bar-chart" */ '@/views/charts/bar-chart.vue'),
+       componentUrl: 'charts/bar-chart',
       name: 'BarChartDemo',
       meta: {
         title: 'barChart',
@@ -24,8 +24,8 @@ const chartsRouter: RouteConfig = {
     },
     {
       path: 'line-chart',
-      component: () => import(/* webpackChunkName: "line-chart" */ '@/views/charts/line-chart.vue'),
-      // componentUrl: 'charts/line-chart',
+      // component: () => import(/* webpackChunkName: "line-chart" */ '@/views/charts/line-chart.vue'),
+       componentUrl: 'charts/line-chart',
       name: 'LineChartDemo',
       meta: {
         title: 'lineChart',
@@ -34,8 +34,8 @@ const chartsRouter: RouteConfig = {
     },
     {
       path: 'mixed-chart',
-      component: () => import(/* webpackChunkName: "mixed-chart" */ '@/views/charts/mixed-chart.vue'),
-      // componentUrl: 'charts/mixed-chart',
+      // component: () => import(/* webpackChunkName: "mixed-chart" */ '@/views/charts/mixed-chart.vue'),
+       componentUrl: 'charts/mixed-chart',
       name: 'MixedChartDemo',
       meta: {
         title: 'mixedChart',

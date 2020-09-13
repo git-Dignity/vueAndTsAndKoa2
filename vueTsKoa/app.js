@@ -15,6 +15,7 @@ const role = require('./routes/sys/role')
 const menu = require('./routes/sys/menu')
 const certificateAuthentication = require('./routes/personal/personalView/certificateAuthentication')
 const music = require('./routes/music/index')
+const apiInterface = require('./routes/apiInterface/index')
 
 
 // error handler
@@ -64,6 +65,7 @@ app.use(user.routes(), user.allowedMethods())
 app.use(menu.routes(), menu.allowedMethods())
 app.use(certificateAuthentication.routes(), certificateAuthentication.allowedMethods())
 app.use(music.routes(), music.allowedMethods())
+app.use(apiInterface.routes(), apiInterface.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

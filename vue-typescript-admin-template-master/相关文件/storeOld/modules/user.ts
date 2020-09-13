@@ -88,7 +88,7 @@ class User extends VuexModule implements IUserState {
 
     const { data } = await getUserInfo({ username:this.name })  
 
-  // console.log(data)
+  
    
     // localStorage.setItem('user', JSON.stringify({
     //   "username": data.user.name 
@@ -118,7 +118,6 @@ class User extends VuexModule implements IUserState {
     await this.GetUserInfo()
     resetRouter()
     // Generate dynamic accessible routes based on roles
-    console.log(this.roles)
     PermissionModule.GenerateRoutes(this.roles)
     // Add generated routes
     router.addRoutes(PermissionModule.dynamicRoutes)

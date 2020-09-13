@@ -1,5 +1,6 @@
 const config = {
-    url: "http://localhost:3333"
+    url: "http://localhost:3333",
+    juheUrl: "http://apis.juhe.cn"
 }
 
 // 注意 配置  set NODE_ENV=production&&nodemon node bin/www && 前边不可以有空格，否则比较不相等

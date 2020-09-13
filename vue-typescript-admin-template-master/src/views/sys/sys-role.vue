@@ -15,9 +15,7 @@
         type="info"
         icon="el-icon-download"
         @click="handleDownload"
-      >
-        {{ $t('table.export') }}
-      </el-button>
+      >{{ $t('table.export') }}</el-button>
     </div>
 
     <ElemenetTable
@@ -99,10 +97,8 @@ import { EventBus } from "@/eventBus/index";
 import { symbol } from "@/utils/symBol";
 import { RouteConfig } from "vue-router";
 import { Tree } from "element-ui";
-import { asyncRoutes } from "@/router/index";
-
-
-
+// import { asyncRoutes } from "@/router/index";
+import { asyncRoutes } from "@/router/asyncRoutes";
 
 @Component({
   name: "sysRole",
@@ -143,7 +139,7 @@ export default class extends Vue {
     isShowSubmit: true,
     info: []
   };
-  private sysRole = new SysRole(this.childrenDialogData)
+  private sysRole = new SysRole(this.childrenDialogData);
 
   private checkStrictly = false;
   private defaultProps = {
@@ -152,11 +148,11 @@ export default class extends Vue {
   };
 
   // private role:any = Object.assign({}, ISysRoleData);  //可能会遇到，ts报错才注释
-  private role:any = {};
-  
+  private role: any = {};
+
   private serviceRoutes: RouteConfig[] = [];
   private reshapedRoutes: RouteConfig[] = [];
-  private downloadLoading = false
+  private downloadLoading = false;
 
   created() {
     this.getRoutes();
@@ -176,6 +172,7 @@ export default class extends Vue {
         "/",
         checkedKeys
       );
+
 
       if (this.childrenDialogData.title === "添加角色") {
         const { data } = await createSysRole({ role: roleData });
@@ -206,7 +203,7 @@ export default class extends Vue {
       initSysRoleForm();
       this.getList(this.childrenTableData.listQuery);
     } else {
-      MessageWarning("请检查信息是否上传齐全"); 
+      MessageWarning("请检查信息是否上传齐全");
     }
   }
 
@@ -217,9 +214,9 @@ export default class extends Vue {
     this.getList(val);
   }
 
-/**
- * 加载路由列表
- */
+  /**
+   * 加载路由列表
+   */
   private async getRoutes() {
     this.serviceRoutes = [...asyncRoutes];
     this.reshapedRoutes = reshapeRoutes([...asyncRoutes]);
@@ -259,14 +256,13 @@ export default class extends Vue {
     return data;
   }
 
-
   private addRole() {
     this.sysRole.showDialog("添加角色", true, false);
     initSysRoleForm();
-    if(this.$refs.tree) (this.$refs.tree as Tree).setCheckedKeys([]);
+    if (this.$refs.tree) (this.$refs.tree as Tree).setCheckedKeys([]);
   }
 
-  private btnView(row: any){
+  private btnView(row: any) {
     this.sysRole.showDialog("查看角色", false, true);
     initSysRoleForm(
       row.id,
@@ -288,7 +284,7 @@ export default class extends Vue {
       this.checkStrictly = false;
     });
   }
- 
+
   private btnEdit(row: any) {
     this.sysRole.showDialog("修改角色", true, false);
     initSysRoleForm(
@@ -315,8 +311,8 @@ export default class extends Vue {
   private btnDelete(id: string) {
     MesssageBoxQuestion("是否确定删除该角色,是否继续")
       .then(async () => {
-        const { data } = await delSysRole({ id: id }); 
- 
+        const { data } = await delSysRole({ id: id });
+
         if (data.msg === "删除成功") {
           MessageSuccess("删除成功!");
           this.getList(this.childrenTableData.listQuery);
@@ -325,17 +321,18 @@ export default class extends Vue {
       .catch(() => {});
   }
 
-
   private handleDownload() {
     this.downloadLoading = true;
     const filterVal = [];
-    this.childrenTableData.data.map( (data: any) => data.routes = JSON.stringify(data.routes))
-    for(let key in this.childrenTableData.data[0]){
+    this.childrenTableData.data.map(
+      (data: any) => (data.routes = JSON.stringify(data.routes))
+    );
+    for (let key in this.childrenTableData.data[0]) {
       filterVal.push(key);
     }
-    const data = formatJson(filterVal, this.childrenTableData.data)
-    exportJson2Excel(this.sysRole.tHeader, data, '角色')
-    this.downloadLoading = false
+    const data = formatJson(filterVal, this.childrenTableData.data);
+    exportJson2Excel(this.sysRole.tHeader, data, "角色");
+    this.downloadLoading = false;
   }
 }
 </script>
