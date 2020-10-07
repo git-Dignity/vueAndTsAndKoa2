@@ -76,6 +76,6 @@ export default class extends Vue {
 </style>
 
 
-<!--
+<!--  写组件，写规范
   实现点击按钮后CSS加载效果: https://mp.weixin.qq.com/s/82HRpX5WpDVt7DTsdDsyzA
  -->

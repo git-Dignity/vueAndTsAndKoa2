@@ -45,6 +45,7 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
           PermissionModule.GenerateRoutes(roles)
         
           // Dynamically add accessible routes
+          // 只要一刷新，vuex的就会没了，所以一刷新重新请求后端拿到路由
           if (PermissionModule.dynamicRoutes.length === 0) {
             const { data } = await getSysRole({
               page: 1,
@@ -52,8 +53,8 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
               roleKey: roles[0]
             })
 
-            const aaa = filterAsyncRouter(data.items[0].routes)
-            console.log(aaa)
+            // const aaa = filterAsyncRouter(data.items[0].routes)
+            // console.log(aaa)
             PermissionModule.dynamicRoutes = filterAsyncRouter(data.items[0].routes)
           }
           console.log(PermissionModule.dynamicRoutes)
