@@ -2,17 +2,17 @@
   <div>
     <el-row>
       <el-form
+        ref="dataForm"
         :label-position="childrenFormData.position"
         :label-width="childrenFormData.labelWidth + 'px'"
-        ref="dataForm"
         class="ruleForm"
         :size="childrenFormData.size"
         :model="childrenFormData"
       >
         <!-- 循环开始  -->
         <template v-for="(item,i) in childrenFormData.info">
-          <!-- 
-        	判断循环中的元素是否需要下拉框  
+          <!--
+        	判断循环中的元素是否需要下拉框
         	:rules="item.rule"  循环中的数据 自定义的 rule 规则
         	:prop="`getAllTableData.${i}.value`"
         	每次循环的时候进行取值, 相当于给每个form绑定了唯一的model
@@ -27,18 +27,22 @@
           >
             <template v-if="item.isLink">
               <div class="df df-ac-jc width100">
-                <router-link :to="item.toLink" class="width100" style="flex: 5">
+                <router-link
+                  :to="item.toLink"
+                  class="width100"
+                  style="flex: 5"
+                >
                   <el-input
                     v-model="item.value"
                     :placeholder="$t(item.label)"
                     prefix-icon="el-icon-edit"
                     autocomplete="off"
-                  ></el-input>
+                  />
                 </router-link>
                 <span
                   class="el-icon-s-promotion df-flex1 title-color font-size-24 ml8"
                   @click="linkMap(item)"
-                ></span>
+                />
               </div>
             </template>
             <template v-else-if="item.isSelect">
@@ -52,11 +56,16 @@
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
-                ></el-option>
+                />
               </el-select>
             </template>
             <template v-else-if="item.isDate">
-              <el-date-picker v-model="item.value" type="datetime" placeholder="选择日期时间"></el-date-picker>
+              <el-date-picker
+                v-model="item.value"
+                value-format="yyyyMMddHHmmss"
+                type="datetime"
+                placeholder="选择日期时间"
+              />
             </template>
             <template v-else-if="item.isInpNumber">
               <el-input
@@ -67,16 +76,21 @@
                 autocomplete="off"
                 @keydown="handleInput"
                 @blur="inpBlurForm(item)"
-              ></el-input>
+              />
             </template>
             <template v-else-if="item.isRadio">
-              <el-radio-group v-model="item.value" @change="selectChangeForm($event, item)">
+              <el-radio-group
+                v-model="item.value"
+                @change="selectChangeForm($event, item)"
+              >
                 <el-radio
                   v-for="item in item.options"
                   :key="item.value"
                   :label="item.value"
                   class="ml8"
-                >{{item.label}}</el-radio>
+                >
+                  {{ item.label }}
+                </el-radio>
               </el-radio-group>
             </template>
             <template v-else-if="item.isTextarea">
@@ -87,20 +101,33 @@
                 :placeholder="$t(item.label)"
                 prefix-icon="el-icon-edit"
                 autocomplete="off"
-              ></el-input>
+              />
             </template>
             <template v-else-if="item.isTree">
-              <slot></slot>
+              <slot />
             </template>
             <template v-else-if="item.isPhoto">
-              <el-row :gutter="20" type="flex" class="row-bg" justify="start">
+              <el-row
+                :gutter="20"
+                type="flex"
+                class="row-bg"
+                justify="start"
+              >
                 <el-col :span="6">
                   <UploadFile
-                    :childrenUploadFileData="item.childrenUploadImgData"
+                    :children-upload-file-data="item.childrenUploadImgData"
                     @parentUploadFileData="parentUploadImgData"
-                  ></UploadFile>
+                  />
                 </el-col>
               </el-row>
+              <!-- <el-avatar shape="square" :size="80" fit="fill" :src="item.value"></el-avatar> -->
+            </template>
+            <template v-else-if="item.isSlider">
+              <el-slider
+                v-model="item.value"
+                :step="10"
+                show-stops
+              />
               <!-- <el-avatar shape="square" :size="80" fit="fill" :src="item.value"></el-avatar> -->
             </template>
             <template v-else>
@@ -110,7 +137,7 @@
                 prefix-icon="el-icon-edit"
                 autocomplete="off"
                 @blur="inpBlurForm(item)"
-              ></el-input>
+              />
             </template>
           </el-form-item>
         </template>
@@ -144,10 +171,14 @@ export default class extends Vue {
   })
   childrenFormData!: object;
 
+  @Watch("childrenFormData")
+  private getSchedule(data: any) {
+    console.log(data);
+  }
 
   // 只能输入数字
   handleInput(e: any) {
-    let a = e.key.replace(/[^\d]/g, "");
+    const a = e.key.replace(/[^\d]/g, "");
     if (!a) {
       e.preventDefault();
     }
@@ -161,8 +192,8 @@ export default class extends Vue {
     this.$emit("selectChangeFormChild", { selectedName: e, item: item });
   }
 
-  inpBlurForm({ name, value }:any) {
-    console.log(name, value)
+  inpBlurForm({ name, value }: any) {
+    console.log(name, value);
   }
 
   private parentUploadImgData(data: any) {
@@ -185,12 +216,6 @@ export default class extends Vue {
 }
 </style>
 
-
-
-
-
-<!-- 
-
+<!--
 
 -->
-

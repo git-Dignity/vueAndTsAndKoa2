@@ -6,7 +6,8 @@ module.exports = {
   'extends': [
     'plugin:vue/recommended',
     '@vue/standard',
-    '@vue/typescript/recommended'
+    '@vue/typescript/recommended',
+    'eslint:recommended'  // 也是新加的
   ],
   parserOptions: {
     ecmaVersion: 2020
@@ -43,7 +44,8 @@ module.exports = {
     'vue/object-curly-spacing': 'error',
     'semi': ["error", "always"],
     'quotes': [1, "double"],
-    'linebreak-style': [0, 'error', 'windows']
+    'linebreak-style': [0, 'error', 'windows'],
+    "indent": ["off", 4]  // 空格4位
   },
   overrides: [
     {

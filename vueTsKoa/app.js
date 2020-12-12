@@ -7,6 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 var mysql = require('mysql');
 const cors = require("koa-cors"); //可以写ajax实现实现异步跨域，在表头加上http头
+require('module-alias/register'); // 设置别名（需要在package.json设置）
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -16,13 +17,16 @@ const menu = require('./routes/sys/menu')
 const certificateAuthentication = require('./routes/personal/personalView/certificateAuthentication')
 const music = require('./routes/music/index')
 const apiInterface = require('./routes/apiInterface/index')
-
+const agentEvent = require('./routes/agentEvent/index') // 代办事项
+const common = require('./routes/common/common') // 公共
 
 // error handler
 onerror(app)
 
  
 app.use(cors());
+
+
 
 
 
@@ -66,6 +70,9 @@ app.use(menu.routes(), menu.allowedMethods())
 app.use(certificateAuthentication.routes(), certificateAuthentication.allowedMethods())
 app.use(music.routes(), music.allowedMethods())
 app.use(apiInterface.routes(), apiInterface.allowedMethods())
+app.use(agentEvent.routes(), agentEvent.allowedMethods())
+app.use(common.routes(), common.allowedMethods())
+
 
 // error-handling
 app.on('error', (err, ctx) => {

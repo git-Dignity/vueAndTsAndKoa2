@@ -192,6 +192,37 @@ export const asyncRoutes: RouteConfig[] = [
     ]
   },
   {
+    path: '/me',
+    component: Layout,
+    meta: {
+      title: 'me',
+      icon: 'example',
+      roles: ['admin'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+      {
+        path: 'agent-event',
+        component: () => import(/* webpackChunkName: "agent-event" */ '@/views/me/agent-event/main.vue'),
+        name: 'agentEvent',
+        meta: { title: 'agentEvent', noCache: true }
+      },
+      {
+        path: 'features-dev',
+        component: () => import(/* webpackChunkName: "features-dev" */ '@/views/me/features-dev.vue'),
+        name: 'featuresDev',
+        meta: { title: 'featuresDev', noCache: true }
+      },
+      {
+        path: 'diary',
+        component: () => import(/* webpackChunkName: "diary" */ '@/views/me/diary.vue'),
+        name: 'diary',
+        meta: { title: 'diary', noCache: true }
+      }
+    ]
+  },
+  {
     path: '/sys',
     component: Layout,
     // componentUrl: 'Layout',
@@ -313,6 +344,28 @@ export const asyncRoutes: RouteConfig[] = [
             meta: { title: 'singerSongLyric', icon: 'singer-song-lyric' } 
           }
         
+    ]
+  },
+  {
+    path: '/eat',
+    component: Layout,
+    redirect: '/eat/index',
+    name: 'eat',
+    meta: {
+      title: 'eat',
+      icon: 'example',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'eat/index',
+            component: () => import(/* webpackChunkName: "eat/index" */ '@/views/eat/index.vue'),
+            // componentUrl: 'eat/index',
+            name: ' todayEat',
+            meta: { title: 'todayEat', noCache: true, icon: 'singer' }
+          },
     ]
   },
   {

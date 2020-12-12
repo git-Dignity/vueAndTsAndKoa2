@@ -26,6 +26,12 @@ import * as filters from '@/filters'
 import appButton from '@/components/Global/index.vue'
 Vue.component("app-button", appButton);
 
+// 更新的就npm i全局一下，在npm i zzmcomponentlib --save-dev
+import zzmcomponentlib from 'zzmcomponentlib'
+import  'zzmcomponentlib/lib/zzmcomponentlib.css'
+Vue.use(zzmcomponentlib)
+
+
 
 
 Vue.use(ElementUI, {

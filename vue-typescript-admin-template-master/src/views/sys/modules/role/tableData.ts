@@ -4,33 +4,34 @@ const roleTableColumns = {
     "name": {
         prop: "name",
         label: "角色名称",
-        width: "180"
+        width: "10%"
     },
     "roleKey": {
         prop: "roleKey",
         label: "roleKey",
-        width: "180"
+        width: "10%"
     },
     "roleType": {
         prop: "roleType",
         label: "角色类型",
-        width: "180",
+        width: "10%",
         render: (h: any, param: any) => formatterType(h)
     },
     "isSys": {
         prop: "isSys",
         label: "是否系统数据",
-        width: "150",
+        width: "10%",
         sortable: "true",
         render: (h: any, param: any) => formatterIsSys(h)
     },
     "remarks": {
         prop: "remarks",
-        width: "180",
+        width: "20%",
         label: "备注"
     },
     "handSolt": {
         prop: "handSolt",    
+        width: "30%",
         label: "操作"
     }
 }

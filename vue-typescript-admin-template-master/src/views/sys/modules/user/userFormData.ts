@@ -1,10 +1,8 @@
-
-
 // 角色表单数据
 const sysUserForm = {
     name: "sysUserForm",
     position: "right",
-    labelWidth: 120, 
+    labelWidth: 120,
     size: "medium",
     info: {
         "id": {
@@ -17,7 +15,7 @@ const sysUserForm = {
                 required: false, message: ""
             }
         },
-        "username": {
+        'username': {
             label: 'sys.user.name',
             name: "username",
             value: "",
@@ -33,11 +31,11 @@ const sysUserForm = {
             name: "photo",
             value: "",
             isPhoto: true,
-             childrenUploadImgData : {
+            childrenUploadImgData: {
                 upload__text: "上传用户头像文件",
                 type: "image_avatar",
                 accept: ".png, .jpg, .gif, .jpeg"
-              },
+            },
             disabled: false,
             hidden: false,
             rule: {
@@ -64,12 +62,12 @@ const sysUserForm = {
                 required: true, message: "角色名不能为空"
             }
         }
-    
+
     }
 }
 
 
-const initSysUserForm = (id="", name = "", phone = "", photo = "", roles = "") =>{
+const initSysUserForm = (id = "", name = "", phone = "", photo = "", roles = "") => {
     sysUserForm.info.id.value = id;
     sysUserForm.info.username.value = name;
     sysUserForm.info.phone.value = phone;

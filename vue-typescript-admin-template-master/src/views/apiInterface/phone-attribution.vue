@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
-    <div class="container-title">
+     <loadingBtn :isClick="isClick" @loadClick="loadClick"></loadingBtn>
+    <!-- <div class="container-title">
       <el-input placeholder="请输入手机号码" v-model="itemList[0].value">
         <i slot="prefix" class="el-input__icon el-icon-phone-outline"></i>
       </el-input>
@@ -8,14 +9,14 @@
     </div>
     <div class="container-content">
       <SingleLine :childData="itemList"></SingleLine>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import SingleLine from "@/components/Table/SingleLine.vue";
-import LoadingBtn from "@/components/Button/LoadingBtn.vue";
+// import LoadingBtn from "@/components/Button/LoadingBtn.vue";
 import { mobile } from "@/api/apiInterface/phone-attribution";
 import { key } from "@/const/juhe";
 import { MessageWarning } from "@/utils/tool/message";
@@ -25,12 +26,21 @@ import { itemList, myCheck } from "@/views/apiInterface/phone-attribution/index"
   name: "phoneAttribution",
   components: {
     SingleLine,
-    LoadingBtn
+    // LoadingBtn
   }
 })
 export default class extends Vue {
   private isClick = false;
   private itemList = itemList
+
+
+  private loadClick() {
+        this.isClick = true;
+        console.log(this.isClick)
+        setTimeout( () =>{
+            this.isClick = false;
+        },2000)
+    }
 
   created() {
     // console.log(myCheck);

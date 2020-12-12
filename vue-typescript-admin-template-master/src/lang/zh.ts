@@ -77,9 +77,16 @@ export default {
     musicSinger: '歌手',
     singerSongList: '歌手清单',
     singerSongLyric: '歌曲歌词',
+    eat:'吃啥',
+    todayEat:'今天吃啥',
     // API接口
     apiInterface: 'API接口',
-    phoneAttribution: '手机号码归属地查询'
+    phoneAttribution: '手机号码归属地查询',
+    // 我的
+    me: '我的',
+    agentEvent: '代办事项',
+    featuresDev: '功能开发',
+    diary: '日记'
   },
   navbar: {
     logOut: '退出登录',
@@ -171,8 +178,8 @@ export default {
     isSys: '是否系统数据',
     remarks: '备注',
     routes: '路由'
-
   },
+  
   music: {
     singerName: "歌手名"
   },
@@ -214,5 +221,15 @@ export default {
     showSidebarLogo: '显示侧边栏 Logo',
     fixedHeader: '固定 Header',
     sidebarTextTheme: '侧边栏文字主题色'
+  },
+  content: '内容',
+  time:{
+    startTime: '开始时间',
+    endTime:"结束时间"
+  },
+  agentEvent:{
+    noticeWay: "通知方式",
+    agent: "代办者",
+    schedule: "进度"
   }
 }

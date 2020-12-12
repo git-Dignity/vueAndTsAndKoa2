@@ -10,51 +10,109 @@
         >
           <template v-for="(column, index) in childrenTableData.column">
             <el-table-column
+              v-if="column.prop === 'serialNum'"
               :key="index"
-              v-if="column.prop == 'handSolt'"
               :prop="column.prop"
               :label="column.label"
-              :width="column.width"
+              :min-width="column.width"
             >
-              <template slot-scope="{row}">
-                <slot :row="row"></slot>
+              <template slot-scope="scope">
+                {{
+                  (page.current - 1) * page.size + scope.$index + 1
+                }}
               </template>
             </el-table-column>
             <el-table-column
+              v-else-if="column.prop === 'handSolt'"
               :key="index"
-              v-else-if="column.sortable"
               :prop="column.prop"
               :label="column.label"
-              :width="column.width"
+              :min-width="column.width"
+            >
+              <template slot-scope="{row}">
+                <slot :row="row" />
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-else-if="column.sortable"
+              :key="index"
+              :prop="column.prop"
+              :label="column.label"
+              :min-width="column.width"
               :sortable="true"
             >
               <template slot-scope="scope">
-                <span v-if="column.render" v-html="column.render(scope.row, column)"></span>
-                <span v-else>{{scope.row[column.prop]}}</span>
+                <span
+                  v-if="column.render"
+                  v-html="column.render(scope.row, column)"
+                />
+                <span v-else>{{ scope.row[column.prop] }}</span>
               </template>
             </el-table-column>
             <el-table-column
               v-else-if="column.isPhoto"
               :key="index"
-              :width="column.width"
+              :min-width="column.width"
               :prop="column.prop"
               :label="column.label"
             >
               <template slot-scope="{row}">
-                <el-avatar shape="square" :size="80" fit="fill" :src="row.photo"></el-avatar>
+                <el-avatar
+                  shape="square"
+                  :size="80"
+                  fit="fill"
+                  :src="row.photo"
+                />
               </template>
             </el-table-column>
             <el-table-column
+              v-else-if="column.isDate"
               :key="index"
-              v-else
+              :min-width="column.width"
               :prop="column.prop"
               :label="column.label"
-              :width="column.width"
+            >
+              <template slot-scope="{row}">
+                {{ dateFormat(row[column.prop]) || '--' }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-else-if="column.isTag"
+              :key="index"
+              :prop="column.prop"
+              :label="column.label"
+              :min-width="column.width"
+              :filter-method="column.filterTag"
+              :filters="column.filters"
+              filter-placement="bottom-end"
+            >
+              <template slot-scope="scope">
+                <el-tag
+                  :type="column.type(scope.row, column)"
+                  disable-transitions
+                >
+                  <span
+                    v-if="column.render"
+                    v-html="column.render(scope.row, column)"
+                  />
+                  <span v-else>{{ scope.row[column.prop] || '--' }}</span>
+                </el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              v-else
+              :key="index"
+              :prop="column.prop"
+              :label="column.label"
+              :min-width="column.width"
               :sortable="column.sortable"
             >
               <template slot-scope="scope">
-                <span v-if="column.render" v-html="column.render(scope.row, column)"></span>
-                <span v-else>{{scope.row[column.prop]}}</span>
+                <span
+                  v-if="column.render"
+                  v-html="column.render(scope.row, column)"
+                />
+                <span v-else>{{ scope.row[column.prop] || '--' }}</span>
               </template>
             </el-table-column>
           </template>
@@ -64,9 +122,9 @@
         <pagination
           v-show="childrenTableData.listQuery.total>0"
           :total="childrenTableData.listQuery.total"
-          :page.sync="childrenTableData.listQuery.page"
-          :pageSizes.sync="childrenTableData.listQuery.pageSize"
-          :limit.sync="childrenTableData.listQuery.limit"
+          :page.sync="childrenTableData.listQuery.current"
+          :page-sizes.sync="childrenTableData.listQuery.pageSize"
+          :limit.sync="childrenTableData.listQuery.size"
           @pagination="getList"
         />
       </el-row>
@@ -85,6 +143,7 @@ import {
 import { symbol } from "@/utils/symBol";
 import { EventBus } from "@/eventBus/index";
 import Pagination from "@/components/Pagination/index.vue";
+import { dateFormat } from "@/utils/tool/date";
 
 @Component({
   name: "ElemenetTable",
@@ -104,8 +163,20 @@ export default class extends Vue {
   })
   childrenTableData!: object;
 
-  getList(val: Object) {
+  private page: any = {
+    current: (this.childrenTableData as any).listQuery.current,
+    size: (this.childrenTableData as any).listQuery.size
+  }
+
+  getList(val: Record<string, any>) {
+    // console.log(val)
+
+    this.page = val;
     this.$emit("parentPagination", val);
+  }
+
+  dateFormat(str: string) {
+    return dateFormat(str);
   }
 
   mounted() {}
@@ -115,17 +186,11 @@ export default class extends Vue {
 <style lang="scss" scoped>
 </style>
 
-
-
-
-
-<!-- 
+<!--
 
 问题：
 关于 <el-table-column>为什么要加上v-if,v-else，直接一个:sortable="column.sortable"不就搞定了吗？
-回答：如果不加上v-if，else的话，:sortable="column.sortable" 无法排序 
+回答：如果不加上v-if，else的话，:sortable="column.sortable" 无法排序
 如果内容需用 <template> 来盛放，那 el-table-column 内的 prop就起不到作用，但他会影响 sortable 排序，所以还是写上为妙
 
-
 -->
-

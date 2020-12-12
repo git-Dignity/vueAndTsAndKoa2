@@ -7,7 +7,9 @@
         type="primary"
         icon="el-icon-edit"
         @click="addRole"
-      >{{ $t('table.add') }}</el-button>
+      >
+        {{ $t('table.add') }}
+      </el-button>
       <el-button
         v-waves
         :loading="downloadLoading"
@@ -15,36 +17,55 @@
         type="info"
         icon="el-icon-download"
         @click="handleDownload"
-      >{{ $t('table.export') }}</el-button>
+      >
+        {{ $t('table.export') }}
+      </el-button>
     </div>
 
     <ElemenetTable
       v-loading="listLoading"
-      :childrenTableData="childrenTableData"
+      :children-table-data="childrenTableData"
       @parentPagination="parentPagination"
     >
       <template slot-scope="{row}">
-        <el-button type="success" icon="el-icon-search" size="medium" @click="btnView(row)">查看</el-button>
-        <el-button type="primary" size="medium" v-permission="['admin']" @click="btnEdit(row)">
+        <el-button
+          type="success"
+          icon="el-icon-search"
+          size="medium"
+          @click="btnView(row)"
+        >
+          查看
+        </el-button>
+        <el-button
+          v-permission="['admin']"
+          type="primary"
+          size="medium"
+          @click="btnEdit(row)"
+        >
           <svg-icon name="edit" />修改
         </el-button>
         <el-button
+          v-permission="['admin']"
           type="danger"
           icon="el-icon-delete"
           size="medium"
-          v-permission="['admin']"
           @click="btnDelete(row.id)"
-        >删除</el-button>
+        >
+          删除
+        </el-button>
       </template>
     </ElemenetTable>
 
     <RoleDialog
-      :childrenData="childrenDialogData"
+      :children-data="childrenDialogData"
       @update:parentDialogSubmit="parentDialogSubmit"
       @update:parentDialogCancel="parentDialogCancel"
     >
       <div slot="childTemplate">
-        <ElemenetForm :childrenFormData="sysRoleForm" @parentForm="parentForm">
+        <ElemenetForm
+          :children-form-data="sysRoleForm"
+          @parentForm="parentForm"
+        >
           <template>
             <el-tree
               ref="tree"
@@ -61,10 +82,10 @@
     </RoleDialog>
   </div>
 </template>
- 
+
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Form } from "element-ui";
+import { Form, Tree } from "element-ui";
 import { cloneDeep } from "lodash";
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import {
@@ -92,11 +113,12 @@ import {
   MessageSuccess,
   MesssageBoxQuestion
 } from "@/utils/tool/message";
-import RoleDialog from "@/components/Dialog/index.vue";
+// import RoleDialog from "@/components/Dialog/index.vue";
+import RoleDialog from "@c/Dialog/index.vue";
 import { EventBus } from "@/eventBus/index";
 import { symbol } from "@/utils/symBol";
 import { RouteConfig } from "vue-router";
-import { Tree } from "element-ui";
+
 // import { asyncRoutes } from "@/router/index";
 import { asyncRoutes } from "@/router/asyncRoutes";
 
@@ -128,6 +150,7 @@ export default class extends Vue {
       sort: "+id"
     }
   };
+
   private sysRoleForm = sysRoleForm;
   private refsForm: any = [];
   private childrenDialogData = {
@@ -139,6 +162,7 @@ export default class extends Vue {
     isShowSubmit: true,
     info: []
   };
+
   private sysRole = new SysRole(this.childrenDialogData);
 
   private checkStrictly = false;
@@ -173,11 +197,9 @@ export default class extends Vue {
         checkedKeys
       );
 
-
       if (this.childrenDialogData.title === "添加角色") {
         const { data } = await createSysRole({ role: roleData });
-        if (data.msg === "添加成功")
-          showNotify(4, "创建" + roleData.name + "角色成功");
+        if (data.msg === "添加成功") { showNotify(4, "创建" + roleData.name + "角色成功"); }
       } else if (this.childrenDialogData.title === "修改角色") {
         const { data } = await updateSysRole({ role: roleData });
         for (
@@ -196,8 +218,7 @@ export default class extends Vue {
             break;
           }
         }
-        if (data.msg === "更新成功")
-          showNotify(4, "修改" + roleData.name + "角色成功");
+        if (data.msg === "更新成功") { showNotify(4, "修改" + roleData.name + "角色成功"); }
       }
       EventBus.$emit("isShowDialog", true);
       initSysRoleForm();
@@ -210,7 +231,7 @@ export default class extends Vue {
   // 弹出框取消的回调
   private parentDialogCancel(data: any) {}
 
-  private parentPagination(val: Object) {
+  private parentPagination(val: Record<string, any>) {
     this.getList(val);
   }
 
@@ -222,7 +243,7 @@ export default class extends Vue {
     this.reshapedRoutes = reshapeRoutes([...asyncRoutes]);
   }
 
-  private async getList(page: Object) {
+  private async getList(page: Record<string, any>) {
     this.listLoading = true;
     const { data } = await getSysRole(page);
     this.childrenTableData.data = data.items;
@@ -327,7 +348,7 @@ export default class extends Vue {
     this.childrenTableData.data.map(
       (data: any) => (data.routes = JSON.stringify(data.routes))
     );
-    for (let key in this.childrenTableData.data[0]) {
+    for (const key in this.childrenTableData.data[0]) {
       filterVal.push(key);
     }
     const data = formatJson(filterVal, this.childrenTableData.data);

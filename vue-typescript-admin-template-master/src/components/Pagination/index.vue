@@ -4,8 +4,8 @@
       :background="background"
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
+      :page-sizes.sync="pageSizes"
       :layout="layout"
-      :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
       @size-change="handleSizeChange"
@@ -23,7 +23,7 @@ import { scrollTo } from "@/utils/scroll-to";
 })
 export default class extends Vue {
   @Prop({ required: true }) private total!: number;
-  @Prop({ default: 1 }) private page!: number;
+  @Prop({ default: 1 }) private current!: number;
   @Prop({ default: 20 }) private limit!: number;
   @Prop({ default: () => [10, 20, 30, 50] }) private pageSizes!: number[];
   @Prop({ default: "total, sizes, prev, pager, next, jumper" })
@@ -33,11 +33,11 @@ export default class extends Vue {
   @Prop({ default: false }) private hidden!: boolean;
 
   get currentPage() {
-    return this.page;
+    return this.current;
   }
 
   set currentPage(value) {
-    this.$emit("update:page", value);
+    this.$emit("update:current", value);
   }
 
   get pageSize() {
@@ -49,14 +49,15 @@ export default class extends Vue {
   }
 
   handleSizeChange(value: number) {
-    this.$emit("pagination", { page: this.currentPage, limit: value });
+    // console.log(value)
+    this.$emit("pagination", { current: this.currentPage, size: value });
     if (this.autoScroll) {
       scrollTo(0, 800);
     }
   }
 
   handleCurrentChange(value: number) {
-    this.$emit("pagination", { page: value, limit: this.pageSize });
+    this.$emit("pagination", { current: value, size: this.pageSize });
     if (this.autoScroll) {
       scrollTo(0, 800);
     }

@@ -7,7 +7,7 @@
     "serve": "concurrently \"npm:mock\" \"vue-cli-service serve\"",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "mock": "cd mock && ts-node-dev mock-server.ts",
     "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6",
     "test:e2e": "vue-cli-service test:e2e",
@@ -106,6 +106,7 @@
     "jest": "^25.2.7",
     "lint-staged": "^10.1.1",
     "lrc-file-parser": "^1.0.3",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.0",
     "prerender-spa-plugin": "^3.4.0",
     "sass": "^1.26.3",
@@ -120,7 +121,8 @@
     "vue-cropper": "^0.5.2",
     "vue-property-decorator": "^8.2.2",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.42.1"
+    "webpack": "^4.42.1",
+    "zzmcomponentlib": "^0.0.14"
   },
   "bugs": {
     "url": "https://github.com/armour/vue-typescript-admin-template/issues"
