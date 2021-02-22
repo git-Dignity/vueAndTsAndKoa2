@@ -6,7 +6,8 @@ const agentTypeOptions = [
 
 const noticeWayOptions = [
     { value: 1, label: 'Bark' },
-    { value: 2, label: '微信方糖' }
+    { value: 2, label: '微信方糖' },
+    { value: 3, label: 'QQ邮箱' }
 ]
 
 

@@ -1,5 +1,6 @@
 import { agentTypeOptions, noticeWayOptions } from './options';
 import moment from 'moment'
+import { Check } from "javascript-tool-class/src/App";
 
 /**
  * 结束时间的效验（不能设置比开始时间早）
@@ -16,12 +17,32 @@ var endTimeValidtor = (rule:any, value:any, callback:any) =>{
       }
 }
 
+/**
+ * 联系方式数据的验证（手机号码 && 邮箱）
+ * @param rule 
+ * @param value 联系方式的值
+ * @param callback 
+ */
+var contactValidtor = (rule:any, value:any, callback:any) =>{
+    let myCheck = new Check();
+
+    // QQ邮箱 && QQ邮箱格式正确
+    if(Form.info.noticeWay.value ===3 && !myCheck.isEmail(value)){
+        callback(new Error("Are you 确定是 yes postbox？？？"));
+    }else if (Form.info.noticeWay.value !==3 && !myCheck.isMPRelaxed(value)){
+        // Bark、方糖 && 手机号码
+        callback(new Error("The phone number is not valid"));
+    }else{
+        callback();
+    }
+}
+
 
 // 角色表单数据
 const Form = {
     name: "undoneForm",
     position: "right",
-    labelWidth: 120, 
+    labelWidth: 140, 
     size: "medium",
     info: {
         "id": {
@@ -95,7 +116,7 @@ const Form = {
         "noticeWay":{
             label: 'agentEvent.noticeWay',
             name: "noticeWay",
-            value: "",
+            value: 1,
             isRadio: true,
             options: noticeWayOptions,
             disabled: false,
@@ -103,6 +124,22 @@ const Form = {
             rule: {
                 required: true, message: "通知方式不能为空"
             }
+        },
+        "contact":{
+            label: 'registe.phone',
+            name: "contact",
+            value: "",
+            disabled: false,
+            hidden: false,
+            // 规则必须也得定义在form绑定的model中
+            rule: [
+                {
+                    required: true, message: "联系方式不能为空" 
+                },
+                {
+                     validator: contactValidtor, trigger: 'blur'
+                }
+            ]
         },
         "startTime": {
             label: 'time.startTime',
@@ -149,7 +186,7 @@ const Form = {
 
 
 
-const initForm = (id="", title = "", content = "", type = "", agent = "", schedule = 0,noticeWay = "",  startTime = "", endTime = "", remarks = "") =>{
+const initForm = (id="", title = "", content = "", type = "", agent = "", schedule = 0,noticeWay = 1,contact = "", startTime = "", endTime = "", remarks = "") =>{
     Form.info.id.value = id;
     Form.info.title.value = title;
     Form.info.content.value = content;
@@ -157,6 +194,7 @@ const initForm = (id="", title = "", content = "", type = "", agent = "", schedu
     Form.info.agent.value = agent;
     Form.info.schedule.value = schedule;
     Form.info.noticeWay.value = noticeWay;
+    Form.info.contact.value = contact;
     Form.info.startTime.value = startTime;
     Form.info.endTime.value = endTime;
     Form.info.remarks.value = remarks;

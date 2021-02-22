@@ -13,12 +13,17 @@ const specifiedTime = (date, callback) =>{
 }
 
 
-// 代做
+// To Do
+// 每天下午h点m分定时执行
 // 指定时间间隔
 // 每什么执行一次 
 // 只能传一个参数
 // 支持 second,minute,hour,date,dayOfWeek,month,year 要传两个参数，一个是数字，一个是标记类型
-const specifyTimeInterval = (num, type) =>{
+// 先这样子吧
+const specifyTimeInterval = (h = 17, m = 21, callback) =>{
+    return schedule.scheduleJob({hour:h, minute:m}, function(){
+        callback()
+    });
 
 }
 

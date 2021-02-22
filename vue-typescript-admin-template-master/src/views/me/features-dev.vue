@@ -20,6 +20,16 @@
     前端：代办者使用下拉框使用展示用户表的数据；可使用Bark、微信方糖通知，若进度100%，则取消通知
     后端：koa：对接Bark、方糖通知接口并且使用node-schedule定时器，，引入module-alias依赖支持别名
     部署上线上版本
+
+    2020/12/13
+    前端：1：代办事项通知方式添加邮箱contact发送功。2：每天19点定时发送信息到邮箱
+    后端koa：引入nodemailer依赖开发邮箱发送功能。2：timer/loveWords文件执行定时器
+    数据库：agent_event表添加CONTACT字段、VARCHAR2(30)、联系方式（noticeWay值的1、2：存的是手机号码； 3：存qq邮箱）
+
+    2021/02/22
+    前端：1：添加IT知识菜单（前端、后端）。2：开发IT知识-前端页面（添加、查看、分页）（删、改尚未完成）（src\views\itKnowledge\front-end.vue）
+    后端koa：1：添加itKnowledge/frontEnd路由。2：开发增删改查接口
+    数据库：itKnowledge表创建（id、title、content、photo、photo_name、random_num、type、auth、remaks、upload_time）
   </div>
 </template>
 

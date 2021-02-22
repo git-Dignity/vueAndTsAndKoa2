@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const config = require('../../config/config.js')
 const { get } = require('../../utils/request.js')
-const { barkSend, serverJiangSend } = require('@api/sendMsg')
+const { barkSend, serverJiangSend, qqMailSend } = require('@api/sendMsg')
 var qs = require('qs');
 const querystring = require('querystring');
 router.prefix('/common')
@@ -54,6 +54,34 @@ router.get('/bark/send', async (ctx, next) => {
     }
     ctx.response.body = data
 })
+
+
+/**
+ * 发信息到qq邮箱
+ */
+router.get('/qqMail/send', async (ctx, next) => {
+    const params = ctx.request.query
+    let data = {}
+
+    // console.log(params)
+
+    const result = await qqMailSend(params.contact, `
+        标题：【音乐博客】通知亲爱的，你${params.agent}的【${params.title}】已添加到未完成事件，记得完成哦！ 
+        内容：${params.content} 
+        类型：${params.type}
+        进度：${params.schedule} 
+        开始时间：${params.startTime} 
+        结束时间：${params.endTime}
+        详情请登录:zhengzemin.cn:3000
+    `)
+
+    data = {
+        code: 20000,
+        data: result
+    }
+    ctx.response.body = data
+})
+
 
 
 

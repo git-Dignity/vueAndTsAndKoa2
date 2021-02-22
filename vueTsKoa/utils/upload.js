@@ -7,7 +7,7 @@ var path = require('path');
 
 
 // 支持多文件上传到本地
-const uploadFile = (fileArr) => {
+const uploadFile = (fileArr,url) => {
 
   var resultArr = []
   fileArr.forEach(element => {
@@ -18,7 +18,7 @@ const uploadFile = (fileArr) => {
 
     // 创建可读流
     const reader = fs.createReadStream(element[1].path);
-    let filePath = path.join(__dirname, '../public/node/upload/image/user/') + `${randomNum}_${element[1].name}`;
+    let filePath = path.join(__dirname, `../public/node/upload/image/${url}/`) + `${randomNum}_${element[1].name}`;
     // let filePath = path.join(__dirname, '../public/upload/image/user/') + `/${element[1].name}`; 斜杆问题注意一下
     // 创建可写流
     const upStream = fs.createWriteStream(filePath);
@@ -28,7 +28,7 @@ const uploadFile = (fileArr) => {
     resultArr.push({
       fileName: element[1].name,
       filePath: filePath.replace(new RegExp(/(\\)/, "g"), '\\/'),  // 上传到服务器上的真实路径（因为mysql插入反斜杠，会被吃掉）
-      fileUrl: `/node/upload/image/user/${randomNum}_${element[1].name}`,  //给前端显示头像
+      fileUrl: `/node/upload/image/${url}/${randomNum}_${element[1].name}`,  //给前端显示头像
       randomNum: randomNum
     })
   });

@@ -91,8 +91,8 @@ router.post('/register', async (ctx, next) => {
 
   
   if (fileArr.length != 0) {
-    result = await uploadFile(fileArr)
-
+    result = await uploadFile(fileArr, 'user/')
+ 
     // console.log(result)
 
     

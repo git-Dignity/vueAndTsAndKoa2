@@ -178,8 +178,6 @@ export default class extends Vue {
   dateFormat(str: string) {
     return dateFormat(str);
   }
-
-  mounted() {}
 }
 </script>
 

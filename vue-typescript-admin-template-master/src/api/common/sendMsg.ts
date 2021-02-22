@@ -24,3 +24,16 @@ export const sendBarkMsg = (params: any) =>
         method: 'get',
         params
     })
+
+
+/**
+ * 发送消息（QQ邮箱）
+ * @param params 数据
+ */
+export const senQQMailMsg = (params: any) =>{
+    request({
+        url: '/common/qqMail/send',
+        method: 'get',
+        params
+    })
+}

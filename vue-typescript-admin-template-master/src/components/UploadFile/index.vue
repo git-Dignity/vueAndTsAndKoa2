@@ -11,18 +11,30 @@
       :on-success="handleFileSuccess"
       :accept="childrenUploadFileData.accept"
     >
-      <div v-if="childrenUploadFileData.type=='image_avatar'">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-        <i v-else class="el-icon-plus f28 avatar-uploader-icon"></i>
+      <div v-if="childrenUploadFileData.type==='image_avatar'">
+        <img
+          v-if="childrenUploadFileData.imageUrl"
+          :src="childrenUploadFileData.imageUrl"
+          class="avatar"
+        >
+        <i
+          v-else
+          class="el-icon-plus f28 avatar-uploader-icon"
+        />
       </div>
       <div v-else>
-        <i class="el-icon-upload"></i>
+        <i class="el-icon-upload" />
         <div class="el-upload__text">
-          {{childrenUploadFileData.upload__text}}
-          <p></p>将文件拖到此处，或
+          {{ childrenUploadFileData.upload__text }}
+          <p />将文件拖到此处，或
           <em>点击上传</em>
         </div>
-        <div class="el-upload__tip" slot="tip">请上传{{childrenUploadFileData.accept}}文件格式</div>
+        <div
+          slot="tip"
+          class="el-upload__tip"
+        >
+          请上传{{ childrenUploadFileData.accept }}文件格式
+        </div>
       </div>
     </el-upload>
   </div>
@@ -36,7 +48,7 @@ import {
   Watch,
   Vue
 } from "vue-property-decorator";
-import { symbol } from '@/utils/symBol'
+import { symbol } from "@/utils/symBol";
 import { EventBus } from "@/eventBus/index";
 
 @Component({
@@ -66,7 +78,7 @@ export default class extends Vue {
 
   private parentFileData: any = []; // 传递给父组件的文件数据
   private fileList: Array<any> = []; // 显示在组件的文件列表
-  private imageUrl = "";
+  // private imageUrl = "";
 
   private async filUpload(e: any) {
     this.parentFileData = e;
@@ -74,9 +86,9 @@ export default class extends Vue {
 
   // 显示在上传组件那的文件列表信息
   private handleFileChange(file: any, list: Array<any>) {
-   
     if ((this.childrenUploadFileData as any).type == "image_avatar") {
-      this.imageUrl = URL.createObjectURL(file.raw);
+      // this.imageUrl = URL.createObjectURL(file.raw);
+      (this.childrenUploadFileData as any).imageUrl = URL.createObjectURL(file.raw);
     } else {
       this.fileList = list.length > 0 ? [list[list.length - 1]] : [];
     }
@@ -115,18 +127,18 @@ export default class extends Vue {
     if ((this as any).isClear == true) {
       this.parentFileData = [];
       this.fileList = [];
-      this.imageUrl = "";
+      // this.imageUrl = "";
+      (this.childrenUploadFileData as any).imageUrl = "";
     }
   }
 
   mounted() {
     // console.log((this as any).isClear);
-    // if ((this as any).isClear == "true") { 
+    // if ((this as any).isClear == "true") {
     //   this.parentFileData = [];
     //   this.fileList = [];
     //   this.imageUrl = "";
     // }
-
 
     // EventBus.$on("clear", msg => {
     //   console.log(msg);
@@ -139,7 +151,6 @@ export default class extends Vue {
     //   }
     // });
   }
-
 }
 </script>
 
@@ -170,13 +181,10 @@ export default class extends Vue {
 
 </style>
 
-
 <!--
 
 # UploadFile组件说明
 这是一个二次封装饿了么的上传组件
-
-
 
 ## 示例代码
 
@@ -193,7 +201,6 @@ import UploadFile from "@/components/UploadFile/index";
     :childrenUploadFileData="childrenUploadImgData"
     @parentUploadFileData="parentUploadImgData"
 ></UploadFile>
-
 
 ## 参数说明
 
@@ -216,12 +223,10 @@ childrenUploadImgData = {
     }
 }
 
-
 // 子组件给父组件传的选中的文件信息
 parentUploadImgData(data: any) {
     this.file_list.songImgFile = data;
 }
-
 
 // 关于清除子组件数据
 父组件
@@ -232,7 +237,5 @@ parentUploadImgData(data: any) {
   private isClear!: boolean;
 
 父组件通过改变isClear的值，子组件通过@watch监听isClear值的变化而做清除数据操作
-
-
 
 -->

@@ -86,7 +86,11 @@ export default {
     me: '我的',
     agentEvent: '代办事项',
     featuresDev: '功能开发',
-    diary: '日记'
+    diary: '日记',
+    // IT知识
+    itKnowledge: 'IT知识',
+    frontEnd: '前端',
+    rearEnd: '后端'
   },
   navbar: {
     logOut: '退出登录',

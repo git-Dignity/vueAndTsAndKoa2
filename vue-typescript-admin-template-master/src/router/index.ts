@@ -346,6 +346,37 @@ export const asyncRoutes: RouteConfig[] = [
         
     ]
   },
+  // IT知识
+  {
+    path: '/itKnowledge',
+    component: Layout,
+    // componentUrl: 'Layout',
+    redirect: '/itKnowledge/front-end',
+    name: 'itKnowledge',
+    meta: {
+      title: 'itKnowledge',
+      icon: 'example',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'front-end',
+            component: () => import(/* webpackChunkName: "front" */ '@/views/itKnowledge/front-end.vue'),
+            name: 'frontEnd',
+            meta: { title: 'frontEnd', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'rear-end',
+            component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/rear-end.vue'),
+            name: 'rearEnd',
+            meta: { title: 'rearEnd', noCache: true, icon: 'example' }
+          }
+    ]
+  },
   {
     path: '/eat',
     component: Layout,

@@ -52,3 +52,4 @@ export const register = (data: any) =>
     method: 'post', 
     data
   })
+ 

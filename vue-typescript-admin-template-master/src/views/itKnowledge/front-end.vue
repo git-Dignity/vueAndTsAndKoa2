@@ -1,0 +1,370 @@
+<template>
+  <div class="app-container">
+    <div class="container-title">
+      <el-button
+        icon="el-icon-circle-plus-outline"
+        @click="add"
+      >
+        {{ $t('table.add') }}
+      </el-button>
+      <el-button
+        v-waves
+        :loading="loading"
+        class="filter-item"
+        type="info"
+        icon="el-icon-download"
+        @click="handleDownload"
+      >
+        {{ $t('table.export') }}
+      </el-button>
+    </div>
+    <div class="container-content mt16">
+      <el-row>
+        <el-col
+          v-for="(data, index) in tableData.data"
+          :key="index"
+          :span="5"
+          class="mb4 mt15 mb15"
+          :offset="index%3 === 0 ? 1 : 2"
+        >
+          <div>
+            <el-card
+              class="box-card"
+              shadow="hover"
+            >
+              <div
+                slot="header"
+                class="clearfix"
+              >
+                <span>{{ data.title }}</span>
+
+                <el-button-group class="fr">
+                  <!-- <el-button
+                    type="primary"
+                    icon="el-icon-thumb"
+                    size="mini"
+                    @click="photoEnter(data.title)"
+                  /> -->
+                  <el-button
+                    v-permission="['admin']"
+                    type
+                    icon="el-icon-edit"
+                    size="mini"
+                    @click="btnEdit(data)"
+                  />
+                  <el-button
+                    v-permission="['admin']"
+                    type="danger"
+                    icon="el-icon-delete"
+                    size="mini"
+                    @click="btnDelete(data.id)"
+                  />
+                </el-button-group>
+              </div>
+              <a
+                :href="data.content"
+                target="_blank"
+              >
+                <el-avatar
+                  shape="square"
+                  :size="150"
+                  fit="fill"
+                  class="image"
+                  :src="data.photo"
+                />
+              </a>
+
+              <div class="box-card-bottom">
+                <span>{{ data.upload_time || '--' }}</span>
+                <el-divider direction="vertical" />
+                <span>{{ data.auth || '--' }}</span>
+              </div>
+            </el-card>
+          </div>
+        </el-col>
+      </el-row>
+      <pagination
+        v-show="tableData.listQuery.total>0"
+        :total="tableData.listQuery.total"
+        :page.sync="tableData.listQuery.current"
+        :page-sizes.sync="tableData.listQuery.pageSize"
+        :limit.sync="tableData.listQuery.size"
+        @pagination="parentPagination"
+      />
+      <!-- <ElemenetTable
+        v-loading="loading"
+        :children-table-data="tableData"
+        @parentPagination="parentPagination"
+      >
+        <template slot-scope="{row}">
+          <el-button
+            type="success"
+            icon="el-icon-search"
+            size="medium"
+            @click="btnView(row)"
+          >
+            查看
+          </el-button>
+          <el-button
+            v-permission="['admin']"
+            type="primary"
+            size="medium"
+            @click="btnEdit(row)"
+          >
+            <svg-icon name="edit" />修改
+          </el-button>
+          <el-button
+            v-permission="['admin']"
+            type="danger"
+            icon="el-icon-delete"
+            size="medium"
+            @click="btnDelete(row.id)"
+          >
+            删除
+          </el-button>
+        </template>
+      </ElemenetTable> -->
+    </div>
+    <RoleDialog
+      :children-data="dialogData"
+      @update:parentDialogSubmit="parentDialogSubmit"
+      @update:parentDialogCancel="parentDialogCancel"
+    >
+      <div slot="childTemplate">
+        <ElemenetForm
+          :children-form-data="undoneForm"
+          @parentForm="parentForm"
+          @UploadImgDataChild="UploadImgDataChild"
+        />
+      </div>
+    </RoleDialog>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import ElemenetTable from "@/components/ElTable/index.vue";
+import Pagination from "@/components/Pagination/index.vue";
+import { IItKnowledge } from "@/api/itKnowledge/types";
+import { columns, formatterType } from "@/views/itKnowledge/modules/tableData";
+import ElemenetForm from "@/components/ElForm/index.vue";
+import RoleDialog from "@c/Dialog/index.vue";
+import { Form, initForm } from "./modules/formData";
+import { showNotify } from "@/utils/tool/notification";
+import { exportJson2Excel } from "@/utils/excel";
+import { formatJson } from "@/utils";
+import {
+  MessageWarning,
+  MessageSuccess,
+  MesssageBoxQuestion
+} from "@/utils/tool/message";
+import {
+  AgentEvent
+} from "./modules/index";
+import {
+  get,
+  create,
+  update,
+  del
+} from "@/api/itKnowledge/frontEnd";
+import { getFormValue, validateForm } from "@/utils/tool/form";
+import { EventBus } from "@/eventBus/index";
+import { UserModule } from "@/store/modules/user";
+
+@Component({
+  name: "AgentEventTable",
+  components: {
+    ElemenetTable,
+    RoleDialog,
+    ElemenetForm,
+    Pagination
+  }
+})
+export default class extends Vue {
+  private list: IItKnowledge[] = [];
+  private loading = false;
+  private refsForm: any = [];
+  private tableData = {
+    data: this.list,
+    column: columns,
+    border: true,
+    tableWidth: "width: 100%",
+    defaultSort: { prop: "isSys", order: "descending" },
+    listQuery: {
+      current: 1,
+      size: 6,
+      total: 0,
+      pageSize: [6, 12, 18, 24, 1000],
+      importance: undefined,
+      title: undefined,
+      type: undefined,
+      sort: "+id"
+    }
+  };
+
+  private dialogData = {
+    title: "添加",
+    show: false,
+    width: "40%",
+    center: true,
+    isCloseModal: false,
+    isShowSubmit: true,
+    info: []
+  };
+
+  private undoneForm = Form;
+  private agentEvent = new AgentEvent(this.dialogData);
+
+  get name() {
+    return UserModule.name;
+  }
+
+  private parentPagination(val: Record<string, any>) {
+    // console.log(val);
+    this.getList(val);
+  }
+
+  private async getList({ current, size }: Record<string, any>) {
+    this.loading = true;
+    const { data } = await get({ current, size, auth: this.name });
+    console.log(data);
+
+    this.tableData.data = data.items;
+    this.tableData.listQuery.total = data.total;
+    console.log(this.tableData);
+    this.loading = false;
+  }
+
+  /**
+   * 对话框提交的回调函数
+   */
+  private async parentDialogSubmit(data: any) {
+    if (!validateForm(this.refsForm).includes("false")) {
+      const paramet = getFormValue(this.undoneForm.info);
+      paramet.auth = this.name;
+      console.log(paramet, this.undoneForm.file);
+
+      const formData = new FormData();
+      formData.append("info", JSON.stringify(paramet));
+      formData.append("file", this.undoneForm.file);
+
+      // save data
+      if (this.dialogData.title === "添加") {
+        const data: any = await create(formData);
+        console.log(data);
+
+        if (data.msg === "添加成功") { showNotify(4, "创建" + paramet.title + "成功"); }
+      } else if (this.dialogData.title.indexOf("修改") !== -1) {
+        const { data } = await update(formData);
+        console.log(data);
+        if (data.msg === "修改成功") {
+          showNotify(4, "修改" + paramet.title + "成功");
+        }
+      }
+
+      EventBus.$emit("isShowDialog", true);
+      initForm();
+      this.getList(this.tableData.listQuery);
+    } else {
+      MessageWarning("请检查信息是否上传齐全");
+    }
+  }
+
+  private parentDialogCancel(data: any) {
+    console.log(data);
+    this.undoneForm.file = "";
+  }
+
+  private UploadImgDataChild(data: any) {
+    console.log(data);
+    this.undoneForm.file = data.file;
+  }
+
+  private parentForm(data: any) {
+    // console.log(data);
+    this.refsForm.push(data);
+  }
+
+  private handleDownload() {
+    this.loading = true;
+    const filterVal = [];
+    this.tableData.data.forEach((t: any) => {
+      t.noticeWay = formatterNoticeWay(t);
+      t.type = formatterType(t);
+    });
+    for (const key in this.tableData.data[0]) {
+      if (key !== "rowId") {
+        filterVal.push(key);
+      }
+    }
+    const data = formatJson(filterVal, this.tableData.data);
+    exportJson2Excel(this.agentEvent.tHeader, data, "代办事项");
+    this.loading = false;
+  }
+
+  private add() {
+    initForm();
+    this.undoneForm.file = "";
+    this.agentEvent.showDialog("添加", true, false);
+  }
+
+  private btnView(row: any) {
+    this.agentEvent.showDialog(`查看【${row.title}】代办事项`, false, true);
+
+    initForm(
+      row.id,
+      row.title,
+      row.content,
+      row.type,
+      row.agent,
+      row.remarks
+    );
+  }
+
+  private btnEdit(row: any) {
+      console.log(row.photo);
+    this.agentEvent.showDialog(`修改【${row.title}】代办事项`, true, false);
+    initForm(
+      row.id,
+      row.title,
+      row.content,
+      row.type,
+      row.photo,
+      row.remarks
+    );
+  }
+
+  private btnDelete(id: string) {
+    console.log(id);
+    MesssageBoxQuestion("是否确定删除该事项,是否继续")
+      .then(async () => {
+        const { data } = await del({ id: id });
+
+        if (data.msg === "删除成功") {
+          MessageSuccess("删除成功!");
+          this.getList(this.tableData.listQuery);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  created() {
+    this.getList(this.tableData.listQuery);
+  }
+}
+</script>
+
+<style lang="scss"  scope>
+.box-card{
+    font-weight: bold;
+    .box-card-bottom{
+        margin-top: 10px;
+        color: #c2c5cd;
+        white-space: nowrap;
+        opacity: .8;
+        font-weight:400;
+    }
+}
+</style>

@@ -193,7 +193,7 @@ export default class extends Vue {
   }
 
   inpBlurForm({ name, value }: any) {
-    console.log(name, value);
+    // console.log(name, value);
   }
 
   private parentUploadImgData(data: any) {

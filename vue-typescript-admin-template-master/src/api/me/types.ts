@@ -10,6 +10,7 @@ export interface IAgentEvent {
     agent: string
     schedule: string
     noticeWay:number
+    contact: string
     startTime: string 
     endTime: string 
     remarks: string 

@@ -9,7 +9,9 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">{{ $t('registe.title') }}</h3>
+        <h3 class="title">
+          {{ $t('registe.title') }}
+        </h3>
         <lang-select class="set-language" />
       </div>
 
@@ -30,7 +32,12 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock is On"
+        placement="right"
+        manual
+      >
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon name="password" />
@@ -47,7 +54,10 @@
             @keyup.native="checkCapslock"
             @blur="capsTooltip = false"
           />
-          <span class="show-pwd" @click="showPwd">
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
             <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
           </span>
         </el-form-item>
@@ -94,18 +104,25 @@
           <i class="el-icon-picture-outline" />
         </span>
         <el-upload
+          ref="upload"
           class="avatar-uploader"
           action="/certificateAuthentication/upload"
           :http-request="uoload"
           accept=".png, .jpg, .gif, .jpeg"
           :show-file-list="false"
-          ref="upload"
           :auto-upload="false"
           :on-change="changeSingerImg"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <img
+            v-if="imageUrl"
+            :src="imageUrl"
+            class="avatar"
+          >
+          <i
+            v-else
+            class="el-icon-plus avatar-uploader-icon"
+          />
         </el-upload>
       </el-form-item>
 
@@ -113,7 +130,9 @@
         type="danger"
         style="width:100%; margin-bottom:30px;"
         @click.native.prevent="handleRegiste"
-      >{{ $t('registe.registeIn') }}</el-button>
+      >
+        {{ $t('registe.registeIn') }}
+      </el-button>
     </el-form>
   </div>
 </template>
@@ -126,7 +145,7 @@ import { Dictionary } from "vue-router/types/router";
 import { Form as ElForm, Input } from "element-ui";
 import LangSelect from "@/components/LangSelect/index.vue";
 import { register } from "@/api/users";
-import axios from 'axios';
+import axios from "axios";
 
 @Component({
   name: "Registe",
@@ -171,7 +190,7 @@ export default class extends Vue {
   public myCheck = new Check();
 
     private uploadFile = (param: any) => {
-      console.log(param)
+      console.log(param);
     return new Promise((resolve, reject) => {
       axios
         .post("http://localhost:3333/users/register", param, {
@@ -294,12 +313,11 @@ export default class extends Vue {
   private handleRegiste() {
     //  var aaa: any = document.getElementById('sendAppealForm')
     //  var formData = new FormData(aaa);
-  
-    //             var myDate = new Date();  
+
+    //             var myDate = new Date();
     //             // formData.append("uploader", JSON.parse(localStorage.getItem("login")).username);    // 上传者
     //             formData.append("uploadTime", myDate.toLocaleDateString());       // 上传日期
-              
-              
+
     //             var _this = this;
 
     //            this.uploadFile(formData).then(res => {

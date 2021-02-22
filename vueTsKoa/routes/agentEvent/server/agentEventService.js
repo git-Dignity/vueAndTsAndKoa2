@@ -2,7 +2,7 @@ const { specifiedTime } = require('../../common/schedule')
 const { specifiedTimeFormat } = require('../../../utils/date')
 const { get } = require('../../../utils/request.js')
 const config = require('../../../config/config.js')
-const { barkSend, serverJiangSend } = require('@api/sendMsg')
+const { barkSend, serverJiangSend, qqMailSend } = require('@api/sendMsg')
 
 
 /**
@@ -49,6 +49,17 @@ const specifiedTimeSend = (params) => {
                 结束时间：${params.endTime} <br />
                 详情请登录:zhengzemin.cn:3000`
             })
+        }else if(params.noticeWay===3){
+            // qq邮箱
+            await qqMailSend(params.contact, `
+                标题：【音乐博客】通知亲爱的，你${params.agent}即将要做：【${params.title}】事情已到期，还没有完成吧，答应我做个自律的后生仔啦
+                内容：${params.content} 
+                类型：${params.type} 
+                进度：${params.schedule}
+                开始时间：${params.startTime}
+                结束时间：${params.endTime} 
+                详情请登录:zhengzemin.cn:3000
+            `)
         }
     })
 }

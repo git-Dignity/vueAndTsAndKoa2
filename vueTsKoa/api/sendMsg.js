@@ -1,5 +1,7 @@
 const { barkUrl, push_wx_url } = require('@config/config.js')
+const { pass } = require('@config/qqMail.js')
 const querystring = require('querystring');
+const nodemailer = require("nodemailer");
 const { get } = require('@utils/request.js')
 
 
@@ -40,6 +42,44 @@ const serverJiangSend = (qs) => {
 }
 
 
+/**
+ * 发送qq邮件（支持多人）
+ * @param {String} qq 对方qq邮箱 ege:1830803049@qq.com,1638153584@qq.com
+ * @param {String} text 发送内容
+ */
+const qqMailSend = async (qqMail, text) => {
+  var user = "1830803049@qq.com";//自己的邮箱
+  var to = qqMail;  //对方的邮箱
+  let transporter = nodemailer.createTransport({
+    host: "smtp.qq.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user, // 用户账号
+      pass, //授权码,通过QQ获取
+    },
+  });
+
+  let qqMailArr = qqMail.split(",")
+ 
+
+  qqMailArr.forEach(async (t) =>{
+    await transporter.sendMail({
+      from: `<${user}>`, // sender address
+      to: `<${t}>`, // list of receivers
+      subject: "喂，有好消息来了", // Subject line
+      text: text, // plain text body
+    });
+  })
+
+
+  
+  console.log("发送QQ邮箱成功");
+}
+
+
+
+
 
 
 
@@ -49,6 +89,7 @@ const serverJiangSend = (qs) => {
 
 module.exports = {
     barkSend,
-    serverJiangSend
+    serverJiangSend,
+    qqMailSend
 }
 

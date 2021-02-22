@@ -94,7 +94,7 @@ import {
   del
 } from "@/api/me/agentEvent";
 import { getSysUser } from "@/api/sys/sysUser";
-import { sendServerJiangMsg, sendBarkMsg } from "@/api/common/sendMsg";
+import { sendServerJiangMsg, sendBarkMsg, senQQMailMsg } from "@/api/common/sendMsg";
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import { EventBus } from "@/eventBus/index";
 import moment from "moment";
@@ -158,6 +158,14 @@ export default class extends Vue {
     this.getList(this.tableData.listQuery, data);
   }
 
+  /**
+   * 通知方式改变，联系方式联动
+   */
+  @Watch("undoneForm.info.noticeWay.value")
+  private getUndoneForm(data: any) {
+    this.undoneForm.info.contact.label = data === 3 ? "registe.postbox" : "registe.phone";
+  }
+
   private parentPagination(val: Record<string, any>) {
     // console.log(val);
     this.getList(val, this.schedule);
@@ -203,6 +211,9 @@ export default class extends Vue {
       } else if (paramet.noticeWay === 2 && paramet.schedule !== 100) {
         // 微信方糖
         await sendServerJiangMsg(paramet);
+      } else if (paramet.noticeWay === 3 && paramet.schedule !== 100) {
+        // qq邮箱
+        await senQQMailMsg(paramet);
       }
 
       EventBus.$emit("isShowDialog", true);
@@ -255,6 +266,7 @@ export default class extends Vue {
       row.agent,
       row.schedule,
       row.noticeWay,
+      row.contact,
       row.startTime,
       row.endTime,
       row.remarks
@@ -271,6 +283,7 @@ export default class extends Vue {
       row.agent,
       row.schedule,
       row.noticeWay,
+      row.contact,
       row.startTime,
       row.endTime,
       row.remarks
