@@ -30,6 +30,13 @@
     前端：1：添加IT知识菜单（前端、后端）。2：开发IT知识-前端页面（添加、查看、分页）（删、改尚未完成）（src\views\itKnowledge\front-end.vue）
     后端koa：1：添加itKnowledge/frontEnd路由。2：开发增删改查接口
     数据库：itKnowledge表创建（id、title、content、photo、photo_name、random_num、type、auth、remaks、upload_time）
+
+    2021/02/23
+    前端：1：开发IT知识-前端页面（删、改完成）（src\views\itKnowledge\front-end.vue）
+
+    2021/02/24
+    前端：1：开发IT知识-修改的时候，上传图片，删除之前的照片
+    后端koa：1：put接口，修改的时候，上传图片，删除之前的照片:。2：upload.js文件添加新unlinkSync方法，用来删除图片文件
   </div>
 </template>
 

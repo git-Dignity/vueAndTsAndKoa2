@@ -37,9 +37,21 @@ const uploadFile = (fileArr,url) => {
 }
 
 
+/**
+ * 删除图片（单个）
+ * @param {String} url 文件的路径，输入从`public/node/upload/image/`之后的路径
+ * @param {String} name 文件名字
+ */
+const unlinkSync = (url, name) => {
+  let filePath = path.join(__dirname, `../public/node/upload/image/${url}/`) + `${name}`;
+  fs.unlinkSync(filePath);
+}
+
+
 
 module.exports = {
-  uploadFile
+  uploadFile,
+  unlinkSync
 }
 
 
@@ -47,4 +59,7 @@ module.exports = {
 
   // NodeJs koa2实现文件上传
   // 使用koa-body ：https://www.jianshu.com/p/34d0e1a5ac70
+
+  // 删除图片
+  // https://www.jb51.net/article/172779.htm
 

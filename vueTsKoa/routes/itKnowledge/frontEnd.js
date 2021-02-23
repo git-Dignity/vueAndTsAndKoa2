@@ -2,7 +2,7 @@ const router = require('koa-router')()
 var DB = require('../../utils/mysqlDB')
 var uuid = require('uuid');
 const config = require('../../config/config');
-const { uploadFile } = require('../../utils/upload')
+const { uploadFile, unlinkSync } = require('../../utils/upload')
 const sqlModel = require('../common')
 
 router.prefix('/itKnowledge/frontEnd')
@@ -107,10 +107,15 @@ router.post('/', async (ctx, next) => {
 })
 
 
+/**
+ * 修改
+ * 
+ * 如果有修改图片，先把之前存在本地的图片删除
+ */
 router.put('/',async (ctx)=>{
     let result = {}
     const req = ctx.request.body.user;
-    console.log(req)
+    // console.log(req)
 
     const info = JSON.parse(ctx.request.body.info);
     let fileArr = Object.entries(ctx.request.files)
@@ -118,6 +123,18 @@ router.put('/',async (ctx)=>{
     
     if (fileArr.length != 0) {
         console.log(' update image')
+
+        // 删除旧图片文件
+        let selectOneRes = await DB.query(`
+            select * from itknowledge 
+            where flag = '1' and
+            id = '${info.id}'
+        `)
+        unlinkSync('itKnowledge/frontEnd', `${selectOneRes[0].random_num}_${selectOneRes[0].photo_name}`)
+     
+
+
+
         result = await uploadFile(fileArr, 'itKnowledge/frontEnd')
         console.log(result)
         

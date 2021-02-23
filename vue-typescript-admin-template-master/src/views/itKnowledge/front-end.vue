@@ -36,7 +36,10 @@
                 slot="header"
                 class="clearfix"
               >
-                <span>{{ data.title }}</span>
+                <span
+                  class="box-card-header ellipsis-oneLine"
+                  :title="data.title"
+                >{{ data.title }}</span>
 
                 <el-button-group class="fr">
                   <!-- <el-button
@@ -74,10 +77,16 @@
                 />
               </a>
 
-              <div class="box-card-bottom">
+              <div class="box-card-foot">
                 <span>{{ data.upload_time || '--' }}</span>
                 <el-divider direction="vertical" />
                 <span>{{ data.auth || '--' }}</span>
+                <div
+                  class="mt10 ellipsis-twoLine"
+                  :title="data.remarks"
+                >
+                  {{ data.remarks }}
+                </div>
               </div>
             </el-card>
           </div>
@@ -359,12 +368,17 @@ export default class extends Vue {
 <style lang="scss"  scope>
 .box-card{
     font-weight: bold;
-    .box-card-bottom{
+    .box-card-header{
+      display: inline-block;
+      width: 70%;
+    }
+    .box-card-foot{
         margin-top: 10px;
         color: #c2c5cd;
         white-space: nowrap;
         opacity: .8;
         font-weight:400;
     }
+
 }
 </style>
