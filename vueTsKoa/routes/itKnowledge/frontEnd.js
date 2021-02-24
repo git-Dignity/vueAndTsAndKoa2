@@ -12,18 +12,36 @@ router.prefix('/itKnowledge/frontEnd')
 router.get('/', async (ctx, next) => {
     const req = ctx.request.query
     console.log(req)
+
+    const auth =  req.auth==undefined?'':req.auth
+    const title =  req.title==undefined?'':req.title
+    const type =  req.type==undefined?'':req.type
+    const remarks =  req.remarks==undefined?'':req.remarks
+    const uploadTime =  req.uploadTime==undefined?'':req.uploadTime
+    console.log(uploadTime)
    
 
-    let sqlM = new sqlModel("itknowledge")
     const pageNumLeft = (req.current - 1) * req.size;
-    let total = await sqlM.getTotal()
+    let sqlM = new sqlModel("itknowledge",`flag = '1' 
+    and auth =  '${auth}' or '${auth} '=''  
+    and title like '%${title}%'
+    and type like '%${type}%'
+    and remarks like '%${remarks}%'
+    and date(upload_time)= '${uploadTime}' or '${uploadTime}'=''  
+    `)
    
-    const userName =  req.auth==undefined?'':req.auth
-    console.log(userName)
+
+    let total = await sqlM.getTotal()
+    
+    
     let result = await DB.query(`
-        select * from itknowledge 
-        where flag = '1' and
-        auth =  '${userName}' or '${userName} '='' 
+        select * from itknowledge as i
+        where i.flag = '1' 
+        and i.auth =  '${auth}' or '${auth} '=''  
+        and i.title like '%${title}%'
+        and i.type like '%${type}%'
+        and i.remarks like '%${remarks}%'
+        and date(i.upload_time)= '${uploadTime}' or '${uploadTime}'=''
         limit ${pageNumLeft},${req.size}
     `)
 

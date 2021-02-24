@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="container-title">
+    <!-- <div class="container-title">
       <el-button
         icon="el-icon-circle-plus-outline"
         @click="add"
@@ -17,7 +17,12 @@
       >
         {{ $t('table.export') }}
       </el-button>
-    </div>
+    </div> -->
+    <Search
+      @add="add"
+      @handleDownload="handleDownload"
+      @search="search"
+    />
     <div class="container-content mt16">
       <el-row>
         <el-col
@@ -78,6 +83,8 @@
               </a>
 
               <div class="box-card-foot">
+                <span>{{ data.type || '--' }}</span>
+                <el-divider direction="vertical" />
                 <span>{{ data.upload_time || '--' }}</span>
                 <el-divider direction="vertical" />
                 <span>{{ data.auth || '--' }}</span>
@@ -179,14 +186,16 @@ import {
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import { EventBus } from "@/eventBus/index";
 import { UserModule } from "@/store/modules/user";
+import Search from "./components/front-end/Search.vue";
 
 @Component({
-  name: "AgentEventTable",
+  name: "FrontEnd",
   components: {
     ElemenetTable,
     RoleDialog,
     ElemenetForm,
-    Pagination
+    Pagination,
+    Search
   }
 })
 export default class extends Vue {
@@ -204,9 +213,11 @@ export default class extends Vue {
       size: 6,
       total: 0,
       pageSize: [6, 12, 18, 24, 1000],
-      importance: undefined,
-      title: undefined,
-      type: undefined,
+      title: "",
+      type: "",
+      auth: "",
+      remarks: "",
+      uploadTime: "",
       sort: "+id"
     }
   };
@@ -228,19 +239,28 @@ export default class extends Vue {
     return UserModule.name;
   }
 
-  private parentPagination(val: Record<string, any>) {
-    // console.log(val);
-    this.getList(val);
+  // 查询
+  private search(data: object) {
+    // console.log(data);
+    Object.assign(this.tableData.listQuery, data); // 对象合并
+    this.getList();
   }
 
-  private async getList({ current, size }: Record<string, any>) {
+  private parentPagination(val: number) {
+    // console.log(val);
+    this.tableData.listQuery.current = val;
+
+    this.getList();
+  }
+
+  private async getList() {
     this.loading = true;
-    const { data } = await get({ current, size, auth: this.name });
+    const { data } = await get(this.tableData.listQuery);
     console.log(data);
 
     this.tableData.data = data.items;
     this.tableData.listQuery.total = data.total;
-    console.log(this.tableData);
+    // console.log(this.tableData);
     this.loading = false;
   }
 
@@ -273,7 +293,7 @@ export default class extends Vue {
 
       EventBus.$emit("isShowDialog", true);
       initForm();
-      this.getList(this.tableData.listQuery);
+      this.getList();
     } else {
       MessageWarning("请检查信息是否上传齐全");
     }
@@ -351,7 +371,7 @@ export default class extends Vue {
 
         if (data.msg === "删除成功") {
           MessageSuccess("删除成功!");
-          this.getList(this.tableData.listQuery);
+          this.getList();
         }
       })
       .catch((e) => {
@@ -360,7 +380,7 @@ export default class extends Vue {
   }
 
   created() {
-    this.getList(this.tableData.listQuery);
+    this.getList();
   }
 }
 </script>

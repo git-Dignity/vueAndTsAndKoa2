@@ -4,70 +4,110 @@
     <app-button></app-button>-->
     <!-- <div>{{ ssss | thousandBitSeparator }}</div> -->
 
-    <el-collapse accordion v-model="activeNames">
+    <el-collapse
+      v-model="activeNames"
+      accordion
+    >
       <el-collapse-item name="search">
         <template slot="title">
           搜索歌手清单 &nbsp;
-          <i class="el-icon-search"></i>
+          <i class="el-icon-search" />
         </template>
 
-        <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+        <el-form
+          :inline="true"
+          :model="searchForm"
+          class="demo-form-inline"
+        >
           <el-form-item label="歌曲名">
-            <el-input v-model="searchForm.song" placeholder="歌曲名"></el-input>
+            <el-input
+              v-model="searchForm.song"
+              placeholder="歌曲名"
+            />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSongSubmit">查询</el-button>
-            <el-button @click="resetForm()">重置</el-button>
+            <el-button
+              type="primary"
+              @click="onSongSubmit"
+            >
+              查询
+            </el-button>
+            <el-button @click="resetForm()">
+              重置
+            </el-button>
           </el-form-item>
         </el-form>
       </el-collapse-item>
 
-      <el-collapse-item name="upload" v-permission="['admin']">
+      <el-collapse-item
+        v-permission="['admin']"
+        name="upload"
+      >
         <template slot="title">
           上传歌手清单 &nbsp;
-          <i class="el-icon-upload2"></i>
+          <i class="el-icon-upload2" />
         </template>
 
         <el-row :gutter="15">
-          <el-form :inline="true" :model="musicInfo" class="demo-form-inline">
+          <el-form
+            :inline="true"
+            :model="musicInfo"
+            class="demo-form-inline"
+          >
             <el-form-item label="歌手名">
               <!-- readonly="true" -->
-              <el-input v-model="musicInfo.singerName" placeholder="歌手名"></el-input>
+              <el-input
+                v-model="musicInfo.singerName"
+                placeholder="歌手名"
+              />
             </el-form-item>
             <el-form-item label="歌曲名">
-              <el-input v-model="musicInfo.songName" placeholder="歌曲名"></el-input>
+              <el-input
+                v-model="musicInfo.songName"
+                placeholder="歌曲名"
+              />
             </el-form-item>
             <el-form-item label="歌曲类型">
-              <el-select v-model="musicInfo.songType" placeholder="歌曲类型">
+              <el-select
+                v-model="musicInfo.songType"
+                placeholder="歌曲类型"
+              >
                 <el-option
                   v-for="(songType, index) in songTypeOption"
                   :key="index"
                   :label="songType.label"
                   :value="songType.value"
-                ></el-option>
+                />
                 <!-- <el-option label="流行" value="1"></el-option>
                 <el-option label="摇滚" value="2"></el-option>
                 <el-option label="轻音乐" value="3"></el-option>-->
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitUpload">上传</el-button>
-              <el-button @click="resetUpload()">重置</el-button>
+              <el-button
+                type="primary"
+                @click="submitUpload"
+              >
+                上传
+              </el-button>
+              <el-button @click="resetUpload()">
+                重置
+              </el-button>
             </el-form-item>
           </el-form>
 
           <el-col :span="7">
             <UploadFile
-              :childrenUploadFileData="childrenUploadMusicData"
+              :children-upload-file-data="childrenUploadMusicData"
               @parentUploadFileData="parentUploadMusicData"
-            ></UploadFile>
+            />
           </el-col>
 
           <el-col :span="7">
             <UploadFile
-              :childrenUploadFileData="childrenUploadImgData"
+              :children-upload-file-data="childrenUploadImgData"
               @parentUploadFileData="parentUploadImgData"
-            ></UploadFile>
+            />
           </el-col>
         </el-row>
       </el-collapse-item>
@@ -80,19 +120,43 @@
         style="width: 100%; margin-top: 3%"
         :default-sort="{prop: 'isSys', order: 'descending'}"
       >
-        <el-table-column width="120" label="歌曲图片">
+        <el-table-column
+          width="120"
+          label="歌曲图片"
+        >
           <template slot-scope="{row}">
             <!-- <router-link :to="'/music/singer-song-lyric/'+row.singer_name"> -->
             <button @click="songLyric(row)">
-              <el-avatar shape="square" :size="80" fit="fill" :src="row.img_url"></el-avatar>
+              <el-avatar
+                shape="square"
+                :size="80"
+                fit="fill"
+                :src="row.img_url"
+              />
             </button>
             <!-- </router-link> -->
           </template>
         </el-table-column>
-        <el-table-column prop="singerSongName" label="歌曲名" width="380"></el-table-column>
-        <el-table-column prop="singerName" label="歌手名" width="180"></el-table-column>
-        <el-table-column prop="singerSongType" label="歌曲类型" width="150"></el-table-column>
-        <el-table-column prop="fileSize" label="時長" width="180"></el-table-column>
+        <el-table-column
+          prop="singerSongName"
+          label="歌曲名"
+          width="380"
+        />
+        <el-table-column
+          prop="singerName"
+          label="歌手名"
+          width="180"
+        />
+        <el-table-column
+          prop="singerSongType"
+          label="歌曲类型"
+          width="150"
+        />
+        <el-table-column
+          prop="fileSize"
+          label="時長"
+          width="180"
+        />
         <el-table-column label="音頻">
           <template slot-scope="{row}">
             <el-button-group>
@@ -101,30 +165,30 @@
                 type="danger"
                 icon="el-icon-video-pause"
                 @click="musicPauseBtn(row)"
-              ></el-button>
+              />
               <el-button
                 v-else
                 type="primary"
                 icon="el-icon-video-play"
                 @click="musicPlayBtn(row, row.song_url, row.singerName, row.singerSongName)"
-              ></el-button>
+              />
               <el-button
+                v-permission="['admin']"
                 icon="el-icon-edit"
-                v-permission="['admin']"
                 @click="singerSongEdit(row, row.song_url, row.singerName, row.singerSongName)"
-              ></el-button>
+              />
               <el-button
-                type="danger"
-                @click="singerSongDel(row)"
-                icon="el-icon-delete"
                 v-permission="['admin']"
-              ></el-button>
+                type="danger"
+                icon="el-icon-delete"
+                @click="singerSongDel(row)"
+              />
             </el-button-group>
           </template>
           <!-- <template slot-scope="scope">
-         <el-button 
-          type="primary" 
-          :icon="viedoPlay" 
+         <el-button
+          type="primary"
+          :icon="viedoPlay"
           @click="music_btn(scope.row, scope.row.musicUrl, scope.row.username)"
           circle>
           </el-button>
@@ -140,15 +204,18 @@
       :total="page.total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    ></el-pagination>
+    />
 
     <SingerDialog
-      :childrenData="childrenDialogData"
+      :children-data="childrenDialogData"
       @update:parentDialogSubmit="parentDialogEditSubmit"
       @update:parentDialogCancel="parentDialogCancel"
     >
       <div slot="childTemplate">
-        <EditSingerSongDialog :info="childrenDialogData.info" @singerDialogData="singerDialogData"></EditSingerSongDialog>
+        <EditSingerSongDialog
+          :info="childrenDialogData.info"
+          @singerDialogData="singerDialogData"
+        />
       </div>
     </SingerDialog>
   </div>
@@ -164,7 +231,7 @@ import { UserModule } from "@/store/modules/user";
 import QS from "qs";
 // import { qiniuUrl } from "@/api/common";
 import { checkPermission } from "@/utils/permission"; // Use permission directly
-import Point from './test'
+import Point from "./test";
 import { symbol } from "@/utils/symBol";
 import { EventBus } from "@/eventBus/index";
 import SingerDialog from "@/components/Dialog/index.vue";
@@ -186,26 +253,30 @@ import {
 })
 export default class extends Vue {
   private musicData = [];
-  private point = new Point("1","41");   //  //使用class
+  private point = new Point("1", "41"); //  //使用class
 
   private page = {
-    currentPage: 1, //当前页码
-    total: 0, //查出来这个条件全部多少条
+    currentPage: 1, // 当前页码
+    total: 0, // 查出来这个条件全部多少条
     size: 6 // 每页显示几条
   };
+
   private musicInfo = {
     songName: "",
     singerName: "",
     songType: "民族"
   };
+
   private file_list: any = {
     song_file: [],
     songImgFile: []
   };
+
   activeNames = ["search"];
   searchForm = {
     song: ""
   };
+
   songTypeOption = [
     {
       label: "民族",
@@ -230,6 +301,7 @@ export default class extends Vue {
     type: "image",
     accept: ".png, .jpg, .gif, .jpeg"
   };
+
   private childrenUploadMusicData = {
     upload__text: "上传歌曲文件",
     type: "music",
@@ -258,8 +330,8 @@ export default class extends Vue {
   }
 
   private async init() {
-    this.point.x = "5454545"
-    console.log(this.point)   //使用class
+    this.point.x = "5454545";
+    console.log(this.point); // 使用class
 
     this.musicInfo.singerName = this.$route.query.singerName + "";
     if (this.musicInfo.singerName == "轻") this.musicInfo.songType = "轻音乐";
@@ -406,7 +478,6 @@ export default class extends Vue {
     });
   }
 
-
   private async parentDialogEditSubmit(data: any) {
     // console.log(data);
 
@@ -456,12 +527,15 @@ export default class extends Vue {
       play: true
     });
   }
+
   async musicPauseBtn(row: any) {
     row.play = false;
   }
+
   get musicpa() {
     return MusicModule.playasb;
   }
+
   @Watch("musicpa")
   private onRoutesChange(data: any) {
     console.log(data);
