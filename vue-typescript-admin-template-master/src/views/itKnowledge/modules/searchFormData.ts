@@ -1,23 +1,13 @@
 import { setType } from './formUtils';
 
 
-// 前端表单数据（添加、修改）
+// 前端表单数据
 const Form = {
-    name: "undoneForm",
+    name: "searchFormData",
     position: "right",
-    labelWidth: 140, 
     size: "medium",
+    inline: true,
     info: {
-        "id": {
-            label: 'id',
-            name: "id",
-            value: "",
-            disabled: true,
-            hidden: true,
-            rule: {
-                required: false, message: ""
-            }
-        },
         "title": {
             label: 'table.title',
             name: "title",
@@ -26,17 +16,7 @@ const Form = {
             hidden: false,
             // 规则必须也得定义在form绑定的model中
             rule: {
-                required: true, message: "标题不能为空"
-            }
-        },
-        "content": {
-            label: 'content',
-            name: "content",
-            value: "",
-            disabled: false,
-            hidden: false,
-            rule: {
-                required: true, message: "内容不能为空"
+                required: false, message: ""
             }
         },
         "type": {
@@ -48,20 +28,27 @@ const Form = {
             disabled: false,
             hidden: false,
             rule: {
-                required: true, message: "类型不能为空"
+                required: false, message: ""
             }
         },
-        "photo": {
-            label: 'sys.photo',
-            name: "photo",
+        "auth": {
+            label: 'sys.auth',
+            name: "auth",
             value: "",
-            isPhoto: true,
-            childrenUploadImgData: {
-                upload__text: "上传文章照片",
-                type: "image_avatar",
-                accept: ".png, .jpg, .gif, .jpeg",
-                imageUrl: ''
-            },
+            isSelect: true,
+            options: [],
+            disabled: false,
+            hidden: false,
+            rule: {
+                required: false, message: ""
+            }
+        },
+        "uploadTime":{
+            label: 'sys.uploadTime',
+            name: "uploadTime",
+            value: "",
+            isDate: true,
+            valueFormat: 'yyyy-MM-dd',
             disabled: false,
             hidden: false,
             rule: {
@@ -72,7 +59,6 @@ const Form = {
             label: 'sys.remarks',
             name: "remarks",
             value: "",
-            isTextarea: true,
             disabled: false,
             hidden: false,
             rule: {
@@ -80,22 +66,20 @@ const Form = {
             }
         }
     },
-    file:""
+    isSlot:true // 一般显示查询重置按钮
 }
 
 
 
 
 
-const initForm = (id="", title = "", content = "", type = "",photo="",remarks = "") =>{
-    Form.info.id.value = id;
+const initForm = (title = "", auth = "", type = "",uploadTime="",remarks = "") =>{
     Form.info.title.value = title;
-    Form.info.content.value = content;
     Form.info.type.value = type;
-    Form.info.photo.childrenUploadImgData.imageUrl = photo;
+    Form.info.auth.value = auth;
+    Form.info.uploadTime.value = uploadTime;
     Form.info.remarks.value = remarks;
 }
-
 
 
 /**
@@ -113,5 +97,3 @@ export {
     initForm,
     setFormType
 }
-
-

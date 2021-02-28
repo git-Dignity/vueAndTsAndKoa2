@@ -56,13 +56,15 @@ const columns = {
         prop: "startTime",
         label: "开始时间",
         width: "15%",
-        isDate:true
+        isDate:true,
+        valueFormat: 'yyyyMMddHHmmss',
     },
     "endTime": {
         prop: "endTime",
         label: "结束时间",
         width: "15%",
-        isDate:true
+        isDate:true,
+        valueFormat: 'yyyyMMddHHmmss',
     },
     "remarks": {
         prop: "remarks",

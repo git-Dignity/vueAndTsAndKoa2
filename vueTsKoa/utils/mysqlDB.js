@@ -20,7 +20,12 @@ exports.query=function(sql,parmas=null){
    //2执行sql语句
  console.log('sql' + sql)
    connection.query(sql,parmas, function (error, results, fields) {
-       if (error) throw error;
+       if (error) {
+          console.log(error)
+          console.log('报错啦')
+         // throw error
+         reject("")
+       };
        reject(results);
    
    });

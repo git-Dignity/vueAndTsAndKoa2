@@ -18,16 +18,19 @@ router.get('/', async (ctx, next) => {
     const type =  req.type==undefined?'':req.type
     const remarks =  req.remarks==undefined?'':req.remarks
     const uploadTime =  req.uploadTime==undefined?'':req.uploadTime
+    const category =  req.category==undefined?'':req.category
+    
     console.log(uploadTime)
    
 
     const pageNumLeft = (req.current - 1) * req.size;
     let sqlM = new sqlModel("itknowledge",`flag = '1' 
-    and auth =  '${auth}' or '${auth} '=''  
-    and title like '%${title}%'
-    and type like '%${type}%'
-    and remarks like '%${remarks}%'
-    and date(upload_time)= '${uploadTime}' or '${uploadTime}'=''  
+    and (auth =  '${auth}' or '${auth} '='')  
+    and (title like '%${title}%')
+    and (type like '%${type}%')
+    and (remarks like '%${remarks}%')
+    and (date(upload_time)= '${uploadTime}' or '${uploadTime}'='')  
+    and (category =  '${category}' or '${category} '='')  
     `)
    
 
@@ -37,17 +40,22 @@ router.get('/', async (ctx, next) => {
     let result = await DB.query(`
         select * from itknowledge as i
         where i.flag = '1' 
-        and i.auth =  '${auth}' or '${auth} '=''  
-        and i.title like '%${title}%'
-        and i.type like '%${type}%'
-        and i.remarks like '%${remarks}%'
-        and date(i.upload_time)= '${uploadTime}' or '${uploadTime}'=''
+        and (i.auth =  '${auth}' or '${auth} '='')  
+        and (i.title like '%${title}%')
+        and (i.type like '%${type}%')
+        and (i.remarks like '%${remarks}%')
+        and (date(i.upload_time)= '${uploadTime}' or '${uploadTime}'='')
+        and (i.category =  '${category}' or '${category} '='')  
         limit ${pageNumLeft},${req.size}
     `)
 
-    result.forEach( user =>{
-        user.photo = config.url+ user.photo
-    })
+    if(result){
+        result.forEach( user =>{
+            user.photo = config.url+ user.photo
+        })
+    }
+
+    
     // console.log(result)
 
   
@@ -78,8 +86,8 @@ router.post('/', async (ctx, next) => {
     console.log(info, info.type)
     
     await DB.query(`
-              insert into itknowledge(title,content,type,auth,remarks,photo,photo_name,random_num)
-              values('${info.title}','${info.content}','${info.type}','${info.auth}','${info.remarks}','${result[0].fileUrl}','${result[0].fileName}','${result[0].randomNum}')
+              insert into itknowledge(title,content,type,auth,remarks,category,photo,photo_name,random_num)
+              values('${info.title}','${info.content}','${info.type}','${info.auth}','${info.remarks}','${info.category}','${result[0].fileUrl}','${result[0].fileName}','${result[0].randomNum}')
           `)
     if (result) {
       console.log("添加成功")
@@ -98,8 +106,8 @@ router.post('/', async (ctx, next) => {
     console.log(4444)
     // 没有选择图片
     await DB.query(`
-              insert into itknowledge(title,content,type,auth,remarks)
-              values('${info.title}','${info.content}','${info.type}','${info.auth}','${info.remarks}')
+              insert into itknowledge(title,content,type,auth,remarks,category)
+              values('${info.title}','${info.content}','${info.type}','${info.auth}','${info.remarks}','${info.category}')
           `)
    
       console.log("添加成功")
@@ -151,7 +159,7 @@ router.put('/',async (ctx)=>{
         unlinkSync('itKnowledge/frontEnd', `${selectOneRes[0].random_num}_${selectOneRes[0].photo_name}`)
      
 
-
+       
 
         result = await uploadFile(fileArr, 'itKnowledge/frontEnd')
         console.log(result)
@@ -162,6 +170,7 @@ router.put('/',async (ctx)=>{
             type = '${info.type}',
             auth = '${info.auth}',
             remarks = '${info.remarks}',
+            category = '${info.category}',
             photo = '${result[0].fileUrl}',
             photo_name = '${result[0].fileName}',
             random_num = '${result[0].randomNum}'
@@ -186,7 +195,8 @@ router.put('/',async (ctx)=>{
             content = '${info.content}',
             type = '${info.type}',
             auth = '${info.auth}',
-            remarks = '${info.remarks}'
+            remarks = '${info.remarks}',
+            category = '${info.category}'
         where id = '${info.id}'
               `)
       

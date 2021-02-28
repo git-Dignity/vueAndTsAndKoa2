@@ -2,12 +2,13 @@
   <div>
     <el-row>
       <el-form
-        ref="dataForm"
+        :ref="childrenFormData.name"
         :label-position="childrenFormData.position"
         :label-width="childrenFormData.labelWidth + 'px'"
         class="ruleForm"
         :size="childrenFormData.size"
         :model="childrenFormData"
+        :inline="childrenFormData.inline"
       >
         <!-- 循环开始  -->
         <template v-for="(item,i) in childrenFormData.info">
@@ -62,7 +63,7 @@
             <template v-else-if="item.isDate">
               <el-date-picker
                 v-model="item.value"
-                value-format="yyyyMMddHHmmss"
+                :value-format="item.valueFormat"
                 type="datetime"
                 placeholder="选择日期时间"
               />
@@ -141,6 +142,10 @@
             </template>
           </el-form-item>
         </template>
+        <!-- 插槽，一般显示查询重置按钮 -->
+        <template v-if="childrenFormData.isSlot">
+          <slot />
+        </template>
       </el-form>
     </el-row>
   </div>
@@ -202,7 +207,7 @@ export default class extends Vue {
   }
 
   mounted() {
-    this.$emit("parentForm", this.$refs.dataForm);
+    this.$emit("parentForm", this.$refs[(this.childrenFormData as any).name]);
   }
 }
 </script>

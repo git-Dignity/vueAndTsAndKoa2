@@ -1,5 +1,4 @@
-import { typeOptions } from './options';
-import { colorStatus } from '@/utils/tool/index'
+import { frontEndTypeOptions } from './options';
 
 const columns = {
     "serialNum": {
@@ -20,18 +19,7 @@ const columns = {
     "type": {
         prop: "type",
         label: "类型",
-        width: "5%",
-        isTag: true,
-        filters: [
-            { value: 'html', text: 'HTML' },
-            { value: 'css', text: 'CSS' },
-            { value: 'javascript', text: 'Javascript' },
-            { value: 'vue', text: 'Vue' },
-            { value: 'ui', text: 'Ui' }
-        ],
-        filterTag:(value: string, row: any, column:Object) => filterTag(value, row, column),
-        type: (h: any, param: any) => setTypeStauts(h),
-        render: (h: any, param: any) => formatterType(h)
+        width: "5%"
     },
     "photo":{
         prop: "photo",
@@ -64,17 +52,17 @@ const columns = {
 const formatterType = (row: any) => {  // row, column
     let type = ""
     switch (row.type) {
-        case `${typeOptions[0].value}`:
-            type = typeOptions[0].label
+        case `${frontEndTypeOptions[0].value}`:
+            type = frontEndTypeOptions[0].label
             break;
-        case `${typeOptions[1].value}`:
-            type = typeOptions[1].label
+        case `${frontEndTypeOptions[1].value}`:
+            type = frontEndTypeOptions[1].label
             break;
-        case `${typeOptions[2].value}`:
-            type = typeOptions[2].label
+        case `${frontEndTypeOptions[2].value}`:
+            type = frontEndTypeOptions[2].label
             break;
         default:
-            type = typeOptions[1].label
+            type = frontEndTypeOptions[1].label
     }
 
     return type;
@@ -82,34 +70,6 @@ const formatterType = (row: any) => {  // row, column
 
 
 
-
-/**
- * 根据type类型设置颜色值
- * @param row 
- */
-const setTypeStauts = (row:any ) =>{
-    if(row.type === 'two-days'){
-       return colorStatus(1, 2) 
-    }else if(row.type === 'recent'){
-        return colorStatus(2,2) 
-    }else if(row.type === 'postpone'){
-        return colorStatus(3,2) 
-    }else {
-        return colorStatus(3,2) 
-    }
-}
-
-
-/**
- * 筛选：它用于决定某些数据是否显示
- * @param value 
- * @param row 
- * @param columns 
- */
-const filterTag = (value: string, row: any, columns:Object) =>{
-    console.log(value, row, columns);
-    return row.type === value;
-  }
 
 
 export {

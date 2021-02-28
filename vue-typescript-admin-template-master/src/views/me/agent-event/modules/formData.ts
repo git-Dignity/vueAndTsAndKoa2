@@ -146,6 +146,7 @@ const Form = {
             name: "startTime",
             value: "",
             isDate: true,
+            valueFormat: 'yyyyMMddHHmmss',
             disabled: false,
             hidden: false,
             rule: {
@@ -157,6 +158,7 @@ const Form = {
             name: "endTime",
             value: "",
             isDate: true,
+            valueFormat: 'yyyyMMddHHmmss',
             disabled: false,
             hidden: false,
             rule: [

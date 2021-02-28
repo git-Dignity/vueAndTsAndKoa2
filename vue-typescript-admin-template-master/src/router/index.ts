@@ -374,6 +374,12 @@ export const asyncRoutes: RouteConfig[] = [
             component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/rear-end.vue'),
             name: 'rearEnd',
             meta: { title: 'rearEnd', noCache: true, icon: 'example' }
+          },
+          { 
+            path: 'algorithm',
+            component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/algorithm.vue'),
+            name: 'algorithm',
+            meta: { title: 'algorithm', noCache: true, icon: 'example' }
           }
     ]
   },

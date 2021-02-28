@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <ItKnowledge :category="1" />
+    <ItKnowledge :category="3" />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import ItKnowledge from "./Index.vue";
 @Component({
-  name: "FrontEnd",
+  name: "Algorithm",
   components: {
     ItKnowledge
   }

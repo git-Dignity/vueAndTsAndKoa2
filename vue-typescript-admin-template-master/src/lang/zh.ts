@@ -90,7 +90,8 @@ export default {
     // IT知识
     itKnowledge: 'IT知识',
     frontEnd: '前端',
-    rearEnd: '后端'
+    rearEnd: '后端',
+    algorithm: '算法'
   },
   navbar: {
     logOut: '退出登录',
@@ -181,7 +182,9 @@ export default {
     phone: '手机号码',
     isSys: '是否系统数据',
     remarks: '备注',
-    routes: '路由'
+    routes: '路由',
+    auth:'上传者',
+    uploadTime: '上传时间'
   },
   
   music: {
