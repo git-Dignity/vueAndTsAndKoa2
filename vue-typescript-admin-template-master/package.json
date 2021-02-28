@@ -34,6 +34,7 @@
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.1.0",
+    "postcss-plugin-px2rem": "^0.8.1",
     "register-service-worker": "^1.7.1",
     "screenfull": "^5.0.2",
     "script-loader": "^0.7.2",

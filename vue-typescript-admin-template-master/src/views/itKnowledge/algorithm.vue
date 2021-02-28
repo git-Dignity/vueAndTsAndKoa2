@@ -16,6 +16,7 @@ import ItKnowledge from "./Index.vue";
 })
 
 export default class extends Vue {
+
 }
 </script>
 

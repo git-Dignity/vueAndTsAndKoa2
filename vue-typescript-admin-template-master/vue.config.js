@@ -2,6 +2,7 @@
 const path = require("path");
 const PrerenderSPAPlugin = require("prerender-spa-plugin");
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
+const webpack = require("webpack");
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -125,6 +126,10 @@ module.exports = {
     if (process.env.NODE_ENV !== "production") return;
     return {
       plugins: [
+        // 在什么文件都可以用，而如果在main中引入全局，只能在vue文件可使用
+        new webpack.ProvidePlugin({
+          // urls: "@/const/urls.js"
+        }),
         new PrerenderSPAPlugin({
           // 生成文件的路径，也可以与webpakc打包的一致。
           // 下面这句话非常重要！！！
@@ -144,6 +149,34 @@ module.exports = {
         })
       ]
     };
+  },
+  // 样式插件
+  css: {
+    // module:true,
+    loaderOptions: (() => {
+      // if (process.env.NODE_ENV === "production" || true) {
+        return {
+          postcss: {
+            plugins: [
+              require("postcss-plugin-px2rem")({
+                rootValue: 16 // 换算基数，默认100  ，这样的话把根标签的字体规定为1rem为50px,这样就可以从设计稿上量出多少个px直接在代码中写多上px了。
+                // unitPrecision:5,// 允许REM单位增长到的十进制数字。
+                // propWhiteList:["cen-column-arrow"],// 默认值是一个空数组，这意味着禁用白名单并启用所有属性。
+                // propBlackList:[/\.cen-column-arrow.*/], // 黑名单
+                // exclude:/(node_module)/,//默认false，可以（reg）利用正则表达式排除某些文件夹的方法，例如/(node_module)/。如果想把前端UI框架内的px也转换成rem，请把此属性设为默认值
+                // selectorBlackList:[".cen-column-arrow", ".reservoir-monitor .cn-body"],// 要忽略并保留为px的选择器
+                // ignoreIdentifier:false,// （boolean/string）忽略单个属性的方法，启用ignoreidentifier后，replace将自动设置为true。
+                // replace:true,//（布尔值）替换包含REM的规则，而不是添加回退。
+                // mediaQuery:false,//（布尔值）允许在媒体查询中转换px。
+                // minPixelValue:3//设置要替换的最小像素值(3px会被转rem)默认 0
+
+              })
+            ]
+          }
+        };
+      // }
+    })()
+
   }
 
 };

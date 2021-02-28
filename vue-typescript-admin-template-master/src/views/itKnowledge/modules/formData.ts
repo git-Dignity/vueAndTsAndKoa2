@@ -85,8 +85,6 @@ const Form = {
 
 
 
-
-
 const initForm = (id="", title = "", content = "", type = "",photo="",remarks = "") =>{
     Form.info.id.value = id;
     Form.info.title.value = title;

@@ -1,26 +1,30 @@
- <template>
+<template>
   <div class="app-container">
     <div
       class="el-icon-service"
       icon="el-icon-search"
-      v-on:click="audioshow = !audioshow"
-      :style="{animation:audioani}"
-    ></div>
+      :style="{animation: audioani}"
+      @click="audioshow = !audioshow"
+    />
 
-    <div id="containe_audio" v-show="audioshow" class="vueAudio">
+    <div
+      v-show="audioshow"
+      id="containe_audio"
+      class="vueAudio"
+    >
       <!-- <div v-for="(item, index) in item" :key="index" v-show="audioshow" class="vueAudio"> -->
-        <VueAudio
-          :theUrl="item.url"
-          :theControlList="item.controlList"
-          :theSingerName="item.singerName"
-          :theUploadTime="item.uploadTime"
-          :theSongName="item.songName"
-          @musicClose="closeMusic"
-          @audioState="audioState($event)"
-          @onTimeupdate="onTimeupdate"
-          @playAll="playAll"
-          @playSingle="playSingle"
-        />
+      <VueAudio
+        :the-url="item.url"
+        :the-control-list="item.controlList"
+        :the-singer-name="item.singerName"
+        :the-upload-time="item.uploadTime"
+        :the-song-name="item.songName"
+        @musicClose="closeMusic"
+        @audioState="audioState($event)"
+        @onTimeupdate="onTimeupdate"
+        @playAll="playAll"
+        @playSingle="playSingle"
+      />
       <!-- </div> -->
     </div>
   </div>
@@ -32,7 +36,7 @@ import { Form } from "element-ui";
 import { cloneDeep } from "lodash";
 import { getMusic } from "@/api/music/index";
 import QS from "qs";
-import vm from 'Vue'
+import vm from "Vue";
 
 import { MusicModule } from "@/store/modules/music";
 import VueAudio from "@/components/Music/VueAudio.vue";
@@ -44,7 +48,7 @@ import VueAudio from "@/components/Music/VueAudio.vue";
   }
 })
 export default class extends Vue {
-  public item = 
+  public item =
     {
       url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
       controlList: "onlyOnePlaying",
@@ -52,8 +56,6 @@ export default class extends Vue {
       songName: "疯人院",
       uploadTime: "2019/05/20"
     };
-
-
 
   // private item = [
   //   {
@@ -65,8 +67,8 @@ export default class extends Vue {
   // ];
   private audioshow = false;
   private audioani = "";
-  private isAllOrSingle = 1; //随机播放
-  private audioIndex = 1; //当前的歌曲在vuex的audiosPage排在第几位
+  private isAllOrSingle = 1; // 随机播放
+  private audioIndex = 1; // 当前的歌曲在vuex的audiosPage排在第几位
   private audioRandomIndex = 1;
   private asd = [
     {
@@ -96,8 +98,8 @@ export default class extends Vue {
   }
 
   @Watch("musicItem")
-  private musicItemChange(data: any){
-    console.log('159' + data)
+  private musicItemChange(data: any) {
+    console.log("159" + data);
   }
 
   @Watch("musicp")
@@ -117,11 +119,10 @@ export default class extends Vue {
       singerName: data.singerName,
       songName: data.songName,
       uploadTime: "2019/05/20"
-    }
+    };
 
 // 动态组件  v-show也可以实现  相当于重新渲染组件
     // this.audioshow = !this.audioshow
-
 
     // this.item.push({
     //   url: data.url,
@@ -130,7 +131,6 @@ export default class extends Vue {
     //   songName: data.songName,
     //   uploadTime: "2019/05/20"
     // });
-
 
     //  this.$set(this.item,'url',data.url);
 
@@ -148,7 +148,7 @@ export default class extends Vue {
     //   uploader: data.uploader,
     //   uploadTime: "2019/05/20"
     // };
-    console.log(this.item)
+    console.log(this.item);
   }
 
   // musicPage() {
@@ -184,6 +184,7 @@ export default class extends Vue {
     }
     // console.log(data);
   }
+
   async audioState(data: string) {
     //  console.log(data)
     // console.log(this.$store.state.music.musicPage)
@@ -200,14 +201,17 @@ export default class extends Vue {
       this.audioani = "";
     }
   }
+
   random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
+
   findThisAudioIndex() {
     return this.$store.state.music.audiosPage.findIndex(
       (n: any) => n.musicUrl === this.$store.state.music.musicPage.song_url
     );
   }
+
   private audioRandomIsThisAudio(
     audioRandomIndex: number,
     thisAudioIndex: number
@@ -248,7 +252,7 @@ export default class extends Vue {
           0,
           this.$store.state.music.audiosPage.length
         );
-        //使用递归，这样才不会当前播放和下一曲的索引会相同
+        // 使用递归，这样才不会当前播放和下一曲的索引会相同
         this.audioRandomIndex = this.audioRandomIsThisAudio(
           this.audioRandomIndex,
           this.findThisAudioIndex()
@@ -256,14 +260,13 @@ export default class extends Vue {
 
         // console.log(this.findThisAudioIndex());
         // console.log(this.$store.state.music.audiosPage);
-        // console.log(this.$store.state.music.audiosPage[this.audioRandomIndex]);
+        console.log(this.$store.state.music.audiosPage[this.audioRandomIndex]);
+        const currentAudio = this.$store.state.music.audiosPage[this.audioRandomIndex];
+        if (!currentAudio) return;
         await MusicModule.MusicPage({
-          url: this.$store.state.music.audiosPage[this.audioRandomIndex]
-            .song_url,
-          singerName: this.$store.state.music.audiosPage[this.audioRandomIndex]
-            .singerName,
-          songName: this.$store.state.music.audiosPage[this.audioRandomIndex]
-            .singerSongName,
+          url: currentAudio.song_url,
+          singerName: currentAudio.singerName,
+          songName: currentAudio.singerSongName,
           play: true
         });
         // // this.$store.commit(
@@ -294,7 +297,8 @@ export default class extends Vue {
       }
     }
   }
-  //随机播放
+
+  // 随机播放
   async playAll(data: any) {
     // 1
     this.isAllOrSingle = data;
@@ -307,7 +311,8 @@ export default class extends Vue {
     });
     // console.log(data)
   }
-  //单曲循环
+
+  // 单曲循环
   async playSingle(data: any) {
     // 2
     this.isAllOrSingle = data;

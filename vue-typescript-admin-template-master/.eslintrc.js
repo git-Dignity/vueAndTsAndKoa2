@@ -57,5 +57,9 @@ module.exports = {
         jest: true
       }
     }
-  ]
+  ],
+  // 在vue.config.js中定义了全局变量、插件，需要在这写入
+  globals:{
+    urls: true
+  }
 }

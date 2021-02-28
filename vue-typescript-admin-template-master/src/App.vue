@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <router-view  />
+    <router-view />
     <service-worker-update-popup />
 
     <div>
-      <MusicPlayer></MusicPlayer>
+      <MusicPlayer />
     </div>
   </div>
 </template>
@@ -22,22 +22,34 @@ import MusicPlayer from "@/views/music/musicPlayer.vue";
   }
 })
 export default class extends Vue {
+  /**
+   * px -rem
+   */
+  private setRem() {
+    const htmlEl = document.querySelector("html") as HTMLHtmlElement;
+    htmlEl.style.fontSize = (document.body.clientWidth / 1920) * 16 + "px";
+  }
+
   created() {
-    //在页面加载时读取sessionStorage里的状态信息
+    // 在页面加载时读取sessionStorage里的状态信息
     const sessiontore: string = sessionStorage.getItem("store") || "";
-     if (sessionStorage.getItem("store") ) {
-     this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessiontore)))
+     if (sessionStorage.getItem("store")) {
+     this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessiontore)));
      }
 
-    //在页面刷新时将vuex里的信息保存到sessionStorage里
+    // 在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener("beforeunload", () => {
       console.log(this.$store.state);
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
     });
   }
 
- 
- 
+  mounted() {
+    window.addEventListener("resize", this.setRem);
+  }
+
+  beforeDestroy() {
+    window.addEventListener("resize", this.setRem);
+  }
 }
 </script>
-

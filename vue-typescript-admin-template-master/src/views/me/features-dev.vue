@@ -43,7 +43,7 @@
     后端koa：1：修改GET itKnowledge/frontEnd/ 接口（支持条件搜索、目前时间搜索失败）
 
     2021/02/28
-    前端：1：开发IT知识-前端和后端模块统一使用同一个模板（vue组件）
+    前端：1：开发IT知识-前端和后端模块统一使用同一个模板（vue组件）；2：系统自适应rem（postcss-plugin-px2rem）
     后端koa：1：修改增删改查 itKnowledge/frontEnd/ 接口（支持条件搜索、修复时间搜索失败）
     数据库：itKnowledge表添加category字段，类别（前端：1；后端：2）
   </div>
