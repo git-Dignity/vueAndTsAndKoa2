@@ -44,8 +44,17 @@
 
     2021/02/28
     前端：1：开发IT知识-前端和后端模块统一使用同一个模板（vue组件）；2：系统自适应rem（postcss-plugin-px2rem）
-    后端koa：1：修改增删改查 itKnowledge/frontEnd/ 接口（支持条件搜索、修复时间搜索失败）
+    后端koa：1：修改增删改查 itKnowledge/frontEnd/ 接口（支持条件搜索、修复时间搜索失败）；2：现在不会报错导致程序崩了，之前是throw
     数据库：itKnowledge表添加category字段，类别（前端：1；后端：2）
+
+    2021/03/05
+    前端：1：开发音乐模块的歌手清单；支持歌手名搜索（多选）
+    后端java：1：修改bk/music/singerSonger/list 接口（支持singerName歌手名条件多选搜索）；2：mybatis才有foreach查询
+
+    代做   歌手那要做个歌手名搜索，接口获取，为空才显示
+
+    在写一个踩坑日记
+    java写了
   </div>
 </template>
 

@@ -25,6 +25,24 @@
               placeholder="歌曲名"
             />
           </el-form-item>
+          <el-form-item
+            label="歌手名"
+          >
+            <el-select
+              v-model="searchForm.singerName"
+              multiple
+              collapse-tags
+              placeholder="歌手名"
+              @change="singTypeChange"
+            >
+              <el-option
+                v-for="(singType, index) in singTypeOption"
+                :key="index"
+                :label="singType.label"
+                :value="singType.value"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button
               type="primary"
@@ -242,6 +260,9 @@ import {
   MessageError,
   MesssageBoxQuestion
 } from "@/utils/tool/message";
+import {
+  getSinger
+} from "@/api/music/singer/index";
 
 @Component({
   name: "singerSongList",
@@ -274,7 +295,8 @@ export default class extends Vue {
 
   activeNames = ["search"];
   searchForm = {
-    song: ""
+    song: "",
+    singerName: ""
   };
 
   songTypeOption = [
@@ -295,6 +317,8 @@ export default class extends Vue {
       value: "3"
     }
   ];
+
+  private singTypeOption: any = [] // 搜索歌手名类型option
 
   private childrenUploadImgData = {
     upload__text: "上传歌曲图片文件",
@@ -333,7 +357,6 @@ export default class extends Vue {
     this.point.x = "5454545";
     console.log(this.point); // 使用class
 
-    this.musicInfo.singerName = this.$route.query.singerName + "";
     if (this.musicInfo.singerName == "轻") this.musicInfo.songType = "轻音乐";
 
     const data: any = await getMusic(
@@ -449,6 +472,7 @@ export default class extends Vue {
   }
 
   created() {
+    this.musicInfo.singerName = this.$route.query.singerName + "";
     this.init();
   }
 
@@ -562,6 +586,54 @@ export default class extends Vue {
     // console.log(`当前页: ${val}`);
     this.page.currentPage = val;
     this.init();
+  }
+
+  /**
+   * 获取歌手列表
+   */
+  private async getSinger() {
+    const { items }: any = await getSinger({});
+    return JSON.parse(items);
+  }
+
+  /**
+   * 初始化搜索栏的歌手名Option
+   * 若this.$route.query.singerName有传值，则是从对应的歌手点进来，不需要执行
+   * 只有当从全部列表进来才需要
+   */
+  private initSongTypeList() {
+    if (this.$route.query.singerName) {
+      this.singTypeOption.push({
+        label: this.$route.query.singerName,
+        value: this.$route.query.singerName
+      });
+
+      return;
+    }
+
+    this.getSinger().then(singer => {
+      singer.forEach((s: any) => {
+          this.singTypeOption.push({
+        label: s.singerName,
+        value: s.singerName
+      });
+      });
+
+      // console.log(this.singTypeOption);
+    });
+  }
+
+  /**
+   * 搜索栏的歌手名下拉框Change事件
+   */
+  private singTypeChange(e: any) {
+    // console.log(e);
+    this.musicInfo.singerName = e.join(",");
+    console.log(this.musicInfo.singerName);
+  }
+
+  mounted() {
+    this.initSongTypeList();
   }
 }
 </script>
