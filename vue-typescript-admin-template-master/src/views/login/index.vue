@@ -9,7 +9,9 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">{{ $t('login.title') }}</h3>
+        <h3 class="title">
+          {{ $t('login.title') }}
+        </h3>
         <lang-select class="set-language" />
       </div>
 
@@ -28,7 +30,12 @@
         />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+      <el-tooltip
+        v-model="capsTooltip"
+        content="Caps lock is On"
+        placement="right"
+        manual
+      >
         <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon name="password" />
@@ -46,7 +53,10 @@
             @blur="capsTooltip = false"
             @keyup.enter.native="handleLogin"
           />
-          <span class="show-pwd" @click="showPwd">
+          <span
+            class="show-pwd"
+            @click="showPwd"
+          >
             <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
           </span>
         </el-form-item>
@@ -57,13 +67,17 @@
           type="danger"
           style="width:50%; margin-bottom:30px;"
           @click.native.prevent="handleRegiste"
-        >{{ $t('registe.registeIn') }}</el-button>
+        >
+          {{ $t('registe.registeIn') }}
+        </el-button>
         <el-button
           :loading="loading"
           type="primary"
           style="width:50%; margin-bottom:30px;"
           @click.native.prevent="handleLogin"
-        >{{ $t('login.logIn') }}</el-button>
+        >
+          {{ $t('login.logIn') }}
+        </el-button>
       </el-button-group>
 
       <div style="position:relative">
@@ -76,15 +90,20 @@
           class="thirdparty-button"
           type="info"
           @click="showDialog=true"
-        >{{ $t('login.thirdparty') }}</el-button>
+        >
+          {{ $t('login.thirdparty') }}
+        </el-button>
       </div>
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
+    <el-dialog
+      :title="$t('login.thirdparty')"
+      :visible.sync="showDialog"
+    >
       {{ $t('login.thirdpartyTips') }}
-      <br />
-      <br />
-      <br />
+      <br>
+      <br>
+      <br>
       <social-sign />
     </el-dialog>
   </div>
@@ -99,6 +118,7 @@ import { UserModule } from "@/store/modules/user";
 import { isValidUsername } from "@/utils/validate";
 import LangSelect from "@/components/LangSelect/index.vue";
 import SocialSign from "./components/SocialSignin.vue";
+import { log } from "util";
 
 @Component({
   name: "Login",
@@ -169,8 +189,9 @@ export default class extends Vue {
 
   private checkCapslock(e: KeyboardEvent) {
     const { key } = e;
-    this.capsTooltip =
-      key !== null && key.length === 1 && key >= "A" && key <= "Z";
+    if (!key) return;
+
+    this.capsTooltip = key !== null && key.length === 1 && key >= "A" && key <= "Z";
   }
 
   private showPwd() {
@@ -185,7 +206,6 @@ export default class extends Vue {
   }
 
   private handleRegiste() {
-  
     this.$router.push({
       path: "/registe",
       query: {}
@@ -196,13 +216,16 @@ export default class extends Vue {
     (this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         this.loading = true;
-        await UserModule.Login(this.loginForm);
-       
-     
-        this.$router.push({
+        try {
+          await UserModule.Login(this.loginForm);
+          this.$router.push({
           path: this.redirect || "/",
           query: this.otherQuery
         });
+        } catch (e) {
+          console.log(e);
+        }
+
         // Just to simulate the time of the request
         setTimeout(() => {
           this.loading = false;

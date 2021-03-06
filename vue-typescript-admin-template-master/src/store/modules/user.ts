@@ -60,12 +60,13 @@ class User extends VuexModule implements IUserState {
     this.email = email
   }
 
-  @Action
+  // rawError:true即暴露出原生 error。
+  @Action({rawError:true})
   public async Login(userInfo: { username: string, password: string }) {
     let { username, password } = userInfo
     username = username.trim()
-    const { data } = await login({ username, password })
-    // console.log(data)
+
+    const {data}  = await login({ username, password })
     setToken(data.accessToken)
     this.SET_TOKEN(data.accessToken)
     this.SET_NAME(username)

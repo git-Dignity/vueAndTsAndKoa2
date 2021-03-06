@@ -39,9 +39,8 @@ router.post('/login', async (ctx, next) => {
   } else {
     data = {
       code: 20001,
-      data: {
-
-      }
+      data: {},
+      message: '请检查账户密码是否输入正确！'
     }
   }
 
