@@ -48,10 +48,42 @@
           </router-link>
           <a
             target="_blank"
-            href="https://github.com/armour/vue-typescript-admin-template/"
+            href="https://github.com/git-Dignity/vueAndTsAndKoa2"
           >
             <el-dropdown-item>
               {{ $t('navbar.github') }}
+            </el-dropdown-item>
+          </a>
+          <a
+            target="_blank"
+            href="http://zhengzemin.cn:8088/"
+          >
+            <el-dropdown-item>
+              {{ $t('navbar.personalDoc') }}
+            </el-dropdown-item>
+          </a>
+          <a
+            target="_blank"
+            href="https://github.com/git-Dignity/vuePressDos"
+          >
+            <el-dropdown-item>
+              {{ $t('navbar.personalDoc') }}{{ $t('navbar.github') }}
+            </el-dropdown-item>
+          </a>
+          <a
+            target="_blank"
+            href="http://zhengzemin.cn:8087/"
+          >
+            <el-dropdown-item>
+              {{ $t('navbar.componentLib') }}
+            </el-dropdown-item>
+          </a>
+          <a
+            target="_blank"
+            href="https://github.com/git-Dignity/componentlib"
+          >
+            <el-dropdown-item>
+              {{ $t('navbar.componentLib') }}{{ $t('navbar.github') }}
             </el-dropdown-item>
           </a>
           <a
@@ -75,19 +107,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { AppModule } from '@/store/modules/app'
-import { UserModule } from '@/store/modules/user'
-import Breadcrumb from '@/components/Breadcrumb/index.vue'
-import ErrorLog from '@/components/ErrorLog/index.vue'
-import Hamburger from '@/components/Hamburger/index.vue'
-import HeaderSearch from '@/components/HeaderSearch/index.vue'
-import LangSelect from '@/components/LangSelect/index.vue'
-import Screenfull from '@/components/Screenfull/index.vue'
-import SizeSelect from '@/components/SizeSelect/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import { AppModule } from "@/store/modules/app";
+import { UserModule } from "@/store/modules/user";
+import Breadcrumb from "@/components/Breadcrumb/index.vue";
+import ErrorLog from "@/components/ErrorLog/index.vue";
+import Hamburger from "@/components/Hamburger/index.vue";
+import HeaderSearch from "@/components/HeaderSearch/index.vue";
+import LangSelect from "@/components/LangSelect/index.vue";
+import Screenfull from "@/components/Screenfull/index.vue";
+import SizeSelect from "@/components/SizeSelect/index.vue";
 
 @Component({
-  name: 'Navbar',
+  name: "Navbar",
   components: {
     Breadcrumb,
     ErrorLog,
@@ -100,24 +132,24 @@ import SizeSelect from '@/components/SizeSelect/index.vue'
 })
 export default class extends Vue {
   get sidebar() {
-    return AppModule.sidebar
+    return AppModule.sidebar;
   }
 
   get device() {
-    return AppModule.device.toString()
+    return AppModule.device.toString();
   }
 
   get avatar() {
-    return UserModule.avatar
+    return UserModule.avatar;
   }
- 
+
   private toggleSideBar() {
-    AppModule.ToggleSideBar(false)
+    AppModule.ToggleSideBar(false);
   }
 
   private async logout() {
-    await UserModule.LogOut()
-    this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    await UserModule.LogOut();
+    this.$router.push(`/login?redirect=${this.$route.fullPath}`);
   }
 }
 </script>

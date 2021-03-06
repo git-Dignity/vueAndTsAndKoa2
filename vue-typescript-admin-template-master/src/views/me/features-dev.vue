@@ -51,6 +51,9 @@
     前端：1：开发音乐模块的歌手清单；支持歌手名搜索（多选）
     后端java：1：修改bk/music/singerSonger/list 接口（支持singerName歌手名条件多选搜索）；2：mybatis才有foreach查询
 
+    2021/03/06
+    前端：1：解决登录页面密码错误登录按钮一直还在转；2：了解@Action({rawError:true})
+
     代做   歌手那要做个歌手名搜索，接口获取，为空才显示
 
     在写一个踩坑日记
