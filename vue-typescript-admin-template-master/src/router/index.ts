@@ -204,7 +204,7 @@ export const asyncRoutes: RouteConfig[] = [
     children: [
       {
         path: 'agent-event',
-        component: () => import(/* webpackChunkName: "agent-event" */ '@/views/me/agent-event/main.vue'),
+        component: () => import(/* webpackChunkName: "agent-event" */ '@/views/me/agent-event.vue'),
         name: 'agentEvent',
         meta: { title: 'agentEvent', noCache: true }
       },

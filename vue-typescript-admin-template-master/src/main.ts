@@ -21,6 +21,7 @@ import '@/utils/error-log'
 import '@/pwa/register-service-worker'
 import * as directives from '@/directives'
 import * as filters from '@/filters'
+import { getVal, toVal } from '@/utils/dataVal'
 
 // 全局引用基础组件
 import appButton from '@/components/Global/index.vue'
@@ -57,6 +58,12 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+
+Vue.prototype.toVal = toVal
+Vue.prototype.getVal = getVal
+Vue.filter('toVal', toVal)
+Vue.filter('getVal', getVal)
+
 
 
 

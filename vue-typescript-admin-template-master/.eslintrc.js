@@ -45,7 +45,8 @@ module.exports = {
     'semi': ["error", "always"],
     'quotes': [1, "double"],
     'linebreak-style': [0, 'error', 'windows'],
-    "indent": ["off", 4]  // 空格4位
+    "indent": ["off", 4],  // 空格4位
+    "camelcase": [1, {"properties": "never"}]  // 使用驼峰命名法
   },
   overrides: [
     {

@@ -72,10 +72,10 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import ElemenetTable from "@/components/ElTable/index.vue";
 import { IAgentEvent } from "@/api/me/types";
-import { columns, formatterType, formatterNoticeWay } from "@/views/me/agent-event/modules/tableData";
+import { columns, formatterType, formatterNoticeWay } from "@/views/me/modules/agent-event/tableData";
 import ElemenetForm from "@/components/ElForm/index.vue";
 import RoleDialog from "@c/Dialog/index.vue";
-import { Form, initForm } from "../modules/formData";
+import { Form, initForm } from "../../modules/agent-event/formData";
 import { showNotify } from "@/utils/tool/notification";
 import { exportJson2Excel } from "@/utils/excel";
 import { formatJson } from "@/utils";
@@ -86,7 +86,7 @@ import {
 } from "@/utils/tool/message";
 import {
   AgentEvent
-} from "../modules/index";
+} from "../../modules/agent-event/index";
 import {
   get,
   create,

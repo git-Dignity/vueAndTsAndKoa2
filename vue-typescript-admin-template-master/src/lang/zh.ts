@@ -91,7 +91,10 @@ export default {
     itKnowledge: 'IT知识',
     frontEnd: '前端',
     rearEnd: '后端',
-    algorithm: '算法'
+    algorithm: '算法',
+    node:'NODE',
+    java:'JAVA',
+    sql:'SQL'
   },
   navbar: {
     logOut: '退出登录',

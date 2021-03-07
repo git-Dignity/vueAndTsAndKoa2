@@ -28,7 +28,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import HeadRadio from "@c/HeadRadio/index.vue";
-import Table from "./component/table.vue";
+import Table from "./component/agent-event/table.vue";
 
 @Component({
   name: "AgentEvent",
