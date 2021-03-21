@@ -376,10 +376,22 @@ export const asyncRoutes: RouteConfig[] = [
             meta: { title: 'rearEnd', noCache: true, icon: 'example' }
           },
           { 
+            path: 'front-rear-end',
+            component: () => import(/* webpackChunkName: "front-rear-end" */ '@/views/itKnowledge/front-rear-end.vue'),
+            name: 'frontRearEnd',
+            meta: { title: 'frontRearEnd', noCache: true, icon: 'example' }
+          },
+          { 
             path: 'algorithm',
             component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/algorithm.vue'),
             name: 'algorithm',
             meta: { title: 'algorithm', noCache: true, icon: 'example' }
+          },
+          { 
+            path: 'tool',
+            component: () => import(/* webpackChunkName: "tool" */ '@/views/itKnowledge/tool.vue'),
+            name: 'tool',
+            meta: { title: 'tool', noCache: true, icon: 'example' }
           }
     ]
   },

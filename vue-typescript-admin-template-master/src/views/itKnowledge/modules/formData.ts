@@ -40,10 +40,11 @@ const Form = {
             }
         },
         "type": {
-            label: 'table.type',
+            label: 'table.type', 
             name: "type",
             value: "",
             isSelect: true,
+            multiple: true, // 是否开启多选
             options: [],
             disabled: false,
             hidden: false,
@@ -89,7 +90,7 @@ const initForm = (id="", title = "", content = "", type = "",photo="",remarks = 
     Form.info.id.value = id;
     Form.info.title.value = title;
     Form.info.content.value = content;
-    Form.info.type.value = type;
+    (Form.info.type as any).value = type? type.split(",") : "";
     Form.info.photo.childrenUploadImgData.imageUrl = photo;
     Form.info.remarks.value = remarks;
 }

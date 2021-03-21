@@ -23,11 +23,27 @@ const algorithmTypeOptions = [
     { value: '算法', label: '算法' }
 ]
 
+// 前后端frontRearEnd的option
+const frontRearEndTypeOptions = [
+    { value: '系统', label: '系统' },
+    { value: '框架', label: '框架' },
+    { value: 'music', label: 'Music' },
+]
+
+
+// 工具tool的option
+const toolTypeOptions = [
+    { value: 'tool', label: '工具' },
+    { value: '杂七杂八', label: '杂七杂八' }
+]
+
 
 
 
 export {
     frontEndTypeOptions,
     rearEndTypeOptions,
-    algorithmTypeOptions
+    algorithmTypeOptions,
+    frontRearEndTypeOptions,
+    toolTypeOptions
 }

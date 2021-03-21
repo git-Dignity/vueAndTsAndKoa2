@@ -47,9 +47,12 @@
               </div>
             </template>
             <template v-else-if="item.isSelect">
+              <!-- multiple：是否开启多选 -->
               <el-select
                 v-model="item.value"
                 placeholder="请选择"
+                :multiple="item.multiple"
+                :collapse-tags="item.multiple"
                 @change="selectChangeForm($event, item)"
               >
                 <el-option
@@ -176,7 +179,8 @@ export default class extends Vue {
   })
   childrenFormData!: object;
 
-  @Watch("childrenFormData")
+  // 因为type为异步，值显示不出来
+  @Watch("childrenFormData.info.type.value")
   private getSchedule(data: any) {
     console.log(data);
   }
@@ -194,6 +198,8 @@ export default class extends Vue {
   }
 
   selectChangeForm(e: any, item: any) {
+    console.log(item);
+
     this.$emit("selectChangeFormChild", { selectedName: e, item: item });
   }
 

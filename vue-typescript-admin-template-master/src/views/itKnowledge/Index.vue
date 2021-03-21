@@ -228,6 +228,7 @@ export default class extends Vue {
       const paramet = getFormValue(this.undoneForm.info);
       paramet.auth = this.name;
       paramet.category = this.category;
+      paramet.type = paramet.type.join(",");
       console.log(paramet, this.undoneForm.file);
 
       const formData = new FormData();
@@ -308,7 +309,7 @@ export default class extends Vue {
   }
 
   private btnEdit(row: any) {
-      console.log(row.photo);
+      console.log(row);
     this.agentEvent.showDialog(`修改【${row.title}】代办事项`, true, false);
     initForm(
       row.id,

@@ -92,6 +92,8 @@ export default {
     frontEnd: '前端',
     rearEnd: '后端',
     algorithm: '算法',
+    frontRearEnd: '前后端',
+    tool: '工具',
     node:'NODE',
     java:'JAVA',
     sql:'SQL'
