@@ -56,7 +56,7 @@ router.get('/', async (ctx, next) => {
     }
 
     
-    // console.log(result)
+    console.log(result)
 
   
     data = {

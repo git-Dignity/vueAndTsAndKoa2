@@ -57,6 +57,7 @@
                 target="_blank"
               >
                 <el-avatar
+                  :key="data.photo"
                   shape="square"
                   :size="150"
                   fit="fill"
@@ -66,16 +67,18 @@
               </a>
 
               <div class="box-card-foot">
-                <span>{{ data.type || '--' }}</span>
+                <span>{{ data.type | toVal }}</span>
                 <el-divider direction="vertical" />
-                <span>{{ data.upload_time || '--' }}</span>
+                <span>{{ formatTime(data.upload_time) }}</span>
+                <!-- <span>{{ moment(data.upload_time).format('YYYYMMDDHH') | toVal }}</span> -->
                 <el-divider direction="vertical" />
-                <span>{{ data.auth || '--' }}</span>
+                <span>{{ data.auth | toVal }}</span>
                 <div
                   class="mt10 ellipsis-oneLine"
                   :title="data.remarks"
                 >
-                  {{ data.remarks }}
+                  {{ data.photo }}
+                  <!-- {{ data.remarks || '暂无备注' }} -->
                 </div>
               </div>
             </el-card>
@@ -137,6 +140,7 @@ import { getFormValue, validateForm } from "@/utils/tool/form";
 import { EventBus } from "@/eventBus/index";
 import { UserModule } from "@/store/modules/user";
 import Search from "./components/Search.vue";
+import { sysDateFormat } from "@/utils/tool/date";
 
 @Component({
   name: "ItKnowledge",
@@ -218,6 +222,10 @@ export default class extends Vue {
     this.tableData.listQuery.total = data.total;
     // console.log(this.tableData);
     this.loading = false;
+  }
+
+  private formatTime(time: string) {
+    return sysDateFormat(time);
   }
 
   /**
