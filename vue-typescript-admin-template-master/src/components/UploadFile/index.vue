@@ -174,9 +174,10 @@ export default class extends Vue {
   padding: 10px;
 }
  .avatar {
-    width: 178px;
+    width: 100%; // 178px
     height: 178px;
     display: block;
+    object-fit: contain;
   }
 
 </style>

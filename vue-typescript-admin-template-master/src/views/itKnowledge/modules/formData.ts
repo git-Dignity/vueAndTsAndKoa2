@@ -91,7 +91,7 @@ const initForm = (id="", title = "", content = "", type = "",photo="",remarks = 
     Form.info.title.value = title;
     Form.info.content.value = content;
     (Form.info.type as any).value = type? type.split(",") : "";
-    Form.info.photo.childrenUploadImgData.imageUrl = photo;
+    Form.info.photo.childrenUploadImgData.imageUrl = photo ? photo : require('@/assets/404-images/404.png');
     Form.info.remarks.value = remarks;
 }
 

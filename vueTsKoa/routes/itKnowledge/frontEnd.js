@@ -51,7 +51,7 @@ router.get('/', async (ctx, next) => {
 
     if(result){
         result.forEach( user =>{
-            user.photo = config.url+ user.photo
+            user.photo = user.photo ? config.url+ user.photo : null
         })
     }
 

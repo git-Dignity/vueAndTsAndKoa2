@@ -63,22 +63,22 @@
                   fit="fill"
                   class="image"
                   :src="data.photo"
-                />
+                >
+                  <img src="@/assets/404-images/404.png">
+                </el-avatar>
               </a>
 
               <div class="box-card-foot">
                 <span>{{ data.type | toVal }}</span>
                 <el-divider direction="vertical" />
                 <span>{{ formatTime(data.upload_time) }}</span>
-                <!-- <span>{{ moment(data.upload_time).format('YYYYMMDDHH') | toVal }}</span> -->
                 <el-divider direction="vertical" />
                 <span>{{ data.auth | toVal }}</span>
                 <div
                   class="mt10 ellipsis-oneLine"
                   :title="data.remarks"
                 >
-                  {{ data.photo }}
-                  <!-- {{ data.remarks || '暂无备注' }} -->
+                  {{ data.remarks || '暂无备注' }}
                 </div>
               </div>
             </el-card>
@@ -304,7 +304,7 @@ export default class extends Vue {
   }
 
   private btnView(row: any) {
-    this.agentEvent.showDialog(`查看【${row.title}】代办事项`, false, true);
+    this.agentEvent.showDialog(`查看【${row.title}】IT知识`, false, true);
 
     initForm(
       row.id,
@@ -318,7 +318,7 @@ export default class extends Vue {
 
   private btnEdit(row: any) {
       console.log(row);
-    this.agentEvent.showDialog(`修改【${row.title}】代办事项`, true, false);
+    this.agentEvent.showDialog(`修改【${row.title}】IT知识`, true, false);
     initForm(
       row.id,
       row.title,
@@ -363,6 +363,10 @@ export default class extends Vue {
     .box-card-header{
       display: inline-block;
       width: 70%;
+    }
+    .el-avatar > img{
+      width: 100%;
+      object-fit: contain;
     }
     .box-card-foot{
         margin-top: 10px;
