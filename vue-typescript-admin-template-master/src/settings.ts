@@ -12,7 +12,7 @@ interface ISettings {
 
 // You can customize below settings :)
 const settings: ISettings = {
-  title: 'Vue Typescript Admin',
+  title: '音乐博客', 
   showSettings: true,
   showTagsView: true,
   fixedHeader: false,

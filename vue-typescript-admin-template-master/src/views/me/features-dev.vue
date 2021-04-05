@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <Search
+      ref="featuresDevSearchFeatures"
       :search-form="searchForm"
       :add-form="undoneForm"
       @search="search"
@@ -13,7 +14,7 @@
       <el-timeline-item
         v-for="(data, index) in tableData.data"
         :key="index"
-        :timestamp="data.create_time"
+        :timestamp="sysDateFormat(data.create_time)"
         placement="top"
       >
         <el-card>
@@ -24,6 +25,18 @@
           <p>数据库：{{ toVal(data.database_sql) }}</p>
           <p>备注：{{ data.remaks | toVal }}</p>
           <p>作者：{{ data.auth | toVal }}</p>
+          <div class="btn-content">
+            <i
+              class="el-icon-edit-outline"
+              :title="'Edit【' + data.title + '】'"
+              @click="btnEdit(data)"
+            />
+            <i
+              class="el-icon-delete"
+              title="我到底做错了什么，要Del Me~"
+              @click="btnDelete(data.id)"
+            />
+          </div>
         </el-card>
       </el-timeline-item>
     </el-timeline>
@@ -56,6 +69,10 @@ import { EventBus } from "@/eventBus/index";
 import { IFeaturesDevType } from "@/api/me/featuresDevType";
 import { columns } from "@/views/me/modules/features-dev/tableData";
 import Pagination from "@/components/Pagination/index.vue";
+import {
+  MessageSuccess,
+  MesssageBoxQuestion
+} from "@/utils/tool/message";
 
 @Component({
   name: "FeaturesDev",
@@ -92,6 +109,9 @@ export default class extends Vue {
     }
   };
 
+  /**
+   * 弹框回调
+   */
   private async dialogSubmit(title: string, paramet: any) {
     console.log(title, paramet);
 
@@ -101,11 +121,11 @@ export default class extends Vue {
 
         if (data.msg === "添加成功") { showNotify(4, "创建" + paramet.title + "成功"); }
       } else if (title.indexOf("修改") !== -1) {
-        // const { data } = await update(formData);
-        // console.log(data);
-        // if (data.msg === "修改成功") {
-        //   showNotify(4, "修改" + paramet.title + "成功");
-        // }
+        const { data } = await update(paramet);
+        console.log(data);
+        if (data.msg === "修改成功") {
+          showNotify(4, "修改" + paramet.title + "成功");
+        }
       }
 
       EventBus.$emit("isShowDialog", true);
@@ -122,6 +142,36 @@ export default class extends Vue {
     this.tableData.listQuery.total = data.total;
     // console.log(this.tableData);
     this.loading = false;
+  }
+
+  private btnEdit(row: any) {
+      console.log(row);
+      initForm(
+      row.id,
+      row.title,
+      row.front_end,
+      row.node,
+      row.java,
+      row.database_sql,
+      row.remarks
+    );
+      this.$refs.featuresDevSearchFeatures.add(`修改【${row.title}】`);
+  }
+
+  private btnDelete(id: string) {
+    console.log(id);
+    MesssageBoxQuestion("是否确定删除该事项,是否继续")
+      .then(async () => {
+        const { data } = await del({ id: id });
+
+        if (data.msg === "删除成功") {
+          MessageSuccess("删除成功!");
+          this.getList();
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   // 查询
@@ -150,6 +200,26 @@ export default class extends Vue {
 <style lang="scss"  scope>
 .el-timeline-item{
   left: -30px;
+  .el-card{
+    position: relative;
+    .btn-content{
+      position: absolute;
+      top: 0;
+      right: 0;
+      i{
+        padding: 10px;
+        cursor: pointer;
+        font-size: $btnFontSize;
+      }
+      .el-icon-edit-outline:hover{
+        color: #5D93E6;
+      }
+      .el-icon-delete:hover{
+        color: #FF7A00;
+      }
+    }
+  }
+
 }
 
 </style>

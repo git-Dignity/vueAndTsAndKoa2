@@ -1,152 +1,236 @@
 const router = require('koa-router')()
-var uuid = require('uuid');
 var DB = require('../../utils/mysqlDB')
 const sqlModel = require('../common')
-const config = require('../../config/config.js')
-const { get, post, put, del } = require('../../utils/request.js')
-var qs = require('qs');
+const Base = require('./../common/base')
+// const SwaggerClass = require("./../common/SwaggerClass.js")
 
 
 router.prefix('/featuresDev')
 
-
-
+/**
+ * @swagger
+ * /featuresDev/:
+ *   get:
+ *     summary: 获取功能开发列表
+ *     description: 获取功能开发列表
+ *     tags: [我的——功能开发模块]
+ *     parameters: # 请求参数
+ *       - name: current
+ *         description: 页码
+ *         in: query # 参数的位置，可能的值有 "query", "header", "path" 或 "cookie" 没有formData，但是我加了不报错
+ *         required: false
+ *         type: number
+ *       - name: size
+ *         description: 页条数
+ *         in: query
+ *         required: false
+ *         type: number # 可能的值有string、number、file（文件）等
+ *       - name: title
+ *         description: 标题（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *       - name: front_end
+ *         description: 前端（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *       - name: node
+ *         description: Node（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *       - name: java
+ *         description: Java（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *       - name: database_sql
+ *         description: SQL（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *       - name: uploadTime
+ *         description: 更新时间（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *       - name: remarks
+ *         description: 备注（搜索）
+ *         in: query
+ *         required: false
+ *         type: string # 可能的值有string、number、file（文件）等
+ *     responses:
+ *       '200':
+ *         description: Ok
+ *         schema:
+ *           type: 'object'
+ *           properties:
+ *             code:
+ *               type: 'number'
+ *               description: 状态码
+ *             data:
+ *               type: 'string'
+ *               description: 加密公钥
+ *             message:
+ *               type: 'string'
+ *               description: 消息提示
+ *             status:
+ *               type: 'number'
+ *               description: 状态
+ *       '400':
+ *         description: 请求参数错误
+ *       '404':
+ *         description: not found
+ */
 router.get('/', async (ctx, next) => {
+    // new SwaggerClass().get('/featuresDev/')
+    
     const req = ctx.request.query
     console.log(req)
-
-    const title =  req.title==undefined?'':req.title
-    const front_end =  req.front_end==undefined?'':req.front_end
-    const node =  req.node==undefined?'':req.node
-    const database_sql =  req.database_sql==undefined?'':req.database_sql
-    const remarks =  req.remarks==undefined?'':req.remarks
-
- 
-    const pageNumLeft = (req.current - 1) * req.size;
-    let sqlM = new sqlModel("features",`flag = '1'
-    and (title like  '%${title}%' or '${title} '='')  
-    and (front_end like  '%${front_end}%' or '${front_end} '='')  
-    and (node like  '%${node}%' or '${node} '='')  
-    and (database_sql like  '%${database_sql}%' or '${database_sql} '='')  
-    and (remarks like '%${remarks}%' or '${remarks} '='')  
-    `)
-    let total = await sqlM.getTotal()
     
     
-    let result = await DB.query(`
-        select * from features as i
-        where i.flag = '1' 
-        and (title like  '%${title}%' or '${title} '='')  
-        and (front_end like  '%${front_end}%' or '${front_end} '='')  
-        and (node like  '%${node}%' or '${node} '='')  
-        and (database_sql like  '%${database_sql}%' or '${database_sql} '='')  
-        and (remarks like '%${remarks}%' or '${remarks} '='')  
-        limit ${pageNumLeft},${req.size}
-    `)
-    
-    // console.log(result)
 
-  
-    data = {
-        code: 20000,
-        status:1,
-        data: {
-            items: result,
-            total: total
-        },
-        message:[]
-    }
-  
-    ctx.response.body = data
+    
+    ctx.response.body = await new Base("features").get(req, 'create_time')
 })
 
 
 
+
+/**
+ * @swagger
+ * /featuresDev/:
+ *   post:
+ *     summary: 添加功能开发
+ *     description: 添加功能开发
+ *     tags: [我的——功能开发模块]
+ *     parameters: # 请求参数
+ *       - name: body
+ *         description: "{'id':'','title':'标题','front_end':'前端','node':'node','java':'java','database_sql':'数据库','remarks':'备注','auth':'创建者'}"
+ *         in: body # 参数的位置，可能的值有 "query", "header", "path", "body" 或 "cookie" 没有formData，但是我加了不报错
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *         description: Ok
+ *         schema:
+ *           type: 'object'
+ *           properties:
+ *             code:
+ *               type: 'number'
+ *               description: 状态码
+ *             data:
+ *               type: 'object'
+ *               properties:
+ *                 msg:
+ *                  type: 'string'
+ *                  description: 消息
+ *                 msgData:
+ *                  type: 'object'
+ *                  description: 数据
+ *       '400':
+ *         description: 请求参数错误
+ *       '404':
+ *         description: not found
+ */
 router.post('/', async (ctx, next) => {
-    let data = {}
     const params = ctx.request.body
-
     console.log(params);
-    
-
-
-    const result = await DB.query(`
-        insert into features(title,front_end,node,java,database_sql,auth,remarks)
-        values('${params.title}','${params.front_end}','${params.node}','${params.java}','${params.database_sql}','${params.auth}','${params.remarks}')
-    `)
   
-
-
-
-    data = {
-        code: 20000,
-        data: {
-            msg: "添加成功",
-            msgData: result
-        }
-    }
-
-    ctx.response.body = data
+    ctx.response.body = await new Base("features").post(params)
 })
 
 
-let tmpTime = null; // 全局定时器
+
+/**
+ * @swagger
+ * /featuresDev/:
+ *   put:
+ *     summary: 修改功能开发
+ *     description: 修改功能开发
+ *     tags: [我的——功能开发模块]
+ *     parameters: # 请求参数
+ *       - name: body
+ *         description: "{'id':520, 'title':'标题','front_end':'前端','node':'node','java':'java','database_sql':'数据库','remarks':'备注','auth':'创建者'}"
+ *         in: body # 参数的位置，可能的值有 "query", "header", "path", "body" 或 "cookie" 没有formData，但是我加了不报错
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *         description: Ok
+ *         schema:
+ *           type: 'object'
+ *           properties:
+ *             code:
+ *               type: 'number'
+ *               description: 状态码
+ *             data:
+ *               type: 'object'
+ *               properties:
+ *                 msg:
+ *                  type: 'string'
+ *                  description: 消息
+ *                 msgData:
+ *                  type: 'object'
+ *                  description: 数据
+ *       '400':
+ *         description: 请求参数错误
+ *       '404':
+ *         description: not found
+ */
 router.put('/', async (ctx) => {
-    let data = {}
     const params = ctx.request.body;
-    // console.log(params)
+    console.log(params)
 
-    
-    
-
-    // save data
-    const result = await put({
-        uri: config.javaUrl + '/agentEvent/edit',
-        qs: qs.stringify(params)
-    })
-
-    data = {
-        code: 20000,
-        data: {
-            msg: "修改成功",
-            msgData: result
-        }
-    }
-
-    ctx.response.body = data
+    ctx.response.body = await new Base("features").put(params)
 })
 
 
 
-
+/**
+ * @swagger
+ * /featuresDev/:
+ *   delete:
+ *     summary: 删除功能开发
+ *     description: 删除功能开发
+ *     tags: [我的——功能开发模块]
+ *     parameters: # 请求参数
+ *       - name: id
+ *         description: id
+ *         in: query # 参数的位置，可能的值有 "query", "header", "path" 或 "cookie" 没有formData，但是我加了不报错
+ *         required: true
+ *         type: string
+ *     responses:
+ *       '200':
+ *         description: Ok
+ *         schema:
+ *           type: 'object'
+ *           properties:
+ *             code:
+ *               type: 'number'
+ *               description: 状态码
+ *             data:
+ *               type: 'object'
+ *               properties:
+ *                 msg:
+ *                  type: 'string'
+ *                  description: 消息
+ *                 msgData:
+ *                  type: 'object'
+ *                  description: 数据
+ *       '400':
+ *         description: 请求参数错误
+ *       '404':
+ *         description: not found
+ */
 router.delete('/', async (ctx, next) => {
-    let data = {}
     const id = ctx.request.query.id
-
     console.log(id);
 
-   
-    
-    const result = await del({
-        uri: config.javaUrl + '/agentEvent/delete',
-        qs: id
-    })
-
-    data = {
-        code: 20000,
-        data: {
-            msg: "删除成功",
-            msgData: result
-        }
-    }
-
-    ctx.response.body = data
-
-
-
-
-    ctx.response.body = data
+    ctx.response.body = await new Base("features").del(id)
 })
+
 
 
 
@@ -155,3 +239,45 @@ router.delete('/', async (ctx, next) => {
 
 
 module.exports = router
+
+
+
+
+
+
+
+// *       - name: id
+// *         description: ID
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等
+// *       - name: auth
+// *         description: 创建者
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等
+// *       - name: front_end
+// *         description: 前端
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等
+// *       - name: node
+// *         description: Node
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等
+// *       - name: java
+// *         description: Java
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等
+// *       - name: database_sql
+// *         description: SQL
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等
+// *       - name: remarks
+// *         description: 备注
+// *         in: body
+// *         required: false
+// *         type: string # 可能的值有string、number、file（文件）等

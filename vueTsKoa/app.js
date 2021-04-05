@@ -1,5 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
+require("babel-register");
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
@@ -8,6 +9,11 @@ const logger = require('koa-logger')
 var mysql = require('mysql');
 const cors = require("koa-cors"); //可以写ajax实现实现异步跨域，在表头加上http头
 require('module-alias/register'); // 设置别名（需要在package.json设置）
+// swagger接口文档
+const swagger = require('./config/swagger');
+const koaSwagger = require('koa2-swagger-ui')
+
+
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -66,6 +72,20 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
+
+// swagger
+app.use(swagger.routes(), swagger.allowedMethods());
+
+
+app.use(
+  koaSwagger.koaSwagger({
+    routePrefix: '/swagger', // host at /swagger instead of default /docs
+    swaggerOptions: {
+      url: '/swagger.json' // example path to json
+    }
+  })
+);
 
 // routes
 app.use(index.routes(), index.allowedMethods())

@@ -71,7 +71,7 @@
               <div class="box-card-foot">
                 <span>{{ data.type | toVal }}</span>
                 <el-divider direction="vertical" />
-                <span>{{ formatTime(data.upload_time) }}</span>
+                <span>{{ sysDateFormat(data.upload_time) }}</span>
                 <el-divider direction="vertical" />
                 <span>{{ data.auth | toVal }}</span>
                 <div
@@ -140,7 +140,6 @@ import { getFormValue, validateForm } from "@/utils/tool/form";
 import { EventBus } from "@/eventBus/index";
 import { UserModule } from "@/store/modules/user";
 import Search from "./components/Search.vue";
-import { sysDateFormat } from "@/utils/tool/date";
 
 @Component({
   name: "ItKnowledge",
@@ -222,10 +221,6 @@ export default class extends Vue {
     this.tableData.listQuery.total = data.total;
     // console.log(this.tableData);
     this.loading = false;
-  }
-
-  private formatTime(time: string) {
-    return sysDateFormat(time);
   }
 
   /**

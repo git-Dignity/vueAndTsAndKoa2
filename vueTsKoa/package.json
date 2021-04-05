@@ -1,5 +1,5 @@
 {
-  "name": "vueTsKoa",
+  "name": "vue-ts-koa",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,8 @@
     "@config": "config",
     "@api": "api",
     "@utils": "utils",
-    "@routes": "routes"
+    "@routes": "routes",
+    "@entity": "entity"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -27,9 +28,15 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
-    "module-alias": "^2.2.2"
+    "koa2-swagger-ui": "^5.0.5",
+    "module-alias": "^2.2.2",
+    "swagger-jsdoc": "^6.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-register": "^6.26.0",
     "cors": "^2.8.5",
     "formidable": "^1.2.2",
     "graceful-fs": "^4.2.3",

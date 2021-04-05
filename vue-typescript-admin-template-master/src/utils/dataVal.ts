@@ -1,4 +1,10 @@
 
+
+/**
+ * 可获取到对象属性（若属性为空，也不会报错）
+ * @param obj 
+ * @param args 
+ */
 const getVal = (obj: any, ...args:any) => {
     let out = null
     if (obj || obj === 0) {
@@ -20,6 +26,11 @@ const getVal = (obj: any, ...args:any) => {
     return out
   }
   
+  /**
+   * 可获取到对象属性（若属性为空，则返回 '--' ）
+   * @param obj 
+   * @param args 
+   */
   const toVal = (obj: any, ...args: any) => {
     const val = getVal(obj, ...args)
     return val === null ? '--' : val

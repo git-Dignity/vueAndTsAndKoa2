@@ -13,7 +13,7 @@
         </template>
         <el-button
           icon="el-icon-circle-plus-outline"
-          @click="add"
+          @click="add('添加')"
         >
           {{ $t('table.add') }}
         </el-button>
@@ -144,8 +144,8 @@ export default class extends Vue {
     this.searchForm.info.remarks.value = remarks;
 }
 
-  add() {
-      this.searchAndFetures.showDialog("添加", true, false);
+  add(title: string) {
+      this.searchAndFetures.showDialog(title, true, false);
   }
 
   handleDownload() {

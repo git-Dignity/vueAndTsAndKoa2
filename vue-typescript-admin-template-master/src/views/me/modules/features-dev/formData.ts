@@ -34,6 +34,7 @@ const Form = {
             name: "front_end",
             value: "",
             disabled: false,
+            isTextarea: true,
             hidden: false,
             rule: {
                 required: false, message: ""
@@ -44,6 +45,7 @@ const Form = {
             name: "node",
             value: "",
             disabled: false,
+            isTextarea: true,
             hidden: false,
             rule: {
                 required: false, message: ""
@@ -54,6 +56,7 @@ const Form = {
             name: "java",
             value: "",
             disabled: false,
+            isTextarea: true,
             hidden: false,
             rule: {
                 required: false, message: ""
@@ -63,6 +66,7 @@ const Form = {
             label: 'route.sql',
             name: "database_sql",
             value: "",
+            isTextarea: true,
             disabled: false,
             hidden: false,
             rule: {

@@ -5,7 +5,10 @@ const config = require('../../config/config');
 const { uploadFile, unlinkSync } = require('../../utils/upload')
 const sqlModel = require('../common')
 
+
 router.prefix('/itKnowledge/frontEnd')
+
+    
 
 
 
@@ -73,15 +76,37 @@ router.get('/', async (ctx, next) => {
 })
 
 
-
 router.post('/', async (ctx, next) => {
   let result = {}
   const info = JSON.parse(ctx.request.body.info);
   let fileArr = Object.entries(ctx.request.files)
+  let uploadUrlName = ''    // 放到哪个文件夹中
+
+  // 哪个类型就添加到对应的文件夹
+  switch(info.category){
+    case 1:
+        uploadUrlName = 'frontEnd'
+        break
+    case 2:
+        uploadUrlName = 'rearEnd'
+        break
+    case 3:
+        uploadUrlName = 'algorithm'
+        break
+    case 4:
+        uploadUrlName = 'frontRearEnd'
+        break
+    case 5:
+        uploadUrlName = 'tool'
+        break
+    default:
+        uploadUrlName = 'frontEnd'
+
+  }
 
   
   if (fileArr.length != 0) {
-    result = await uploadFile(fileArr, 'itKnowledge/frontEnd')
+    result = await uploadFile(fileArr, 'itKnowledge/' + uploadUrlName)
     console.log(result)
     console.log(info, info.type)
     
@@ -267,3 +292,6 @@ router.delete('/', async (ctx, next) => {
 
 
 module.exports = router
+
+
+

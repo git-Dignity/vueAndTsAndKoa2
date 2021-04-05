@@ -22,6 +22,7 @@ import '@/pwa/register-service-worker'
 import * as directives from '@/directives'
 import * as filters from '@/filters'
 import { getVal, toVal } from '@/utils/dataVal'
+import { sysDateFormat } from "@/utils/tool/date";
 
 // 全局引用基础组件
 import appButton from '@/components/Global/index.vue'
@@ -61,6 +62,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.toVal = toVal
 Vue.prototype.getVal = getVal
+Vue.prototype.sysDateFormat = sysDateFormat
 Vue.filter('toVal', toVal)
 Vue.filter('getVal', getVal)
 
