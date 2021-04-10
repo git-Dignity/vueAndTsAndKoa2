@@ -13,7 +13,10 @@ const { uploadFile } = require('../utils/upload')
 
 router.prefix('/users')
 
+
+
 router.get('/', function (ctx, next) {
+  register()
   ctx.body = 'this is a users response!'
 })
 
