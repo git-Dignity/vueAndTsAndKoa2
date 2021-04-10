@@ -7,13 +7,17 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 var mysql = require('mysql');
+const ErrorRoutes = require('./routes/error-routes')
+const ErrorRoutesCatch = require('./middleware/ErrorRoutesCatch')
 const cors = require("koa-cors"); //可以写ajax实现实现异步跨域，在表头加上http头
 require('module-alias/register'); // 设置别名（需要在package.json设置）
-// swagger接口文档
-// const swagger = require('./config/swagger');
-// const koaSwagger = require('koa2-swagger-ui')
+// swagger接口文档（swagger-jsdoc）
+const swagger = require('./config/swagger-jsdoc');
+const koaSwagger = require('koa2-swagger-ui')
+const testSwaggerJsdoc = require('./routes/test/test-swagger-jsdoc')
 
-// const test = require('./routes/test') // 功能开发
+// koa-swagger-decorator
+const swaggerDecorator = require('./config/swagger-decorator');
 
 
 const index = require('./routes/index')
@@ -30,7 +34,7 @@ const frontEnd = require('./routes/itKnowledge/frontEnd') // IT知识 -- 前端
 const featuresDev = require('./routes/featuresDev/index') // 功能开发
 
 
-const swaggerDec = require('./config/swaggerDec');
+
 
 // 定时器
 require('./timer/loveWords')  // 定时发送情话（qq邮箱）
@@ -77,22 +81,23 @@ app.use(async (ctx, next) => {
 })
 
 
-// swagger
-// app.use(swagger.routes(), swagger.allowedMethods());
+// swagger-jsdoc
+app.use(swagger.routes(), swagger.allowedMethods());
+app.use(
+  koaSwagger.koaSwagger({
+    routePrefix: '/swagger', // host at /swagger instead of default /docs
+    swaggerOptions: {
+      url: '/swagger.json' // example path to json
+    }
+  })
+);
 
 
-// app.use(
-//   koaSwagger.koaSwagger({
-//     routePrefix: '/swagger', // host at /swagger instead of default /docs
-//     swaggerOptions: {
-//       url: '/swagger.json' // example path to json
-//     }
-//   })
-// );
-
-app.use(swaggerDec.routes(), swaggerDec.allowedMethods())
+// koa-swagger-decorator
+app.use(swaggerDecorator.routes(), swaggerDecorator.allowedMethods())
 
 // routes
+app.use(testSwaggerJsdoc.routes(), testSwaggerJsdoc.allowedMethods()) 
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(role.routes(), role.allowedMethods())
@@ -106,12 +111,24 @@ app.use(common.routes(), common.allowedMethods())
 app.use(frontEnd.routes(), frontEnd.allowedMethods())
 app.use(featuresDev.routes(), featuresDev.allowedMethods())
 
-// app.use(test.routes(), test.allowedMethods())
+app.use(ErrorRoutes())
+app.use(ErrorRoutesCatch())
 
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
+
+if (process.env.NODE_ENV == "dev") {
+   // logger
+  app.use((ctx, next) => {
+    const start = new Date()
+    return next().then(() => {
+      const ms = new Date() - start
+      console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+    })
+  })
+}
 
 
 

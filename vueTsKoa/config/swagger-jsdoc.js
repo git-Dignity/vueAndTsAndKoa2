@@ -1,5 +1,14 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-04-10 17:24:49
+ * @LastEditTime: 2021-04-10 17:56:56
+ * @LastEditors: Please set LastEditors
+ * @Description: swagger-jsdoc的配置文件
+ * @FilePath: \vueTsKoa\config\swagger-jsdoc.js
+ * @Url：http://localhost:3333/swagger
+ */
+
 const router = require('koa-router')(); // 引入路由函数
-const path = require('path');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerDefinition = {
     info: {
@@ -43,7 +52,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // 写有注解的router的存放地址(当你新增swagger时文档里没显示出来的话那么就是这边地址没有加进去)
-  apis: ['./routes/*/*.js', './routes/image/*.js'] // routes下所有的js文件和routes/image下所有js文件
+  apis: ['./routes/*.js', './routes/*/*.js'] // routes下所有的js文件和routes/image下所有js文件
 };
 const swaggerSpec = swaggerJSDoc(options);
 // 通过路由获取生成的注解文件
