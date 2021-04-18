@@ -1,8 +1,7 @@
 const router = require('koa-router')()
 var uuid = require('uuid');
-// var db = require('../../utils/db')
-var DB = require('../../utils/mysqlDB')
-const sqlModel = require('../common')
+var DB = require('@utils/sql/mysqlDB')
+const sqlModel = require('@utils/sql/sqlModel')
 const config = require('../../config/config');
 
 router.prefix('/user')

@@ -1,5 +1,5 @@
 const router = require('koa-router')()
-var DB = require('../utils/mysqlDB')
+var DB = require('@utils/sql/mysqlDB')
 var uuid = require('uuid');
 let { func, uploadToQiniu} = require('../utils/qianniuyun');  /*导入七牛文件   */
 const formidable = require('formidable');

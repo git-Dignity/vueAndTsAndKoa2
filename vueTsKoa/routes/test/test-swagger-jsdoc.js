@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-04-10 17:38:12
- * @LastEditTime: 2021-04-17 18:15:50
+ * @LastEditTime: 2021-04-18 17:05:12
  * @LastEditors: Please set LastEditors
  * @Description: swagger-jsdoc的测试文件
  * @FilePath: \vueTsKoa\routes\test\test-swagger-jsdoc.js
@@ -9,9 +9,9 @@
  
 
 const router = require('koa-router')()
-var DB = require('../../utils/mysqlDB')
-const sqlModel = require('../common')
-const Base = require('../common/BaseService')
+var DB = require('@utils/sql/mysqlDB')
+const sqlModel = require('@utils/sql/sqlModel')
+const Base = require('@src/common/service/BaseService')
 
 
 router.prefix('/featuresDevTest')

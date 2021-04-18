@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-12-01 23:21:53
+ * @LastEditTime: 2021-04-18 17:50:51
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vueTsKoa\routes\agentEvent\server\agentEventService.js
+ */
 const { specifiedTime } = require('../../common/schedule')
 const { specifiedTimeFormat } = require('../../../utils/date')
 const { get } = require('../../../utils/request.js')
@@ -20,7 +28,7 @@ const executeTimeout = (params, tmpTime) =>{
         console.log('取消定时器') 
     }
 }
-
+ 
 
 /**
  * 判断如果传进来的schedule进度是100的话，分两种情况，已经有定时器就关掉，没有就不需要启动定时器了，不是就启动，还要将他的date存数据库，方便以后关闭

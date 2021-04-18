@@ -28,7 +28,7 @@ const menu = require('./routes/sys/menu')
 const certificateAuthentication = require('./routes/personal/personalView/certificateAuthentication')
 const music = require('./routes/music/index')
 const apiInterface = require('./routes/apiInterface/index')
-const agentEvent = require('./routes/agentEvent/index') // 代办事项
+// const agentEvent = require('./routes/agentEvent/index') // 代办事项
 const common = require('./routes/common/common') // 公共
 // const frontEnd = require('./routes/itKnowledge/frontEnd') // IT知识 -- 前端
 // const featuresDev = require('./routes/featuresDev/index') // 功能开发
@@ -106,7 +106,7 @@ app.use(menu.routes(), menu.allowedMethods())
 app.use(certificateAuthentication.routes(), certificateAuthentication.allowedMethods())
 app.use(music.routes(), music.allowedMethods())
 app.use(apiInterface.routes(), apiInterface.allowedMethods())
-app.use(agentEvent.routes(), agentEvent.allowedMethods())
+// app.use(agentEvent.routes(), agentEvent.allowedMethods())
 app.use(common.routes(), common.allowedMethods())
 // app.use(frontEnd.routes(), frontEnd.allowedMethods())
 // app.use(featuresDev.routes(), featuresDev.allowedMethods())

@@ -12,9 +12,9 @@
   "_moduleAliases": {
     "@config": "config",
     "@api": "api",
-    "@utils": "utils",
+    "@utils": "utils", 
     "@routes": "routes",
-    "@entity": "entity"
+    "@src": "src"
   },
   "dependencies": {
     "debug": "^4.1.1",

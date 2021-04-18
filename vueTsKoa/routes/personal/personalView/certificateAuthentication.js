@@ -4,8 +4,8 @@ let func = require('../../../utils/qianniuyun');  /*导入七牛文件   */
 const formidable = require('formidable');
 var fs = require('fs');
 var path = require('path');
-var DB = require('../../../utils/mysqlDB')
-const sqlModel = require('../../common')
+var DB = require('@utils/sql/mysqlDB')
+const sqlModel = require('@utils/sql/sqlModel')
 
 router.prefix('/certificateAuthentication')
 

@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 var uuid = require('uuid');
-var DB = require('../../utils/mysqlDB')
-const sqlModel = require('../common')
+var DB = require('@utils/sql/mysqlDB')
+const sqlModel = require('@utils/sql/sqlModel')
 const config = require('../../config/config.js')
 const { get, post, put, del } = require('../../utils/request.js')
 var qs = require('qs');
@@ -12,7 +12,7 @@ const { executeTimeout, specifiedTimeSend } = require('./server/agentEventServic
 
 router.prefix('/agentEvent')
 
-
+ 
 
 router.get('/get', async (ctx, next) => {
     const params = ctx.request.query
@@ -118,11 +118,6 @@ router.delete('/delete', async (ctx, next) => {
             msgData: result
         }
     }
-
-    ctx.response.body = data
-
-
-
 
     ctx.response.body = data
 })

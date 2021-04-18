@@ -1,9 +1,9 @@
 const router = require('koa-router')()
-var DB = require('../../utils/mysqlDB')
+var DB = require('@utils/sql/mysqlDB')
 var uuid = require('uuid');
 const config = require('../../config/config');
 const { uploadFile, unlinkSync } = require('../../utils/upload')
-const sqlModel = require('../common')
+const sqlModel = require('@utils/sql/sqlModel')
 
 
 router.prefix('/itKnowledge/frontEnd')
