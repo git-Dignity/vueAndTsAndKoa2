@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-04-27 19:12:15
+ * @LastEditTime: 2021-04-18 21:48:35
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vueTsKoa\README.md
+-->
 # koa2后台node
 1. node生成id ["node-uuid", "node-machine-id"]
 1-1: node-uuid（生成唯一标识）看了下npm官网，下载量1,227,641
@@ -15,3 +23,36 @@
 
 # 项目结构
 
+├─api   第三方api接口
+├─bin
+├─config
+├─middleware
+├─routes
+│  ├─agentEvent
+│  │  └─server
+│  ├─apiInterface
+│  ├─common
+│  ├─itKnowledge
+│  ├─music
+│  │  └─singer
+│  ├─personal
+│  │  └─personalView
+│  ├─sys
+│  └─test
+├─src
+│  ├─common
+│  │  ├─controller
+│  │  ├─entity
+│  │  ├─service
+│  │  └─utils
+│  └─modules
+│      ├─controller
+│      ├─entity
+│      ├─service
+│      └─utils
+├─timer
+├─utils
+│  ├─date
+│  ├─redis
+│  └─sql
+└─views

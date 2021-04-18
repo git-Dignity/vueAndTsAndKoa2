@@ -1,8 +1,24 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-09-12 13:05:48
+ * @LastEditTime: 2021-04-18 21:41:56
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\components\Table\SingleLine.vue
+-->
 <template>
   <div>
-    <div class="content-item" v-for="(item, key) in childData" :key="key">
-      <div class="content-item-left">{{item.name}}</div>
-      <div class="content-item-right">{{item.value || '--'}}</div>
+    <div
+      v-for="(item, key) in childData"
+      :key="key"
+      class="content-item"
+    >
+      <div class="content-item-left">
+        {{ item.name }}
+      </div>
+      <div class="content-item-right">
+        {{ item.value || '--' }}
+      </div>
     </div>
   </div>
 </template>

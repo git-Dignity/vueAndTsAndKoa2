@@ -1,6 +1,6 @@
 {
   "name": "vue-ts-koa",
-  "version": "0.1.0",
+  "version": "1.2",
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=dev&&nodemon node bin/www",

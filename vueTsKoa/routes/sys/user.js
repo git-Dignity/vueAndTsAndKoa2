@@ -6,7 +6,7 @@ const config = require('../../config/config');
 
 router.prefix('/user')
 
-
+ 
 
 router.get('/', async (ctx, next) => {
     const req = ctx.request.query
