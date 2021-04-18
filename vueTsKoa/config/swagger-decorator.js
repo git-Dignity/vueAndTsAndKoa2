@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-04-10 11:12:03
- * @LastEditTime: 2021-04-10 18:01:19
+ * @LastEditTime: 2021-04-11 18:37:41
  * @LastEditors: Please set LastEditors
  * @Description: koa-swagger-decorator的配置文件
  * @FilePath: \vueTsKoa\config\swagger-decorator.js
@@ -18,7 +18,7 @@ router.swagger({
     version: '1.0.1'
 });
 // 查找对应目录下的controller类
-router.mapDir(path.resolve(__dirname, '../routes/'), {
+router.mapDir(path.resolve(__dirname, '../src/'), {
     // default: true, if true, you can call ctx.validatedBody[Query|Params] to get validated data.
 });
 

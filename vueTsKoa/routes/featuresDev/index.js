@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 var DB = require('../../utils/mysqlDB')
 const sqlModel = require('../common')
-const Base = require('./../common/base')
+const Base = require('./../common/BaseService')
 
 
 router.prefix('/featuresDev')

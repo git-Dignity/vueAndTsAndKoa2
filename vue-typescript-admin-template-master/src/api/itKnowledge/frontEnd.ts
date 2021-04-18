@@ -1,3 +1,11 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-02-21 22:24:50
+ * @LastEditTime: 2021-04-17 20:38:15
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\api\itKnowledge\frontEnd.ts
+ */
 import request from '@/utils/request'
 import { ISysRoleData } from '@/api/types'
 
@@ -17,7 +25,7 @@ export const defaultSysRoleData: ISysRoleData = {
  */
 export const get = (params: any) =>
     request({
-        url: '/itKnowledge/frontEnd/',
+        url: '/itKnowledge/',
         method: 'get',
         params
     })
@@ -35,7 +43,7 @@ export const getArticle = (id: number, params: any) =>
  */
 export const create = (data: any) =>
     request({
-        url: '/itKnowledge/frontEnd/',
+        url: '/itKnowledge/',
         method: 'post',
         data
     })
@@ -52,14 +60,14 @@ export const delSysRole = (data: any) =>
 
 export const update = (data: any) =>
     request({
-        url: `/itKnowledge/frontEnd/`,
+        url: `/itKnowledge/`,
         method: 'put',
         data
     })
 
 export const del = (params: any) =>
     request({
-        url: `/itKnowledge/frontEnd/`,
+        url: `/itKnowledge/`,
         method: 'delete',
         params
     })

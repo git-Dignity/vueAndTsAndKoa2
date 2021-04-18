@@ -1,3 +1,13 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-04-10 11:14:13
+ * @LastEditTime: 2021-04-18 15:32:59
+ * @LastEditors: Please set LastEditors
+ * @Description: koa-swagger-decorator的测试文件
+ * @FilePath: \vueTsKoa\routes\test\test-swagger-decorator.js
+ */
+
+
 const {
   request,
   summary,
@@ -18,6 +28,7 @@ const logTime = () => async (ctx, next) => {
   await next()
   console.log(`end: ${new Date()}`)
 }
+
 const getListSchema = {
   keyword: { type: 'string', required: true },
   status: { type: 'number', required: true }
@@ -25,7 +36,25 @@ const getListSchema = {
 const listSchema = {
   user_id: { type: 'string',format: 'uuid', required: true },
   content: { type: 'string', required: true },
-  status: { type: 'string', required: true }
+  status: { type: 'string', required: true },
+  info: { type: 'object', required: true,
+  default: {"id":"","title":"","content":"","type":"","photo":"","remarks":"","auth":"zheng","category":1},
+    properties: {
+      title: { type: 'string',required: false },
+      content: { type: 'string',required: false }
+    } 
+  },
+  xis: { type: 'array', required: true,
+    items: {
+      title: { type: 'string',required: false },
+      content: { type: 'string',required: false }
+    } 
+  },
+  file:{
+    type:"file",
+    required: false,
+    description: '文件'
+  }
 }
 const updateListSchema = {
   user_id: { type: 'string',format: 'uuid', required: true },
@@ -124,3 +153,6 @@ class ListController {
 
 
 module.exports = ListController
+
+
+// 误区：关于对象，发现type写为object，一直提示我类型错误，最后才发现原来JSON并不是对象，而是string

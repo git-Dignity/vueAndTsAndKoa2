@@ -1,3 +1,13 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-03-27 16:09:01
+ * @LastEditTime: 2021-04-17 18:17:00
+ * @LastEditors: Please set LastEditors
+ * @Description: 集成增删改查的Controller层简单处理
+ * @FilePath: \vueTsKoa\routes\common\BaseService.js
+ */
+
+
 var DB = require('../../utils/mysqlDB')
 const sqlModel = require('../common')
 const featuresEntity = require('@entity/features')
@@ -6,7 +16,7 @@ const itknowledgeEntity = require('@entity/itknowledgeEntity')
 /**
  * 封装增删改查
  */
-class Base {
+class BaseService {
     constructor(tableName){
         this.tableName = tableName
         this.getEntity()
@@ -258,4 +268,4 @@ class Base {
 }
 
 
-module.exports = Base
+module.exports = BaseService

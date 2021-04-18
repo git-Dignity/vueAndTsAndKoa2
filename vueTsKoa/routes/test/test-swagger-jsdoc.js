@@ -1,7 +1,7 @@
 /*
- * @Author: your name
+ * @Author: zemin zheng
  * @Date: 2021-04-10 17:38:12
- * @LastEditTime: 2021-04-10 18:00:39
+ * @LastEditTime: 2021-04-17 18:15:50
  * @LastEditors: Please set LastEditors
  * @Description: swagger-jsdoc的测试文件
  * @FilePath: \vueTsKoa\routes\test\test-swagger-jsdoc.js
@@ -11,14 +11,14 @@
 const router = require('koa-router')()
 var DB = require('../../utils/mysqlDB')
 const sqlModel = require('../common')
-const Base = require('../common/base')
+const Base = require('../common/BaseService')
 
 
-router.prefix('/featuresDev')
+router.prefix('/featuresDevTest')
 
 /**
  * @swagger
- * /featuresDev/:
+ * /featuresDevTest/:
  *   get:
  *     summary: 获取功能开发列表
  *     description: 获取功能开发列表
@@ -93,7 +93,6 @@ router.prefix('/featuresDev')
  *         description: not found
  */
 router.get('/', async (ctx, next) => {
-    // new SwaggerClass().get('/featuresDev/')
     
     const req = ctx.request.query
     console.log(req)
@@ -109,7 +108,7 @@ router.get('/', async (ctx, next) => {
 
 /**
  * @swagger
- * /featuresDev/:
+ * /featuresDevTest/:
  *   post:
  *     summary: 添加功能开发
  *     description: 添加功能开发
@@ -154,7 +153,7 @@ router.post('/', async (ctx, next) => {
 
 /**
  * @swagger
- * /featuresDev/:
+ * /featuresDevTest/:
  *   put:
  *     summary: 修改功能开发
  *     description: 修改功能开发
@@ -199,7 +198,7 @@ router.put('/', async (ctx) => {
 
 /**
  * @swagger
- * /featuresDev/:
+ * /featuresDevTest/:
  *   delete:
  *     summary: 删除功能开发
  *     description: 删除功能开发
