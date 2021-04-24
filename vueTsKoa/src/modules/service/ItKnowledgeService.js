@@ -104,7 +104,7 @@ class ItKnowledgeService {
         uploadUrlName = 'frontEnd'
 
   }
-
+ 
   
   if (fileArr.length != 0) {
     result = await uploadFile(fileArr, 'itKnowledge/' + uploadUrlName)

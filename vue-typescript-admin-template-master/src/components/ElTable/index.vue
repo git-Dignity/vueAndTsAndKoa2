@@ -58,11 +58,14 @@
             >
               <template slot-scope="{row}">
                 <el-avatar
+                  :key="row.photo"
                   shape="square"
                   :size="80"
                   fit="fill"
                   :src="row.photo"
-                />
+                >
+                  <img src="@/assets/404-images/404.png">
+                </el-avatar>
               </template>
             </el-table-column>
             <el-table-column

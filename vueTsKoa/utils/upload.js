@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-22 22:46:14
+ * @LastEditTime: 2021-04-24 12:32:14
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vueTsKoa\utils\upload.js
+ */
 /**
  * 文件上传 - 工具类 
  */
@@ -43,7 +51,10 @@ const uploadFile = (fileArr,url) => {
  * @param {String} name 文件名字
  */
 const unlinkSync = (url, name) => {
+  
   let filePath = path.join(__dirname, `../public/node/upload/image/${url}/`) + `${name}`;
+  console.log(filePath);
+  
   fs.unlinkSync(filePath);
 }
 

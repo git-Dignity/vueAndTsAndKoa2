@@ -79,7 +79,7 @@ import { Tree } from "element-ui";
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import {
   getSysUser,
-  // createSysUser,
+  createSysUser,
   updateSysUser,
   delSysRole
 } from "@/api/sys/sysUser";
@@ -89,7 +89,7 @@ import { formatJson } from "@/utils";
 import { userTableColumns } from "@/views/sys/modules/user/tableData";
 import ElemenetTable from "@/components/ElTable/index.vue";
 import ElemenetForm from "@/components/ElForm/index.vue";
-import { sysUserForm, initSysUserForm } from "./modules/user/userFormData";
+import { sysUserForm, initSysUserForm, setPhoto } from "./modules/user/userFormData";
 import {
   SysRole
 } from "./modules/role/sysRole";
@@ -125,8 +125,8 @@ export default class extends Vue {
     tableWidth: "width: 100%",
     defaultSort: { },
     listQuery: {
-      page: 1,
-      limit: 8,
+      current: 1,
+      size: 8,
       total: 0,
       pageSize: [8, 16, 50, 100, 1000],
       importance: undefined,
@@ -174,17 +174,20 @@ export default class extends Vue {
     console.log(this.sysUserForm.info);
     if (!validateForm(this.refsForm).includes("false")) {
       const { ...userData } = getFormValue(this.sysUserForm.info);
+      const formData = new FormData();
+      formData.append("info", JSON.stringify(userData));
+      formData.append("file", this.sysUserForm.file);
 
       if (this.childrenDialogData.title === "添加用户") {
         console.log(userData);
-        // const { data } = await createSysUser({ user: userData });
+        const { data } = await createSysUser(formData);
         if (data.msg === "添加成功") { showNotify(4, "创建" + userData.username + "用户成功"); }
       } else if (this.childrenDialogData.title === "修改用户") {
-        const { data } = await updateSysUser({ user: userData });
+        const { data } = await updateSysUser(formData);
         if (data.msg === "更新成功") { showNotify(4, "修改" + userData.username + "用户成功"); }
       }
       EventBus.$emit("isShowDialog", true);
-      initSysUserForm();
+      initSysUserForm({});
       this.getList(this.childrenTableData.listQuery);
     } else {
       MessageWarning("请检查信息是否上传齐全");
@@ -194,6 +197,7 @@ export default class extends Vue {
   // 弹出框取消的回调
   private parentDialogCancel(data: any) {
     console.log("取消的回调", data);
+    this.sysUserForm.file = "";
   }
 
   private parentPagination(val: Record<string, any>) {
@@ -202,11 +206,17 @@ export default class extends Vue {
 
   private async getList(page: Record<string, any>) {
     this.listLoading = true;
-    const { data } = await getSysUser(page);
+    console.log(page);
+
+    const { res } = await this.awaitWraper(getSysUser(page));
+    const data = this.getVal(res, "data");
     console.log(data);
 
-    this.childrenTableData.data = data.items;
-    this.childrenTableData.listQuery.total = data.total;
+    if (data) {
+      this.childrenTableData.data = data.items;
+      this.childrenTableData.listQuery.total = data.total;
+    }
+
     this.listLoading = false;
   }
 
@@ -217,34 +227,25 @@ export default class extends Vue {
 
   private UploadImgDataChild(data: any) {
     console.log("修改图片", data);
+    setPhoto(data.file.name);
+    this.sysUserForm.file = data.file;
   }
 
   private addRole() {
     this.sysRole.showDialog("添加用户", true, false);
-    initSysUserForm();
+    initSysUserForm({});
+    this.sysUserForm.file = "";
     if (this.$refs.tree) (this.$refs.tree as Tree).setCheckedKeys([]);
   }
 
   private btnView(row: any) {
     this.sysRole.showDialog("查看用户", false, true);
-    initSysUserForm(
-      row.id,
-      row.username,
-      row.phone,
-      row.photo,
-      row.roles
-    );
+    initSysUserForm(row);
   }
 
   private btnEdit(row: any) {
     this.sysRole.showDialog("修改用户", true, false);
-    initSysUserForm(
-      row.id,
-      row.username,
-      row.phone,
-      row.photo,
-      row.roles
-    );
+    initSysUserForm(row);
   }
 
   private btnDelete(id: string) {

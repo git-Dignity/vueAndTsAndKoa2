@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-06 15:00:00
+ * @LastEditTime: 2021-04-24 15:31:20
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\api\sys\sysUser.ts
+ */
 import request from '@/utils/request'
 import { ISysUserData } from '@/api/sys/types'
 
@@ -20,14 +28,14 @@ export const getSysUser = (params: any) =>
 
 export const createSysUser = (data: any) =>
   request({
-    url: '/user/',
+    url: '/user',
     method: 'post',
     data
   })
 
   export const delSysRole = (data: any) =>
   request({
-    url: '/role/del',
+    url: '/user/del',
     method: 'post',
     data
   })

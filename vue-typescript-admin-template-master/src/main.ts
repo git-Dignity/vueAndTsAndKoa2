@@ -1,3 +1,11 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2020-09-06 15:00:00
+ * @LastEditTime: 2021-04-24 11:40:42
+ * @LastEditors: Please set LastEditors
+ * @Description: main入口文件
+ * @FilePath: \vue-typescript-admin-template-master\src\main.ts
+ */
 import Vue, { DirectiveOptions } from 'vue'
 
 import 'normalize.css'
@@ -23,6 +31,9 @@ import * as directives from '@/directives'
 import * as filters from '@/filters'
 import { getVal, toVal } from '@/utils/dataVal'
 import { sysDateFormat } from "@/utils/tool/date";
+import { awaitWraper } from "@/utils/tool/request";
+import myTool from "@/utils/tool/javascript-tool-class";
+
 
 // 全局引用基础组件
 import appButton from '@/components/Global/index.vue'
@@ -62,6 +73,8 @@ Vue.config.productionTip = false
 
 Vue.prototype.toVal = toVal
 Vue.prototype.getVal = getVal
+Vue.prototype.awaitWraper = awaitWraper
+Vue.prototype.myTool = myTool
 Vue.prototype.sysDateFormat = sysDateFormat
 Vue.filter('toVal', toVal)
 Vue.filter('getVal', getVal)

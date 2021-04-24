@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-04-11 18:28:33
- * @LastEditTime: 2021-04-18 18:33:07
+ * @LastEditTime: 2021-04-24 16:39:17
  * @LastEditors: Please set LastEditors
  * @Description: 我的——功能开发 Controller层
  * @FilePath: \vueTsKoa\src\controller\featuresDevController.js
@@ -20,7 +20,7 @@ const featuresDevService = new FeaturesDevService("features")
 const tag = tags(['我的——功能开发'])
 const paramsList = (id=false, title=false, front_end = false, node = false, java = false, database_sql = false, remarks = false, auth = false) =>{
   return {
-    id: { type: 'number', required: id, description: 'id'  },
+    id: { type: 'string', required: id, description: 'id'  },
     title: { type: 'string', required: title, default: '干饭', description: '标题' },
     front_end: { type: 'string', required: front_end, default: 'div', description: '前端内容' },
     node: { type: 'string', required: node, default: 'console.log(1314)', description: 'node内容' },

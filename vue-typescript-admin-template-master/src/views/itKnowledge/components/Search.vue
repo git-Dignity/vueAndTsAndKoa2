@@ -99,8 +99,8 @@ export default class extends Vue {
   // 获取用户列表
   private async getUser() {
     const { data } = await getSysUser({
-        page: 1,
-        limit: 1000
+        current: 1,
+        size: 1000
     });
 
     data.items.forEach((i: any) => {

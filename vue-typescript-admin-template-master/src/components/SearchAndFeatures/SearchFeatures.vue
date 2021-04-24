@@ -135,6 +135,8 @@ export default class extends Vue {
   }
 
    initForm = (id = "", title = "", front_end = "", node = "", java = "", database_sql = "", remarks = "") => {
+     console.log(front_end);
+
     this.searchForm.info.id.value = id;
     this.searchForm.info.title.value = title;
     this.searchForm.info.front_end.value = front_end;

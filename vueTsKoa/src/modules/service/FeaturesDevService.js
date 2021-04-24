@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-04-17 20:42:03
- * @LastEditTime: 2021-04-18 17:12:26
+ * @LastEditTime: 2021-04-24 16:25:38
  * @LastEditors: Please set LastEditors
  * @Description: 我的——功能开发 Service层
  * @FilePath: \vueTsKoa\src\service\FeaturesDevService.js
@@ -14,6 +14,8 @@ class FeaturesDevService {
   }
  
   async get(params) {
+    console.log(params, '8888887sdsd');
+    
     return await this.baseService.get(params, 'create_time')
   }
 
@@ -22,7 +24,7 @@ class FeaturesDevService {
     return await this.baseService.post(params)
   }
 
- 
+  
   async update(params) {
     return await this.baseService.put(params)
   }

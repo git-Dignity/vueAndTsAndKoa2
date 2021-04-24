@@ -1,3 +1,18 @@
+/*
+ * @Author: your name
+ * @Date: 2020-09-06 15:00:02
+ * @LastEditTime: 2021-04-24 12:27:40
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\views\sys\modules\user\userFormData.ts
+ */
+
+import { phoneValidtor } from '@/utils/validate'
+
+ 
+
+
+
 // 角色表单数据
 const sysUserForm = {
     name: "sysUserForm",
@@ -34,7 +49,8 @@ const sysUserForm = {
             childrenUploadImgData: {
                 upload__text: "上传用户头像文件",
                 type: "image_avatar",
-                accept: ".png, .jpg, .gif, .jpeg"
+                accept: ".png, .jpg, .gif, .jpeg",
+                imageUrl: ''
             },
             disabled: false,
             hidden: false,
@@ -48,9 +64,14 @@ const sysUserForm = {
             value: "",
             disabled: false,
             hidden: false,
-            rule: {
-                required: true, message: "手机号码不能为空"
-            }
+            rule: [
+                {
+                    required: true, message: "手机号码不能为空" 
+                },
+                {
+                     validator: phoneValidtor, trigger: 'blur'
+                }
+            ]
         },
         "roles": {
             label: 'sys.routes',
@@ -63,21 +84,30 @@ const sysUserForm = {
             }
         }
 
-    }
+    },
+    file:""
 }
 
 
-const initSysUserForm = (id = "", name = "", phone = "", photo = "", roles = "") => {
+const initSysUserForm = ({id = "", username = "", phone = "", photo = "", roles = ""}) => {
+    console.log(photo);
+    
     sysUserForm.info.id.value = id;
-    sysUserForm.info.username.value = name;
+    sysUserForm.info.username.value = username;
     sysUserForm.info.phone.value = phone;
-    sysUserForm.info.photo.value = photo;
+    sysUserForm.info.photo.childrenUploadImgData.imageUrl = photo ? photo : require('@/assets/404-images/404.png');
+    sysUserForm.info.photo.value = photo 
     sysUserForm.info.roles.value = roles;
+}
+
+const setPhoto = (photo: string) =>{
+    sysUserForm.info.photo.value = photo 
 }
 
 
 
 export {
     sysUserForm,
-    initSysUserForm
+    initSysUserForm,
+    setPhoto
 }

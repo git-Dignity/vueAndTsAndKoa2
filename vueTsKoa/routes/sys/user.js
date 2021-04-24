@@ -23,6 +23,9 @@ router.get('/', async (ctx, next) => {
         limit ${pageNumLeft},${req.limit}
     `)
 
+    console.log(result);
+    
+
     result.forEach( user =>{
         user.photo = config.url+ user.photo
     })
