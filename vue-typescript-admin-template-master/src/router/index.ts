@@ -62,6 +62,11 @@ export const constantRoutes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
     meta: { hidden: true }
   },
+  // {
+  //   path: '/cover',
+  //   component: () => import(/* webpackChunkName: "cover" */ '@/views/cover/index.vue'),
+  //   meta: { hidden: true }
+  // },
   {
     path: '/auth-redirect',
     component: () => import(/* webpackChunkName: "auth-redirect" */ '@/views/login/auth-redirect.vue'),
@@ -80,6 +85,7 @@ export const constantRoutes: RouteConfig[] = [
   {
     path: '/',
     component: Layout,
+    
     redirect: '/dashboard',
     children: [
       {

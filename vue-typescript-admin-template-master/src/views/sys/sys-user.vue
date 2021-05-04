@@ -81,7 +81,7 @@ import {
   getSysUser,
   createSysUser,
   updateSysUser,
-  delSysRole
+  delSysUser
 } from "@/api/sys/sysUser";
 import { ISysRoleData } from "@/api/sys/types/index";
 import { exportJson2Excel } from "@/utils/excel";
@@ -251,7 +251,7 @@ export default class extends Vue {
   private btnDelete(id: string) {
     MesssageBoxQuestion("是否确定删除该用户,是否继续")
       .then(async () => {
-        const { data } = await delSysRole({ id: id });
+        const { data } = await delSysUser({ id: id });
 
         if (data.msg === "删除成功") {
           MessageSuccess("删除成功!");

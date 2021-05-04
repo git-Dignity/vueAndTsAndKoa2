@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-09-06 15:00:00
- * @LastEditTime: 2021-04-24 15:31:20
+ * @LastEditTime: 2021-04-24 16:53:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\api\sys\sysUser.ts
@@ -33,7 +33,7 @@ export const createSysUser = (data: any) =>
     data
   })
 
-  export const delSysRole = (data: any) =>
+  export const delSysUser = (data: any) =>
   request({
     url: '/user/del',
     method: 'post',
