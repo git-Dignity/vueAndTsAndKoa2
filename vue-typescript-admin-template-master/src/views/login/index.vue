@@ -82,8 +82,8 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ $t('login.username') }} : 去注册吧  |  test</span>
-          <span>{{ $t('login.password') }} :  testtest</span>
+          <span>{{ $t('login.username') }} : 去注册吧 | test</span>
+          <span>{{ $t('login.password') }} : testtest</span>
         </div>
 
         <el-button
@@ -193,7 +193,8 @@ export default class extends Vue {
     const { key } = e;
     if (!key) return;
 
-    this.capsTooltip = key !== null && key.length === 1 && key >= "A" && key <= "Z";
+    this.capsTooltip =
+      key !== null && key.length === 1 && key >= "A" && key <= "Z";
   }
 
   private showPwd() {
@@ -220,10 +221,21 @@ export default class extends Vue {
         this.loading = true;
         try {
           await UserModule.Login(this.loginForm);
-          this.$router.push({
-          path: this.redirect || "/",
-          query: this.otherQuery
-        });
+          this.$router
+            .push({
+              path: this.redirect || "/",
+              query: this.otherQuery
+            })
+            .catch(async err => {
+              console.log(err);
+              // 为什么这里要加catch：https://blog.csdn.net/Tom__cy/article/details/112846816
+              // permission.js里的next({ ...to, replace: true })会被认为是一个失败的navigation（虽然能导航成功，但不再是原来的to），所以login里的push()返回一个rejected Promise。
+              await UserModule.Login(this.loginForm);
+              this.$router.push({
+                path: this.redirect || "/",
+                query: this.otherQuery
+              });
+            });
         } catch (e) {
           console.log(e);
         }

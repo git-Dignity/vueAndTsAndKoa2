@@ -55,6 +55,10 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
 
             // const aaa = filterAsyncRouter(data.items[0].routes)
             // console.log(aaa)
+            console.log(data.items[0].routes);
+            
+            // console.log(filterAsyncRouter(data.items[0].routes));
+            
             PermissionModule.dynamicRoutes = filterAsyncRouter(data.items[0].routes)
           }
           console.log(PermissionModule.dynamicRoutes)
