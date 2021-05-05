@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-05-22 22:46:14
- * @LastEditTime: 2021-04-24 12:32:14
+ * @LastEditTime: 2021-05-05 15:17:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueTsKoa\utils\upload.js
@@ -12,6 +12,16 @@
 
 var fs = require('fs');
 var path = require('path');
+
+
+/**
+ * 创建文件夹
+ * @param {*} name 文件夹名字，输入从`public/node/upload/image/`之后的路径
+ */
+const createFold = (name) =>{
+  let filePath = path.join(__dirname, `../public/node/upload/image/${name}/`);
+  fs.existsSync(filePath) || fs.mkdirSync(filePath)
+}
 
 
 // 支持多文件上传到本地
@@ -61,6 +71,7 @@ const unlinkSync = (url, name) => {
 
 
 module.exports = {
+  createFold,
   uploadFile,
   unlinkSync
 }

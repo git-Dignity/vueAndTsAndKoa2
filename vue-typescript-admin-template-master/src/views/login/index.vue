@@ -82,8 +82,8 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>{{ $t('login.username') }} : 自己去注册吧</span>
-          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+          <span>{{ $t('login.username') }} : 去注册吧  |  test</span>
+          <span>{{ $t('login.password') }} :  testtest</span>
         </div>
 
         <el-button

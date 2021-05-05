@@ -4,9 +4,7 @@
       v-model="activeNames"
       accordion
     >
-      <el-collapse-item
-        name="features"
-      >
+      <el-collapse-item name="features">
         <template slot="title">
           功能按钮 &nbsp;
           <i class="el-icon-connection" />
@@ -29,18 +27,14 @@
         </el-button>
       </el-collapse-item>
 
-      <el-collapse-item
-        name="search"
-      >
+      <el-collapse-item name="search">
         <template slot="title">
-          搜索前端链接 &nbsp;
+          搜索 &nbsp;
           <i class="el-icon-search" />
         </template>
 
         <el-row :gutter="15">
-          <ElemenetForm
-            :children-form-data="searchForm"
-          >
+          <ElemenetForm :children-form-data="searchForm">
             <el-button
               type="primary"
               @click="search"
@@ -64,6 +58,7 @@
         <ElemenetForm
           :children-form-data="addForm"
           @parentForm="parentForm"
+          @UploadImgDataChild="UploadImgDataChild"
         />
       </div>
     </RoleDialog>
@@ -74,20 +69,17 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import ElemenetForm from "@/components/ElForm/index.vue";
 import RoleDialog from "@c/Dialog/index.vue";
- import {
-  SearchAndFetures
-} from "./modules/SearchAndFetures";
+import { SearchAndFetures } from "./modules/SearchAndFetures";
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import { UserModule } from "@/store/modules/user";
-import {
-  MessageWarning
-} from "@/utils/tool/message";
+import { MessageWarning } from "@/utils/tool/message";
+import { log } from "util";
 
 @Component({
   components: { ElemenetForm, RoleDialog }
 })
 export default class extends Vue {
-  private loading = false
+  private loading = false;
   private activeNames = ["search"];
   private authorOption: any[] = [];
   private dialogData = {
@@ -105,16 +97,16 @@ export default class extends Vue {
 
   @Prop({
     default: () => {
-        return {
-            name: "searchFormData",
-            position: "right",
-            size: "medium",
-            inline: true,
-            info: {}
-
-        };
+      return {
+        name: "searchFormData",
+        position: "right",
+        size: "medium",
+        inline: true,
+        info: {}
+      };
     }
-  }) private searchForm!: object;
+  })
+  private searchForm!: object;
 
   @Prop({ default: () => null }) private addForm!: object;
 
@@ -134,34 +126,47 @@ export default class extends Vue {
     this.$emit("search", getFormValue(this.searchForm.info));
   }
 
-   initForm = (id = "", title = "", front_end = "", node = "", java = "", database_sql = "", remarks = "") => {
-     console.log(front_end);
+  initForm = () => {
+    for (const key in this.searchForm.info) {
+        console.log(key);
+        this.searchForm.info[key].value = "";
+    }
 
-    this.searchForm.info.id.value = id;
-    this.searchForm.info.title.value = title;
-    this.searchForm.info.front_end.value = front_end;
-    this.searchForm.info.node.value = node;
-    this.searchForm.info.java.value = java;
-    this.searchForm.info.database_sql.value = database_sql;
-    this.searchForm.info.remarks.value = remarks;
-}
+    // if (this.getVal(this.searchForm, "info", "id", "value")) {
+    //   this.searchForm.info.id.value = id;
+    // }
+
+    // this.searchForm.info.title.value = title;
+    // this.searchForm.info.front_end.value = front_end;
+    // this.searchForm.info.node.value = node;
+    // this.searchForm.info.java.value = java;
+    // this.searchForm.info.database_sql.value = database_sql;
+    // this.searchForm.info.remarks.value = remarks;
+  };
 
   add(title: string) {
-      this.searchAndFetures.showDialog(title, true, false);
+    this.searchAndFetures.showDialog(title, true, false);
   }
 
   handleDownload() {
     this.$emit("handleDownload", true);
   }
 
+  private UploadImgDataChild(data: any) {
+    // console.log(data);
+    this.addForm.file = data.file;
+  }
+
   private async parentDialogSubmit(data: any) {
- if (!validateForm(this.refsForm).includes("false")) {
+    if (!validateForm(this.refsForm).includes("false")) {
       const paramet = getFormValue(this.addForm.info);
       paramet.auth = this.name;
 
       console.log(paramet);
 
       this.$emit("dialogSubmit", this.dialogData.title, paramet);
+      // 点击确定之后回调成功清除文件
+      this.addForm.file = "";
     } else {
       MessageWarning("请检查信息是否上传齐全");
     }

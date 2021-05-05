@@ -43,7 +43,7 @@ export default class extends Vue {
   async touristClick() {
     await UserModule.Login({
       username: "test",
-      password: "test123"
+      password: "testtest"
     });
 
         this.$router.push({
@@ -56,8 +56,9 @@ export default class extends Vue {
  * 用户登录
  */
   userClick() {
-      this.$router.push({
-      path: "/login"
+    this.$router.push({
+      path: "/login",
+      query: {}
     });
   }
 }

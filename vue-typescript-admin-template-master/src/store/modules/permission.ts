@@ -159,19 +159,15 @@ class Permission extends VuexModule implements IPermissionState {
 
 
 export const filterAsyncRouter = (asyncRouterMap: any) =>{ //遍历后台传来的路由字符串，转换为组件对象
-  
-  const accessedRouters = asyncRouterMap.filter( (route: any) => {
+  const accessedRouters = asyncRouterMap.filter((route: any) => {
     // console.log(route)
     if (route.componentUrl) {
      if (route.componentUrl === 'Layout') {//Layout组件特殊处理
         route.component = Layout
         delete route.componentUrl
       } else {
-       
-      
-    
-        route.component =   loadViewsd(route.componentUrl)
-
+        
+        route.component = loadViewsd(route.componentUrl)
         delete route.componentUrl
       }
     }
@@ -188,13 +184,9 @@ export const filterAsyncRouter = (asyncRouterMap: any) =>{ //遍历后台传来�
     meta: { hidden: true }
   })
 
-  
-  
   // console.log(accessedRouters)
   return accessedRouters
 }
-
-// export const loadViewsd = (view: any) => import(`@/views/music/index.vue`)
 
 export const loadViewsd = (view: any) => {
   return (resolve: any) => require([`@/views/${view}.vue`], resolve)
@@ -203,7 +195,7 @@ export const loadViewsd = (view: any) => {
 // function loadViewas(view:string)
 // {
 //     // 路由懒加载
-//     return () => import(`@/views/${view}.vue`);
+//     return () => import(`@/views/${view}`);
 // }
 
 

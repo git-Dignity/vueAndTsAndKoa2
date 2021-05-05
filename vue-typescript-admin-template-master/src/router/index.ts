@@ -62,11 +62,11 @@ export const constantRoutes: RouteConfig[] = [
     component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
     meta: { hidden: true }
   },
-  // {
-  //   path: '/cover',
-  //   component: () => import(/* webpackChunkName: "cover" */ '@/views/cover/index.vue'),
-  //   meta: { hidden: true }
-  // },
+  {
+    path: '/cover',
+    component: () => import(/* webpackChunkName: "cover" */ '@/views/cover/index.vue'),
+    meta: { hidden: true }
+  },
   {
     path: '/auth-redirect',
     component: () => import(/* webpackChunkName: "auth-redirect" */ '@/views/login/auth-redirect.vue'),
@@ -86,7 +86,7 @@ export const constantRoutes: RouteConfig[] = [
     path: '/',
     component: Layout,
     
-    redirect: '/dashboard',
+    redirect: '/music/song-list',
     children: [
       {
         path: 'dashboard',
@@ -421,6 +421,13 @@ export const asyncRoutes: RouteConfig[] = [
             name: ' todayEat',
             meta: { title: 'todayEat', noCache: true, icon: 'singer' }
           },
+          { 
+            path: 'eat/food',
+            component: () => import(/* webpackChunkName: "eat/food" */ '@/views/eat/food.vue'),
+            // componentUrl: 'eat/food',
+            name: ' foodShare',
+            meta: { title: 'foodShare', noCache: true, icon: 'singer' }
+          }
     ]
   },
   {

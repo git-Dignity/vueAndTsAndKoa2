@@ -31,39 +31,52 @@
           All rights reserved
           <a
             style="color:#20a0ff"
-            href="https://wallstreetcn.com"
+            href="http://zhengzemin.cn:3000/"
             target="_blank"
-          >wallstreetcn</a>
+          >Music</a>
         </div>
         <div class="text-404__headline">
           {{ message }}
         </div>
-        <div class="text-404__info">
+        <div
+          class="text-404__info"
+        >
           Please check that the URL you entered is correct, or click the button below to return to the homepage.
         </div>
-        <a
+        <el-button
+          class="text-404__return-home"
+          @click="goHome"
+        >
+          Back to home
+        </el-button>
+        <!-- <a
           href=""
           class="text-404__return-home"
-        >Back to home</a>
+        >Back to home</a>-->
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'Page404'
+  name: "Page404"
 })
 export default class extends Vue {
-  private message = '404 Page Not Found'
+  private message = "404 Page Not Found";
+  private goHome() {
+    this.$router.push({
+      path: "/"
+    });
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .wscn-http404-container {
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   position: absolute;
   top: 40%;
   left: 50%;
@@ -251,15 +264,15 @@ export default class extends Vue {
     &__return-home {
       display: block;
       float: left;
-      width: 110px;
-      height: 36px;
+      // width: 110px;
+      // height: 36px;
       background: #1482f0;
       border-radius: 100px;
       text-align: center;
       color: #ffffff;
       opacity: 0;
       font-size: 14px;
-      line-height: 36px;
+      // line-height: 36px;
       cursor: pointer;
       animation-name: slideUp;
       animation-duration: 0.5s;

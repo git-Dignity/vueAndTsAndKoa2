@@ -79,6 +79,7 @@ export default {
     singerSongLyric: '歌曲歌词',
     eat:'吃啥',
     todayEat:'今天吃啥',
+    foodShare: '美食分享',
     // API接口
     apiInterface: 'API接口',
     phoneAttribution: '手机号码归属地查询',

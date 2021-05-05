@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-04-18 16:52:55
- * @LastEditTime: 2021-04-24 16:35:58
+ * @LastEditTime: 2021-05-05 16:20:54
  * @LastEditors: Please set LastEditors
  * @Description: 集成增删改查的Controller层简单处理
  * @FilePath: \vueTsKoa\src\common\service\BaseService.js
@@ -9,9 +9,10 @@
 
 var DB = require("@utils/sql/mysqlDB");
 const sqlModel = require("@utils/sql/sqlModel");
-const { uploadFile, unlinkSync } = require("@utils/upload");
+const { uploadFile, unlinkSync, createFold } = require("@utils/upload");
 const featuresEntity = require("../entity/FeaturesEntity");
 const itknowledgeEntity = require("../entity/ItknowledgeEntity");
+const foodEntity = require("../entity/FoodEntity");
 
 /**
  * 封装增删改查
@@ -33,6 +34,9 @@ class BaseService {
       case "itknowledge":
         this.entity = itknowledgeEntity;
         break;
+      case "food":
+        this.entity = foodEntity;
+        break;
     }
   }
 
@@ -48,7 +52,6 @@ class BaseService {
       let vars = {}; //批量定义变量
       // console.log(pageNumLeft);
 
-
       // 拼接实体中字段（拼成sql语句）
       for (const key in this.entity) {
         if (this.entity.hasOwnProperty(key)) {
@@ -57,7 +60,7 @@ class BaseService {
           condition += attr;
         }
       }
-  
+
       let sqlM = new sqlModel(this.tableName, `flag = '1' ${condition}`);
       let total = await sqlM.getTotal();
       orderCondition = orderCondition
@@ -110,6 +113,8 @@ class BaseService {
    * 添加
    */
   async post(params) {
+    console.log(params);
+
     let dataResult = {};
     const promiseRes = new Promise(async (resolve, reject) => {
       let condition = "("; // 条件
@@ -229,6 +234,210 @@ class BaseService {
   }
 
   /**
+   * 添加 && 上传图片
+   * @param {*} params
+   */
+  async upAndPost(params) {
+    console.log(params);
+    const info = JSON.parse(params.body.info);
+    let fileArr = Object.entries(params.files);
+
+    let resultPhoto = {};
+    let dataResult = {};
+    const promiseRes = new Promise(async (resolve, reject) => {
+      let condition = "("; // 条件
+      let k = "";
+      let v = "";
+
+      // 拼接实体中字段（拼成sql语句）
+      for (const key in this.entity) {
+        if (this.entity.hasOwnProperty(key)) {
+          k += `${key},`;
+          v += `'${info[key]}',`;
+        }
+      }
+
+      if (fileArr.length != 0) {
+        await createFold(this.tableName);
+
+        resultPhoto = await this.uploadPhoto({
+          file: fileArr,
+          filePath: this.tableName,
+        });
+
+        k += `photo,`;
+        k += `photo_name,`;
+        k += `random_num`;
+        v += `'${resultPhoto[0].fileUrl}',`;
+        v += `'${resultPhoto[0].fileName}',`;
+        v += `'${resultPhoto[0].randomNum}'`;
+
+        condition += k + ") values(" + v + ")";
+        console.log(condition);
+
+        const insertRes = await DB.query(`
+            insert into ${this.tableName}  ${condition}
+            `);
+
+        if (resultPhoto && insertRes) {
+          return resolve({
+            code: 20000,
+            data: {
+              msg: "添加成功",
+              msgData: resultPhoto,
+            },
+          });
+        } else {
+          return reject({
+            code: 40002, // 参数约束请检查（参数不是期望的类型）
+            data: {
+              msg: "添加失败",
+              msgData: result,
+            },
+          });
+        }
+      } else {
+        console.log("没有选择图片");
+
+        k = k.substring(0, k.length - 1); // del  最后一个逗号
+        v = v.substring(0, v.length - 1); // del  最后一个逗号
+        condition += k + ") values(" + v + ")";
+        await DB.query(`
+            insert into ${this.tableName}  ${condition}
+          `);
+
+        return resolve({
+          code: 20000,
+          data: {
+            msg: "添加成功",
+            msgData: resultPhoto,
+          },
+        });
+      }
+    });
+
+    await promiseRes.then(
+      (res) => {
+        dataResult = res;
+      },
+      (err) => {
+        dataResult = err;
+      }
+    );
+
+    return dataResult;
+  }
+
+  /**
+   * 修改 && 上传图片
+   * @param {*} params 
+   */
+  async upAndPut(params) {
+    let dataResult = {};
+    let resultPhoto = {};
+    const info = JSON.parse(params.body.info);
+    let fileArr = Object.entries(params.files);
+    const promiseRes = new Promise(async (resolve, reject) => {
+      let condition = ""; // 条件
+
+      console.log(info);
+      
+
+      if (!info.id) {
+        console.log(111);
+
+        return reject({
+          code: 40002, // 参数约束请检查（参数不是期望的类型）
+          data: {
+            msg: "修改失败",
+            msgData: "err",
+          },
+        });
+      }
+
+      // 拼接实体中字段（拼成sql语句）
+      for (const key in this.entity) {
+        if (this.entity.hasOwnProperty(key)) {
+          let attr = `${key} = '${info[key]}'`;
+          condition += attr + ",";
+        }
+      }
+
+      if (fileArr.length != 0) {
+        console.log(" update image");
+
+        resultPhoto = await this.uploadPhoto({
+          file: fileArr,
+          id: info.id,
+          filePath: this.tableName,
+        });
+
+        condition += `photo = '${resultPhoto[0].fileUrl}'` + ",";
+        condition += `photo_name = '${resultPhoto[0].fileName}'` + ",";
+        condition += `random_num = '${resultPhoto[0].randomNum}'`;
+
+        const result = await DB.query(`
+                update ${this.tableName} set ${condition}
+                where id = '${info.id}'
+            `);
+
+        if (resultPhoto) {
+          return resolve({
+            code: 20000,
+            data: {
+              msg: "修改成功",
+              msgData: result,
+            },
+          });
+        } else {
+          return reject({
+            code: 40002, // 参数约束请检查（参数不是期望的类型）
+            data: {
+              msg: "修改失败",
+              msgData: result,
+            },
+          });
+        }
+      } else {
+        condition = condition.substring(0, condition.length - 1); // del  最后一个逗号
+        const result = await DB.query(`
+                update ${this.tableName} set ${condition}
+                where id = '${info.id}'
+            `);
+
+        if (result) {
+          return resolve({
+            code: 20000,
+            data: {
+              msg: "修改成功",
+              msgData: result,
+            },
+          });
+        } else {
+          return reject({
+            code: 40002, // 参数约束请检查（参数不是期望的类型）
+            data: {
+              msg: "修改失败",
+              msgData: result,
+            },
+          });
+        }
+      }
+    });
+
+    await promiseRes.then(
+      (res) => {
+        dataResult = res;
+      },
+      (err) => {
+        dataResult = err;
+      }
+    );
+
+    return dataResult;
+  }
+
+  /**
      * 上传图片（替换本地图片文件）
      * 支持添加上传图片、修改图片
      * @param {*} params 
@@ -257,6 +466,8 @@ class BaseService {
 
     // 上传文件到本地目录下
     const resultPhoto = await uploadFile(file, filePath);
+    console.log(resultPhoto);
+
     return resultPhoto;
   }
 

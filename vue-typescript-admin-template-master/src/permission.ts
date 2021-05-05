@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-09-06 15:00:00
- * @LastEditTime: 2021-05-04 22:27:11
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \vue-typescript-admin-template-master\src\permission.ts
- */
 import router from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -16,9 +8,10 @@ import { PermissionModule, filterAsyncRouter } from '@/store/modules/permission'
 import i18n from '@/lang' // Internationalization
 import settings from './settings'
 import { getSysRole } from "@/api/sys/sysRole";
+import { RouteConfig } from 'vue-router'
 
 NProgress.configure({ showSpinner: false })
-// , '/cover'
+
 const whiteList = ['/login', '/auth-redirect', '/registe', '/404']
 
 const getPageTitle = (key: string) => {
@@ -33,10 +26,6 @@ const getPageTitle = (key: string) => {
 router.beforeEach(async (to: Route, _: Route, next: any) => {
   // Start progress bar
   NProgress.start()
-  
-  console.log(UserModule);
-  
-  
 
   // Determine whether the user has logged in
   if (UserModule.token) {
@@ -93,7 +82,6 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
       next()
     } else {
       // Other pages that do not have permission to access are redirected to the login page.
-      // next(`/cover`)
       next(`/login?redirect=${to.path}`)
       NProgress.done()
     }
