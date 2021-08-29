@@ -1,0 +1,10 @@
+
+连接到: Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+
+经由常规路径由 EXPORT:V19.00.00 创建的导出文件
+已经完成 ZHS16GBK 字符集和 AL16UTF16 NCHAR 字符集中的导入
+IMP-00003: 遇到 ORACLE 错误 942
+ORA-00942: 表或视图不存在
+IMP-00023: 未安装导入视图, 请通知 DBA
+IMP-00000: 未成功终止导入
