@@ -1,27 +1,48 @@
 <template>
   <div class="app-container">
-    <el-collapse accordion v-permission="['admin']">
+    <el-collapse
+      v-permission="['admin']"
+      accordion
+    >
       <el-collapse-item>
         <template slot="title">
           歌手上传 &nbsp;
-          <i class="el-icon-upload2"></i>
+          <i class="el-icon-upload2" />
         </template>
 
-        <el-row :gutter="20" type="flex" class="row-bg" justify="start">
+        <el-row
+          :gutter="20"
+          type="flex"
+          class="row-bg"
+          justify="start"
+        >
           <el-col :span="6">
-            <ElemenetForm :childrenFormData="singerInfo" @parentForm="parentForm"></ElemenetForm>
+            <ElemenetForm
+              :children-form-data="singerInfo"
+              @parentForm="parentForm"
+            />
           </el-col>
           <el-col :span="4">
-            <el-button type="primary" @click="onSubmit">上传</el-button>
+            <el-button
+              type="primary"
+              @click="onSubmit"
+            >
+              上传
+            </el-button>
           </el-col>
         </el-row>
 
-        <el-row :gutter="20" type="flex" class="row-bg" justify="start">
+        <el-row
+          :gutter="20"
+          type="flex"
+          class="row-bg"
+          justify="start"
+        >
           <el-col :span="6">
             <UploadFile
-              :childrenUploadFileData="childrenUploadImgData"
-              @parentUploadFileData="parentUploadImgData" 
-            ></UploadFile>
+              :children-upload-file-data="childrenUploadImgData"
+              @parentUploadFileData="parentUploadImgData"
+            />
           </el-col>
         </el-row>
       </el-collapse-item>
@@ -29,53 +50,68 @@
 
     <el-row>
       <el-col
-        :span="5"
         v-for="(single, index) in singleList"
         :key="index"
+        :span="5"
         class="mb4 mt15 mb15"
         :offset="index%3 == 0 ? 1 : 2"
       >
-        <div @mouseover="changeActive($event, index)" @mouseout="removeActive($event, index)">
+        <div
+          @mouseover="changeActive($event, index)"
+          @mouseout="removeActive($event, index)"
+        >
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <span>{{single.singerName}}</span>
+            <div
+              slot="header"
+              class="clearfix"
+            >
+              <span>{{ single.singerName }}</span>
 
               <el-button-group class="fr">
                 <el-button
                   type="primary"
                   icon="el-icon-thumb"
-                  @click="photoEnter(single.singerName)"
                   size="mini"
-                ></el-button>
+                  @click="photoEnter(single.singerName)"
+                />
                 <el-button
+                  v-permission="['admin']"
                   type
                   icon="el-icon-edit"
-                  v-permission="['admin']"
+                  size="mini"
                   @click="singerEdit(single)"
-                  size="mini"
-                ></el-button>
+                />
                 <el-button
-                  type="danger"
-                  @click="singerDel(single)"
-                  icon="el-icon-delete"
                   v-permission="['admin']"
+                  type="danger"
+                  icon="el-icon-delete"
                   size="mini"
-                ></el-button>
+                  @click="singerDel(single)"
+                />
               </el-button-group>
             </div>
-            <el-avatar shape="square" :size="150" fit="fill" class="image" :src="single.fileUrl"></el-avatar>
+            <el-avatar
+              shape="square"
+              :size="150"
+              fit="cover"
+              class="image"
+              :src="single.fileUrl"
+            />
           </el-card>
         </div>
       </el-col>
     </el-row>
 
     <SingerDialog
-      :childrenData="childrenDialogData"
+      :children-data="childrenDialogData"
       @update:parentDialogSubmit="parentDialogEditSubmit"
       @update:parentDialogCancel="parentDialogCancel"
     >
       <div slot="childTemplate">
-        <EditSingerDialog :info="childrenDialogData.info" @singerDialogData="singerDialogData"></EditSingerDialog>
+        <EditSingerDialog
+          :info="childrenDialogData.info"
+          @singerDialogData="singerDialogData"
+        />
       </div>
     </SingerDialog>
   </div>
@@ -130,6 +166,7 @@ export default class extends Vue {
     center: true,
     info: []
   };
+
   private childrenUploadImgData = {
     upload__text: "上传歌曲图片文件",
     type: "image_avatar",
@@ -145,7 +182,7 @@ export default class extends Vue {
   }
 
   private async init() {
-    const { items }:any = await getSinger({});
+    const { items }: any = await getSinger({});
     this.singleList = JSON.parse(items);
   }
 
@@ -206,7 +243,7 @@ export default class extends Vue {
   /**
    * 删除歌手图片
    */
-  private async singerDel({ id, 文件夹名字, fileUrl }:any) {
+  private async singerDel({ id, 文件夹名字, fileUrl }: any) {
     MesssageBoxQuestion("是否删除该歌手照片,是否继续")
       .then(async () => {
         if (id && 文件夹名字 && fileUrl) {
@@ -252,16 +289,14 @@ export default class extends Vue {
     param.append("fileType", "0");
     param.append("file", e.file);
 
-    const { Success }:any = await uploadSinger(param);
-   
+    const { Success }: any = await uploadSinger(param);
+
     if (Success === "true") {
       MessageSuccess("上传成功!");
       this.clearUploadData();
       this.init();
     }
   }
-
- 
 
   changeActive($event: any, index: number) {
     // console.log($event)
@@ -270,6 +305,7 @@ export default class extends Vue {
     // document.getElementById('btnEdit_' + index).style.display = 'inline-block';
     // document.getElementById('btnDel_' + index).style.display = 'inline-block';
   }
+
   removeActive($event: any, index: number) {
     // $event.currentTarget.className = "";
     // document.getElementById('btnEdit_' + index).style.display = 'none';
