@@ -28,63 +28,51 @@
         class="avatar-container right-menu-item hover-effect"
         trigger="click"
       >
+        <!-- src="@/assets/404-images/404-cloud.png" -->
         <div class="avatar-wrapper">
           <img
             :src="avatar+'?imageView2/1/w/80/h/80'"
             class="user-avatar"
+            @error="imgerrorfun"
           >
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/">
-            <el-dropdown-item>
-              {{ $t('navbar.profile') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.profile') }}</el-dropdown-item>
           </router-link>
           <router-link to="/">
-            <el-dropdown-item>
-              {{ $t('navbar.dashboard') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.dashboard') }}</el-dropdown-item>
           </router-link>
           <a
             target="_blank"
             href="https://github.com/git-Dignity/vueAndTsAndKoa2"
           >
-            <el-dropdown-item>
-              {{ $t('navbar.github') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.github') }}</el-dropdown-item>
           </a>
           <a
             target="_blank"
             href="http://zhengzemin.cn:8088/"
           >
-            <el-dropdown-item>
-              {{ $t('navbar.personalDoc') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.personalDoc') }}</el-dropdown-item>
           </a>
           <a
             target="_blank"
             href="https://github.com/git-Dignity/vuePressDos"
           >
-            <el-dropdown-item>
-              {{ $t('navbar.personalDoc') }}{{ $t('navbar.github') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.personalDoc') }}{{ $t('navbar.github') }}</el-dropdown-item>
           </a>
           <a
             target="_blank"
             href="http://zhengzemin.cn:8087/"
           >
-            <el-dropdown-item>
-              {{ $t('navbar.componentLib') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.componentLib') }}</el-dropdown-item>
           </a>
           <a
             target="_blank"
             href="https://github.com/git-Dignity/componentlib"
           >
-            <el-dropdown-item>
-              {{ $t('navbar.componentLib') }}{{ $t('navbar.github') }}
-            </el-dropdown-item>
+            <el-dropdown-item>{{ $t('navbar.componentLib') }}{{ $t('navbar.github') }}</el-dropdown-item>
           </a>
           <a
             target="_blank"
@@ -96,9 +84,7 @@
             divided
             @click.native="logout"
           >
-            <span style="display:block;">
-              {{ $t('navbar.logOut') }}
-            </span>
+            <span style="display:block;">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -151,6 +137,18 @@ export default class extends Vue {
     await UserModule.LogOut();
     this.$router.push(`/login?redirect=${this.$route.fullPath}`);
   }
+
+  /**
+   * @description: 图片404则会进入图片err事件
+   * @param {*} event
+   * @return {*}
+   */
+  private imgerrorfun(event: any) {
+    // console.log(event);
+    const img: HTMLImageElement = event.srcElement;
+    img.src = require("@/assets/404-images/404-cloud.png");
+    img.onerror = null; // 控制不要一直跳动;
+  }
 }
 </script>
 
@@ -160,7 +158,7 @@ export default class extends Vue {
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .hamburger-container {
     line-height: 46px;
@@ -168,11 +166,11 @@ export default class extends Vue {
     float: left;
     padding: 0 15px;
     cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
@@ -204,10 +202,10 @@ export default class extends Vue {
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }

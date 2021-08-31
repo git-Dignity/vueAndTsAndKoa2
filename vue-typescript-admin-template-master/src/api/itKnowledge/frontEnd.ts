@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-02-21 22:24:50
- * @LastEditTime: 2021-04-17 20:38:15
+ * @LastEditTime: 2021-08-29 20:55:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\api\itKnowledge\frontEnd.ts
@@ -28,6 +28,16 @@ export const get = (params: any) =>
         url: '/itKnowledge/',
         method: 'get',
         params
+    })
+
+
+/**
+ * 查询全部
+ */
+export const getAll = () =>
+    request({
+        url: '/itKnowledge/getAll',
+        method: 'get',
     })
 
 export const getArticle = (id: number, params: any) =>

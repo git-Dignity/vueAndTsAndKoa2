@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-05-04 23:23:38
+ * @LastEditTime: 2021-08-29 21:38:38
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\utils\request.ts
+ */
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
@@ -37,11 +45,11 @@ service.interceptors.response.use(
     
     if (res.code !== 20000) {
       Message({
-        message: res.message || res.data.msg || 'Error',
+        message: res?.message || res?.data?.msg || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      if (res?.code === 50008 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm(
           '你已被登出，可以取消继续留在该页面，或者重新登录',
           '确定登出',

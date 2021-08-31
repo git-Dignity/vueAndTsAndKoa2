@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-05-04 23:23:38
+ * @LastEditTime: 2021-08-31 18:10:47
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\views\dashboard\admin\components\TransactionTable.vue
+-->
 <template>
   <el-table
     :data="list"
@@ -65,6 +73,7 @@ export default class extends Vue {
 
   private async fetchData() {
     const { data } = await getTransactions({ /* Your params here */ });
+    if (data.length === 0 || !data?.length) return;
     this.list = data.items.slice(0, 8);
   }
 }

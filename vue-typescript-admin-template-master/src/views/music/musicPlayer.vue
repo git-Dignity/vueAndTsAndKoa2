@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div>
     <div
       class="el-icon-service"
       icon="el-icon-search"

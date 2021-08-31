@@ -213,6 +213,8 @@ export default class extends Vue {
   }
 
   private async getList() {
+    console.log(111111);
+
     this.loading = true;
     const { data } = await get(this.tableData.listQuery);
     console.log(data);

@@ -74,39 +74,45 @@
 </template>
 
 <script lang="ts">
-import 'echarts/theme/macarons.js' // Theme used in BarChart, LineChart, PieChart and RadarChart
-import { Component, Vue } from 'vue-property-decorator'
-import GithubCorner from '@/components/GithubCorner/index.vue'
-import BarChart from './components/BarChart.vue'
-import BoxCard from './components/BoxCard.vue'
-import LineChart, { ILineChartData } from './components/LineChart.vue'
-import PanelGroup from './components/PanelGroup.vue'
-import PieChart from './components/PieChart.vue'
-import RadarChart from './components/RadarChart.vue'
-import TodoList from './components/TodoList/index.vue'
-import TransactionTable from './components/TransactionTable.vue'
+import "echarts/theme/macarons.js"; // Theme used in BarChart, LineChart, PieChart and RadarChart
+import { Component, Vue } from "vue-property-decorator";
+import GithubCorner from "@/components/GithubCorner/index.vue";
+import BarChart from "./components/BarChart.vue";
+import BoxCard from "./components/BoxCard.vue";
+import LineChart, { ILineChartData } from "./components/LineChart.vue";
+import PanelGroup from "./components/PanelGroup.vue";
+import PieChart from "./components/PieChart.vue";
+import RadarChart from "./components/RadarChart.vue";
+import TodoList from "./components/TodoList/index.vue";
+import TransactionTable from "./components/TransactionTable.vue";
+import { getAll } from "@/api/itKnowledge/frontEnd";
+// import { arrCalculateStr } from "@/utils/tool/arr";
 
 const lineChartData: { [type: string]: ILineChartData } = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
+  user: {
+    xAxis: [],
+    efficient: [], // 有效
+    fail: [] // 失效
   },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
+   agentEvent: {
+    xAxis: [],
+    efficient: [], // 有效
+    fail: [] // 失效
   },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
+  itKnowledge: {
+    xAxis: [],
+    efficient: [], // 有效
+    fail: [] // 失效
   },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
+  music: {
+    xAxis: [],
+    efficient: [], // 有效
+    fail: [] // 失效
   }
-}
+};
 
 @Component({
-  name: 'DashboardAdmin',
+  name: "DashboardAdmin",
   components: {
     GithubCorner,
     BarChart,
@@ -120,10 +126,101 @@ const lineChartData: { [type: string]: ILineChartData } = {
   }
 })
 export default class extends Vue {
-  private lineChartData = lineChartData.newVisitis
+  private lineChartData: ILineChartData = {
+    xAxis: [],
+    efficient: [],
+    fail: []
+  }
 
-  private handleSetLineChartData(type: string) {
-    this.lineChartData = lineChartData[type]
+  /**
+   * @description: 设置图数据
+   * @param {*} data
+   * @return {*}
+   */
+  private handleSetLineChartData(data: ILineChartData) {
+    this.lineChartData = data;
+  }
+
+  /**
+   * @description: 设置自定义数据格式
+   * @param {Array} data
+   * @return {Array}
+   */
+  private setFormatData(data: Array<any>) {
+    const efficient: any = []; // 有效
+    const fail: any = []; // 失效
+    data.forEach((d: Record<string, any>) => {
+      if (d.flag === 1) {
+        efficient["category" + d.category]
+          ? efficient["category" + d.category]++
+          : (efficient["category" + d.category] = 1);
+
+        // 初始化失效数组
+        if (!fail["category" + d.category]) {
+          fail["category" + d.category] = 0;
+        }
+      } else {
+        fail["category" + d.category]
+          ? fail["category" + d.category]++
+          : (fail["category" + d.category] = 1);
+      }
+    });
+
+    this.categoryChinese(Object.keys(fail));
+
+    return [Object.values(efficient), Object.values(fail)];
+  }
+
+  /**
+   * @description: category字段转中文
+   * @param {*} data
+   * @return {Array}
+   */
+  private async categoryChinese(data: Array<any>) {
+    const res: string[] = [];
+
+    data.forEach((d: string) => {
+      d = d.replace("category", "");
+      switch (d) {
+        case "1":
+          res.push("前端");
+          break;
+        case "2":
+          res.push("后端");
+          break;
+        case "3":
+          res.push("算法");
+          break;
+        case "4":
+          res.push("前后端");
+          break;
+        case "5":
+          res.push("工具");
+          break;
+          default:
+            break;
+      }
+    });
+    this.lineChartData.xAxis = res;
+  }
+
+  /**
+   * @description: 获取IT知识数据
+   * @param {*}
+   * @return {*}
+   */
+  private async getItKnowledgeData() {
+    const { data } = await getAll();
+    const formatData: Array<any> = this.setFormatData(data.items);
+
+    this.lineChartData.efficient = formatData[0];
+    this.lineChartData.fail = formatData[1];
+
+    // console.log(arrCalculateStr(data.items, "category"));
+  }
+
+  created() {
+    // this.getItKnowledgeData();
   }
 }
 </script>
@@ -148,7 +245,7 @@ export default class extends Vue {
   }
 }
 
-@media (max-width:1024px) {
+@media (max-width: 1024px) {
   .chart-wrapper {
     padding: 8px;
   }

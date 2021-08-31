@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router, { RouteConfig } from 'vue-router'
+import Router, { RouteConfig, RawLocation, Route } from 'vue-router'
 
 /* Layout */
 import Layout from '@/layout/index.vue'
@@ -745,6 +745,47 @@ const createRouter = () => new Router({
 const router = createRouter()
 
 
+
+// 
+
+// Personal utils. Can be replaced with `Function` and `(e: Error) => any;` respectively.
+export type AnyFunction<RETURN_T = any> = (...args: any[]) => RETURN_T;
+export type ErrorHandlerFunction<RETURN_T = any> = (e: Error) => RETURN_T;
+
+let isAugumented = false;
+export function augmentVueRouterPush(): void {
+	if (isAugumented) { return; }
+	isAugumented = true;
+
+	const originalPush = Router.prototype.push; // eslint-disable-line @typescript-eslint/unbound-method
+	function augmentedPush(location: RawLocation): Promise<Route>;
+	function augmentedPush(location: RawLocation, onResolve?: AnyFunction, onReject?: ErrorHandlerFunction): void;
+	function augmentedPush(this: Router, location: RawLocation, onResolve?: AnyFunction, onReject?: ErrorHandlerFunction): void | Promise<Route> {
+		const boundOriginalPush = originalPush.bind(this);
+		if (onResolve || onReject) {
+			return boundOriginalPush(location, onResolve, onReject);
+		} else {
+			return boundOriginalPush(location)
+				.catch((err) => {
+					if (Router.isNavigationFailure(err, Router.NavigationFailureType.redirected)) {
+						// whatever, we are fine if it's aborted due to navigation redirect
+						return Promise.resolve(err.from);
+					}
+					// rethrow error
+					console.log({ err });
+					return Promise.reject(err);
+				});
+		}
+  }
+
+
+  Router.prototype.push = augmentedPush;
+  
+}
+
+augmentVueRouterPush()
+
+
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter();
@@ -752,3 +793,10 @@ export function resetRouter() {
 }
 
 export default router
+
+
+// 登录要点两下才可登录成功
+
+// vue-router — Uncaught (in promise) Error: Redirected from “/login” to “/” via a navigation guard：https://stackoverflow.com/questions/62223195/vue-router-uncaught-in-promise-error-redirected-from-login-to-via-a
+
+// https://gist.github.com/eyedean/ce6ab6a5108a1bd19ace64382144b5b0

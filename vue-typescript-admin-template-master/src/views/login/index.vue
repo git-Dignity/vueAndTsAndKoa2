@@ -80,8 +80,8 @@
         </el-button>
       </el-button-group>
 
-      <div style="position:relative">
-        <div class="tips">
+      <div class="tips">
+        <div>
           <span>{{ $t('login.username') }} : 自己去注册吧</span>
           <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
         </div>
@@ -218,10 +218,14 @@ export default class extends Vue {
         this.loading = true;
         try {
           await UserModule.Login(this.loginForm);
+          console.log(11111);
+
           this.$router.push({
           path: this.redirect || "/",
           query: this.otherQuery
-        });
+        }).catch(e => {
+          console.log(e);
+          });
         } catch (e) {
           console.log(e);
         }
@@ -311,11 +315,13 @@ export default class extends Vue {
   .tips {
     font-size: 14px;
     color: #fff;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     span {
       &:first-of-type {
-        margin-right: 16px;
+        // margin-right: 16px;
       }
     }
   }
@@ -357,12 +363,6 @@ export default class extends Vue {
     color: $darkGray;
     cursor: pointer;
     user-select: none;
-  }
-
-  .thirdparty-button {
-    position: absolute;
-    right: 0;
-    bottom: 6px;
   }
 
   @media only screen and (max-width: 470px) {

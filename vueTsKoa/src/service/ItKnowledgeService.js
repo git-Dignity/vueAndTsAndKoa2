@@ -1,7 +1,7 @@
 /* 
  * @Author: zemin zheng
  * @Date: 2021-04-17 22:16:07
- * @LastEditTime: 2021-04-18 15:50:56
+ * @LastEditTime: 2021-08-29 20:59:50
  * @LastEditors: Please set LastEditors
  * @Description: IT知识（前端、后端、前后端、算法、工具） Service层
  * @FilePath: \vueTsKoa\src\service\ItKnowledgeService.js
@@ -35,7 +35,7 @@ class ItKnowledgeService {
     and (category =  '${category}' or '${category} '='')  
     `)
    
-
+ 
     let total = await sqlM.getTotal()
     
     
@@ -57,10 +57,36 @@ class ItKnowledgeService {
         })
     }
 
-    
-    console.log(result)
+    return {
+        code: 20000,
+        status:1,
+        data: {
+            items: result,
+            total: total
+        },
+        message:[]
+    }
+
+  }
 
   
+  async getAll(params) {
+    let sqlM = new sqlModel("itknowledge")
+    let total = await sqlM.getTotal()
+    console.log(2222);
+    
+    
+    
+    let result = await DB.query(`
+        select * from itknowledge 
+    `)
+
+    if(result){
+        result.forEach( user =>{
+            user.photo = user.photo ? config.url+ user.photo : null
+        })
+    }
+
     return {
         code: 20000,
         status:1,
@@ -265,4 +291,4 @@ class ItKnowledgeService {
 }
 
 
-module.exports = ItKnowledgeService
+module.exports = ItKnowledgeService 

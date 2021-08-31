@@ -11,6 +11,7 @@ router.prefix('/user')
 
 router.get('/', async (ctx, next) => {
     const req = ctx.request.query
+  
    
 
     let sqlM = new sqlModel("login")
