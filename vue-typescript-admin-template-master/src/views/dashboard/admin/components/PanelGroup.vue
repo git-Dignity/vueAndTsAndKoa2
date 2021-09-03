@@ -127,7 +127,7 @@ import { Component, Vue } from "vue-property-decorator";
 import CountTo from "vue-count-to";
 import QS from "qs";
 import { getSysUser } from "@/api/sys/sysUser";
-import { get } from "@/api/me/agentEvent";
+import { getAll as getAgentAll } from "@/api/me/agentEvent";
 import { getAll } from "@/api/itKnowledge/frontEnd";
 import { getMusic } from "@/api/music/index";
 import { getEfficientAndFail } from "./tool";
@@ -200,7 +200,7 @@ export default class extends Vue {
       limit: 1000
     });
 
-    this.user.num = (this as any).getVal(data, "total");
+    this.user.num = this.getVal(data, "total");
     const formatData: Array<any> = getEfficientAndFail(data.items, "roles", function(d: any) {
       return d.flag === 1;
     });
@@ -216,8 +216,8 @@ export default class extends Vue {
    * @return {*}
    */
   private async getAgentEvent(schedule: number) {
-    const { data } = await get({ current: 1, size: 9999, schedule });
-    this.agentEvent.num = Number((this as any).getVal(data, "total"));
+    const { data } = await getAgentAll({ current: 1, size: 9999, schedule });
+    this.agentEvent.num = Number(this.getVal(data, "total"));
 
     const formatData: Array<any> = this.getAgentEventEfficientAndFail(
       JSON.parse(data.items),

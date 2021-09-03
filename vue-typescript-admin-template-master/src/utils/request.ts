@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2021-05-04 23:23:38
- * @LastEditTime: 2021-08-29 21:38:38
- * @LastEditors: your name
+ * @LastEditTime: 2021-09-01 23:43:44
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\utils\request.ts
  */

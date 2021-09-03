@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-08-31 16:03:53
- * @LastEditTime: 2021-08-31 18:08:55
+ * @LastEditTime: 2021-09-03 21:47:27
  * @LastEditors: Please set LastEditors
  * @Description: admin文件夹中的方法
  * @FilePath: \vue-typescript-admin-template-master\src\views\dashboard\admin\components\tool.ts

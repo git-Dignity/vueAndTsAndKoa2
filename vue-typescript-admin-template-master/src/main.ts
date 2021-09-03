@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-09-01 22:13:28
+ * @LastEditTime: 2021-09-03 21:52:34
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\main.ts
+ */
 import Vue, { DirectiveOptions } from 'vue'
 
 import 'normalize.css'
@@ -57,6 +65,7 @@ Object.keys(directives).forEach(key => {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, (filters as { [key: string ]: Function })[key])
 })
+
 
 Vue.config.productionTip = false
 

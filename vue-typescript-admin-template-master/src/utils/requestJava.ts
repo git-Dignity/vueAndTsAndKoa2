@@ -1,15 +1,21 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2020-09-06 15:00:01
+ * @LastEditTime: 2021-09-03 22:22:40
+ * @LastEditors: Please set LastEditors
+ * @Description: 音乐模块服务（java）
+ * @FilePath: \vue-typescript-admin-template-master\src\utils\requestJava.ts
+ */
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import { UserModule } from '@/store/modules/user'
+import { getVal } from '@/utils/dataVal'
 
 const service = axios.create({
   baseURL: process.env.VUE_APP_BLOG_API, // url = base url + request url
   timeout: 50000
   // withCredentials: true // send cookies when cross-domain requests
 })
-console.log(process)
-console.log(process.env)
-console.log(process.env.VUE_APP_BLOG_API)
 
 // Request interceptors
 service.interceptors.request.use(
@@ -40,7 +46,13 @@ service.interceptors.response.use(
     // code == 40002：参数约束请检查（参数不是期望的类型）
     // You can change this part for your own usage.
     const res = response.data
-    if (Number(res.code) !== 20000) {
+    console.warn(res);
+    
+   
+    
+    if (getVal(res,'code') == '20000' || getVal(res,'data', 'code') == '20000' || getVal(res,'data', '0') == "20000" ) {
+      return response.data.data
+    } else {
       Message({
         message: res.message || 'Error',
         type: 'error',
@@ -67,8 +79,7 @@ service.interceptors.response.use(
         })
       }
       return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      return response.data
+      
     }
   },
   (error) => {

@@ -26,6 +26,7 @@
       "@c/*": [
         "src/components/*"
       ]
+    
    
     },
     "lib": [
@@ -41,7 +42,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "./typings-custom/**/*.ts", "src/components/Table/index.js"
+    "./typings-custom/**/*.ts", "src/components/Table/index.js", "src/const/urls.ts"
   ],
   "exclude": [
     "node_modules"

@@ -1,3 +1,4 @@
+
 declare module '*.scss' {
     const str: string;
     export default str;
@@ -32,5 +33,7 @@ declare module '*.scss' {
           $route: Route;
           $store: Store<any>;
           $api: any;
+          getVal: any;
+          toVal: any;
       }
   }

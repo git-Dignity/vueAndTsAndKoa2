@@ -5,6 +5,7 @@
   "author": "Chong Guo <armourcy@gmail.com>",
   "scripts": {
     "serve": "concurrently \"npm:mock\" \"vue-cli-service serve\"",
+    "pserve": "concurrently \"npm:mock\" \"vue-cli-service serve --mode pserve\"",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "lint": "vue-cli-service lint --fix",
