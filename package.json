@@ -127,7 +127,7 @@
     "zzmcomponentlib": "^0.0.14"
   },
   "bugs": {
-    "url": "https://github.com/armour/vue-typescript-admin-template/issues"
+    "url": "http://github.com/armour/vue-typescript-admin-template/issues"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -146,6 +146,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/armour/vue-typescript-admin-template.git"
+    "url": "git+http://github.com/armour/vue-typescript-admin-template.git"
   }
 }
