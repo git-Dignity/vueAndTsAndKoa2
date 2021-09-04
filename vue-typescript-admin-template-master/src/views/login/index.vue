@@ -191,7 +191,8 @@ export default class extends Vue {
     const { key } = e;
     if (!key) return;
 
-    this.capsTooltip = key !== null && key.length === 1 && key >= "A" && key <= "Z";
+    this.capsTooltip =
+      key !== null && key.length === 1 && key >= "A" && key <= "Z";
   }
 
   private showPwd() {
@@ -220,11 +221,15 @@ export default class extends Vue {
           await UserModule.Login(this.loginForm);
           console.log(11111);
 
-          this.$router.push({
-          path: this.redirect || "/",
-          query: this.otherQuery
-        }).catch(e => {
-          console.log(e);
+          this.$nextTick(() => {
+            this.$router
+              .push({
+                path: this.redirect || "/",
+                query: this.otherQuery
+              })
+              .catch(e => {
+                console.log(e);
+              });
           });
         } catch (e) {
           console.log(e);

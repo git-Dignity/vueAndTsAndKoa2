@@ -444,6 +444,7 @@ export default class extends Vue {
 
 <style lang="scss" scoped>
 .panel-group {
+  height: 130px;
   margin-top: 18px;
 
   .card-panel-col {
