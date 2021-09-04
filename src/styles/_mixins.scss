@@ -1,0 +1,26 @@
+/* Mixins */
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin rounded-corners($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+    
+}
+@mixin transition{
+    transition: height 0.2s;
+    -o-transition: height 0.2s;	
+    -moz-transition: height 0.2s;	
+    -webkit-transition: height 0.2s;	
+    
+}
+@mixin fontFamily($fontfamily){
+    font-family:$fontfamily;   
+    font-weight: bold;   
+}

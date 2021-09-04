@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": [
+      "node",
+      "jest",
+      "webpack-env"
+    ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@v/*": [
+        "src/views/*"
+      ],
+      "@c/*": [
+        "src/components/*"
+      ]
+    
+   
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "./typings-custom/**/*.ts", "src/components/Table/index.js", "src/const/urls.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+
+
+// 在typescript中import第三方类库lrc-file-parser报错:
+// https://stackoverflow.com/questions/38224232/how-to-consume-npm-modules-from-typescript
+
+
