@@ -1,19 +1,22 @@
-import request from '@/utils/request'
+/*
+ * @Author: your name
+ * @Date: 2020-09-06 15:00:00
+ * @LastEditTime: 2021-09-03 21:59:12
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\api\music\index.ts
+ */
+import request from '@/utils/requestJava'
 import axios from 'axios';
 
-let blog_api = process.env.VUE_APP_BLOG_API;
-if (process.env.NODE_ENV !== 'development') {
-  // blog_api = "http://file.dev.zhengzemin.cn:81";
-  blog_api =  "http://zhengzemin.cn:8527";
-}
 
 
-// export const getMusic = (data: any) =>
-//   request({
-//     url: '/music/get',
-//     method: 'post',
-//     data
-//   })
+export const getMusic = (data: any) =>
+  request({
+    url: '/bk/music/singerSonger/list',
+    method: 'post',
+    data
+  })
 
 
 // export const uploadMusic = (data: any) =>
@@ -23,20 +26,20 @@ if (process.env.NODE_ENV !== 'development') {
 //   data
 // })
 
-export const getMusic = (param: any) => {
+// export const getMusic = (param: any) => {
 
-  return new Promise((resolve, reject) => {
-    axios
-      .post(`${blog_api}/bk/music/singerSonger/list`, param)
-      .then(res => {
-        // console.log(res)
-        resolve(res.data.data);
-      })
-      .catch(err => {
-        reject(err.data);
-      });
-  });
-};
+//   return new Promise((resolve, reject) => {
+//     axios
+//       .post(`/bk/music/singerSonger/list`, param)
+//       .then(res => {
+//         // console.log(res)
+//         resolve(res.data.data);
+//       })
+//       .catch(err => {
+//         reject(err.data);
+//       });
+//   });
+// };
 
 export const delMusic = (param: any) => {
   return new Promise((resolve, reject) => {

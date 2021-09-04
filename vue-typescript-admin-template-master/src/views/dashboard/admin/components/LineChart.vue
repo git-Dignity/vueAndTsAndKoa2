@@ -6,54 +6,57 @@
 </template>
 
 <script lang="ts">
-import echarts, { EChartOption } from 'echarts'
-import { Component, Prop, Watch } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import ResizeMixin from '@/components/Charts/mixins/resize'
+import echarts, { EChartOption } from "echarts";
+import { Component, Prop, Watch } from "vue-property-decorator";
+import { mixins } from "vue-class-component";
+import ResizeMixin from "@/components/Charts/mixins/resize";
 
 export interface ILineChartData {
-  expectedData: number[]
-  actualData: number[]
+  xAxis: string[]
+  efficient: number[]
+  fail: number[]
 }
 
 @Component({
-  name: 'LineChart'
+  name: "LineChart"
 })
 export default class extends mixins(ResizeMixin) {
   @Prop({ required: true }) private chartData!: ILineChartData
-  @Prop({ default: 'chart' }) private className!: string
-  @Prop({ default: '100%' }) private width!: string
-  @Prop({ default: '350px' }) private height!: string
+  @Prop({ default: "chart" }) private className!: string
+  @Prop({ default: "100%" }) private width!: string
+  @Prop({ default: "350px" }) private height!: string
 
-  @Watch('chartData', { deep: true })
+  @Watch("chartData", { deep: true })
   private onChartDataChange(value: ILineChartData) {
-    this.setOptions(value)
+    this.setOptions(value);
   }
 
   mounted() {
+    console.log(this.chartData);
+
     this.$nextTick(() => {
-      this.initChart()
-    })
+      this.initChart();
+    });
   }
 
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   }
 
   private initChart() {
-    this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons')
-    this.setOptions(this.chartData)
+    this.chart = echarts.init(this.$el as HTMLDivElement, "macarons");
+    this.setOptions(this.chartData);
   }
 
   private setOptions(chartData: ILineChartData) {
     if (this.chart) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: chartData.xAxis,
           boundaryGap: false,
           axisTick: {
             show: false
@@ -61,15 +64,15 @@ export default class extends mixins(ResizeMixin) {
         },
         grid: {
           left: 10,
-          right: 10,
+          right: 30,
           bottom: 20,
           top: 30,
           containLabel: true
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'cross'
+            type: "cross"
           },
           padding: 8
         },
@@ -79,42 +82,42 @@ export default class extends mixins(ResizeMixin) {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ["有效", "已失效"]
         },
         series: [{
-          name: 'expected',
+          name: "有效",
           itemStyle: {
-            color: '#FF005A',
+            color: "#FF005A",
             lineStyle: {
-              color: '#FF005A',
+              color: "#FF005A",
               width: 2
             }
           },
           smooth: true,
-          type: 'line',
-          data: chartData.expectedData,
+          type: "line",
+          data: chartData.efficient,
           animationDuration: 2800,
-          animationEasing: 'cubicInOut'
+          animationEasing: "cubicInOut"
         },
         {
-          name: 'actual',
+          name: "已失效",
           smooth: true,
-          type: 'line',
+          type: "line",
           itemStyle: {
-            color: '#3888fa',
+            color: "#3888fa",
             lineStyle: {
-              color: '#3888fa',
+              color: "#3888fa",
               width: 2
             },
             areaStyle: {
-              color: '#f3f8ff'
+              color: "#f3f8ff"
             }
           },
-          data: chartData.actualData,
+          data: chartData.fail,
           animationDuration: 2800,
-          animationEasing: 'quadraticOut'
+          animationEasing: "quadraticOut"
         }]
-      } as EChartOption<EChartOption.SeriesLine>)
+      } as EChartOption<EChartOption.SeriesLine>);
     }
   }
 }

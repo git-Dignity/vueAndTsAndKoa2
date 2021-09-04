@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div>
     <div
       class="el-icon-service"
       icon="el-icon-search"
@@ -50,10 +50,10 @@ import VueAudio from "@/components/Music/VueAudio.vue";
 export default class extends Vue {
   public item =
     {
-      url: "https://zhengzemin.cn/nodeJs/audio/%E7%96%AF%E4%BA%BA%E9%99%A2.mp3",
+      url: "http://zhengzemin.cn:9000/music/%E5%91%A8%E6%9D%B0%E4%BC%A6%20-%20%E7%A8%BB%E9%A6%99.mflac202005212340005727.flac",
       controlList: "onlyOnePlaying",
-      singerName: "华晨宇",
-      songName: "疯人院",
+      singerName: "周杰伦",
+      songName: "稻香",
       uploadTime: "2019/05/20"
     };
 

@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-04-17 20:30:46
- * @LastEditTime: 2021-04-18 15:47:44
+ * @LastEditTime: 2021-08-29 21:00:01
  * @LastEditors: Please set LastEditors
  * @Description: IT知识（前端、后端、前后端、算法、工具） Controller层
  * @FilePath: \vueTsKoa\src\controller\ItKnowledgeController.js
@@ -43,6 +43,14 @@ class ItKnowledgeController {
   @tag
   static async getList(ctx, next) {
     ctx.response.body = await itKnowledgeService.get(ctx.request.query) 
+  }
+
+  @request('get', '/itKnowledge/getAll')
+  @summary('获取全部列表')
+  @description('在【IT知识】使用')
+  @tag
+  static async getAllList(ctx, next) {
+    ctx.response.body = await itKnowledgeService.getAll(ctx.request.query) 
   }
 
   @request('post', '/itKnowledge/')

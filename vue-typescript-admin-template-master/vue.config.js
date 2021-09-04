@@ -3,6 +3,7 @@ const path = require("path");
 const PrerenderSPAPlugin = require("prerender-spa-plugin");
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 const webpack = require("webpack");
+const servesIP = "http://zhengzemin.cn:8527/";
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -27,28 +28,16 @@ module.exports = {
     progress: false,
 
     proxy: {
-      "/bk": {
-        target: "http://file.dev.zhengzemin.cn/bk/", // 对应自己的接口
+      "/aaaasas": {
+        target: servesIP,
         changeOrigin: true,
-        ws: true,
-        pathRewrite: {
-          "^/bk": ""
-        }
+        ws: true
+        // pathRewrite: {
+        //   "^/bk": ""
+        // }
       }
     }
 
-    // proxy: {
-    //   // change xxx-api/login => /mock-api/v1/login
-    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
-    //   [process.env.VUE_APP_BASE_API]: {
-    //     target: `http://localhost:${mockServerPort}/mock-api/v1`,
-    //     changeOrigin: true, // needed for virtual hosted sites
-    //     ws: true, // proxy websockets
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_BASE_API]: ''
-    //     }
-    //   }
-    // }
   },
   pwa: {
     name: name,
@@ -128,7 +117,7 @@ module.exports = {
       plugins: [
         // 在什么文件都可以用，而如果在main中引入全局，只能在vue文件可使用
         new webpack.ProvidePlugin({
-          // urls: "@/const/urls.js"
+          urls: "src/const/urls.js"
         }),
         new PrerenderSPAPlugin({
           // 生成文件的路径，也可以与webpakc打包的一致。

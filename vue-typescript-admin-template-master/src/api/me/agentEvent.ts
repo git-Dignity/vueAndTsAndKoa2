@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-11-21 15:57:53
+ * @LastEditTime: 2021-09-03 22:41:25
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\api\me\agentEvent.ts
+ */
 import request from '@/utils/request'
 import { ISysRoleData } from '@/api/types'
 
@@ -21,6 +29,17 @@ export const get = (params: any) =>
         method: 'get',
         params
     })
+
+    /**
+ * 查询
+ * @param params 数据
+ */
+export const getAll = (params: any) =>
+request({
+    url: '/agentEvent/getAll',
+    method: 'get',
+    params
+})
 
 export const getArticle = (id: number, params: any) =>
     request({

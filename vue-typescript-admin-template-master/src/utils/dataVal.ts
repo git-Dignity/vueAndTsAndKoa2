@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-05-04 23:23:38
+ * @LastEditTime: 2021-08-29 17:47:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \vue-typescript-admin-template-master\src\utils\dataVal.ts
+ */
 
 
 /**

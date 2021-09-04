@@ -1,22 +1,28 @@
 <template>
   <div class="app-container">
     <el-col
-      :span="6"
       v-for="(song, index) in songeList"
       :key="index"
+      :span="6"
       class="mb4"
       :offset="index > 0 ? 2 : 0"
     >
       <el-row>
-        <router-link :to="{ path: song.link.path, query: song.link.query}">
-          <el-card class="box-card" ref="songHead">
-            <div slot="header" class="clearfix text-white">
-              <songeListHeader :header="song.header"></songeListHeader>
+        <router-link :to="{path: song.link.path, query: song.link.query}">
+          <el-card
+            ref="songHead"
+            class="box-card"
+          >
+            <div
+              slot="header"
+              class="clearfix text-white"
+            >
+              <songeListHeader :header="song.header" />
               <span
-                style="padding: 3px 0"
                 v-if="song.header.play"
+                style="padding: 3px 0"
                 class="el-icon-video-play f40 fr"
-              ></span>
+              />
             </div>
 
             <div
@@ -24,11 +30,20 @@
               :key="songList.index"
               class="text item"
             >
-              <span class="f20 num3-color" v-if="songListIndex<3">{{songListIndex+1}}</span>
-              <span class="f20 num-color" v-else>{{songListIndex+1}}</span>
+              <span
+                v-if="songListIndex<3"
+                class="f20 num3-color"
+              >{{ songListIndex+1 }}</span>
+              <span
+                v-else
+                class="f20 num-color"
+              >{{ songListIndex+1 }}</span>
               <span class="ml4 mr4">-</span>
               <span>{{ songList.songer }}</span>
-              <span class="fr" v-if="songList.singer">{{ songList.singer }}</span>
+              <span
+                v-if="songList.singer"
+                class="fr"
+              >{{ songList.singer }}</span>
             </div>
           </el-card>
         </router-link>
@@ -50,6 +65,7 @@ import QS from "qs";
 import songeListHeader from "./components/Header.vue";
 import { randomSort } from "@/utils/tool/index";
 import { songeList } from "./modules/songeList";
+import { log } from "util";
 
 @Component({
   name: "songList",
@@ -75,16 +91,15 @@ export default class extends Vue {
    * 初始化歌手榜
    */
   private async initSingerList() {
-   
-    let { items }:any = await getSinger({
+    let { items }: any = await getSinger({
       current: 1,
       size: 8
     });
-    // console.log(items)
+
     items = JSON.parse(items);
 
     const arrTmp: Array<any> = [];
-    for (var i in items) {
+    for (const i in items) {
       arrTmp.push({
         songer: items[i].singerName,
         singer: "",
@@ -109,7 +124,7 @@ export default class extends Vue {
     );
 
     const arrTmp: Array<any> = [];
-    for (var i in qingData[1].records) {
+    for (const i in qingData[1].records) {
       arrTmp.push({
         songer: qingData[1].records[i].singerSongName,
         singer: qingData[1].records[i].singerName,
@@ -135,7 +150,7 @@ export default class extends Vue {
     const tmp: any = allSongData[1].records.sort(randomSort).slice(0, 8);
 
     const arrTmp: any = [];
-    for (var i in tmp) {
+    for (const i in tmp) {
       arrTmp.push({
         songer: tmp[i].singerSongName,
         singer: tmp[i].singerName,
@@ -156,7 +171,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 
 <style lang="scss"  scope>
 .text {

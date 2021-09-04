@@ -175,7 +175,7 @@ export default class extends Vue {
     // console.log(schedule);
     this.loading = true;
     const { data } = await get({ current, size, schedule });
-    // console.log(data)
+    console.log(data);
     data.records.forEach((r: IAgentEvent) => {
       r.startTime = moment(r.startTime).format("YYYYMMDDHHmmss");
       r.endTime = moment(r.endTime).format("YYYYMMDDHHmmss");

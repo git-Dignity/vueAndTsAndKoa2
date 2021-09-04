@@ -3,7 +3,7 @@ var uuid = require('uuid');
 var DB = require('@utils/sql/mysqlDB')
 const sqlModel = require('@utils/sql/sqlModel')
 const config = require('../../config/config.js')
-const { get, post, put, del } = require('../../utils/request.js')
+const { get,  post, put, del } = require('../../utils/request.js')
 var qs = require('qs');
 const { specifiedTime } = require('../common/schedule')
 const { specifiedTimeFormat } = require('../../utils/date')
@@ -22,9 +22,12 @@ router.get('/get', async (ctx, next) => {
     // console.log(params)
 
     const result = await get({
-        uri: config.javaUrl + '/agentEvent/get',
+        uri: config.javaUrl + '/agentEvent/getAll',
         qs: params
     })
+
+    console.log(result);
+    
 
 
     data = {
@@ -33,7 +36,6 @@ router.get('/get', async (ctx, next) => {
     }
     ctx.response.body = data
 })
-
 
 
 router.post('/save', async (ctx, next) => {

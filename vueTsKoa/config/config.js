@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-22 22:34:00
+ * @LastEditTime: 2021-08-29 12:51:22
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \vueTsKoa\config\config.js
+ */
 const config = {
     url: "http://localhost:3333",
     juheUrl: "http://apis.juhe.cn",
@@ -14,7 +22,7 @@ if (process.env.NODE_ENV == "production") {
 } else {
     // 测试接口地址
     config.url = "http://localhost:3333"
-    config.javaUrl = "http://localhost:8627/bk"
+    config.javaUrl = "http://localhost:8527/bk"
 }
 
 
