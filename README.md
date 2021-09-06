@@ -1,5 +1,5 @@
 # vueAndTsAndKoa2
-线上地址可预览：<a href="zhengzemin.cn:3000">https://zhengzemin.cn:3000</a>
+线上地址可预览：http://zhengzemin.cn:3000
 
 vue-typescript-admin-template后台管理系统 + koa2后台node + radis缓存 + 音乐文件由springboot使用minio文件服务器部署的
 
