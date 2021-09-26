@@ -131,7 +131,7 @@ export default class extends Vue {
       clearInterval(this.timer);
     }
 
-    this.lrc.pause();
+    this.lrc?.pause();
   }
 
   refresh() {}

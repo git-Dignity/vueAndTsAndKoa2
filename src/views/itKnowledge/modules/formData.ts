@@ -52,9 +52,9 @@ const Form = {
                 required: true, message: "类型不能为空"
             }
         },
-        "photo": {
+        "photo_url": {
             label: 'sys.photo',
-            name: "photo",
+            name: "photo_url",
             value: "",
             isPhoto: true,
             childrenUploadImgData: {
@@ -86,12 +86,12 @@ const Form = {
 
 
 
-const initForm = (id="", title = "", content = "", type = "",photo="",remarks = "") =>{
+const initForm = (id="", title = "", content = "", type = "",photo_url="",remarks = "") =>{
     Form.info.id.value = id;
     Form.info.title.value = title;
     Form.info.content.value = content;
     (Form.info.type as any).value = type? type.split(",") : "";
-    Form.info.photo.childrenUploadImgData.imageUrl = photo ? photo : require('@/assets/404-images/404.png');
+    Form.info.photo_url.childrenUploadImgData.imageUrl = photo_url ? photo_url : require('@/assets/404-images/404.png');
     Form.info.remarks.value = remarks;
 }
 
