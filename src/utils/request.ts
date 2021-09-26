@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-04 23:23:38
- * @LastEditTime: 2021-09-24 06:45:46
+ * @LastEditTime: 2021-09-26 22:34:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\utils\request.ts
@@ -69,11 +69,11 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    // Message({
+    //   message: error.message,
+    //   type: 'error',
+    //   duration: 5 * 1000
+    // })
     return Promise.reject(error)
   }
 )
