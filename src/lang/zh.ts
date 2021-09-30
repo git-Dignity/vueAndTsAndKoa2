@@ -104,6 +104,8 @@ export default {
     github: '项目地址',
     personalDoc: '个人文档',
     componentLib: '组件库',
+    nodeSwagger: 'Node-Swagger在线接口',
+    jsToolClass: 'javascript-tool-class',
     theme: '换肤',
     size: '布局大小',
     profile: '个人中心'
