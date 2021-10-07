@@ -395,6 +395,64 @@ export const asyncRoutes: RouteConfig[] = [
           }
     ]
   },
+  // 常用网站
+  {
+    path: '/usualWebsite',
+    component: Layout,
+    // componentUrl: 'Layout',
+    redirect: '/usualWebsite/program',
+    name: 'usualWebsite',
+    meta: {
+      title: 'usualWebsite',
+      icon: 'example',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'program',
+            component: () => import(/* webpackChunkName: "program" */ '@/views/usualWebsite/program.vue'),
+            name: 'program',
+            meta: { title: 'program', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'design',
+            component: () => import(/* webpackChunkName: "design" */ '@/views/usualWebsite/design.vue'),
+            name: 'design',
+            meta: { title: 'design', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'tool',
+            component: () => import(/* webpackChunkName: "tool" */ '@/views/usualWebsite/tool.vue'),
+            name: 'tool',
+            meta: { title: 'tool', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'movie',
+            component: () => import(/* webpackChunkName: "movie" */ '@/views/usualWebsite/movie.vue'),
+            name: 'movie',
+            meta: { title: 'movie', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'other',
+            component: () => import(/* webpackChunkName: "other" */ '@/views/usualWebsite/other.vue'),
+            name: 'other',
+            meta: { title: 'other', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+        
+    ]
+  },
   {
     path: '/eat',
     component: Layout,

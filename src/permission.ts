@@ -1,3 +1,4 @@
+
 import router from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -65,7 +66,9 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
         } catch (err) {
           // Remove token and redirect to login page
           UserModule.ResetToken()
-          Message.error(err || 'Has Error')
+          console.log(err || 'Has Error');
+          
+          // Message.error(err || 'Has Error')
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }

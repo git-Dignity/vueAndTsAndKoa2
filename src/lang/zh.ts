@@ -96,7 +96,16 @@ export default {
     tool: '工具',
     node:'NODE',
     java:'JAVA',
-    sql:'SQL'
+    sql:'SQL', 
+    // 常用网站
+    usualWebsite: '常用网站',
+    program: '编程',
+    design: '设计', 
+    desc: '描述',
+    category: '类别',
+    websiteUrl: '网站链接',
+    movie: '电影',
+    other: '其他'
   },
   navbar: {
     logOut: '退出登录',
