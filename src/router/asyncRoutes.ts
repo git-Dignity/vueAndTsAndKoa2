@@ -175,6 +175,187 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/itKnowledge',
+    // component: Layout,
+    componentUrl: 'Layout',
+    redirect: '/itKnowledge/front-end',
+    name: 'itKnowledge',
+    meta: {
+      title: 'itKnowledge',
+      icon: 'example',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'front-end',
+            componentUrl: 'itKnowledge/front-end',
+            // component: () => import(/* webpackChunkName: "front" */ '@/views/itKnowledge/front-end.vue'),
+            name: 'frontEnd',
+            meta: { title: 'frontEnd', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'rear-end',
+            componentUrl: 'itKnowledge/rear-end',
+            // component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/rear-end.vue'),
+            name: 'rearEnd',
+            meta: { title: 'rearEnd', noCache: true, icon: 'example' }
+          },
+          { 
+            path: 'front-rear-end',
+            componentUrl: 'itKnowledge/front-rear-end',
+            // component: () => import(/* webpackChunkName: "front-rear-end" */ '@/views/itKnowledge/front-rear-end.vue'),
+            name: 'frontRearEnd',
+            meta: { title: 'frontRearEnd', noCache: true, icon: 'example' }
+          },
+          { 
+            path: 'algorithm',
+            componentUrl: 'itKnowledge/algorithm',
+            // component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/algorithm.vue'),
+            name: 'algorithm',
+            meta: { title: 'algorithm', noCache: true, icon: 'example' }
+          },
+          { 
+            path: 'tool',
+            componentUrl: 'itKnowledge/tool',
+            // component: () => import(/* webpackChunkName: "tool" */ '@/views/itKnowledge/tool.vue'),
+            name: 'tool',
+            meta: { title: 'tool', noCache: true, icon: 'example' }
+          }
+    ]
+  },
+  // 常用网站
+  {
+    path: '/usualWebsite',
+    // component: Layout,
+    componentUrl: 'Layout',
+    redirect: '/usualWebsite/program',
+    name: 'usualWebsite',
+    meta: {
+      title: 'usualWebsite',
+      icon: 'example',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'program',
+            componentUrl: 'usualWebsite/program',
+            // component: () => import(/* webpackChunkName: "program" */ '@/views/usualWebsite/program.vue'),
+            name: 'program',
+            meta: { title: 'program', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'design',
+            componentUrl: 'usualWebsite/design',
+            // component: () => import(/* webpackChunkName: "design" */ '@/views/usualWebsite/design.vue'),
+            name: 'design',
+            meta: { title: 'design', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'tool',
+            componentUrl: 'usualWebsite/tool',
+            // component: () => import(/* webpackChunkName: "tool" */ '@/views/usualWebsite/tool.vue'),
+            name: 'tool',
+            meta: { title: 'tool', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'movie',
+            componentUrl: 'usualWebsite/movie',
+            // component: () => import(/* webpackChunkName: "movie" */ '@/views/usualWebsite/movie.vue'),
+            name: 'movie',
+            meta: { title: 'movie', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
+            path: 'other',
+            componentUrl: 'usualWebsite/other',
+            // component: () => import(/* webpackChunkName: "other" */ '@/views/usualWebsite/other.vue'),
+            name: 'other',
+            meta: { title: 'other', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+        
+    ]
+  },
+  
+  {
+    path: '/eat',
+    componentUrl: 'Layout',
+    // component: Layout,
+    redirect: '/eat/index',
+    name: 'eat',
+    meta: {
+      title: 'eat',
+      icon: 'example',
+      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      alwaysShow: true, // will always show the root menu
+      noCache: true
+    },
+    children: [
+          { 
+            path: 'todayEat',
+            componentUrl: 'eat/todayEat',
+            // component: () => import(/* webpackChunkName: "eat/index" */ '@/views/eat/todayEat.vue'),
+            // componentUrl: 'eat/index',
+            name: ' todayEat',
+            meta: { title: 'todayEat', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'breakfast',
+            componentUrl: 'eat/breakfast',
+            // component: () => import(/* webpackChunkName: "eat/breakfast" */ '@/views/eat/breakfast.vue'),
+            // componentUrl: 'eat/breakfast',
+            name: ' breakfast',
+            meta: { title: 'breakfast', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'lunch',
+            componentUrl: 'eat/lunch',
+            // component: () => import(/* webpackChunkName: "eat/lunch" */ '@/views/eat/lunch.vue'),
+            // componentUrl: 'eat/lunch',
+            name: ' lunch',
+            meta: { title: 'lunch', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'dinner',
+            componentUrl: 'eat/dinner',
+            // component: () => import(/* webpackChunkName: "eat/dinner" */ '@/views/eat/dinner.vue'),
+            // componentUrl: 'eat/dinner',
+            name: ' dinner',
+            meta: { title: 'dinner', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'nightingale',
+            componentUrl: 'eat/nightingale',
+            // component: () => import(/* webpackChunkName: "eat/nightingale" */ '@/views/eat/nightingale.vue'),
+            // componentUrl: 'eat/nightingale',
+            name: ' nightingale',
+            meta: { title: 'nightingale', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'other',
+            componentUrl: 'eat/other',
+            // component: () => import(/* webpackChunkName: "eat/other" */ '@/views/eat/other.vue'),
+            // componentUrl: 'eat/other',
+            name: ' other',
+            meta: { title: 'other', noCache: true, icon: 'singer' }
+          },
+    ]
+  },
+  {
     // 免费api接口调用
     path: '/apiInterface',
     // component: Layout,

@@ -2,6 +2,7 @@
   <div class="app-container">
     <Search
       ref="featuresDevSearchUsualWebsite"
+      v-permission="['admin']"
       :search-form="searchForm"
       :add-form="undoneForm"
       @search="search"
@@ -34,9 +35,9 @@
             <el-divider direction="vertical" />
             <div
               class="mt10 ellipsis-oneLine"
-              :title="item.remarks"
+              :title="item.content"
             >
-              {{ item.remarks || '暂无备注' }}
+              {{ item.content || '暂无备注' }}
             </div>
           </div>
         </el-card>
