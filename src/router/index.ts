@@ -467,11 +467,46 @@ export const asyncRoutes: RouteConfig[] = [
     },
     children: [
           { 
-            path: 'eat/index',
-            component: () => import(/* webpackChunkName: "eat/index" */ '@/views/eat/index.vue'),
+            path: 'todayEat',
+            component: () => import(/* webpackChunkName: "eat/index" */ '@/views/eat/todayEat.vue'),
             // componentUrl: 'eat/index',
             name: ' todayEat',
             meta: { title: 'todayEat', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'breakfast',
+            component: () => import(/* webpackChunkName: "eat/breakfast" */ '@/views/eat/breakfast.vue'),
+            // componentUrl: 'eat/breakfast',
+            name: ' breakfast',
+            meta: { title: 'breakfast', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'lunch',
+            component: () => import(/* webpackChunkName: "eat/lunch" */ '@/views/eat/lunch.vue'),
+            // componentUrl: 'eat/lunch',
+            name: ' lunch',
+            meta: { title: 'lunch', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'dinner',
+            component: () => import(/* webpackChunkName: "eat/dinner" */ '@/views/eat/dinner.vue'),
+            // componentUrl: 'eat/dinner',
+            name: ' dinner',
+            meta: { title: 'dinner', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'nightingale',
+            component: () => import(/* webpackChunkName: "eat/nightingale" */ '@/views/eat/nightingale.vue'),
+            // componentUrl: 'eat/nightingale',
+            name: ' nightingale',
+            meta: { title: 'nightingale', noCache: true, icon: 'singer' }
+          },
+          { 
+            path: 'other',
+            component: () => import(/* webpackChunkName: "eat/other" */ '@/views/eat/other.vue'),
+            // componentUrl: 'eat/other',
+            name: ' other',
+            meta: { title: 'other', noCache: true, icon: 'singer' }
           },
     ]
   },

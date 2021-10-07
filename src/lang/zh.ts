@@ -79,6 +79,10 @@ export default {
     singerSongLyric: '歌曲歌词',
     eat:'吃啥',
     todayEat:'今天吃啥',
+    breakfast: '早餐列表',
+    lunch: '午餐列表',
+    dinner: '晚餐列表',
+    nightingale: '夜宵',
     // API接口
     apiInterface: 'API接口',
     phoneAttribution: '手机号码归属地查询',

@@ -64,6 +64,7 @@
         <ElemenetForm
           :children-form-data="addForm"
           @parentForm="parentForm"
+          @UploadImgDataChild="UploadImgDataChild"
         />
       </div>
     </RoleDialog>
@@ -157,17 +158,19 @@ export default class extends Vue {
       const paramet = getFormValue(this.addForm.info);
       paramet.auth = this.name;
 
-      console.log(paramet);
-
-      this.$emit("dialogSubmit", this.dialogData.title, paramet);
+      this.$emit("dialogSubmit", this.dialogData.title, paramet, this.addForm.file);
     } else {
       MessageWarning("请检查信息是否上传齐全");
     }
   }
 
   private parentForm(data: any) {
-    // console.log(data);
+    console.log(data);
     this.refsForm.push(data);
+  }
+
+  private UploadImgDataChild(data: any) {
+    this.addForm.file = data.file;
   }
 }
 </script>
