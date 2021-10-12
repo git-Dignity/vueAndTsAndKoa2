@@ -1,11 +1,16 @@
+
 // 前端front-end的option
 const frontEndTypeOptions = [
     { value: 'html', label: 'HTML' },
     { value: 'css', label: 'CSS' },
     { value: 'javascript', label: 'Javascript' },
+    { value: 'typeSrcipt', label: 'TypeSrcipt' },
     { value: 'vue', label: 'Vue' },
     { value: 'ui', label: 'Ui' },
-    { value: '面试', label: '面试' }
+    { value: 'elementUi', label: 'ElementUi' },
+    { value: '优化', label: '优化' },
+    { value: '面试', label: '面试' },
+    { value: '前端', label: '前端' }
 ]
 
 // 后端rear-end的option
