@@ -272,5 +272,9 @@ See [CONTRIBUTING.md](https://github.com/Armour/vue-typescript-admin-template/bl
 
 [MIT License](https://github.com/Armour/vue-typescript-admin-template/blob/master/LICENSE)
 
+版本
+
+v1.0-releases：该标签在原有master上打出来
+
 
 
