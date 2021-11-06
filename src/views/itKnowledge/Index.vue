@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <Search
+      v-permission="['admin']"
       :category="category"
       @add="add"
       @handleDownload="handleDownload"
@@ -52,17 +53,18 @@
                   />
                 </el-button-group>
               </div>
+
               <a
                 :href="data.content"
                 target="_blank"
               >
                 <el-avatar
-                  :key="data.photo"
+                  :key="data.photo_url"
                   shape="square"
                   :size="150"
                   fit="fill"
                   class="image"
-                  :src="data.photo"
+                  :src="data.photo_url"
                 >
                   <img src="@/assets/404-images/404.png">
                 </el-avatar>
@@ -321,7 +323,7 @@ export default class extends Vue {
       row.title,
       row.content,
       row.type,
-      row.photo,
+      row.photo_url,
       row.remarks
     );
   }

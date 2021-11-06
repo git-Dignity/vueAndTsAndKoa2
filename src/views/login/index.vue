@@ -74,6 +74,7 @@
           :loading="loading"
           type="primary"
           style="width:50%; margin-bottom:30px;"
+          @keydown.enter.native="handleLogin"
           @click.native.prevent="handleLogin"
         >
           {{ $t('login.logIn') }}
@@ -179,11 +180,15 @@ export default class extends Vue {
     }
   }
 
-  mounted() {
-    if (this.loginForm.username === "") {
-      (this.$refs.username as Input).focus();
-    } else if (this.loginForm.password === "") {
-      (this.$refs.password as Input).focus();
+  /**
+   * @description: 监听键盘事件
+   * @param {*} e
+   * @return {*}
+   */
+  private keyDown(e: any) {
+    // 如果是回车则执行登录方法
+    if (e.keyCode === 13) {
+      this.handleLogin();
     }
   }
 
@@ -214,6 +219,8 @@ export default class extends Vue {
   }
 
   private handleLogin() {
+    console.log(41111);
+
     (this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
       if (valid) {
         this.loading = true;
@@ -252,6 +259,20 @@ export default class extends Vue {
       }
       return acc;
     }, {} as Dictionary<string>);
+  }
+
+  mounted() {
+    if (this.loginForm.username === "") {
+      (this.$refs.username as Input).focus();
+    } else if (this.loginForm.password === "") {
+      (this.$refs.password as Input).focus();
+    }
+
+    window.addEventListener("keydown", this.keyDown);
+  }
+
+  destroyed() {
+    window.removeEventListener("keydown", this.keyDown, false);
   }
 }
 </script>

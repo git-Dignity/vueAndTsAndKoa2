@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2020-09-06 15:00:01
- * @LastEditTime: 2021-09-03 22:22:40
+ * @LastEditTime: 2021-09-26 22:34:54
  * @LastEditors: Please set LastEditors
  * @Description: 音乐模块服务（java）
  * @FilePath: \vue-typescript-admin-template-master\src\utils\requestJava.ts
@@ -53,11 +53,11 @@ service.interceptors.response.use(
     if (getVal(res,'code') == '20000' || getVal(res,'data', 'code') == '20000' || getVal(res,'data', '0') == "20000" ) {
       return response.data.data
     } else {
-      Message({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+      // Message({
+      //   message: res.message || 'Error',
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm(
           '你已被登出，可以取消继续留在该页面，或者重新登录',
@@ -72,22 +72,22 @@ service.interceptors.response.use(
           location.reload() // To prevent bugs from vue-router
         })
       }else{
-        Message({
-          message: res,
-          type: 'error',
-          duration: 5 * 1000
-        })
+        // Message({
+        //   message: res,
+        //   type: 'error',
+        //   duration: 5 * 1000
+        // })
       }
       return Promise.reject(new Error(res.message || 'Error'))
       
     }
   },
   (error) => {
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    // Message({
+    //   message: error.message,
+    //   type: 'error',
+    //   duration: 5 * 1000
+    // })
     return Promise.reject(error)
   }
 )

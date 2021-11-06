@@ -76,6 +76,24 @@
           </a>
           <a
             target="_blank"
+            href="http://zhengzemin.cn:9052/ArrayTool.html#allEqual"
+          >
+            <el-dropdown-item>{{ $t('navbar.jsToolClass') }}</el-dropdown-item>
+          </a>
+          <a
+            target="_blank"
+            href="https://github.com/git-Dignity/npm"
+          >
+            <el-dropdown-item>{{ $t('navbar.jsToolClass') }}{{ $t('navbar.github') }}</el-dropdown-item>
+          </a>
+          <!-- <a
+            target="_blank"
+            href="http://zhengzemin.cn:3333/swagger-html"
+          >
+            <el-dropdown-item>{{ $t('navbar.nodeSwagger') }}</el-dropdown-item>
+          </a> -->
+          <a
+            target="_blank"
             href="https://armour.github.io/vue-typescript-admin-docs/"
           >
             <el-dropdown-item>Docs</el-dropdown-item>

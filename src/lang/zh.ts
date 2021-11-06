@@ -79,6 +79,10 @@ export default {
     singerSongLyric: '歌曲歌词',
     eat:'吃啥',
     todayEat:'今天吃啥',
+    breakfast: '早餐列表',
+    lunch: '午餐列表',
+    dinner: '晚餐列表',
+    nightingale: '夜宵',
     // API接口
     apiInterface: 'API接口',
     phoneAttribution: '手机号码归属地查询',
@@ -96,7 +100,16 @@ export default {
     tool: '工具',
     node:'NODE',
     java:'JAVA',
-    sql:'SQL'
+    sql:'SQL', 
+    // 常用网站
+    usualWebsite: '常用网站',
+    program: '编程',
+    design: '设计', 
+    desc: '描述',
+    category: '类别',
+    websiteUrl: '网站链接',
+    movie: '电影',
+    other: '其他'
   },
   navbar: {
     logOut: '退出登录',
@@ -104,6 +117,8 @@ export default {
     github: '项目地址',
     personalDoc: '个人文档',
     componentLib: '组件库',
+    nodeSwagger: 'Node-Swagger在线接口',
+    jsToolClass: 'javascript-tool-class',
     theme: '换肤',
     size: '布局大小',
     profile: '个人中心'

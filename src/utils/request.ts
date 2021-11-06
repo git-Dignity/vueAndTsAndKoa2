@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-05-04 23:23:38
- * @LastEditTime: 2021-09-01 23:43:44
+ * @LastEditTime: 2021-09-26 22:34:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\utils\request.ts
@@ -44,11 +44,11 @@ service.interceptors.response.use(
     const res = response.data
     
     if (res.code !== 20000) {
-      Message({
-        message: res?.message || res?.data?.msg || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
+      // Message({
+      //   message: res?.message || res?.data?.msg || 'Error',
+      //   type: 'error',
+      //   duration: 5 * 1000
+      // })
       if (res?.code === 50008 || res.code === 50012 || res.code === 50014) {
         MessageBox.confirm(
           '你已被登出，可以取消继续留在该页面，或者重新登录',
@@ -69,11 +69,11 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    // Message({
+    //   message: error.message,
+    //   type: 'error',
+    //   duration: 5 * 1000
+    // })
     return Promise.reject(error)
   }
 )

@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-02-21 22:24:50
- * @LastEditTime: 2021-08-29 20:55:01
+ * @LastEditTime: 2021-09-21 23:43:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\api\itKnowledge\frontEnd.ts
@@ -57,7 +57,7 @@ export const create = (data: any) =>
         method: 'post',
         data
     })
-
+ 
  
 
 

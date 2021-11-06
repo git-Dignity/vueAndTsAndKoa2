@@ -8,41 +8,54 @@
       @search="search"
       @dialogSubmit="dialogSubmit"
     />
-    <div>
-      <el-col
-        v-for="(item, index) in tableData.data"
-        :key="index"
-        :span="3"
-        class="mb4 mt15 mb15"
-        :offset="index%5 == 0 ? 1 : 2"
+    <div class="usualWebsite-body mt12">
+      <div
+        v-for="(tableData, tableDataIndex) in tableData.data"
+        :key="tableDataIndex"
+        class="usualWebsite-main"
       >
-        <el-card class="box-card">
+        <div class="left">
+          {{ tableData[0].type }}
+        </div>
+        <div class="right">
           <div
-            slot="header"
-            class="clearfix"
+            v-for="itemData in tableData"
+            :key="itemData.id"
+            class="item"
           >
-            <span>{{ item.title }}</span>
-          </div>
-          <el-avatar
-            shape="square"
-            :size="150"
-            fit="cover"
-            class="image"
-            :src="item.photo_url"
-          />
-          <div class="box-card-foot">
-            <span>{{ sysDateFormat(item.upload_time) }}</span>
-            <el-divider direction="vertical" />
-            <div
-              class="mt10 ellipsis-oneLine"
-              :title="item.content"
+            <a
+              :href="itemData.website_url"
+              target="_blank"
             >
-              {{ item.content || '暂无备注' }}
-            </div>
+              <el-avatar
+                key="itemData.photo_url"
+                shape="square"
+                :size="50"
+                fit="fill"
+                class="image"
+                :src="itemData.photo_url"
+              >
+                <img src="@/assets/404-images/404.png">
+              </el-avatar>
+              <div class="item-right">
+                <div class="title mb4 ellipsis-oneLine">
+                  {{ itemData.title }}
+                </div>
+                <span class="illustrate ellipsis-twoLine">{{ itemData.content }}</span>
+              </div>
+            </a>
           </div>
-        </el-card>
-      </el-col>
+        </div>
+      </div>
     </div>
+    <!-- <pagination
+      v-show="tableData.listQuery.total>0"
+      :total="tableData.listQuery.total"
+      :page.sync="tableData.listQuery.current"
+      :page-sizes.sync="tableData.listQuery.pageSize"
+      :limit.sync="tableData.listQuery.size"
+      @pagination="pageChange"
+    /> -->
   </div>
 </template>
 
@@ -51,7 +64,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import Search from "@c/SearchAndFeatures";
 import { Form, initForm, setFormType } from "./modules/formData";
 import { searchForm } from "./modules/searchFormData";
-import { get, create, update, del } from "@/api/eat/index";
+import { get, create, update, del } from "@/api/usualWebsite/index";
 import { showNotify } from "@/utils/tool/notification";
 import { EventBus } from "@/eventBus/index";
 import { IFeaturesDevType } from "@/api/me/featuresDevType";
@@ -97,17 +110,13 @@ export default class extends Vue {
   /**
    * 弹框回调
    */
-  private async dialogSubmit(title: string, paramet: any, file: any) {
-    console.log(title, paramet, file);
-    // paramet.type = paramet.type.join(",");
+  private async dialogSubmit(title: string, paramet: any) {
+    console.log(title, paramet);
+    paramet.type = paramet.type.join(",");
     paramet.category = this.category;
 
-    const formData = new FormData();
-    formData.append("info", JSON.stringify(paramet));
-    formData.append("file", file);
-
     if (title === "添加") {
-      const { data } = await create(formData);
+      const { data } = await create(paramet);
       console.log(data);
 
       if (data.msg === "添加成功") {
@@ -129,12 +138,31 @@ export default class extends Vue {
   private async getList() {
     this.loading = true;
     const { data } = await get(this.tableData.listQuery);
-    console.log(data);
 
-    this.tableData.data = data.items;
+    this.tableData.data = this.setData(data.items);
     this.tableData.listQuery.total = data.total;
     // console.log(this.tableData);
     this.loading = false;
+  }
+
+  /**
+   * @description: 设置数据（按type分类）
+   * @param {Array} data
+   * @return {Array}
+   */
+  setData(data: Array<any>) {
+    const tmp: Record<string, any> = {};
+    data.forEach(d => {
+      if (tmp[d.type]) {
+        tmp[d.type].push(d);
+      } else {
+        tmp[d.type] = [];
+        tmp[d.type].push(d);
+      }
+    });
+console.log(tmp);
+
+    return tmp;
   }
 
   private btnEdit(row: any) {
@@ -185,31 +213,13 @@ export default class extends Vue {
   }
 
   mounted() {
-    // setFormType(this.category);
+    setFormType(this.category);
     this.tableData.listQuery.category = this.category;
   }
 }
 </script>
 
 <style lang="scss"  scope>
-.box-card {
-  font-weight: bold;
-  .box-card-header {
-    display: inline-block;
-    width: 70%;
-  }
-  .el-avatar > img {
-    width: 100%;
-    object-fit: contain;
-  }
-  .box-card-foot {
-    margin-top: 10px;
-    color: #c2c5cd;
-    white-space: nowrap;
-    opacity: 0.8;
-    font-weight: 400;
-  }
-}
 .usualWebsite-body {
   .usualWebsite-main {
     display: flex;
@@ -222,7 +232,7 @@ export default class extends Vue {
     .right {
       flex: 1;
       display: flex;
-      flex-wrap: wrap; // 挤不下去就换行
+      flex-wrap:wrap; // 挤不下去就换行
 
       .item {
         display: flex;
