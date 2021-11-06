@@ -276,5 +276,5 @@ See [CONTRIBUTING.md](https://github.com/Armour/vue-typescript-admin-template/bl
 
 v1.0-releases：该标签在原有master上打出来
 
-
+v1.1-releases：在与合并develop1.2上打出的标签
 
