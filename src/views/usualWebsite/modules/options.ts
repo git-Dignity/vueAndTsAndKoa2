@@ -1,3 +1,11 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-10-06 14:50:44
+ * @LastEditTime: 2021-11-06 14:56:04
+ * @LastEditors: Please set LastEditors
+ * @Description: 常用网站 -- option类型下拉框选项
+ * @FilePath: \vueAndTsAndKoa2\src\views\usualWebsite\modules\options.ts
+ */
 
 
 // 编程program的option
@@ -16,7 +24,9 @@ const designTypeOptions = [
 
 // 工具tool的option
 const toolTypeOptions = [
-    { value: '算法', label: '算法' }
+    { value: '算法', label: '算法' },
+    { value: '工具', label: '工具' },
+    { value: '颜色', label: '颜色' },
 ]
 
 
