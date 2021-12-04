@@ -326,7 +326,7 @@ export default class extends Vue {
 .login-container {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  // overflow: hidden;
   background-color: $loginBg;
 
   .login-form {
