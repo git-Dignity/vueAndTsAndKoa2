@@ -2,7 +2,6 @@
   <div class="app-container">
     <Search
       ref="featuresDevSearchUsualWebsite"
-      v-permission="['admin']"
       :search-form="searchForm"
       :add-form="undoneForm"
       @search="search"

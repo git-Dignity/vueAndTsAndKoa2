@@ -1,7 +1,6 @@
 <template>
   <div class="app-container">
     <Search
-      v-permission="['admin']"
       :category="category"
       @add="add"
       @handleDownload="handleDownload"

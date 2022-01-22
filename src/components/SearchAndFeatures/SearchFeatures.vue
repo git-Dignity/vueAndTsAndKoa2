@@ -12,6 +12,7 @@
           <i class="el-icon-connection" />
         </template>
         <el-button
+          v-permission="['admin']"
           icon="el-icon-circle-plus-outline"
           @click="add('添加')"
         >

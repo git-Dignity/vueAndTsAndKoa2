@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-09-04 17:39:18
- * @LastEditTime: 2021-11-06 14:56:58
+ * @LastEditTime: 2022-01-22 15:28:27
  * @LastEditors: Please set LastEditors
  * @Description: IT知识 -- option类型下拉框选项
  * @FilePath: \vueAndTsAndKoa2\src\views\itKnowledge\modules\options.ts
@@ -15,10 +15,13 @@ const frontEndTypeOptions = [
     { value: 'typeSrcipt', label: 'TypeSrcipt' },
     { value: 'h5', label: 'H5' },
     { value: 'vue', label: 'Vue' },
+    { value: 'react', label: 'React' },
     { value: 'webpack', label: 'Webpack' },
     { value: 'ui', label: 'Ui' },
     { value: 'elementUi', label: 'ElementUi' },
     { value: 'svg', label: 'Svg' },
+    { value: '网络', label: '网络' },
+    { value: '移动端', label: '移动端' },
     { value: '可视化', label: '可视化' },
     { value: '地图', label: '地图' },
     { value: '优化', label: '优化' },
