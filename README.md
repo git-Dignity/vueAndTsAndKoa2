@@ -6,7 +6,8 @@ vue-typescript-admin-template后台管理系统 + koa2后台node + radis缓存 +
 可使用里面的音乐菜单，可以点歌曲头像看歌词听歌，支持周杰伦、华晨宇、邓紫棋、李荣浩、林俊杰五大歌神全部歌曲
 歌曲都是无损歌曲
 
-
+解锁网易云音乐客户端变灰歌曲：https://github.com/nondanee/UnblockNeteaseMusic
+网易云音乐 API：https://github.com/Binaryify/NeteaseCloudMusicApi
 
 <p align="center">
   <img width="120" src="public/img/icons/android-chrome-512x512.png">
