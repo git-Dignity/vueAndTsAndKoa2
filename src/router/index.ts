@@ -419,6 +419,14 @@ export const asyncRoutes: RouteConfig[] = [
              icon: 'example' }
           },
           { 
+            path: 'github',
+            component: () => import(/* webpackChunkName: "github" */ '@/views/usualWebsite/github.vue'),
+            name: 'github',
+            meta: { title: 'github', noCache: true,
+            roles: ['admin', 'editor','test'], // you can set roles in root nav
+             icon: 'example' }
+          },
+          { 
             path: 'design',
             component: () => import(/* webpackChunkName: "design" */ '@/views/usualWebsite/design.vue'),
             name: 'design',

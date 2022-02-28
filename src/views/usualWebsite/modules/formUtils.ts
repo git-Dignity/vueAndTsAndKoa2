@@ -1,14 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-10-06 14:50:44
- * @LastEditTime: 2021-10-06 18:38:40
+ * @LastEditTime: 2022-02-28 15:25:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \vueAndTsAndKoa2\src\views\usualWebsite\modules\formUtils.ts
  */
 // Form工具方法
 
-import { programTypeOptions, designTypeOptions, toolTypeOptions, movieTypeOptions,otherTypeOptions } from './options';
+import { programTypeOptions, designTypeOptions, toolTypeOptions, movieTypeOptions,otherTypeOptions, githubTypeOptions } from './options';
 
 /**
  * 设置表单的type类型的option
@@ -30,6 +30,9 @@ const setType = (type:number, Form:any) =>{
             break
         case 5:
             Form.info.type.options = otherTypeOptions
+            break
+        case 6:
+            Form.info.type.options = githubTypeOptions
             break
         default:
             Form.info.type.options = programTypeOptions

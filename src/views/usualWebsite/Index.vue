@@ -20,6 +20,7 @@
           <div
             v-for="itemData in tableData"
             :key="itemData.id"
+            :title="itemData.title"
             class="item"
           >
             <a

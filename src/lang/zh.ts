@@ -104,6 +104,7 @@ export default {
     // 常用网站
     usualWebsite: '常用网站',
     program: '编程',
+    github: 'Github',
     design: '设计', 
     desc: '描述',
     category: '类别',
