@@ -3,206 +3,206 @@
     <!-- <svg-icon name="singer" />
     <app-button></app-button>-->
     <!-- <div>{{ ssss | thousandBitSeparator }}</div> -->
-
-    <el-collapse
-      v-model="activeNames"
-      accordion
-    >
-      <el-collapse-item name="search">
-        <template slot="title">
-          搜索歌手清单 &nbsp;
-          <i class="el-icon-search" />
-        </template>
-
-        <el-form
-          :inline="true"
-          :model="searchForm"
-          class="demo-form-inline"
-        >
-          <el-form-item label="歌曲名">
-            <el-input
-              v-model="searchForm.song"
-              placeholder="歌曲名"
-            />
-          </el-form-item>
-          <el-form-item
-            label="歌手名"
-          >
-            <el-select
-              v-model="searchForm.singerName"
-              multiple
-              collapse-tags
-              placeholder="歌手名"
-              @change="singTypeChange"
-            >
-              <el-option
-                v-for="(singType, index) in singTypeOption"
-                :key="index"
-                :label="singType.label"
-                :value="singType.value"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              type="primary"
-              @click="onSongSubmit"
-            >
-              查询
-            </el-button>
-            <el-button @click="resetForm()">
-              重置
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-collapse-item>
-
-      <el-collapse-item
-        v-permission="['admin']"
-        name="upload"
+    <div v-permission="['admin']">
+      <el-collapse
+        v-model="activeNames"
+        accordion
       >
-        <template slot="title">
-          上传歌手清单 &nbsp;
-          <i class="el-icon-upload2" />
-        </template>
+        <el-collapse-item name="search">
+          <template slot="title">
+            搜索歌手清单 &nbsp;
+            <i class="el-icon-search" />
+          </template>
 
-        <el-row :gutter="15">
           <el-form
             :inline="true"
-            :model="musicInfo"
+            :model="searchForm"
             class="demo-form-inline"
           >
-            <el-form-item label="歌手名">
-              <!-- readonly="true" -->
-              <el-input
-                v-model="musicInfo.singerName"
-                placeholder="歌手名"
-              />
-            </el-form-item>
             <el-form-item label="歌曲名">
               <el-input
-                v-model="musicInfo.songName"
+                v-model="searchForm.song"
                 placeholder="歌曲名"
               />
             </el-form-item>
-            <el-form-item label="歌曲类型">
+            <el-form-item
+              label="歌手名"
+            >
               <el-select
-                v-model="musicInfo.songType"
-                placeholder="歌曲类型"
+                v-model="searchForm.singerName"
+                multiple
+                collapse-tags
+                placeholder="歌手名"
+                @change="singTypeChange"
               >
                 <el-option
-                  v-for="(songType, index) in songTypeOption"
+                  v-for="(singType, index) in singTypeOption"
                   :key="index"
-                  :label="songType.label"
-                  :value="songType.value"
+                  :label="singType.label"
+                  :value="singType.value"
                 />
-                <!-- <el-option label="流行" value="1"></el-option>
-                <el-option label="摇滚" value="2"></el-option>
-                <el-option label="轻音乐" value="3"></el-option>-->
               </el-select>
             </el-form-item>
             <el-form-item>
               <el-button
                 type="primary"
-                @click="submitUpload"
+                @click="onSongSubmit"
               >
-                上传
+                查询
               </el-button>
-              <el-button @click="resetUpload()">
+              <el-button @click="resetForm()">
                 重置
               </el-button>
             </el-form-item>
           </el-form>
+        </el-collapse-item>
 
-          <el-col :span="7">
-            <UploadFile
-              :children-upload-file-data="childrenUploadMusicData"
-              @parentUploadFileData="parentUploadMusicData"
-            />
-          </el-col>
-
-          <el-col :span="7">
-            <UploadFile
-              :children-upload-file-data="childrenUploadImgData"
-              @parentUploadFileData="parentUploadImgData"
-            />
-          </el-col>
-        </el-row>
-      </el-collapse-item>
-    </el-collapse>
-
-    <el-row>
-      <el-table
-        :data="musicData"
-        border
-        style="width: 100%; margin-top: 3%"
-        :default-sort="{prop: 'isSys', order: 'descending'}"
-      >
-        <el-table-column
-          width="120"
-          label="歌曲图片"
+        <el-collapse-item
+          v-permission="['admin']"
+          name="upload"
         >
-          <template slot-scope="{row}">
-            <!-- <router-link :to="'/music/singer-song-lyric/'+row.singer_name"> -->
-            <button @click="songLyric(row)">
-              <el-avatar
-                shape="square"
-                :size="80"
-                fit="fill"
-                :src="row.img_url"
+          <template slot="title">
+            上传歌手清单 &nbsp;
+            <i class="el-icon-upload2" />
+          </template>
+
+          <el-row :gutter="15">
+            <el-form
+              :inline="true"
+              :model="musicInfo"
+              class="demo-form-inline"
+            >
+              <el-form-item label="歌手名">
+                <!-- readonly="true" -->
+                <el-input
+                  v-model="musicInfo.singerName"
+                  placeholder="歌手名"
+                />
+              </el-form-item>
+              <el-form-item label="歌曲名">
+                <el-input
+                  v-model="musicInfo.songName"
+                  placeholder="歌曲名"
+                />
+              </el-form-item>
+              <el-form-item label="歌曲类型">
+                <el-select
+                  v-model="musicInfo.songType"
+                  placeholder="歌曲类型"
+                >
+                  <el-option
+                    v-for="(songType, index) in songTypeOption"
+                    :key="index"
+                    :label="songType.label"
+                    :value="songType.value"
+                  />
+                <!-- <el-option label="流行" value="1"></el-option>
+                <el-option label="摇滚" value="2"></el-option>
+                <el-option label="轻音乐" value="3"></el-option>-->
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  @click="submitUpload"
+                >
+                  上传
+                </el-button>
+                <el-button @click="resetUpload()">
+                  重置
+                </el-button>
+              </el-form-item>
+            </el-form>
+
+            <el-col :span="7">
+              <UploadFile
+                :children-upload-file-data="childrenUploadMusicData"
+                @parentUploadFileData="parentUploadMusicData"
               />
-            </button>
+            </el-col>
+
+            <el-col :span="7">
+              <UploadFile
+                :children-upload-file-data="childrenUploadImgData"
+                @parentUploadFileData="parentUploadImgData"
+              />
+            </el-col>
+          </el-row>
+        </el-collapse-item>
+      </el-collapse>
+
+      <el-row>
+        <el-table
+          :data="musicData"
+          border
+          style="width: 100%; margin-top: 3%"
+          :default-sort="{prop: 'isSys', order: 'descending'}"
+        >
+          <el-table-column
+            width="120"
+            label="歌曲图片"
+          >
+            <template slot-scope="{row}">
+              <!-- <router-link :to="'/music/singer-song-lyric/'+row.singer_name"> -->
+              <button @click="songLyric(row)">
+                <el-avatar
+                  shape="square"
+                  :size="80"
+                  fit="fill"
+                  :src="row.img_url"
+                />
+              </button>
             <!-- </router-link> -->
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="singerSongName"
-          label="歌曲名"
-          width="380"
-        />
-        <el-table-column
-          prop="singerName"
-          label="歌手名"
-          width="180"
-        />
-        <el-table-column
-          prop="singerSongType"
-          label="歌曲类型"
-          width="150"
-        />
-        <el-table-column
-          prop="fileSize"
-          label="時長"
-          width="180"
-        />
-        <el-table-column label="音頻">
-          <template slot-scope="{row}">
-            <el-button-group>
-              <el-button
-                v-if="row.play"
-                type="danger"
-                icon="el-icon-video-pause"
-                @click="musicPauseBtn(row)"
-              />
-              <el-button
-                v-else
-                type="primary"
-                icon="el-icon-video-play"
-                @click="musicPlayBtn(row, row.song_url, row.singerName, row.singerSongName)"
-              />
-              <el-button
-                v-permission="['admin']"
-                icon="el-icon-edit"
-                @click="singerSongEdit(row, row.song_url, row.singerName, row.singerSongName)"
-              />
-              <el-button
-                v-permission="['admin']"
-                type="danger"
-                icon="el-icon-delete"
-                @click="singerSongDel(row)"
-              />
-            </el-button-group>
-          </template>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="singerSongName"
+            label="歌曲名"
+            width="380"
+          />
+          <el-table-column
+            prop="singerName"
+            label="歌手名"
+            width="180"
+          />
+          <el-table-column
+            prop="singerSongType"
+            label="歌曲类型"
+            width="150"
+          />
+          <el-table-column
+            prop="fileSize"
+            label="時長"
+            width="180"
+          />
+          <el-table-column label="音頻">
+            <template slot-scope="{row}">
+              <el-button-group>
+                <el-button
+                  v-if="row.play"
+                  type="danger"
+                  icon="el-icon-video-pause"
+                  @click="musicPauseBtn(row)"
+                />
+                <el-button
+                  v-else
+                  type="primary"
+                  icon="el-icon-video-play"
+                  @click="musicPlayBtn(row, row.song_url, row.singerName, row.singerSongName)"
+                />
+                <el-button
+                  v-permission="['admin']"
+                  icon="el-icon-edit"
+                  @click="singerSongEdit(row, row.song_url, row.singerName, row.singerSongName)"
+                />
+                <el-button
+                  v-permission="['admin']"
+                  type="danger"
+                  icon="el-icon-delete"
+                  @click="singerSongDel(row)"
+                />
+              </el-button-group>
+            </template>
           <!-- <template slot-scope="scope">
          <el-button
           type="primary"
@@ -211,31 +211,42 @@
           circle>
           </el-button>
           </template>-->
-        </el-table-column>
-      </el-table>
-    </el-row>
-    <el-pagination
-      :current-page="page.currentPage"
-      :page-sizes="[6, 12, 18, 100, 1000]"
-      :page-size="6"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="page.total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+          </el-table-column>
+        </el-table>
+      </el-row>
+      <el-pagination
+        :current-page="page.currentPage"
+        :page-sizes="[6, 12, 18, 100, 1000]"
+        :page-size="6"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="page.total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
 
-    <SingerDialog
-      :children-data="childrenDialogData"
-      @update:parentDialogSubmit="parentDialogEditSubmit"
-      @update:parentDialogCancel="parentDialogCancel"
+      <SingerDialog
+        :children-data="childrenDialogData"
+        @update:parentDialogSubmit="parentDialogEditSubmit"
+        @update:parentDialogCancel="parentDialogCancel"
+      >
+        <div slot="childTemplate">
+          <EditSingerSongDialog
+            :info="childrenDialogData.info"
+            @singerDialogData="singerDialogData"
+          />
+        </div>
+      </SingerDialog>
+    </div>
+
+    <div
+      v-permission="['common']"
+      class="under-dev"
     >
-      <div slot="childTemplate">
-        <EditSingerSongDialog
-          :info="childrenDialogData.info"
-          @singerDialogData="singerDialogData"
-        />
+      <div class="text">
+        Under development...
       </div>
-    </SingerDialog>
+      <img src="@/assets/401-images/401.gif">
+    </div>
   </div>
 </template>
 
@@ -656,5 +667,50 @@ export default class extends Vue {
 }
 .el-collapse-item__wrap {
   padding: 10px;
+}
+
+.under-dev{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+    .text{
+       color: #000;
+        font-size: 2em;
+        width: 21em;
+        height: 1.5em;
+        border-right: 1px solid transparent;
+        animation: typing 2s steps(42, end), blink-caret .75s step-end infinite;
+        animation-iteration-count: 100;
+        font-family: Consolas, Monaco;
+        word-break: break-all;
+        overflow: hidden;
+    }
+
+}
+
+/* 打印效果 */
+@keyframes typing {
+ from {
+  width: 0;
+ }
+
+ to {
+  width: 21em;
+ }
+}
+
+/* 光标 */
+@keyframes blink-caret {
+
+ from,
+ to {
+  border-color: transparent;
+ }
+
+ 50% {
+  border-color: currentColor;
+ }
 }
 </style>
