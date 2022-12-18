@@ -64,14 +64,13 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import Search from "@c/SearchAndFeatures";
 import { Form, initForm, setFormType } from "./modules/formData";
 import { searchForm } from "./modules/searchFormData";
-import { get, create, update, del } from "@/api/usualWebsite/index";
+import { get, create, del } from "@/api/usualWebsite/index"; // update,
 import { showNotify } from "@/utils/tool/notification";
 import { EventBus } from "@/eventBus/index";
-import { IFeaturesDevType } from "@/api/me/featuresDevType";
+// import { IFeaturesDevType } from "@/api/me/featuresDevType";
 import { columns } from "@/views/usualWebsite/modules/tableData";
 import Pagination from "@/components/Pagination/index.vue";
 import { MessageSuccess, MesssageBoxQuestion } from "@/utils/tool/message";
-import { log } from "util";
 
 @Component({
   name: "UsualWebsite",

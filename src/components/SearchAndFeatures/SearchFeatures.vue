@@ -116,9 +116,9 @@ export default class extends Vue {
 
         };
     }
-  }) private searchForm!: object;
+  }) private searchForm!: any;
 
-  @Prop({ default: () => null }) private addForm!: object;
+  @Prop({ default: () => null }) private addForm!: any;
 
   get name() {
     return UserModule.name;

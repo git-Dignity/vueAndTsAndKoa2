@@ -136,7 +136,7 @@ export default class extends Vue {
         continue;
       }
 
-      const data: RouteConfig = {
+      const data: any = {
         path: path.resolve(basePath, router.path),
         meta: {
           title: [...prefixTitle]

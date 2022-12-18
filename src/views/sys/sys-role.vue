@@ -85,7 +85,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Form, Tree } from "element-ui";
+import { Tree } from "element-ui"; // Form,
 import { cloneDeep } from "lodash";
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import {
@@ -116,7 +116,7 @@ import {
 // import RoleDialog from "@/components/Dialog/index.vue";
 import RoleDialog from "@c/Dialog/index.vue";
 import { EventBus } from "@/eventBus/index";
-import { symbol } from "@/utils/symBol";
+// import { symbol } from "@/utils/symBol";
 import { RouteConfig } from "vue-router";
 
 // import { asyncRoutes } from "@/router/index";
@@ -187,6 +187,8 @@ export default class extends Vue {
    * 对话框提交的回调函数
    */
   private async parentDialogSubmit(data: any) {
+    console.log(data);
+
     if (!validateForm(this.refsForm).includes("false")) {
       const { ...roleData } = getFormValue(this.sysRoleForm.info);
 
@@ -229,7 +231,9 @@ export default class extends Vue {
   }
 
   // 弹出框取消的回调
-  private parentDialogCancel(data: any) {}
+  private parentDialogCancel(data: any) {
+    console.log(data);
+  }
 
   private parentPagination(val: Record<string, any>) {
     this.getList(val);
@@ -339,7 +343,9 @@ export default class extends Vue {
           this.getList(this.childrenTableData.listQuery);
         }
       })
-      .catch(() => {});
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   private handleDownload() {

@@ -1,7 +1,7 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-11-06 17:08:35
- * @LastEditTime: 2022-12-18 15:45:12
+ * @LastEditTime: 2022-12-18 17:38:14
  * @LastEditors: zemin zheng
  * @Description: 头部注释
  * @FilePath: \vueAndTsAndKoa2\.eslintrc.js
@@ -44,7 +44,6 @@ module.exports = {
     'vue/arrow-spacing': 'error',
     'vue/block-spacing': 'error',
     'vue/brace-style': 'error',
-    'vue/camelcase': 'error',
     'vue/comma-dangle': 'error',
     'vue/component-name-in-template-casing': 'error',
     'vue/eqeqeq': 'error',
@@ -55,7 +54,10 @@ module.exports = {
     'quotes': [1, "double"],
     'linebreak-style': [0, 'error', 'windows'],
     "indent": ["off", 4],  // 空格4位
-    "camelcase": [1, {"properties": "never"}]  // 使用驼峰命名法
+    "camelcase":  [1, {"properties": "always"}],
+    // "camelcase": [1, {"properties": "never"}]  // 使用驼峰命名法
+    
+    // 'vue/camelcase': 'error', // error
   },
   overrides: [
     {

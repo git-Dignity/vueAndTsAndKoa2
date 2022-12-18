@@ -20,7 +20,7 @@ export default class extends Vue {
   @Prop({ required: true }) private value!: string;
   @Prop({ default: defaultId }) private id!: string;
   @Prop({ default: () => defaultOptions })
-  private options!: tuiEditor.IEditorOptions;
+  private any!: tuiEditor.IEditorOptions;
 
   @Prop({ default: "markdown" }) private mode!: string;
   @Prop({ default: "300px" }) private height!: string;
@@ -30,7 +30,7 @@ export default class extends Vue {
   private markdownEditor?: tuiEditor.Editor;
 
   get editorOptions() {
-    const options = Object.assign({}, defaultOptions, this.options);
+    const options: any = Object.assign({}, defaultOptions); // this.options
     options.initialEditType = this.mode;
     options.height = this.height;
     options.language = this.language;

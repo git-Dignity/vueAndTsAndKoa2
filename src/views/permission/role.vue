@@ -120,16 +120,9 @@ import { cloneDeep } from "lodash";
 import { Component, Vue } from "vue-property-decorator";
 import { RouteConfig } from "vue-router";
 import { Tree } from "element-ui";
-import { getRoutes, getRoles, createRole, deleteRole, updateRole } from "@/api/roles";
-import { constantRoutes, asyncRoutes } from "@/router/index";
-import {
-  getSysRole,
-  getPageviews,
-  createSysRole,
-  updateSysRole,
-  delSysRole,
-  defaultSysRoleData
-} from "@/api/sys/sysRole";
+import { createRole, deleteRole } from "@/api/roles"; // getRoutes, getRoles,updateRole
+import { asyncRoutes } from "@/router/index"; // constantRoutes,
+import { getSysRole, updateSysRole } from "@/api/sys/sysRole"; // getPageviews, createSysRole, delSysRole,defaultSysRoleData
 
 interface IRole {
   roleKey: number
@@ -155,25 +148,25 @@ const defaultRole: IRole = {
   name: "RolePermission"
 })
 export default class extends Vue {
-  private role: any = Object.assign({}, defaultRole)
-  private reshapedRoutes: RouteConfig[] = []
-  private serviceRoutes: RouteConfig[] = []
-  private rolesList: IRole[] = []
-  private dialogVisible = false
-  private dialogType = "new"
-  private checkStrictly = false
+  private role: any = Object.assign({}, defaultRole);
+  private reshapedRoutes: RouteConfig[] = [];
+  private serviceRoutes: RouteConfig[] = [];
+  private rolesList: IRole[] = [];
+  private dialogVisible = false;
+  private dialogType = "new";
+  private checkStrictly = false;
   private defaultProps = {
     children: "children",
     label: "title"
-  }
+  };
 
   private listQuery = {
-      page: 1,
-      limit: 8,
-      total: 0,
-      pageSize: [8, 16, 50, 100, 1000],
-      sort: "+id"
-    }
+    page: 1,
+    limit: 8,
+    total: 0,
+    pageSize: [8, 16, 50, 100, 1000],
+    sort: "+id"
+  };
 
   get routesTreeData() {
     return this.generateTreeData(this.reshapedRoutes);
@@ -230,8 +223,15 @@ export default class extends Vue {
       if (route.meta && route.meta.hidden) {
         continue;
       }
-      const onlyOneShowingChild = this.onlyOneShowingChild(route.children, route);
-      if (route.children && onlyOneShowingChild && (!route.meta || !route.meta.alwaysShow)) {
+      const onlyOneShowingChild = this.onlyOneShowingChild(
+        route.children,
+        route
+      );
+      if (
+        route.children &&
+        onlyOneShowingChild &&
+        (!route.meta || !route.meta.alwaysShow)
+      ) {
         route = onlyOneShowingChild;
       }
 
@@ -308,18 +308,31 @@ export default class extends Vue {
           message: "Deleted!"
         });
       })
-      .catch(err => { console.error(err); });
+      .catch(err => {
+        console.error(err);
+      });
   }
 
-  private generateTree(routes: RouteConfig[], basePath = "/", checkedKeys: string[]) {
+  private generateTree(
+    routes: RouteConfig[],
+    basePath = "/",
+    checkedKeys: string[]
+  ) {
     const res: RouteConfig[] = [];
     for (const route of routes) {
       const routePath = path.resolve(basePath, route.path);
       // recursive child routes
       if (route.children) {
-        route.children = this.generateTree(route.children, routePath, checkedKeys);
+        route.children = this.generateTree(
+          route.children,
+          routePath,
+          checkedKeys
+        );
       }
-      if (checkedKeys.includes(routePath) || (route.children && route.children.length >= 1)) {
+      if (
+        checkedKeys.includes(routePath) ||
+        (route.children && route.children.length >= 1)
+      ) {
         res.push(route);
       }
     }
@@ -330,8 +343,14 @@ export default class extends Vue {
     const isEdit = this.dialogType === "edit";
     const checkedKeys = (this.$refs.tree as Tree).getCheckedKeys();
 
-    this.role.routes = this.generateTree(cloneDeep(this.serviceRoutes), "/", checkedKeys);
-    console.log(this.generateTree(cloneDeep(this.serviceRoutes), "/", checkedKeys));
+    this.role.routes = this.generateTree(
+      cloneDeep(this.serviceRoutes),
+      "/",
+      checkedKeys
+    );
+    console.log(
+      this.generateTree(cloneDeep(this.serviceRoutes), "/", checkedKeys)
+    );
 
     if (isEdit) {
       await updateSysRole({ role: this.role });
@@ -362,9 +381,14 @@ export default class extends Vue {
   }
 
   // Reference: src/layout/components/Sidebar/SidebarItem.vue
-  private onlyOneShowingChild(children: RouteConfig[] = [], parent: RouteConfig) {
+  private onlyOneShowingChild(
+    children: RouteConfig[] = [],
+    parent: RouteConfig
+  ) {
     let onlyOneChild = null;
-    const showingChildren = children.filter(item => !item.meta || !item.meta.hidden);
+    const showingChildren = children.filter(
+      item => !item.meta || !item.meta.hidden
+    );
     // When there is only one child route, the child route is displayed by default
     if (showingChildren.length === 1) {
       onlyOneChild = showingChildren[0];

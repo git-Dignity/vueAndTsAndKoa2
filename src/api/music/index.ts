@@ -1,13 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2020-09-06 15:00:00
- * @LastEditTime: 2021-09-03 21:59:12
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-12-18 17:13:54
+ * @LastEditors: zemin zheng
  * @Description: In User Settings Edit
- * @FilePath: \vue-typescript-admin-template-master\src\api\music\index.ts
+ * @FilePath: \vueAndTsAndKoa2\src\api\music\index.ts
  */
 import request from "@/utils/requestJava";
 import axios from "axios";
+let blog_api = process.env.VUE_APP_BLOG_API;
 
 export const getMusic = (data: any) =>
   request({
@@ -63,7 +64,7 @@ export const editMusic = (param: any) => {
       });
   });
 };
-
+ 
 export const uploadMusic = (param: any) => {
   return new Promise((resolve, reject) => {
     axios
