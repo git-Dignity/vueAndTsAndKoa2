@@ -35,7 +35,7 @@
                     icon="el-icon-thumb"
                     size="mini"
                     @click="photoEnter(data.title)"
-                  /> -->
+                  />-->
                   <el-button
                     v-permission="['admin']"
                     type
@@ -123,20 +123,9 @@ import { Form, initForm, setFormType } from "./modules/formData";
 import { showNotify } from "@/utils/tool/notification";
 import { exportJson2Excel } from "@/utils/excel";
 import { formatJson } from "@/utils";
-import {
-  MessageWarning,
-  MessageSuccess,
-  MesssageBoxQuestion
-} from "@/utils/tool/message";
-import {
-  AgentEvent
-} from "./modules/index";
-import {
-  get,
-  create,
-  update,
-  del
-} from "@/api/itKnowledge/frontEnd";
+import { MessageWarning, MessageSuccess, MesssageBoxQuestion } from "@/utils/tool/message";
+import { AgentEvent } from "./modules/index";
+import { get, create, update, del } from "@/api/itKnowledge/frontEnd";
 import { getFormValue, validateForm } from "@/utils/tool/form";
 import { EventBus } from "@/eventBus/index";
 import { UserModule } from "@/store/modules/user";
@@ -246,7 +235,9 @@ export default class extends Vue {
         const { data } = await create(formData);
         console.log(data);
 
-        if (data.msg === "添加成功") { showNotify(4, "创建" + paramet.title + "成功"); }
+        if (data.msg === "添加成功") {
+          showNotify(4, "创建" + paramet.title + "成功");
+        }
       } else if (this.dialogData.title.indexOf("修改") !== -1) {
         const { data } = await update(formData);
         console.log(data);
@@ -304,27 +295,13 @@ export default class extends Vue {
   private btnView(row: any) {
     this.agentEvent.showDialog(`查看【${row.title}】IT知识`, false, true);
 
-    initForm(
-      row.id,
-      row.title,
-      row.content,
-      row.type,
-      row.agent,
-      row.remarks
-    );
+    initForm(row.id, row.title, row.content, row.type, row.agent, row.remarks);
   }
 
   private btnEdit(row: any) {
-      console.log(row);
+    console.log(row);
     this.agentEvent.showDialog(`修改【${row.title}】IT知识`, true, false);
-    initForm(
-      row.id,
-      row.title,
-      row.content,
-      row.type,
-      row.photo_url,
-      row.remarks
-    );
+    initForm(row.id, row.title, row.content, row.type, row.photo_url, row.remarks);
   }
 
   private btnDelete(id: string) {
@@ -338,7 +315,7 @@ export default class extends Vue {
           this.getList();
         }
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
       });
   }
@@ -356,23 +333,22 @@ export default class extends Vue {
 </script>
 
 <style lang="scss"  scope>
-.box-card{
-    font-weight: bold;
-    .box-card-header{
-      display: inline-block;
-      width: 70%;
-    }
-    .el-avatar > img{
-      width: 100%;
-      object-fit: contain;
-    }
-    .box-card-foot{
-        margin-top: 10px;
-        color: #c2c5cd;
-        white-space: nowrap;
-        opacity: .8;
-        font-weight:400;
-    }
-
+.box-card {
+  font-weight: bold;
+  .box-card-header {
+    display: inline-block;
+    width: 70%;
+  }
+  .el-avatar > img {
+    width: 100%;
+    object-fit: contain;
+  }
+  .box-card-foot {
+    margin-top: 10px;
+    color: #c2c5cd;
+    white-space: nowrap;
+    opacity: 0.8;
+    font-weight: 400;
+  }
 }
 </style>

@@ -12,16 +12,14 @@
       >
         <!-- 循环开始  -->
         <template v-for="(item,i) in childrenFormData.info">
-          <!--
-        	判断循环中的元素是否需要下拉框
+          <!-- 判断循环中的元素是否需要下拉框
         	:rules="item.rule"  循环中的数据 自定义的 rule 规则
         	:prop="`getAllTableData.${i}.value`"
-        	每次循环的时候进行取值, 相当于给每个form绑定了唯一的model
-          -->
+          每次循环的时候进行取值, 相当于给每个form绑定了唯一的model-->
 
           <el-form-item
             v-if="!item.hidden && !item.disabled"
-            :key="item.name"
+            :key="i"
             :prop="`info.${i}.value`"
             :rules="item.rule"
             :label="$t(item.label)"
@@ -56,8 +54,8 @@
                 @change="selectChangeForm($event, item)"
               >
                 <el-option
-                  v-for="item in item.options"
-                  :key="item.value"
+                  v-for="(item, optionKey) in item.options"
+                  :key="optionKey"
                   :label="item.label"
                   :value="item.value"
                 />
@@ -88,8 +86,8 @@
                 @change="selectChangeForm($event, item)"
               >
                 <el-radio
-                  v-for="item in item.options"
-                  :key="item.value"
+                  v-for="(item, k) in item.options"
+                  :key="k"
                   :label="item.value"
                   class="ml8"
                 >
@@ -155,13 +153,7 @@
 </template>
 
 <script lang="ts">
-import {
-  Component,
-  Prop,
-  InjectReactive,
-  Watch,
-  Vue
-} from "vue-property-decorator";
+import { Component, Prop, InjectReactive, Watch, Vue } from "vue-property-decorator";
 import { symbol } from "@/utils/symBol";
 import { EventBus } from "@/eventBus/index";
 import UploadFile from "@/components/UploadFile/index.vue";
