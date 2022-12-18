@@ -70,7 +70,10 @@
               </a>
 
               <div class="box-card-foot">
-                <span>{{ data.type | toVal }}</span>
+                <span
+                  class="type ellipsis-oneLine"
+                  :title="data.type"
+                >{{ data.type | toVal }}</span>
                 <el-divider direction="vertical" />
                 <span>{{ sysDateFormat(data.upload_time) }}</span>
                 <el-divider direction="vertical" />
@@ -351,6 +354,10 @@ export default class extends Vue {
     white-space: nowrap;
     opacity: 0.8;
     font-weight: 400;
+    .type{
+      max-width: 70px;
+      display: inline-block;
+    }
   }
 }
 </style>
