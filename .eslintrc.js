@@ -1,3 +1,11 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-11-06 17:08:35
+ * @LastEditTime: 2022-12-18 15:45:12
+ * @LastEditors: zemin zheng
+ * @Description: 头部注释
+ * @FilePath: \vueAndTsAndKoa2\.eslintrc.js
+ */
 module.exports = {
   root: true,
   env: {
@@ -13,6 +21,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/interface-name-prefix': ['error', { "prefixWithI": "always" }],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/member-delimiter-style': ['error',

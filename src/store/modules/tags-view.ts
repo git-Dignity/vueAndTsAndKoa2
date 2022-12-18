@@ -17,7 +17,7 @@ class TagsView extends VuexModule implements ITagsViewState {
   public cachedViews: (string | undefined)[] = []
 
   @Mutation
-  private ADD_VISITED_VIEW(view: ITagView) {
+  private ADD_VISITED_VIEW(view: any) {
     if (this.visitedViews.some(v => v.path === view.path)) return
     this.visitedViews.push(
       Object.assign({}, view, {
@@ -27,7 +27,7 @@ class TagsView extends VuexModule implements ITagsViewState {
   }
 
   @Mutation
-  private ADD_CACHED_VIEW(view: ITagView) {
+  private ADD_CACHED_VIEW(view: any) {
     if (view.name === null) return
     if (this.cachedViews.includes(view.name)) return
     if (!view.meta.noCache) {
@@ -54,7 +54,7 @@ class TagsView extends VuexModule implements ITagsViewState {
 
   @Mutation
   private DEL_OTHERS_VISITED_VIEWS(view: ITagView) {
-    this.visitedViews = this.visitedViews.filter(v => {
+    this.visitedViews = this.visitedViews.filter((v:any) => {
       return v.meta.affix || v.path === view.path
     })
   }
@@ -74,7 +74,7 @@ class TagsView extends VuexModule implements ITagsViewState {
   @Mutation
   private DEL_ALL_VISITED_VIEWS() {
     // keep affix tags
-    const affixTags = this.visitedViews.filter(tag => tag.meta.affix)
+    const affixTags = this.visitedViews.filter((tag:any) => tag.meta.affix)
     this.visitedViews = affixTags
   }
 

@@ -91,7 +91,7 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
   }
 })
 
-router.afterEach((to: Route) => {
+router.afterEach((to: any) => {
   // Finish progress bar
   NProgress.done()
 

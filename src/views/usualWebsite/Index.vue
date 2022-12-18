@@ -176,7 +176,7 @@ console.log(tmp);
       row.database_sql,
       row.remarks
     );
-    this.$refs.featuresDevSearchUsualWebsite.add(`修改【${row.title}】`);
+    (this.$refs as HTMLFormElement).featuresDevSearchUsualWebsite.add(`修改【${row.title}】`);
   }
 
   private btnDelete(id: string) {

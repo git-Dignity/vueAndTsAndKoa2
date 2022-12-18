@@ -267,7 +267,7 @@ export default class extends Vue {
         title: "",
         path: ""
       };
-      tmp.title = this.$t(`route.${route.meta.title}`).toString();
+      tmp.title = this.$t(`route.${(route as any).meta.title}`).toString();
       tmp.path = route.path;
       if (route.children) {
         tmp.children = this.generateTreeData(route.children);

@@ -282,7 +282,7 @@ export default class extends Vue {
     this.loading = true;
     const filterVal = [];
     this.tableData.data.forEach((t: any) => {
-      t.noticeWay = formatterNoticeWay(t);
+      // t.noticeWay = formatterNoticeWay(t);
       t.type = formatterType(t);
     });
     for (const key in this.tableData.data[0]) {

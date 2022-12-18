@@ -1,4 +1,12 @@
-import { frontEndTypeOptions } from './options';
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-11-06 17:08:35
+ * @LastEditTime: 2022-12-18 16:10:36
+ * @LastEditors: zemin zheng
+ * @Description: 头部注释
+ * @FilePath: \vueAndTsAndKoa2\src\views\eat\modules\tableData.ts
+ */
+
 
 const columns = {
     "serialNum": {
@@ -45,28 +53,6 @@ const columns = {
 }
 
 
-/**
- * 将类型转为对应的中文
- * @param row 
- */
-const formatterType = (row: any) => {  // row, column
-    let type = ""
-    switch (row.type) {
-        case `${frontEndTypeOptions[0].value}`:
-            type = frontEndTypeOptions[0].label
-            break;
-        case `${frontEndTypeOptions[1].value}`:
-            type = frontEndTypeOptions[1].label
-            break;
-        case `${frontEndTypeOptions[2].value}`:
-            type = frontEndTypeOptions[2].label
-            break;
-        default:
-            type = frontEndTypeOptions[1].label
-    }
-
-    return type;
-}
 
 
 
@@ -74,6 +60,5 @@ const formatterType = (row: any) => {  // row, column
 
 export {
     columns,
-    formatterType
    
 }

@@ -6,9 +6,9 @@ import store from '@/store'
 import { getSysRole } from "@/api/sys/sysRole";
 import Layout from '@/layout/index.vue'
 
-const hasPermission = (roles: string[], route: RouteConfig) => {
+const hasPermission = (roles: string[], route: any) => {
   if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
+    return roles.some((role:any) => route.meta.roles.includes(role))
   } else {
     return true
   }

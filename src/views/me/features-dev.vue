@@ -23,8 +23,8 @@
           <p>node：{{ toVal(data.node) }}</p>
           <p>java：{{ toVal(data.java) }}</p>
           <p>数据库：{{ toVal(data.database_sql) }}</p>
-          <p>备注：{{ data.remaks | toVal }}</p>
-          <p>作者：{{ data.auth | toVal }}</p>
+          <p>备注：{{ toVal(data.remaks) }}</p>
+          <p>作者：{{ toVal(data.auth) }}</p>
           <div class="btn-content">
             <i
               class="el-icon-edit-outline"
@@ -155,7 +155,7 @@ export default class extends Vue {
       row.database_sql,
       row.remarks
     );
-      this.$refs.featuresDevSearchFeatures.add(`修改【${row.title}】`);
+      (this.$refs as HTMLFormElement).featuresDevSearchFeatures.add(`修改【${row.title}】`);
   }
 
   private btnDelete(id: string) {
@@ -187,9 +187,9 @@ export default class extends Vue {
     this.getList();
   }
 
-  private toVal(str: string) {
-    return str || "暂无开发";
-  }
+  // public toVal(str: string) {
+  //   return str || "暂无开发";
+  // }
 
   created() {
     this.getList();

@@ -90,9 +90,9 @@ const searchForm = {
 
 const initSearchForm = (title = "", auth = "", type = "",uploadTime="",remarks = "") =>{
     searchForm.info.title.value = title;
-    searchForm.info.type.value = type;
-    searchForm.info.auth.value = auth;
-    searchForm.info.uploadTime.value = uploadTime;
+    (searchForm as any).info.type.value = type;
+    (searchForm as any).info.auth.value = auth;
+    (searchForm as any).info.uploadTime.value = uploadTime;
     searchForm.info.remarks.value = remarks;
 }
 

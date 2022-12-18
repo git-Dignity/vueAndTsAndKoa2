@@ -2,7 +2,7 @@ import { setType } from './formUtils';
 
 
 // 前端表单数据
-const searchForm = {
+const searchForm:any = {
     name: "searchFormData",
     position: "right",
     size: "medium",
@@ -85,7 +85,7 @@ const searchForm = {
 }
 
 
-
+ 
 
 
 const initSearchForm = (title = "", auth = "", type = "",uploadTime="",remarks = "") =>{
