@@ -1,3 +1,11 @@
+/*
+ * @Author: zemin zheng
+ * @Date: 2021-11-06 17:08:35
+ * @LastEditTime: 2022-12-18 17:57:00
+ * @LastEditors: zemin zheng
+ * @Description: 头部注释
+ * @FilePath: \vueAndTsAndKoa2\src\permission.ts
+ */
 
 import router from "./router";
 import NProgress from "nprogress";
@@ -67,7 +75,7 @@ router.beforeEach(async (to: Route, _: Route, next: any) => {
           UserModule.ResetToken();
           console.log(err || "Has Error");
 
-          // Message.error(err || 'Has Error')
+          Message.error('Has Error, 请重新点击登录按钮')
           next(`/login?redirect=${to.path}`);
           NProgress.done();
         }
