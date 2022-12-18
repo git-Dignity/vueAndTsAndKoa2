@@ -1,8 +1,8 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-10-06 14:50:44
- * @LastEditTime: 2022-02-28 15:25:56
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-12-18 18:20:07
+ * @LastEditors: zemin zheng
  * @Description: 常用网站 -- option类型下拉框选项
  * @FilePath: \vueAndTsAndKoa2\src\views\usualWebsite\modules\options.ts
  */
@@ -34,7 +34,13 @@ const designTypeOptions = [
 const toolTypeOptions = [
     { value: "算法", label: "算法" },
     { value: "工具", label: "工具" },
-    { value: "颜色", label: "颜色" }
+    { value: "软件", label: "软件" },
+    { value: "颜色", label: "颜色" },
+    { value: "加密", label: "加密" },
+    { value: "排版", label: "排版" },
+    { value: "交通", label: "交通" },
+    { value: "转换", label: "转换" },
+    { value: "压缩", label: "压缩" },
 ];
 
 // 电影movie的option
