@@ -18,21 +18,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { IProfile } from '../index.vue'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { IProfile } from "../index.vue";
 
 @Component({
-  name: 'Account'
+  name: "Account"
 })
 export default class extends Vue {
   @Prop({ required: true }) private user!: IProfile
 
   private submit() {
     this.$message({
-      message: 'User information has been updated successfully',
-      type: 'success',
+      message: "User information has been updated successfully",
+      type: "success",
       duration: 5 * 1000
-    })
+    });
   }
 }
 </script>

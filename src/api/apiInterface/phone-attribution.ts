@@ -1,8 +1,8 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 
 /**
  * 手机号码归属地
- * @param params 
+ * @param params
  * {
       key,
       phone
@@ -10,8 +10,7 @@ import request from '@/utils/request'
  */
 export const mobile = (params: any) =>
   request({
-    url: '/apiInterface/mobile',
-    method: 'get',
+    url: "/apiInterface/mobile",
+    method: "get",
     params
-  })
-
+  });

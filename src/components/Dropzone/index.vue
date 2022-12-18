@@ -21,13 +21,13 @@
 </template>
 
 <script lang="ts">
-import VueDropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { SettingsModule } from '@/store/modules/settings'
+import VueDropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { SettingsModule } from "@/store/modules/settings";
 
 @Component({
-  name: 'Dropzone',
+  name: "Dropzone",
   components: {
     VueDropzone
   }
@@ -42,10 +42,10 @@ export default class extends Vue {
   @Prop({ default: 5 }) private maxFilesize!: number // In MB
   @Prop({ default: true }) private autoProcessQueue!: boolean
   @Prop({ default: true }) private addRemoveLinks!: boolean
-  @Prop({ default: 'Drop files here to upload' }) private dictDefaultMessage!: string
-  @Prop({ default: 'Your broswer does not support dropzone.js' }) private dictFallbackMessage!: string
-  @Prop({ default: 'Remove' }) private dictRemoveFile!: string
-  @Prop({ default: 'Max Files Exceeded' }) private dictMaxFilesExceeded!: string
+  @Prop({ default: "Drop files here to upload" }) private dictDefaultMessage!: string
+  @Prop({ default: "Your broswer does not support dropzone.js" }) private dictFallbackMessage!: string
+  @Prop({ default: "Remove" }) private dictRemoveFile!: string
+  @Prop({ default: "Max Files Exceeded" }) private dictMaxFilesExceeded!: string
 
   get dropzoneOptions() {
     return {
@@ -60,20 +60,20 @@ export default class extends Vue {
       dictFallbackMessage: this.dictFallbackMessage,
       dictRemoveFile: this.dictRemoveFile,
       dictMaxFilesExceeded: this.dictMaxFilesExceeded
-    }
+    };
   }
 
   get themeColor() {
-    return SettingsModule.theme
+    return SettingsModule.theme;
   }
 
   // You can add more Event handler, see: https://rowanwins.github.io/vue-dropzone/docs/dist/#/events
   private dropzoneSuccess(file: File, response: any) {
-    this.$emit('dropzone-success', file, response)
+    this.$emit("dropzone-success", file, response);
   }
 
   private dropzoneRemovedFile(file: File, error: Error, xhr: XMLHttpRequest) {
-    this.$emit('dropzone-removed-file', file, error, xhr)
+    this.$emit("dropzone-removed-file", file, error, xhr);
   }
 }
 </script>

@@ -12,15 +12,15 @@ interface ISettings {
 
 // You can customize below settings :)
 const settings: ISettings = {
-  title: '音乐博客', 
+  title: "音乐博客",
   showSettings: true,
   showTagsView: true,
   fixedHeader: false,
   showSidebarLogo: false,
-  errorLog: ['production'],
+  errorLog: ["production"],
   sidebarTextTheme: true,
   devServerPort: 9527,
   mockServerPort: 9548
-}
+};
 
-export default settings
+export default settings;

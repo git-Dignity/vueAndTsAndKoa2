@@ -1,48 +1,48 @@
-import { RouteConfig } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import { RouteConfig } from "vue-router";
+import Layout from "@/layout/index.vue";
 
 const chartsRouter: RouteConfig = {
-  path: '/charts',
+  path: "/charts",
   component: Layout,
   // componentUrl: 'Layout',
-  redirect: 'noredirect',
-  name: 'Charts',
+  redirect: "noredirect",
+  name: "Charts",
   meta: {
-    title: 'charts',
-    icon: 'chart'
+    title: "charts",
+    icon: "chart"
   },
   children: [
     {
-      path: 'bar-chart',
-      component: () => import(/* webpackChunkName: "bar-chart" */ '@/views/charts/bar-chart.vue'),
+      path: "bar-chart",
+      component: () => import(/* webpackChunkName: "bar-chart" */ "@/views/charts/bar-chart.vue"),
       // componentUrl: 'charts/bar-chart',
-      name: 'BarChartDemo',
+      name: "BarChartDemo",
       meta: {
-        title: 'barChart',
+        title: "barChart",
         noCache: true
       }
     },
     {
-      path: 'line-chart',
-      component: () => import(/* webpackChunkName: "line-chart" */ '@/views/charts/line-chart.vue'),
+      path: "line-chart",
+      component: () => import(/* webpackChunkName: "line-chart" */ "@/views/charts/line-chart.vue"),
       // componentUrl: 'charts/line-chart',
-      name: 'LineChartDemo',
+      name: "LineChartDemo",
       meta: {
-        title: 'lineChart',
+        title: "lineChart",
         noCache: true
       }
     },
     {
-      path: 'mixed-chart',
-      component: () => import(/* webpackChunkName: "mixed-chart" */ '@/views/charts/mixed-chart.vue'),
+      path: "mixed-chart",
+      component: () => import(/* webpackChunkName: "mixed-chart" */ "@/views/charts/mixed-chart.vue"),
       // componentUrl: 'charts/mixed-chart',
-      name: 'MixedChartDemo',
+      name: "MixedChartDemo",
       meta: {
-        title: 'mixedChart',
+        title: "mixedChart",
         noCache: true
       }
     }
   ]
-}
+};
 
-export default chartsRouter
+export default chartsRouter;

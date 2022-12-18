@@ -5,8 +5,8 @@ const singerInfo = {
     labelWidth: 100,
     size: "medium",
     info: {
-        "singerName": {
-            label: 'music.singerName',
+        singerName: {
+            label: "music.singerName",
             name: "singerName",
             value: "",
             disabled: false,
@@ -17,10 +17,8 @@ const singerInfo = {
             }
         }
     }
-}
-
-
+};
 
 export {
     singerInfo
-}
+};

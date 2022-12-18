@@ -17,22 +17,18 @@ export interface IItKnowledge {
     type: number
     agent: string
     schedule: string
-    noticeWay:number
+    noticeWay: number
     contact: string
-    startTime: string 
-    endTime: string 
-    remarks: string 
-  }  
-
-
-
+    startTime: string
+    endTime: string
+    remarks: string
+  }
 
   export interface IRoutesTreeData {
     children: IRoutesTreeData[]
     title: string
     path: string
   }
-
 
   export interface ISysUserData {
     id: string
@@ -42,7 +38,3 @@ export interface IItKnowledge {
     roles: string
     token: string
   }
-
-
-
-  

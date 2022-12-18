@@ -1,172 +1,162 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import { RouteConfig } from 'vue-router'
-import {  constantRoutes, asyncRoutes as adminRoutes } from '@/router'
+import { VuexModule, Module, Mutation, Action, getModule } from "vuex-module-decorators";
+import { RouteConfig } from "vue-router";
+import { constantRoutes, asyncRoutes as adminRoutes } from "@/router";
 import { asyncRoutes } from "@/router/asyncRoutes";
-import store from '@/store'
+import store from "@/store";
 import { getSysRole } from "@/api/sys/sysRole";
-import Layout from '@/layout/index.vue'
+import Layout from "@/layout/index.vue";
 
 const hasPermission = (roles: string[], route: any) => {
   if (route.meta && route.meta.roles) {
-    return roles.some((role:any) => route.meta.roles.includes(role))
+    return roles.some((role: any) => route.meta.roles.includes(role));
   } else {
-    return true
+    return true;
   }
-}
+};
 
 export const filterAsyncRoutes = (routes: RouteConfig[], roles: string[]) => {
-  const res: RouteConfig[] = []
+  const res: RouteConfig[] = [];
   routes.forEach(route => {
-    const r = { ...route }
+    const r = { ...route };
     if (hasPermission(roles, r)) {
       if (r.children) {
-        r.children = filterAsyncRoutes(r.children, roles)
+        r.children = filterAsyncRoutes(r.children, roles);
       }
-      res.push(r)
+      res.push(r);
     }
-  })
-  return res
-}
+  });
+  return res;
+};
 
-
-const  filterAsyncRoutesComponentTmp = (routes: any) => {
+const filterAsyncRoutesComponentTmp = (routes: any) => {
   const res: RouteConfig[] = [];
-  routes.forEach(async (r:any) => {
-   
+  routes.forEach(async (r: any) => {
     if (r.componentUrl) {
-
-      asyncRoutes.forEach( (rrr: any) =>{
-        if(rrr.children){
-          rrr.children.forEach( (ccc:any) => {
-            if(ccc.componentUrl === r.componentUrl){
-              r.component = ccc.component
+      asyncRoutes.forEach((rrr: any) => {
+        if (rrr.children) {
+          rrr.children.forEach((ccc: any) => {
+            if (ccc.componentUrl === r.componentUrl) {
+              r.component = ccc.component;
             }
-          })
+          });
         }
-
-      })
+      });
     }
-    if(r.children){
+    if (r.children) {
         filterAsyncRoutesComponentTmp(r.children);
     }
-  })
+  });
 
   // console.log(routes)
   return routes;
-}
-
+};
 
 const filterAsyncRoutesComponent = (routes: RouteConfig[]) => {
-  const res: RouteConfig[] = []
-  routes.forEach((r:any) => {
+  const res: RouteConfig[] = [];
+  routes.forEach((r: any) => {
     // const r = { ...route }
     if (r.componentUrl) {
-      r.component  = Layout   
+      r.component = Layout;
       // r.component = loadView(r.componentUrl)
     }
-    if(r.children){
+    if (r.children) {
       // r.children.forEach( (rr: any) => {
         filterAsyncRoutesComponentTmp(r.children);
       // })
     }
-  })
+  });
 
   // console.log(routes)
 
   return routes;
-}
+};
 
-
-const loadView = async (view:string) => {
+const loadView = async (view: string) => {
     try {
-        return await import(`./src/views/${view}`)
+        return await import(`./src/views/${view}`);
     } catch (error) {
-        return error
+        return error;
     }
-  }
+  };
 
 export interface IPermissionState {
   routes: RouteConfig[]
   dynamicRoutes: RouteConfig[]
 }
 
-@Module({ dynamic: true, store, name: 'permission' })
+@Module({ dynamic: true, store, name: "permission" })
 class Permission extends VuexModule implements IPermissionState {
   public routes: RouteConfig[] = []
   public dynamicRoutes: RouteConfig[] = []
 
   @Mutation
   private SET_ROUTES(routes: RouteConfig[]) {
-    this.routes = constantRoutes.concat(routes)
-    this.dynamicRoutes = routes
+    this.routes = constantRoutes.concat(routes);
+    this.dynamicRoutes = routes;
   }
 
   @Action
   public async GenerateRoutes(roles: string[]) {
-    let accessedRoutes
-    if (roles.includes('admin')) {
-      accessedRoutes = adminRoutes
+    let accessedRoutes;
+    if (roles.includes("admin")) {
+      accessedRoutes = adminRoutes;
     } else {
-      console.log(roles)
-      
-      const {data} = await getSysRole({
+      console.log(roles);
+
+      const { data } = await getSysRole({
         page: 1,
         limit: 8,
         roleKey: roles[0]
-      })
+      });
       console.log(data.items[0].routes);
 
       // accessedRoutes = filterAsyncRoutesComponent(data.items[0].routes);
-     
 
-      accessedRoutes = filterAsyncRouter(data.items[0].routes)
+      accessedRoutes = filterAsyncRouter(data.items[0].routes);
 
-      console.log(accessedRoutes)
+      console.log(accessedRoutes);
       // accessedRoutes = asyncRoutes
-
 
       // accessedRoutes = filterAsyncRoutes(data.items[0].routes, roles)  // 这种是使用页面权限的，我现在不需要了
       // accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
     }
-    this.SET_ROUTES(accessedRoutes)
+    this.SET_ROUTES(accessedRoutes);
   }
 }
 
-
-
-export const filterAsyncRouter = (asyncRouterMap: any) =>{ //遍历后台传来的路由字符串，转换为组件对象
+export const filterAsyncRouter = (asyncRouterMap: any) => { // 遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter((route: any) => {
     // console.log(route)
     if (route.componentUrl) {
-     if (route.componentUrl === 'Layout') {//Layout组件特殊处理
-        route.component = Layout
-        delete route.componentUrl
+     if (route.componentUrl === "Layout") { // Layout组件特殊处理
+        route.component = Layout;
+        delete route.componentUrl;
       } else {
-        route.component = loadViewsd(route.componentUrl)
-        delete route.componentUrl
+        route.component = loadViewsd(route.componentUrl);
+        delete route.componentUrl;
       }
     }
     if (route.children && route.children.length) {
-      route.children = filterAsyncRouter(route.children)
+      route.children = filterAsyncRouter(route.children);
     }
-   
-    return route
-  })
 
-  //全不匹配的情况下，返回404，路由按顺序从上到下，依次匹配。最后一个*能匹配全部，
+    return route;
+  });
+
+  // 全不匹配的情况下，返回404，路由按顺序从上到下，依次匹配。最后一个*能匹配全部，
   accessedRouters.push({
-    path: '*',
-    redirect: '/404',
+    path: "*",
+    redirect: "/404",
     meta: { hidden: true }
-  })
+  });
 
   // console.log(accessedRouters)
-  return accessedRouters
-}
+  return accessedRouters;
+};
 
 export const loadViewsd = (view: any) => {
-  return (resolve: any) => require([`@/views/${view}.vue`], resolve)
-}
+  return (resolve: any) => require([`@/views/${view}.vue`], resolve);
+};
 
 // function loadViewas(view:string)
 // {
@@ -174,5 +164,4 @@ export const loadViewsd = (view: any) => {
 //     return () => import(`@/views/${view}`);
 // }
 
-
-export const PermissionModule = getModule(Permission)
+export const PermissionModule = getModule(Permission);

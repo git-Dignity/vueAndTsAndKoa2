@@ -9,8 +9,5 @@ export interface IFeaturesDevType {
     node: string
     java: string
     database_sql: string
-    remarks:number
-  } 
-
-
-  
+    remarks: number
+  }

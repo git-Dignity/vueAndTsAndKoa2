@@ -1,7 +1,6 @@
 <!--https://github.com/wangduanduan/element-audio-->
 <template>
   <div class="di main-wrap">
-  
     <!-- <audio
       ref="audio"
       class="dn"
@@ -13,7 +12,7 @@
       @timeupdate="onTimeupdate"
       @loadedmetadata="onLoadedmetadata"
     ></audio>
-   
+
     <div>
       <fieldset class="layui-elem-field layui-field-title">
         <legend>
@@ -31,7 +30,6 @@
 
         <el-tag type="info">{{ audio.currentTime | formatSecond}}</el-tag>
 
-      
         <el-slider
           v-show="!controlList.noProcess"
           v-model="sliderTime"
@@ -74,7 +72,6 @@
   </div>
 </template>
 
-
 <script lang="ts">
 // import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 // import { Form } from "element-ui";
@@ -107,7 +104,7 @@
 //     return "0:00:00";
 //   }
 // },
-   
+
 //     // 使用组件过滤器来动态改变按钮的显示
 //     transPlayPause(value) {
 //       return value ? "暂停" : "播放";
@@ -124,8 +121,6 @@
 //   }
 // })
 // export default class extends Vue {
-
-
 
 // // 整数格式化成时:分:秒
 //  realFormatSecond(second) {
@@ -152,8 +147,6 @@
 //  @Prop({  }) private theUploader!: string
 //   @Prop({  }) private theUploadTime!: string
 //   @Prop({ default: () => [1, 1.5, 2] }) private theSpeeds!: object
-
- 
 
 //       audioName= ""
 //       uploadTime=  "admin"
@@ -190,9 +183,9 @@
 //         // 不要快进按钮
 //         noSpeed: false
 //       }
-  
+
 //   created() {
-   
+
 //     //显示歌曲名字
 //     if (this.theUrl != null || this.theUrl != "") {
 //       this.audioName = this.theUrl.substring(this.theUrl.lastIndexOf("/") + 1);
@@ -209,7 +202,6 @@
 //     }
 //   }
 
-
 //    get musicurlp() {
 //     return MusicModule.url;
 //   }
@@ -219,7 +211,6 @@
 //     console.log(data)
 //   }
 
- 
 //     setControlList() {
 //       let controlList = this.theControlList.split(" ");
 //       controlList.forEach(item => {
@@ -333,7 +324,7 @@
 //       // console.log(res)
 //       this.audio.currentTime = res.target.currentTime;
 //       this.sliderTime =  (this.audio.currentTime / this.audio.maxTime) * 100
-    
+
 //       // playIsAll单曲循环、播放中、this.sliderTime是100
 //       if (
 //         this.playIsAll &&
@@ -368,8 +359,6 @@
 //       // console.log('single');
 //       this.$emit("playSingle", 2);
 //     }
- 
-
 
 //   mounted() {
 //     console.log(this.theUrl)
@@ -400,7 +389,6 @@
 //   }
 // };
 </script>
-
 
 <style scoped>
 .main-wrap {

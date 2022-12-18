@@ -83,56 +83,56 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
-import { IArticleData } from '@/api/types'
-import { formatJson } from '@/utils'
-import { exportJson2Excel } from '@/utils/excel'
-import { Table } from 'element-ui'
+import { Component, Vue } from "vue-property-decorator";
+import { getArticles } from "@/api/articles";
+import { IArticleData } from "@/api/types";
+import { formatJson } from "@/utils";
+import { exportJson2Excel } from "@/utils/excel";
+import { Table } from "element-ui";
 
 @Component({
-  name: 'SelectExcel'
+  name: "SelectExcel"
 })
 export default class extends Vue {
   private list: IArticleData[] = []
   private listLoading = true
   private multipleSelection = []
   private downloadLoading = false
-  private filename = ''
+  private filename = ""
 
   created() {
-    this.fetchData()
+    this.fetchData();
   }
 
   private async fetchData() {
-    this.listLoading = true
-    const { data } = await getArticles({ /* Your params here */ })
-    this.list = data.items
+    this.listLoading = true;
+    const { data } = await getArticles({ /* Your params here */ });
+    this.list = data.items;
     // Just to simulate the time of the request
     setTimeout(() => {
-      this.listLoading = false
-    }, 0.5 * 1000)
+      this.listLoading = false;
+    }, 0.5 * 1000);
   }
 
   private handleSelectionChange(value: any) {
-    this.multipleSelection = value
+    this.multipleSelection = value;
   }
 
   private handleDownload() {
     if (this.multipleSelection.length) {
-      this.downloadLoading = true
-      const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
-      const filterVal = ['id', 'title', 'author', 'pageviews', 'timestamp']
-      const list = this.multipleSelection
-      const data = formatJson(filterVal, list)
-      exportJson2Excel(tHeader, data, this.filename !== '' ? this.filename : undefined);
-      (this.$refs.multipleTable as Table).clearSelection()
-      this.downloadLoading = false
+      this.downloadLoading = true;
+      const tHeader = ["Id", "Title", "Author", "Readings", "Date"];
+      const filterVal = ["id", "title", "author", "pageviews", "timestamp"];
+      const list = this.multipleSelection;
+      const data = formatJson(filterVal, list);
+      exportJson2Excel(tHeader, data, this.filename !== "" ? this.filename : undefined);
+      (this.$refs.multipleTable as Table).clearSelection();
+      this.downloadLoading = false;
     } else {
       this.$message({
-        message: 'Please select at least one item',
-        type: 'warning'
-      })
+        message: "Please select at least one item",
+        type: "warning"
+      });
     }
   }
 }

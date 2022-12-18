@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-  name: 'HeadRadio',
+  name: "HeadRadio",
   props: {
     list: {
       type: Array,
@@ -20,23 +20,23 @@ export default {
     },
     value: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   data() {
     return {
       myValue: this.value
-    }
+    };
   },
   watch: {
     value(newValue) {
-      this.myValue = newValue
+      this.myValue = newValue;
     },
     myValue(newValue) {
-      this.$emit('input', newValue)
+      this.$emit("input", newValue);
     }
   }
-}
+};
 </script>
 <style  scope lang="scss">
 .head-radio {

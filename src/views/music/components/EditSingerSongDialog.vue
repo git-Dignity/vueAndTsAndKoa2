@@ -3,7 +3,7 @@
 import { EventBus } from "@/eventBus/index";
 
 export default {
-  name: "editSingerSongDialog",
+  name: "EditSingerSongDialog",
 
   props: {
     info: {
@@ -17,7 +17,7 @@ export default {
       show: false,
       list: [1, 2, 3, 4],
       singerId: this.info.id,
-      text: this.info.singerSongName,
+      text: this.info.singerSongName
     };
   },
 
@@ -34,7 +34,6 @@ export default {
       }
     });
   },
-  mounted() {},
   computed: {
     cancelData() {
       return this.info;
@@ -44,10 +43,10 @@ export default {
     cancelData(val) {
     //   console.log(val);
       this.singerId = val.id;
-      this.text = val.singerSongName
-     
+      this.text = val.singerSongName;
     }
   },
+  mounted() {},
   methods: {
     input(e) {
       this.text = e.target.value;
@@ -55,7 +54,7 @@ export default {
         id: this.singerId,
         singerName: this.text
       });
-    },
+    }
   },
   render: function(h) {
     return (

@@ -75,9 +75,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { AppModule } from '@/store/modules/app'
-import MarkdownEditor from '@/components/MarkdownEditor/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import { AppModule } from "@/store/modules/app";
+import MarkdownEditor from "@/components/MarkdownEditor/index.vue";
 
 const content = `
 **This is test**
@@ -85,10 +85,10 @@ const content = `
 * vue
 * element
 * webpack
-`
+`;
 
 @Component({
-  name: 'MarkdownDemo',
+  name: "MarkdownDemo",
   components: {
     MarkdownEditor
   }
@@ -98,28 +98,28 @@ export default class extends Vue {
   private content2 = content
   private content3 = content
   private content4 = content
-  private html = ''
+  private html = ""
   // Mapping for local lang to tuiEditor lang
   // https://github.com/nhnent/tui.editor/tree/master/src/js/langs
   private languageTypeList: { [key: string]: string } = {
-    en: 'en_US',
-    zh: 'zh_CN',
-    es: 'es_ES',
-    ja: 'ja_JP',
-    ko: 'ko_KR'
+    en: "en_US",
+    zh: "zh_CN",
+    es: "es_ES",
+    ja: "ja_JP",
+    ko: "ko_KR"
   }
 
   mounted() {
     // FIXES weird focus issue caused by MarkdownEditor
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
 
   get language() {
-    return this.languageTypeList[AppModule.language]
+    return this.languageTypeList[AppModule.language];
   }
 
   private getHtml() {
-    this.html = (this.$refs.markdownEditor as MarkdownEditor).getHtml()
+    this.html = (this.$refs.markdownEditor as MarkdownEditor).getHtml();
   }
 }
 </script>

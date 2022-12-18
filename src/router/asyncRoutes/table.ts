@@ -1,46 +1,46 @@
-import { RouteConfig } from 'vue-router'
-import Layout from '@/layout/index.vue'
+import { RouteConfig } from "vue-router";
+import Layout from "@/layout/index.vue";
 
 const tableRoutes = {
-  path: '/table',
+  path: "/table",
   // component: Layout,
-  componentUrl: 'Layout',
-  redirect: '/table/complex-table',
-  name: 'Table',
+  componentUrl: "Layout",
+  redirect: "/table/complex-table",
+  name: "Table",
   meta: {
-    title: 'table',
-    icon: 'table'
+    title: "table",
+    icon: "table"
   },
   children: [
     {
-      path: 'dynamic-table',
+      path: "dynamic-table",
       // component: () => import(/* webpackChunkName: "dynamic-table" */ '@/views/table/dynamic-table/index.vue'),
-      componentUrl: 'table/dynamic-table/index',
-      name: 'DynamicTable',
-      meta: { title: 'dynamicTable' }
+      componentUrl: "table/dynamic-table/index",
+      name: "DynamicTable",
+      meta: { title: "dynamicTable" }
     },
     {
-      path: 'draggable-table',
+      path: "draggable-table",
       // component: () => import(/* webpackChunkName: "draggable-table" */ '@/views/table/draggable-table.vue'),
-      componentUrl: 'table/draggable-table',
-      name: 'DraggableTable',
-      meta: { title: 'draggableTable' }
+      componentUrl: "table/draggable-table",
+      name: "DraggableTable",
+      meta: { title: "draggableTable" }
     },
     {
-      path: 'inline-edit-table',
+      path: "inline-edit-table",
       // component: () => import(/* webpackChunkName: "inline-edit-table" */ '@/views/table/inline-edit-table.vue'),
-      componentUrl: 'table/inline-edit-table',
-      name: 'InlineEditTable',
-      meta: { title: 'inlineEditTable' }
+      componentUrl: "table/inline-edit-table",
+      name: "InlineEditTable",
+      meta: { title: "inlineEditTable" }
     },
     {
-      path: 'complex-table',
-      // component: () => import(/* webpackChunkName: "complex-table" */ '@/views/table/complex-table.vue'), 
-      componentUrl: 'table/complex-table',
-      name: 'ComplexTable',
-      meta: { title: 'complexTable' }
+      path: "complex-table",
+      // component: () => import(/* webpackChunkName: "complex-table" */ '@/views/table/complex-table.vue'),
+      componentUrl: "table/complex-table",
+      name: "ComplexTable",
+      meta: { title: "complexTable" }
     }
   ]
-}
+};
 
-export default tableRoutes
+export default tableRoutes;

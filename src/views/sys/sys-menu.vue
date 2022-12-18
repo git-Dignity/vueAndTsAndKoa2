@@ -1,8 +1,11 @@
 <template>
   <div class="app-container">
-    <el-button type="success" @click="synchronize">
+    <el-button
+      type="success"
+      @click="synchronize"
+    >
       同步菜单
-      <i class="el-icon-upload el-icon--right"></i>
+      <i class="el-icon-upload el-icon--right" />
     </el-button>
   </div>
 </template>
@@ -22,8 +25,7 @@ export default class extends Vue {
   private tableHeader: string[] = [];
 
   private async synchronize() {
-
-    const data = await createSysMenu({ menu: [...constantRoutes, ...asyncRoutes] })
+    const data = await createSysMenu({ menu: [...constantRoutes, ...asyncRoutes] });
     console.log(data);
   }
 }

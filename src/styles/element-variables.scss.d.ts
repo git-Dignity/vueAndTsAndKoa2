@@ -2,6 +2,6 @@ export interface IScssVariables {
   theme: string
 }
 
-export const variables: IScssVariables
+export const variables: IScssVariables;
 
-export default variables
+export default variables;

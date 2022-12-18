@@ -130,28 +130,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Sticky from '@/components/Sticky/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import Sticky from "@/components/Sticky/index.vue";
 
 @Component({
-  name: 'StickyDemo',
+  name: "StickyDemo",
   components: {
     Sticky
   }
 })
 export default class extends Vue {
   private time = Date
-  private url = ''
-  private platforms = ['a-platform']
+  private url = ""
+  private platforms = ["a-platform"]
   private platformsOptions = [
-    { key: 'a-platform', name: 'platformA' },
-    { key: 'b-platform', name: 'platformB' },
-    { key: 'c-platform', name: 'platformC' }
+    { key: "a-platform", name: "platformA" },
+    { key: "b-platform", name: "platformB" },
+    { key: "c-platform", name: "platformC" }
   ]
 
   private pickerOptions = {
     disabledDate(time: Date) {
-      return time.getTime() > Date.now()
+      return time.getTime() > Date.now();
     }
   }
 }

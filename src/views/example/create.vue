@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import ArticleDetail from './components/ArticleDetail.vue'
+import { Component, Vue } from "vue-property-decorator";
+import ArticleDetail from "./components/ArticleDetail.vue";
 
 @Component({
-  name: 'CreateArticle',
+  name: "CreateArticle",
   components: {
     ArticleDetail
   }

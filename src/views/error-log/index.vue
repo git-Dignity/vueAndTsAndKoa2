@@ -20,12 +20,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import ErrorA from './components/ErrorTestA.vue'
-import ErrorB from './components/ErrorTestB.vue'
+import { Component, Vue } from "vue-property-decorator";
+import ErrorA from "./components/ErrorTestA.vue";
+import ErrorB from "./components/ErrorTestB.vue";
 
 @Component({
-  name: 'ErrorLog',
+  name: "ErrorLog",
   components: {
     ErrorA,
     ErrorB

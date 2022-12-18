@@ -37,11 +37,11 @@
 </template>
 
 <script lang="ts">
-import SplitPane from 'vue-splitpane'
-import { Component, Vue } from 'vue-property-decorator'
+import SplitPane from "vue-splitpane";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'SplitPaneDemo',
+  name: "SplitPaneDemo",
   components: {
     SplitPane
   }

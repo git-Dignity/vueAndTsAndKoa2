@@ -1,1 +1,1 @@
-declare module 'globals'
+declare module "globals"

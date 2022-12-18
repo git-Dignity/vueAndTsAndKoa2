@@ -129,24 +129,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import BackToTop from '@/components/BackToTop/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import BackToTop from "@/components/BackToTop/index.vue";
 
 @Component({
-  name: 'BackToTopDemo',
+  name: "BackToTopDemo",
   components: {
     BackToTop
   }
 })
 export default class extends Vue {
   private myBackToTopStyle = {
-    right: '50px',
-    bottom: '50px',
-    width: '40px',
-    height: '40px',
-    'border-radius': '4px',
-    'line-height': '45px', // Please keep consistent with height to make it center vertically
-    background: '#e7eaf1'
+    right: "50px",
+    bottom: "50px",
+    width: "40px",
+    height: "40px",
+    "border-radius": "4px",
+    "line-height": "45px", // Please keep consistent with height to make it center vertically
+    background: "#e7eaf1"
   }
 }
 </script>

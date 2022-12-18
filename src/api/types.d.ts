@@ -49,6 +49,6 @@ export interface ISysRoleData {
   roleKey: string
   roleType: string
   isSys: number
-  remarks: string 
+  remarks: string
   routes: Array<any>
-} 
+}

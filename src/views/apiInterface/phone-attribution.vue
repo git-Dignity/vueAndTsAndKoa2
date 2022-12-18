@@ -1,6 +1,9 @@
 <template>
   <div class="app-container">
-     <loadingBtn :isClick="isClick" @loadClick="loadClick"></loadingBtn>
+    <loadingBtn
+      :is-click="isClick"
+      @loadClick="loadClick"
+    />
     <!-- <div class="container-title">
       <el-input placeholder="请输入手机号码" v-model="itemList[0].value">
         <i slot="prefix" class="el-input__icon el-icon-phone-outline"></i>
@@ -20,12 +23,12 @@ import SingleLine from "@/components/Table/SingleLine.vue";
 import { mobile } from "@/api/apiInterface/phone-attribution";
 import { key } from "@/const/juhe";
 import { MessageWarning } from "@/utils/tool/message";
-import { itemList, myCheck } from "@/views/apiInterface/phone-attribution/index"
+import { itemList, myCheck } from "@/views/apiInterface/phone-attribution/index";
 
 @Component({
   name: "phoneAttribution",
   components: {
-    SingleLine,
+    SingleLine
     // LoadingBtn
   }
 })
@@ -33,13 +36,12 @@ export default class extends Vue {
   private isClick = false;
   private itemList = itemList
 
-
   private loadClick() {
         this.isClick = true;
-        console.log(this.isClick)
-        setTimeout( () =>{
+        console.log(this.isClick);
+        setTimeout(() => {
             this.isClick = false;
-        },2000)
+        }, 2000);
     }
 
   created() {
@@ -59,7 +61,7 @@ export default class extends Vue {
       this.itemList[2].value = data.company;
       this.itemList[3].value = data.areacode;
       this.itemList[4].value = data.zip;
-    }else{
+    } else {
       MessageWarning(data);
     }
   }
@@ -77,7 +79,6 @@ export default class extends Vue {
 }
 </script>
 
-
 <style lang="scss"  scope>
 .app-container {
   height: 100%;
@@ -91,6 +92,5 @@ export default class extends Vue {
   }
 }
 </style>
-
 
 <!-- 手机号码查询https://www.juhe.cn/docs/api/id/11 -->

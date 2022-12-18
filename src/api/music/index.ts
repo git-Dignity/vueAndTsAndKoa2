@@ -6,22 +6,19 @@
  * @Description: In User Settings Edit
  * @FilePath: \vue-typescript-admin-template-master\src\api\music\index.ts
  */
-import request from '@/utils/requestJava'
-import axios from 'axios';
-
-
+import request from "@/utils/requestJava";
+import axios from "axios";
 
 export const getMusic = (data: any) =>
   request({
-    url: '/bk/music/singerSonger/list',
-    method: 'post',
+    url: "/bk/music/singerSonger/list",
+    method: "post",
     data
-  })
-
+  });
 
 // export const uploadMusic = (data: any) =>
 // request({
-//   url: '/music/upload',  
+//   url: '/music/upload',
 //   method: 'post',
 //   data
 // })

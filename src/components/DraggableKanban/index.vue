@@ -20,17 +20,17 @@
 </template>
 
 <script lang="ts">
-import Draggable from 'vuedraggable'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import Draggable from "vuedraggable";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'DraggableKanban',
+  name: "DraggableKanban",
   components: {
     Draggable
   }
 })
 export default class extends Vue {
-  @Prop({ default: 'header' }) private headerText!: string
+  @Prop({ default: "header" }) private headerText!: string
   @Prop({ default: () => [] }) private list!: any[]
   @Prop({ default: () => null }) private options!: object
 }

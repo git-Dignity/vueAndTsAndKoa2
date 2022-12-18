@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
-import DraggableList from '@/components/DraggableList/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import { getArticles } from "@/api/articles";
+import DraggableList from "@/components/DraggableList/index.vue";
 
 @Component({
-  name: 'DraggableListDemo',
+  name: "DraggableListDemo",
   components: {
     DraggableList
   }
@@ -34,13 +34,13 @@ export default class extends Vue {
   private list2 = []
 
   created() {
-    this.fetchData()
+    this.fetchData();
   }
 
   private async fetchData() {
-    const { data } = await getArticles({ /* Your params here */ })
-    this.list1 = data.items.splice(0, 5)
-    this.list2 = data.items
+    const { data } = await getArticles({ /* Your params here */ });
+    this.list1 = data.items.splice(0, 5);
+    this.list2 = data.items;
   }
 }
 </script>

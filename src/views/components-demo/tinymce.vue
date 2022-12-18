@@ -24,11 +24,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Tinymce from '@/components/Tinymce/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import Tinymce from "@/components/Tinymce/index.vue";
 
 @Component({
-  name: 'TinymceDemo',
+  name: "TinymceDemo",
   components: {
     Tinymce
   }
@@ -42,11 +42,11 @@ export default class extends Vue {
   private tinymceActive = true
 
   deactivated() {
-    this.tinymceActive = false
+    this.tinymceActive = false;
   }
 
   activated() {
-    this.tinymceActive = true
+    this.tinymceActive = true;
   }
 }
 </script>

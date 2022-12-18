@@ -31,80 +31,80 @@
 </template>
 
 <script lang="ts">
-import path from 'path'
-import Fuse from 'fuse.js' // A lightweight fuzzy-search module
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { RouteConfig } from 'vue-router'
-import { AppModule } from '@/store/modules/app'
-import { PermissionModule } from '@/store/modules/permission'
-import i18n from '@/lang' // Internationalization
+import path from "path";
+import Fuse from "fuse.js"; // A lightweight fuzzy-search module
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { RouteConfig } from "vue-router";
+import { AppModule } from "@/store/modules/app";
+import { PermissionModule } from "@/store/modules/permission";
+import i18n from "@/lang"; // Internationalization
 
 @Component({
-  name: 'HeaderSearch'
+  name: "HeaderSearch"
 })
 export default class extends Vue {
-  private search = ''
+  private search = ""
   private show = false
   private options: RouteConfig[] = []
   private searchPool: RouteConfig[] = []
   private fuse?: Fuse<RouteConfig, Fuse.IFuseOptions<RouteConfig>>
 
   get routes() {
-    return PermissionModule.routes
+    return PermissionModule.routes;
   }
 
   get lang() {
-    return AppModule.language
+    return AppModule.language;
   }
 
-  @Watch('lang')
+  @Watch("lang")
   private onLangChange() {
-    this.searchPool = this.generateRoutes(this.routes)
+    this.searchPool = this.generateRoutes(this.routes);
   }
 
-  @Watch('routes')
+  @Watch("routes")
   private onRoutesChange() {
-    this.searchPool = this.generateRoutes(this.routes)
+    this.searchPool = this.generateRoutes(this.routes);
   }
 
-  @Watch('searchPool')
+  @Watch("searchPool")
   private onSearchPoolChange(value: RouteConfig[]) {
-    this.initFuse(value)
+    this.initFuse(value);
   }
 
-  @Watch('show')
+  @Watch("show")
   private onShowChange(value: boolean) {
     if (value) {
-      document.body.addEventListener('click', this.close)
+      document.body.addEventListener("click", this.close);
     } else {
-      document.body.removeEventListener('click', this.close)
+      document.body.removeEventListener("click", this.close);
     }
   }
 
   mounted() {
-    this.searchPool = this.generateRoutes(this.routes)
+    this.searchPool = this.generateRoutes(this.routes);
   }
 
   private click() {
-    this.show = !this.show
+    this.show = !this.show;
     if (this.show) {
-      this.$refs.headerSearchSelect && (this.$refs.headerSearchSelect as HTMLElement).focus()
+      this.$refs.headerSearchSelect && (this.$refs.headerSearchSelect as HTMLElement).focus();
     }
   }
 
   private close() {
-    this.$refs.headerSearchSelect && (this.$refs.headerSearchSelect as HTMLElement).blur()
-    this.options = []
-    this.show = false
+    this.$refs.headerSearchSelect && (this.$refs.headerSearchSelect as HTMLElement).blur();
+    this.options = [];
+    this.show = false;
   }
 
   private change(route: RouteConfig) {
-    this.$router.push(route.path)
-    this.search = ''
-    this.options = []
+    this.$router.push(route.path);
+    this.search = "";
+    this.options = [];
     this.$nextTick(() => {
-      this.show = false
-    })
+      this.show = false;
+    });
   }
 
   private initFuse(list: RouteConfig[]) {
@@ -116,24 +116,24 @@ export default class extends Vue {
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [{
-        name: 'title',
+        name: "title",
         weight: 0.7
       }, {
-        name: 'path',
+        name: "path",
         weight: 0.3
       }]
-    })
+    });
   }
 
   // Filter out the routes that can be displayed in the sidebar
   // And generate the internationalized title
-  private generateRoutes(routes: RouteConfig[], basePath = '/', prefixTitle: string[] = []) {
-    let res: RouteConfig[] = []
+  private generateRoutes(routes: RouteConfig[], basePath = "/", prefixTitle: string[] = []) {
+    let res: RouteConfig[] = [];
 
     for (const router of routes) {
       // skip hidden router
       if (router.meta && router.meta.hidden) {
-        continue
+        continue;
       }
 
       const data: RouteConfig = {
@@ -141,37 +141,37 @@ export default class extends Vue {
         meta: {
           title: [...prefixTitle]
         }
-      }
+      };
 
       if (router.meta && router.meta.title) {
         // generate internationalized title
-        const i18ntitle = i18n.t(`route.${router.meta.title}`).toString()
-        data.meta.title = [...data.meta.title, i18ntitle]
-        if (router.redirect !== 'noRedirect') {
+        const i18ntitle = i18n.t(`route.${router.meta.title}`).toString();
+        data.meta.title = [...data.meta.title, i18ntitle];
+        if (router.redirect !== "noRedirect") {
           // only push the routes with title
           // special case: need to exclude parent router without redirect
-          res.push(data)
+          res.push(data);
         }
       }
 
       // recursive child routes
       if (router.children) {
-        const tempRoutes = this.generateRoutes(router.children, data.path, data.meta.title)
+        const tempRoutes = this.generateRoutes(router.children, data.path, data.meta.title);
         if (tempRoutes.length >= 1) {
-          res = [...res, ...tempRoutes]
+          res = [...res, ...tempRoutes];
         }
       }
     }
-    return res
+    return res;
   }
 
   private querySearch(query: string) {
-    if (query !== '') {
+    if (query !== "") {
       if (this.fuse) {
-        this.options = this.fuse.search(query).map((result) => result.item)
+        this.options = this.fuse.search(query).map((result) => result.item);
       }
     } else {
-      this.options = []
+      this.options = [];
     }
   }
 }

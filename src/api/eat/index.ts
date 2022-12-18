@@ -6,8 +6,7 @@
  * @Description: In User Settings Edit
  * @FilePath: \vueAndTsAndKoa2\src\api\eat\index.ts
  */
-import request from '@/utils/request'
-
+import request from "@/utils/request";
 
 /**
  * 查询
@@ -15,12 +14,10 @@ import request from '@/utils/request'
  */
 export const get = (params: any) =>
     request({
-        url: '/eat/',
-        method: 'get',
+        url: "/eat/",
+        method: "get",
         params
-    })
-
-  
+    });
 
 /**
  * 添加
@@ -28,11 +25,10 @@ export const get = (params: any) =>
  */
 export const create = (data: any) =>
     request({
-        url: '/eat/',
-        method: 'post',
+        url: "/eat/",
+        method: "post",
         data
-    })
-  
+    });
 
     /**
      * 更新
@@ -40,10 +36,10 @@ export const create = (data: any) =>
      */
 export const update = (data: any) =>
     request({
-        url: `/eat/`,
-        method: 'put',
+        url: "/eat/",
+        method: "put",
         data
-    })
+    });
 
     /**
      * 删除
@@ -51,7 +47,7 @@ export const update = (data: any) =>
      */
 export const del = (params: any) =>
     request({
-        url: `/eat/`,
-        method: 'delete',
+        url: "/eat/",
+        method: "delete",
         params
-    })
+    });

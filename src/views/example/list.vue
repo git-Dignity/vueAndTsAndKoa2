@@ -108,13 +108,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
-import { IArticleData } from '@/api/types'
-import Pagination from '@/components/Pagination/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import { getArticles } from "@/api/articles";
+import { IArticleData } from "@/api/types";
+import Pagination from "@/components/Pagination/index.vue";
 
 @Component({
-  name: 'ArticleList',
+  name: "ArticleList",
   components: {
     Pagination
   }
@@ -129,18 +129,18 @@ export default class extends Vue {
   }
 
   created() {
-    this.getList()
+    this.getList();
   }
 
   private async getList() {
-    this.listLoading = true
-    const { data } = await getArticles(this.listQuery)
-    this.list = data.items
-    this.total = data.total
+    this.listLoading = true;
+    const { data } = await getArticles(this.listQuery);
+    this.list = data.items;
+    this.total = data.total;
     // Just to simulate the time of the request
     setTimeout(() => {
-      this.listLoading = false
-    }, 0.5 * 1000)
+      this.listLoading = false;
+    }, 0.5 * 1000);
   }
 }
 </script>

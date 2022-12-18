@@ -19,24 +19,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Dropzone from '@/components/Dropzone/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import Dropzone from "@/components/Dropzone/index.vue";
 
 @Component({
-  name: 'DropzoneDemo',
+  name: "DropzoneDemo",
   components: {
     Dropzone
   }
 })
 export default class extends Vue {
   private dropzoneSuccess(file: File, response: any) {
-    this.$message({ message: 'Upload success', type: 'success' })
-    console.log(file, response)
+    this.$message({ message: "Upload success", type: "success" });
+    console.log(file, response);
   }
 
   private dropzoneRemovedFile(file: File, error: Error, xhr: XMLHttpRequest) {
-    this.$message({ message: 'Delete success', type: 'success' })
-    console.log(file, error, xhr)
+    this.$message({ message: "Delete success", type: "success" });
+    console.log(file, error, xhr);
   }
 }
 </script>

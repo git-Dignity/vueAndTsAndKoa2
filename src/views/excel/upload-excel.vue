@@ -21,11 +21,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import UploadExcelComponent from '@/components/UploadExcel/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import UploadExcelComponent from "@/components/UploadExcel/index.vue";
 
 @Component({
-  name: 'UploadExcel',
+  name: "UploadExcel",
   components: {
     UploadExcelComponent
   }
@@ -35,20 +35,20 @@ export default class extends Vue {
   private tableHeader: string[] = []
 
   private beforeUpload(file: File) {
-    const isLt1M = file.size / 1024 / 1024 < 1
+    const isLt1M = file.size / 1024 / 1024 < 1;
     if (isLt1M) {
-      return true
+      return true;
     }
     this.$message({
-      message: 'Please do not upload files larger than 1m in size.',
-      type: 'warning'
-    })
-    return false
+      message: "Please do not upload files larger than 1m in size.",
+      type: "warning"
+    });
+    return false;
   }
 
   private handleSuccess({ results, header }: { results: any, header: string[]}) {
-    this.tableData = results
-    this.tableHeader = header
+    this.tableData = results;
+    this.tableHeader = header;
   }
 }
 </script>

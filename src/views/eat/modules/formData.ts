@@ -6,18 +6,17 @@
  * @Description: In User Settings Edit
  * @FilePath: \vueAndTsAndKoa2\src\views\usualWebsite\modules\formData.ts
  */
-import { setType } from './formUtils';
-
+import { setType } from "./formUtils";
 
 // 常用图层表单数据（添加、修改）
 const Form = {
     name: "usualWebsiteForm",
     position: "right",
-    labelWidth: 140, 
+    labelWidth: 140,
     size: "medium",
     info: {
-        "id": {
-            label: 'id',
+        id: {
+            label: "id",
             name: "id",
             value: "",
             disabled: true,
@@ -26,8 +25,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "title": {
-            label: 'table.title',
+        title: {
+            label: "table.title",
             name: "title",
             value: "",
             disabled: false,
@@ -37,8 +36,8 @@ const Form = {
                 required: true, message: "标题不能为空"
             }
         },
-        "content": {
-            label: 'content',
+        content: {
+            label: "content",
             name: "content",
             value: "",
             disabled: false,
@@ -48,7 +47,7 @@ const Form = {
             }
         },
         // "type": {
-        //     label: 'table.type', 
+        //     label: 'table.type',
         //     name: "type",
         //     value: "",
         //     isSelect: true,
@@ -60,8 +59,8 @@ const Form = {
         //         required: true, message: "类型不能为空"
         //     }
         // },
-        "photo_url": {
-            label: 'sys.photo',
+        photo_url: {
+            label: "sys.photo",
             name: "photo_url",
             value: "",
             isPhoto: true,
@@ -69,7 +68,7 @@ const Form = {
                 upload__text: "上传文章照片",
                 type: "image_avatar",
                 accept: ".png, .jpg, .gif, .jpeg",
-                imageUrl: ''
+                imageUrl: ""
             },
             disabled: false,
             hidden: false,
@@ -77,8 +76,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "remarks": {
-            label: 'sys.remarks',
+        remarks: {
+            label: "sys.remarks",
             name: "remarks",
             value: "",
             isTextarea: true,
@@ -89,37 +88,29 @@ const Form = {
             }
         }
     },
-    file:""
-}
+    file: ""
+};
 
-
-
-const initForm = (id="", title = "", content = "", type="",photo_url = "",remarks = "") =>{
+const initForm = (id = "", title = "", content = "", type = "", photo_url = "", remarks = "") => {
     Form.info.id.value = id;
     Form.info.title.value = title;
     Form.info.content.value = content;
     Form.info.photo_url.value = photo_url;
     // (Form.info.type as any).value = type? type.split(",") : "";
     Form.info.remarks.value = remarks;
-    Form.info.photo_url.childrenUploadImgData.imageUrl = photo_url ? photo_url : require('@/assets/404-images/404.png');
-}
-
-
+    Form.info.photo_url.childrenUploadImgData.imageUrl = photo_url || require("@/assets/404-images/404.png");
+};
 
 /**
  * 设置表单的type类型的option
  * @param type 类别（编程：1；后端：2）
  */
-const setFormType = (type:number) =>{
-    setType(type, Form)
-}
-
-
+const setFormType = (type: number) => {
+    setType(type, Form);
+};
 
 export {
     Form,
     initForm,
     setFormType
-}
-
-
+};

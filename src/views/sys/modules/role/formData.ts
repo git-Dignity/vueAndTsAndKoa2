@@ -1,14 +1,14 @@
-import { calendarTypeOptions, statusOptions } from '../options';
+import { calendarTypeOptions, statusOptions } from "../options";
 
 // 角色表单数据
 const sysRoleForm = {
     name: "sysRoleForm",
     position: "right",
-    labelWidth: 120, 
+    labelWidth: 120,
     size: "medium",
     info: {
-        "id": {
-            label: 'id',
+        id: {
+            label: "id",
             name: "id",
             value: "",
             disabled: true,
@@ -18,8 +18,8 @@ const sysRoleForm = {
             }
         },
 
-        "name": {
-            label: 'sys.role.name',
+        name: {
+            label: "sys.role.name",
             name: "name",
             value: "",
             disabled: false,
@@ -29,8 +29,8 @@ const sysRoleForm = {
                 required: true, message: "角色名不能为空"
             }
         },
-        "roleKey": {
-            label: 'sys.role.roleKey',
+        roleKey: {
+            label: "sys.role.roleKey",
             name: "roleKey",
             value: "",
             disabled: false,
@@ -39,8 +39,8 @@ const sysRoleForm = {
                 required: true, message: "英文名不能为空"
             }
         },
-        "roleType": {
-            label: 'sys.role.roleType',
+        roleType: {
+            label: "sys.role.roleType",
             name: "roleType",
             value: "",
             isSelect: true,
@@ -51,8 +51,8 @@ const sysRoleForm = {
                 required: true, message: "角色类型不能为空"
             }
         },
-        "isSys": {
-            label: 'sys.isSys',
+        isSys: {
+            label: "sys.isSys",
             name: "isSys",
             value: 0,
             isSelect: true,
@@ -63,8 +63,8 @@ const sysRoleForm = {
                 required: true, message: "是否系统数据不能为空"
             }
         },
-        "remarks": {
-            label: 'sys.remarks',
+        remarks: {
+            label: "sys.remarks",
             name: "remarks",
             value: "",
             isTextarea: true,
@@ -74,8 +74,8 @@ const sysRoleForm = {
                 required: false, message: ""
             }
         },
-        "routes": {
-            label: 'sys.routes',
+        routes: {
+            label: "sys.routes",
             name: "routes",
             value: "",
             isTree: true,
@@ -84,23 +84,20 @@ const sysRoleForm = {
             rule: {
                 required: false, message: ""
             }
-        },
+        }
     }
-}
+};
 
-
-const initSysRoleForm = (id="", name = "", roleKey = "", roleType = "", isSys = 0, remarks = "") =>{
+const initSysRoleForm = (id = "", name = "", roleKey = "", roleType = "", isSys = 0, remarks = "") => {
     sysRoleForm.info.id.value = id;
     sysRoleForm.info.name.value = name;
     sysRoleForm.info.roleKey.value = roleKey;
     sysRoleForm.info.roleType.value = roleType;
     sysRoleForm.info.isSys.value = isSys;
     sysRoleForm.info.remarks.value = remarks;
-}
-
-
+};
 
 export {
     sysRoleForm,
     initSysRoleForm
-}
+};

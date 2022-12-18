@@ -2,11 +2,15 @@
   <div>
     <div class="header-content">
       <div>
-        <div class="text-unique f40">{{header.unique}}</div>
+        <div class="text-unique f40">
+          {{ header.unique }}
+        </div>
       </div>
       <div>
-        <span class="f24">{{header.rightText}}</span>
-        <div class="text-time f12">{{header.time}}</div>
+        <span class="f24">{{ header.rightText }}</span>
+        <div class="text-time f12">
+          {{ header.time }}
+        </div>
       </div>
     </div>
   </div>
@@ -37,4 +41,3 @@ export default class extends Vue {
   }
 }
 </style>
-

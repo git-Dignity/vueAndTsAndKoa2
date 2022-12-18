@@ -25,30 +25,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import content from './content'
+import { Component, Vue } from "vue-property-decorator";
+import content from "./content";
 
 @Component({
-  name: 'PDFDownload'
+  name: "PDFDownload"
 })
 export default class extends Vue {
   private article: { title?: string, content?: string } = {}
   private fullscreenLoading = true
 
   mounted() {
-    this.fetchData()
+    this.fetchData();
   }
 
   private fetchData() {
-    const { title } = content
-    document.title = title
-    this.article = content
+    const { title } = content;
+    document.title = title;
+    this.article = content;
     setTimeout(() => {
-      this.fullscreenLoading = false
+      this.fullscreenLoading = false;
       this.$nextTick(() => {
-        window.print()
-      })
-    }, 3000)
+        window.print();
+      });
+    }, 3000);
   }
 }
 </script>

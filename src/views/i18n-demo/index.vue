@@ -162,75 +162,75 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { AppModule } from '@/store/modules/app'
-import local from './local'
+import { Component, Vue } from "vue-property-decorator";
+import { AppModule } from "@/store/modules/app";
+import local from "./local";
 
 @Component({
-  name: 'I18n'
+  name: "I18n"
 })
 export default class extends Vue {
-  private date = ''
-  private value = ''
+  private date = ""
+  private value = ""
   private options: any[] = []
   private tableData = [{
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
+    date: "2016-05-03",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
+    date: "2016-05-02",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
+    date: "2016-05-04",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
   },
   {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
+    date: "2016-05-01",
+    name: "Tom",
+    address: "No. 189, Grove St, Los Angeles"
   }]
 
   get lang() {
-    return AppModule.language
+    return AppModule.language;
   }
 
   set lang(lang) {
-    AppModule.SetLanguage(lang)
-    this.$i18n.locale = lang
-    this.setOptions()
+    AppModule.SetLanguage(lang);
+    this.$i18n.locale = lang;
+    this.setOptions();
   }
 
   created() {
-    const viewName = 'i18nView'
-    if (!this.$i18n.getLocaleMessage('en')[viewName]) {
-      this.$i18n.mergeLocaleMessage('en', local.en)
-      this.$i18n.mergeLocaleMessage('zh', local.zh)
-      this.$i18n.mergeLocaleMessage('es', local.es)
-      this.$i18n.mergeLocaleMessage('ja', local.ja)
-      this.$i18n.mergeLocaleMessage('ko', local.ko)
+    const viewName = "i18nView";
+    if (!this.$i18n.getLocaleMessage("en")[viewName]) {
+      this.$i18n.mergeLocaleMessage("en", local.en);
+      this.$i18n.mergeLocaleMessage("zh", local.zh);
+      this.$i18n.mergeLocaleMessage("es", local.es);
+      this.$i18n.mergeLocaleMessage("ja", local.ja);
+      this.$i18n.mergeLocaleMessage("ko", local.ko);
     }
-    this.setOptions() // set default select options
+    this.setOptions(); // set default select options
   }
 
   private setOptions() {
     this.options = [
       {
-        value: '1',
-        label: this.$t('i18nView.one')
+        value: "1",
+        label: this.$t("i18nView.one")
       },
       {
-        value: '2',
-        label: this.$t('i18nView.two')
+        value: "2",
+        label: this.$t("i18nView.two")
       },
       {
-        value: '3',
-        label: this.$t('i18nView.three')
+        value: "3",
+        label: this.$t("i18nView.three")
       }
-    ]
+    ];
   }
 }
 </script>

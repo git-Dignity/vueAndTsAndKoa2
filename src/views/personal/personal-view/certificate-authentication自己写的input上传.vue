@@ -1,26 +1,47 @@
 <template>
   <div class="app-container">
     <el-row :gutter="15">
-      <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+      <el-col
+        :xs="5"
+        :sm="5"
+        :md="5"
+        :lg="5"
+        :xl="5"
+      >
         <form id="sendAppealForm">
-          <a href="javascript:void(0);" class="upload">
+          <a
+            href="javascript:void(0);"
+            class="upload"
+          >
             选择文件111 >
-            <span class="unfile">{{unfile}}</span>
+            <span class="unfile">{{ unfile }}</span>
             <input
-              class="replyFileid"
-              @change="getfilename($event)"
-              name="appealFile"
               id="appealFile"
+              class="replyFileid"
+              name="appealFile"
               type="file"
               accept="*"
               multiple="multiple"
-            />
+              @change="getfilename($event)"
+            >
           </a>
         </form>
       </el-col>
-      <el-col :xs="5" :sm="5" :md="5" :lg="5" :xl="5">
+      <el-col
+        :xs="5"
+        :sm="5"
+        :md="5"
+        :lg="5"
+        :xl="5"
+      >
         <div class="component-item">
-          <el-button v-waves type="primary" v-on:click.prevent="uoload()">上传</el-button>
+          <el-button
+            v-waves
+            type="primary"
+            @click.prevent="uoload()"
+          >
+            上传
+          </el-button>
         </div>
       </el-col>
     </el-row>
@@ -28,14 +49,23 @@
     <!-- <pan-thumb :image="image" /> -->
 
     <el-row>
-      <el-col :span="8" v-for="data in certificateData" :key="data.id" >
-        <el-card :body-style="{ padding: '0px' }">
+      <el-col
+        v-for="data in certificateData"
+        :key="data.id"
+        :span="8"
+      >
+        <el-card :body-style="{padding: '0px'}">
           <!-- <img :src="data.imgUrl" class="image"> -->
-          <el-avatar shape="square" :size="200" fit="fill" :src="data.imgUrl"></el-avatar>
+          <el-avatar
+            shape="square"
+            :size="200"
+            fit="fill"
+            :src="data.imgUrl"
+          />
           <div style="padding: 14px;">
-            <span>{{data.file_name}}</span>
+            <span>{{ data.file_name }}</span>
             <div class="bottom clearfix">
-              <time class="time">{{data.upload_time}}</time>
+              <time class="time">{{ data.upload_time }}</time>
             </div>
           </div>
         </el-card>
@@ -52,7 +82,7 @@ import {
   getCertificate
 } from "@/api/personal/personal-view/certificateAuthentication";
 import { qiniuUrl } from "@/api/common";
-import axios from 'axios';
+import axios from "axios";
 
 @Component({
   name: "certificateAuthentication",
@@ -74,7 +104,7 @@ export default class extends Vue {
 
   private async initPhoto() {
     // console.log(UserModule.name);
-    let { data } = await getCertificate(UserModule.name);
+    const { data } = await getCertificate(UserModule.name);
     data.forEach((element: any) => {
       element.imgUrl = qiniuUrl + element.file_key;
     });
@@ -85,9 +115,9 @@ export default class extends Vue {
   private getfilename(e: any) {
     this.filess = e.target.files;
 
-    var _el = e.target.files;
-    var _name = "";
-    for (var i = 0; i < _el.length; i++) {
+    const _el = e.target.files;
+    let _name = "";
+    for (let i = 0; i < _el.length; i++) {
       if (i == _el.length - 1) {
         _name += _el[i].name;
       } else {
@@ -104,7 +134,7 @@ export default class extends Vue {
         type: "warning"
       });
     } else {
-      let param = new FormData();
+      const param = new FormData();
       param.append("username", UserModule.name);
 
       this.filess.forEach((element: any, index: number) => {

@@ -45,13 +45,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
-import PanThumb from '@/components/PanThumb/index.vue'
-import Mallki from '@/components/TextHoverEffect/Mallki.vue'
+import { Component, Vue } from "vue-property-decorator";
+import { UserModule } from "@/store/modules/user";
+import PanThumb from "@/components/PanThumb/index.vue";
+import Mallki from "@/components/TextHoverEffect/Mallki.vue";
 
 @Component({
-  name: 'BoxCard',
+  name: "BoxCard",
   components: {
     PanThumb,
     Mallki
@@ -59,15 +59,15 @@ import Mallki from '@/components/TextHoverEffect/Mallki.vue'
 })
 export default class extends Vue {
   get name() {
-    return UserModule.name
+    return UserModule.name;
   }
 
   get avatar() {
-    return UserModule.avatar
+    return UserModule.avatar;
   }
 
   get roles() {
-    return UserModule.roles
+    return UserModule.roles;
   }
 }
 </script>

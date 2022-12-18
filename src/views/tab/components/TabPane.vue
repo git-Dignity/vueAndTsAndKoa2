@@ -86,38 +86,38 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { getArticles } from "@/api/articles";
 
 @Component({
-  name: 'TabPane'
+  name: "TabPane"
 })
 export default class extends Vue {
-  @Prop({ default: 'CN' }) private type!: string
+  @Prop({ default: "CN" }) private type!: string
 
   private list = null
   private listQuery = {
     page: 1,
     limit: 5,
     type: this.type,
-    sort: 'id'
+    sort: "id"
   }
 
   private loading = false
 
   created() {
-    this.getList()
+    this.getList();
   }
 
   private async getList() {
-    this.loading = true
-    this.$emit('create') // for test
-    const { data } = await getArticles(this.listQuery)
-    this.list = data.items
+    this.loading = true;
+    this.$emit("create"); // for test
+    const { data } = await getArticles(this.listQuery);
+    this.list = data.items;
     // Just to simulate the time of the request
     setTimeout(() => {
-      this.loading = false
-    }, 0.5 * 1000)
+      this.loading = false;
+    }, 0.5 * 1000);
   }
 }
 </script>

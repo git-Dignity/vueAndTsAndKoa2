@@ -5,8 +5,8 @@ const sysUserForm = {
     labelWidth: 120,
     size: "medium",
     info: {
-        "id": {
-            label: 'id',
+        id: {
+            label: "id",
             name: "id",
             value: "",
             disabled: true,
@@ -15,8 +15,8 @@ const sysUserForm = {
                 required: false, message: ""
             }
         },
-        'username': {
-            label: 'sys.user.name',
+        username: {
+            label: "sys.user.name",
             name: "username",
             value: "",
             disabled: false,
@@ -26,8 +26,8 @@ const sysUserForm = {
                 required: true, message: "用户名不能为空"
             }
         },
-        "photo": {
-            label: 'sys.photo',
+        photo: {
+            label: "sys.photo",
             name: "photo",
             value: "",
             isPhoto: true,
@@ -42,8 +42,8 @@ const sysUserForm = {
                 required: true, message: "头像不能为空"
             }
         },
-        "phone": {
-            label: 'sys.phone',
+        phone: {
+            label: "sys.phone",
             name: "phone",
             value: "",
             disabled: false,
@@ -52,8 +52,8 @@ const sysUserForm = {
                 required: true, message: "手机号码不能为空"
             }
         },
-        "roles": {
-            label: 'sys.routes',
+        roles: {
+            label: "sys.routes",
             name: "roles",
             value: "",
             disabled: false,
@@ -64,8 +64,7 @@ const sysUserForm = {
         }
 
     }
-}
-
+};
 
 const initSysUserForm = (id = "", name = "", phone = "", photo = "", roles = "") => {
     sysUserForm.info.id.value = id;
@@ -73,11 +72,9 @@ const initSysUserForm = (id = "", name = "", phone = "", photo = "", roles = "")
     sysUserForm.info.phone.value = phone;
     sysUserForm.info.photo.value = photo;
     sysUserForm.info.roles.value = roles;
-}
-
-
+};
 
 export {
     sysUserForm,
     initSysUserForm
-}
+};

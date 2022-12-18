@@ -16,7 +16,7 @@
       tyle="position: absolute;bottom: 15px;margin-left: 40px;"
       @click="toggleShow"
     >
-      Change Avatar 
+      Change Avatar
     </el-button>
     <avatar-upload
       v-model="showImageUpload"
@@ -33,12 +33,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import AvatarUpload from '@/components/AvatarUpload/index.vue'
-import PanThumb from '@/components/PanThumb/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import AvatarUpload from "@/components/AvatarUpload/index.vue";
+import PanThumb from "@/components/PanThumb/index.vue";
 
 @Component({
-  name: 'AvatarUploadDemo',
+  name: "AvatarUploadDemo",
   components: {
     AvatarUpload,
     PanThumb
@@ -46,21 +46,21 @@ import PanThumb from '@/components/PanThumb/index.vue'
 })
 export default class extends Vue {
   private showImageUpload = false
-  private image = 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
-  private params = { someParams: 'your_params_goes_here' }
-  private headers = { smail: '*_~' }
+  private image = "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191"
+  private params = { someParams: "your_params_goes_here" }
+  private headers = { smail: "*_~" }
 
   private toggleShow() {
-    this.showImageUpload = !this.showImageUpload
+    this.showImageUpload = !this.showImageUpload;
   }
 
   private onCropUploadSuccess(jsonData: any, field: string) {
-    this.showImageUpload = false
-    this.image = jsonData.files[field]
+    this.showImageUpload = false;
+    this.image = jsonData.files[field];
   }
 
   private onClose() {
-    this.showImageUpload = false
+    this.showImageUpload = false;
   }
 }
 </script>

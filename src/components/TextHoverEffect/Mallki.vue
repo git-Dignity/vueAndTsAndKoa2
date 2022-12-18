@@ -11,14 +11,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'Mallki'
+  name: "Mallki"
 })
 export default class extends Vue {
-  @Prop({ default: '' }) private className!: string
-  @Prop({ default: 'vue-typescript-admin' }) private text!: string
+  @Prop({ default: "" }) private className!: string
+  @Prop({ default: "vue-typescript-admin" }) private text!: string
 }
 </script>
 

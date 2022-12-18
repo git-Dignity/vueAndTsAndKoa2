@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Router, { RouteConfig, RawLocation, Route } from 'vue-router'
+import Vue from "vue";
+import Router, { RouteConfig, RawLocation, Route } from "vue-router";
 
 /* Layout */
-import Layout from '@/layout/index.vue'
+import Layout from "@/layout/index.vue";
 
 /* Router modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+import componentsRouter from "./modules/components";
+import chartsRouter from "./modules/charts";
+import tableRouter from "./modules/table";
+import nestedRouter from "./modules/nested";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /*
   Note: sub-menu only appear when children.length>=1
@@ -41,54 +41,54 @@ Vue.use(Router)
   all roles can be accessed
 */
 export const constantRoutes: RouteConfig[] = [
-  { 
-    path: '/redirect',
+  {
+    path: "/redirect",
     component: Layout,
     meta: { hidden: true },
     children: [
       {
-        path: '/redirect/:path(.*)',
-        component: () => import(/* webpackChunkName: "redirect" */ '@/views/redirect/index.vue')
+        path: "/redirect/:path(.*)",
+        component: () => import(/* webpackChunkName: "redirect" */ "@/views/redirect/index.vue")
       }
     ]
   },
   {
-    path: '/registe',
-    component: () => import(/* webpackChunkName: "registe" */ '@/views/registe/index.vue'),
+    path: "/registe",
+    component: () => import(/* webpackChunkName: "registe" */ "@/views/registe/index.vue"),
     meta: { hidden: true }
   },
   {
-    path: '/login',
-    component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
+    path: "/login",
+    component: () => import(/* webpackChunkName: "login" */ "@/views/login/index.vue"),
     meta: { hidden: true }
   },
   {
-    path: '/auth-redirect',
-    component: () => import(/* webpackChunkName: "auth-redirect" */ '@/views/login/auth-redirect.vue'),
+    path: "/auth-redirect",
+    component: () => import(/* webpackChunkName: "auth-redirect" */ "@/views/login/auth-redirect.vue"),
     meta: { hidden: true }
   },
   {
-    path: '/404',
-    component: () => import(/* webpackChunkName: "404" */ '@/views/error-page/404.vue'),
+    path: "/404",
+    component: () => import(/* webpackChunkName: "404" */ "@/views/error-page/404.vue"),
     meta: { hidden: true }
   },
   {
-    path: '/401',
-    component: () => import(/* webpackChunkName: "401" */ '@/views/error-page/401.vue'),
+    path: "/401",
+    component: () => import(/* webpackChunkName: "401" */ "@/views/error-page/401.vue"),
     meta: { hidden: true }
   },
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/dashboard',
+    redirect: "/dashboard",
     children: [
       {
-        path: 'dashboard',
-        component: () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/index.vue'),
-        name: 'Dashboard',
+        path: "dashboard",
+        component: () => import(/* webpackChunkName: "dashboard" */ "@/views/dashboard/index.vue"),
+        name: "Dashboard",
         meta: {
-          title: 'dashboard',
-          icon: 'dashboard',
+          title: "dashboard",
+          icon: "dashboard",
           affix: true
         }
       }
@@ -107,41 +107,41 @@ export const constantRoutes: RouteConfig[] = [
   //   ]
   // },
   {
-    path: '/guide',
+    path: "/guide",
     component: Layout,
-    redirect: '/guide/index',
+    redirect: "/guide/index",
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "guide" */ '@/views/guide/index.vue'),
-        name: 'Guide',
+        path: "index",
+        component: () => import(/* webpackChunkName: "guide" */ "@/views/guide/index.vue"),
+        name: "Guide",
         meta: {
-          title: 'guide',
-          icon: 'guide',
+          title: "guide",
+          icon: "guide",
           noCache: true
         }
       }
     ]
   },
   {
-    path: '/profile',
+    path: "/profile",
     component: Layout,
-    redirect: '/profile/index',
+    redirect: "/profile/index",
     meta: { hidden: true },
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "profile" */ '@/views/profile/index.vue'),
-        name: 'Profile',
+        path: "index",
+        component: () => import(/* webpackChunkName: "profile" */ "@/views/profile/index.vue"),
+        name: "Profile",
         meta: {
-          title: 'profile',
-          icon: 'user',
+          title: "profile",
+          icon: "user",
           noCache: true
         }
       }
     ]
   }
-]
+];
 
 /**
  * asyncRoutes
@@ -149,149 +149,149 @@ export const constantRoutes: RouteConfig[] = [
 */
 export const asyncRoutes: RouteConfig[] = [
   {
-    path: '/permission',
+    path: "/permission",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/permission/directive',
+    redirect: "/permission/directive",
     meta: {
-      title: 'permission',
-      icon: 'lock',
+      title: "permission",
+      icon: "lock",
       alwaysShow: true // will always show the root menu
     },
     children: [
       {
-        path: 'page',
-        component: () => import(/* webpackChunkName: "permission-page" */ '@/views/permission/page.vue'),
+        path: "page",
+        component: () => import(/* webpackChunkName: "permission-page" */ "@/views/permission/page.vue"),
         // componentUrl: 'permission/page',
-        name: 'PagePermission',
+        name: "PagePermission",
         meta: {
-          title: 'pagePermission'
+          title: "pagePermission"
         }
       },
       {
-        path: 'directive',
-        component: () => import(/* webpackChunkName: "permission-directive" */ '@/views/permission/directive.vue'),
+        path: "directive",
+        component: () => import(/* webpackChunkName: "permission-directive" */ "@/views/permission/directive.vue"),
         // componentUrl: 'permission/directive',
-        name: 'DirectivePermission',
+        name: "DirectivePermission",
         meta: {
-          title: 'directivePermission'
+          title: "directivePermission"
           // if do not set roles, means: this page does not require permission
         }
       },
       {
-        path: 'role',
-        component: () => import(/* webpackChunkName: "permission-role" */ '@/views/permission/role.vue'),
+        path: "role",
+        component: () => import(/* webpackChunkName: "permission-role" */ "@/views/permission/role.vue"),
         // componentUrl:  'permission/role',
-        name: 'RolePermission',
+        name: "RolePermission",
         meta: {
-          title: 'rolePermission', 
+          title: "rolePermission",
           noCache: true,
-          roles: ['admin']
+          roles: ["admin"]
         }
       }
     ]
   },
   {
-    path: '/me',
+    path: "/me",
     component: Layout,
     meta: {
-      title: 'me',
-      icon: 'example',
-      roles: ['admin'], // you can set roles in root nav
+      title: "me",
+      icon: "example",
+      roles: ["admin"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
       {
-        path: 'agent-event',
-        component: () => import(/* webpackChunkName: "agent-event" */ '@/views/me/agent-event.vue'),
-        name: 'agentEvent',
-        meta: { title: 'agentEvent', noCache: true }
+        path: "agent-event",
+        component: () => import(/* webpackChunkName: "agent-event" */ "@/views/me/agent-event.vue"),
+        name: "agentEvent",
+        meta: { title: "agentEvent", noCache: true }
       },
       {
-        path: 'features-dev',
-        component: () => import(/* webpackChunkName: "features-dev" */ '@/views/me/features-dev.vue'),
-        name: 'featuresDev',
-        meta: { title: 'featuresDev', noCache: true }
+        path: "features-dev",
+        component: () => import(/* webpackChunkName: "features-dev" */ "@/views/me/features-dev.vue"),
+        name: "featuresDev",
+        meta: { title: "featuresDev", noCache: true }
       },
       {
-        path: 'diary',
-        component: () => import(/* webpackChunkName: "diary" */ '@/views/me/diary.vue'),
-        name: 'diary',
-        meta: { title: 'diary', noCache: true }
+        path: "diary",
+        component: () => import(/* webpackChunkName: "diary" */ "@/views/me/diary.vue"),
+        name: "diary",
+        meta: { title: "diary", noCache: true }
       }
     ]
   },
   {
-    path: '/sys',
+    path: "/sys",
     component: Layout,
     // componentUrl: 'Layout',
     meta: {
-      title: 'sys',
-      icon: 'example',
-      roles: ['admin'], // you can set roles in root nav
+      title: "sys",
+      icon: "example",
+      roles: ["admin"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
       {
-        path: 'sys-user',
-        component: () => import(/* webpackChunkName: "sys-user" */ '@/views/sys/sys-user.vue'),
+        path: "sys-user",
+        component: () => import(/* webpackChunkName: "sys-user" */ "@/views/sys/sys-user.vue"),
         // componentUrl: 'sys/sys-user',
-        name: 'sysUser',
-        meta: { title: 'sysUser', noCache: true }
+        name: "sysUser",
+        meta: { title: "sysUser", noCache: true }
       },
       {
-        path: 'sys-menu',
-        component: () => import(/* webpackChunkName: "sys-menu" */ '@/views/sys/sys-menu.vue'),
+        path: "sys-menu",
+        component: () => import(/* webpackChunkName: "sys-menu" */ "@/views/sys/sys-menu.vue"),
         // componentUrl: 'sys/sys-menu',
-        name: 'sysMenu',
-        meta: { title: 'sysMenu', noCache: true }
+        name: "sysMenu",
+        meta: { title: "sysMenu", noCache: true }
       },
       {
-        path: 'sys-role',
-        component: () => import(/* webpackChunkName: "sys-role" */ '@/views/sys/sys-role.vue'),
+        path: "sys-role",
+        component: () => import(/* webpackChunkName: "sys-role" */ "@/views/sys/sys-role.vue"),
         // componentUrl: 'sys/sys-role',
-        name: 'sysRole',
-        meta: { title: 'sysRole', noCache: true }
+        name: "sysRole",
+        meta: { title: "sysRole", noCache: true }
       }
     ]
   },
   {
-    path: '/personal',
+    path: "/personal",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/personal/personal-view',
-    name: 'personal',
+    redirect: "/personal/personal-view",
+    name: "personal",
     meta: {
-      title: 'personal',
-      icon: 'example',
-      roles: ['admin', 'editor'], // you can set roles in root nav
+      title: "personal",
+      icon: "example",
+      roles: ["admin", "editor"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
       {
-        path: 'personal-view',   
-        component: () => import(/* webpackChunkName: "personal-view" */ '@/views/personal/personal-view/index.vue'),
+        path: "personal-view",
+        component: () => import(/* webpackChunkName: "personal-view" */ "@/views/personal/personal-view/index.vue"),
         // componentUrl: 'personal/personal-view/index',
-        name: 'personalView',
-        redirect: '/personal/personal-view/certificate',
-        meta: { title: 'personalView', noCache: true },
+        name: "personalView",
+        redirect: "/personal/personal-view/certificate",
+        meta: { title: "personalView", noCache: true },
         children: [
           {
-            path: 'certificate',
-            component: () => import(/* webpackChunkName: "certificate" */ '@/views/personal/personal-view/certificate.vue'),
+            path: "certificate",
+            component: () => import(/* webpackChunkName: "certificate" */ "@/views/personal/personal-view/certificate.vue"),
             // componentUrl: 'personal/personal-view/certificate',
-            name: 'certificate',
-            meta: { title: 'certificate', noCache: true }
+            name: "certificate",
+            meta: { title: "certificate", noCache: true }
           },
           {
-            path: 'certificate-authentication',
-            component: () => import(/* webpackChunkName: "certificate-authentication" */ '@/views/personal/personal-view/certificate-authentication.vue'),
+            path: "certificate-authentication",
+            component: () => import(/* webpackChunkName: "certificate-authentication" */ "@/views/personal/personal-view/certificate-authentication.vue"),
             // componentUrl: 'personal/personal-view/certificate-authentication',
-            name: 'certificateAuthentication',
-            meta: { title: 'certificateAuthentication', noCache: true }
+            name: "certificateAuthentication",
+            meta: { title: "certificateAuthentication", noCache: true }
           }
         ]
       }
@@ -299,262 +299,286 @@ export const asyncRoutes: RouteConfig[] = [
   },
 
   {
-    path: '/music',
+    path: "/music",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/music/music-singer',
-    name: 'music',
+    redirect: "/music/music-singer",
+    name: "music",
     meta: {
-      title: 'music',
-      icon: 'music',
-      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      title: "music",
+      icon: "music",
+      roles: ["admin", "editor", "test"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
-          { 
-            path: 'song-list',
-            component: () => import(/* webpackChunkName: "song-list" */ '@/views/music/index.vue'),
+          {
+            path: "song-list",
+            component: () => import(/* webpackChunkName: "song-list" */ "@/views/music/index.vue"),
             // componentUrl: 'music/index',
-            name: 'songList',
-            meta: { title: 'songList', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'singer' }
+            name: "songList",
+            meta: {
+ title: "songList",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "singer"
+}
           },
-          { 
-            path: 'music-singer',
-            component: () => import(/* webpackChunkName: "music-singer" */ '@/views/music/music-singer.vue'),
+          {
+            path: "music-singer",
+            component: () => import(/* webpackChunkName: "music-singer" */ "@/views/music/music-singer.vue"),
             // componentUrl: 'music/music-singer',
-            name: 'musicSinger',
-            meta: { title: 'musicSinger', noCache: true, icon: 'singer' }
+            name: "musicSinger",
+            meta: { title: "musicSinger", noCache: true, icon: "singer" }
           },
           {
-            path: 'singer-song-list',
-            component: () => import(/* webpackChunkName: "singer-song-list" */ '@/views/music/singer-song-list.vue'),
+            path: "singer-song-list",
+            component: () => import(/* webpackChunkName: "singer-song-list" */ "@/views/music/singer-song-list.vue"),
             // componentUrl: 'music/singer-song-list',
-            name: 'singerSongList',
-            meta: { title: 'singerSongList', noCache: true, icon: 'singer-song-list' } 
+            name: "singerSongList",
+            meta: { title: "singerSongList", noCache: true, icon: "singer-song-list" }
           },
           {
-            // path: 'singer-song-lyric/:row',  
-            path: 'singer-song-lyric',  
-            component: () => import(/* webpackChunkName: "singer-song-lyric" */ '@/views/music/singer-song-lyric.vue'),
+            // path: 'singer-song-lyric/:row',
+            path: "singer-song-lyric",
+            component: () => import(/* webpackChunkName: "singer-song-lyric" */ "@/views/music/singer-song-lyric.vue"),
             // componentUrl: 'music/singer-song-lyric',
-            name: 'singerSongLyric',
-            meta: { title: 'singerSongLyric', icon: 'singer-song-lyric' } 
+            name: "singerSongLyric",
+            meta: { title: "singerSongLyric", icon: "singer-song-lyric" }
           }
-        
+
     ]
   },
   // IT知识
   {
-    path: '/itKnowledge',
+    path: "/itKnowledge",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/itKnowledge/front-end',
-    name: 'itKnowledge',
+    redirect: "/itKnowledge/front-end",
+    name: "itKnowledge",
     meta: {
-      title: 'itKnowledge',
-      icon: 'example',
-      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      title: "itKnowledge",
+      icon: "example",
+      roles: ["admin", "editor", "test"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
-          { 
-            path: 'front-end',
-            component: () => import(/* webpackChunkName: "front" */ '@/views/itKnowledge/front-end.vue'),
-            name: 'frontEnd',
-            meta: { title: 'frontEnd', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
+          {
+            path: "front-end",
+            component: () => import(/* webpackChunkName: "front" */ "@/views/itKnowledge/front-end.vue"),
+            name: "frontEnd",
+            meta: {
+ title: "frontEnd",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
           },
-          { 
-            path: 'rear-end',
-            component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/rear-end.vue'),
-            name: 'rearEnd',
-            meta: { title: 'rearEnd', noCache: true, icon: 'example' }
+          {
+            path: "rear-end",
+            component: () => import(/* webpackChunkName: "rear-end" */ "@/views/itKnowledge/rear-end.vue"),
+            name: "rearEnd",
+            meta: { title: "rearEnd", noCache: true, icon: "example" }
           },
-          { 
-            path: 'front-rear-end',
-            component: () => import(/* webpackChunkName: "front-rear-end" */ '@/views/itKnowledge/front-rear-end.vue'),
-            name: 'frontRearEnd',
-            meta: { title: 'frontRearEnd', noCache: true, icon: 'example' }
+          {
+            path: "front-rear-end",
+            component: () => import(/* webpackChunkName: "front-rear-end" */ "@/views/itKnowledge/front-rear-end.vue"),
+            name: "frontRearEnd",
+            meta: { title: "frontRearEnd", noCache: true, icon: "example" }
           },
-          { 
-            path: 'algorithm',
-            component: () => import(/* webpackChunkName: "rear-end" */ '@/views/itKnowledge/algorithm.vue'),
-            name: 'algorithm',
-            meta: { title: 'algorithm', noCache: true, icon: 'example' }
+          {
+            path: "algorithm",
+            component: () => import(/* webpackChunkName: "rear-end" */ "@/views/itKnowledge/algorithm.vue"),
+            name: "algorithm",
+            meta: { title: "algorithm", noCache: true, icon: "example" }
           },
-          { 
-            path: 'tool',
-            component: () => import(/* webpackChunkName: "tool" */ '@/views/itKnowledge/tool.vue'),
-            name: 'tool',
-            meta: { title: 'tool', noCache: true, icon: 'example' }
+          {
+            path: "tool",
+            component: () => import(/* webpackChunkName: "tool" */ "@/views/itKnowledge/tool.vue"),
+            name: "tool",
+            meta: { title: "tool", noCache: true, icon: "example" }
           }
     ]
   },
   // 常用网站
   {
-    path: '/usualWebsite',
+    path: "/usualWebsite",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/usualWebsite/program',
-    name: 'usualWebsite',
+    redirect: "/usualWebsite/program",
+    name: "usualWebsite",
     meta: {
-      title: 'usualWebsite',
-      icon: 'example',
-      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      title: "usualWebsite",
+      icon: "example",
+      roles: ["admin", "editor", "test"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
-          { 
-            path: 'program',
-            component: () => import(/* webpackChunkName: "program" */ '@/views/usualWebsite/program.vue'),
-            name: 'program',
-            meta: { title: 'program', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
+          {
+            path: "program",
+            component: () => import(/* webpackChunkName: "program" */ "@/views/usualWebsite/program.vue"),
+            name: "program",
+            meta: {
+ title: "program",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
           },
-          { 
-            path: 'github',
-            component: () => import(/* webpackChunkName: "github" */ '@/views/usualWebsite/github.vue'),
-            name: 'github',
-            meta: { title: 'github', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
+          {
+            path: "github",
+            component: () => import(/* webpackChunkName: "github" */ "@/views/usualWebsite/github.vue"),
+            name: "github",
+            meta: {
+ title: "github",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
           },
-          { 
-            path: 'design',
-            component: () => import(/* webpackChunkName: "design" */ '@/views/usualWebsite/design.vue'),
-            name: 'design',
-            meta: { title: 'design', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
+          {
+            path: "design",
+            component: () => import(/* webpackChunkName: "design" */ "@/views/usualWebsite/design.vue"),
+            name: "design",
+            meta: {
+ title: "design",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
           },
-          { 
-            path: 'tool',
-            component: () => import(/* webpackChunkName: "tool" */ '@/views/usualWebsite/tool.vue'),
-            name: 'tool',
-            meta: { title: 'tool', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
+          {
+            path: "tool",
+            component: () => import(/* webpackChunkName: "tool" */ "@/views/usualWebsite/tool.vue"),
+            name: "tool",
+            meta: {
+ title: "tool",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
           },
-          { 
-            path: 'movie',
-            component: () => import(/* webpackChunkName: "movie" */ '@/views/usualWebsite/movie.vue'),
-            name: 'movie',
-            meta: { title: 'movie', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
+          {
+            path: "movie",
+            component: () => import(/* webpackChunkName: "movie" */ "@/views/usualWebsite/movie.vue"),
+            name: "movie",
+            meta: {
+ title: "movie",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
           },
-          { 
-            path: 'other',
-            component: () => import(/* webpackChunkName: "other" */ '@/views/usualWebsite/other.vue'),
-            name: 'other',
-            meta: { title: 'other', noCache: true,
-            roles: ['admin', 'editor','test'], // you can set roles in root nav
-             icon: 'example' }
-          },
-        
+          {
+            path: "other",
+            component: () => import(/* webpackChunkName: "other" */ "@/views/usualWebsite/other.vue"),
+            name: "other",
+            meta: {
+ title: "other",
+noCache: true,
+            roles: ["admin", "editor", "test"], // you can set roles in root nav
+             icon: "example"
+}
+          }
+
     ]
   },
   {
-    path: '/eat',
+    path: "/eat",
     component: Layout,
-    redirect: '/eat/index',
-    name: 'eat',
+    redirect: "/eat/index",
+    name: "eat",
     meta: {
-      title: 'eat',
-      icon: 'example',
-      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      title: "eat",
+      icon: "example",
+      roles: ["admin", "editor", "test"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
-          { 
-            path: 'todayEat',
-            component: () => import(/* webpackChunkName: "eat/index" */ '@/views/eat/todayEat.vue'),
+          {
+            path: "todayEat",
+            component: () => import(/* webpackChunkName: "eat/index" */ "@/views/eat/todayEat.vue"),
             // componentUrl: 'eat/index',
-            name: ' todayEat',
-            meta: { title: 'todayEat', noCache: true, icon: 'singer' }
+            name: " todayEat",
+            meta: { title: "todayEat", noCache: true, icon: "singer" }
           },
-          { 
-            path: 'breakfast',
-            component: () => import(/* webpackChunkName: "eat/breakfast" */ '@/views/eat/breakfast.vue'),
+          {
+            path: "breakfast",
+            component: () => import(/* webpackChunkName: "eat/breakfast" */ "@/views/eat/breakfast.vue"),
             // componentUrl: 'eat/breakfast',
-            name: ' breakfast',
-            meta: { title: 'breakfast', noCache: true, icon: 'singer' }
+            name: " breakfast",
+            meta: { title: "breakfast", noCache: true, icon: "singer" }
           },
-          { 
-            path: 'lunch',
-            component: () => import(/* webpackChunkName: "eat/lunch" */ '@/views/eat/lunch.vue'),
+          {
+            path: "lunch",
+            component: () => import(/* webpackChunkName: "eat/lunch" */ "@/views/eat/lunch.vue"),
             // componentUrl: 'eat/lunch',
-            name: ' lunch',
-            meta: { title: 'lunch', noCache: true, icon: 'singer' }
+            name: " lunch",
+            meta: { title: "lunch", noCache: true, icon: "singer" }
           },
-          { 
-            path: 'dinner',
-            component: () => import(/* webpackChunkName: "eat/dinner" */ '@/views/eat/dinner.vue'),
+          {
+            path: "dinner",
+            component: () => import(/* webpackChunkName: "eat/dinner" */ "@/views/eat/dinner.vue"),
             // componentUrl: 'eat/dinner',
-            name: ' dinner',
-            meta: { title: 'dinner', noCache: true, icon: 'singer' }
+            name: " dinner",
+            meta: { title: "dinner", noCache: true, icon: "singer" }
           },
-          { 
-            path: 'nightingale',
-            component: () => import(/* webpackChunkName: "eat/nightingale" */ '@/views/eat/nightingale.vue'),
+          {
+            path: "nightingale",
+            component: () => import(/* webpackChunkName: "eat/nightingale" */ "@/views/eat/nightingale.vue"),
             // componentUrl: 'eat/nightingale',
-            name: ' nightingale',
-            meta: { title: 'nightingale', noCache: true, icon: 'singer' }
+            name: " nightingale",
+            meta: { title: "nightingale", noCache: true, icon: "singer" }
           },
-          { 
-            path: 'other',
-            component: () => import(/* webpackChunkName: "eat/other" */ '@/views/eat/other.vue'),
+          {
+            path: "other",
+            component: () => import(/* webpackChunkName: "eat/other" */ "@/views/eat/other.vue"),
             // componentUrl: 'eat/other',
-            name: ' other',
-            meta: { title: 'other', noCache: true, icon: 'singer' }
-          },
+            name: " other",
+            meta: { title: "other", noCache: true, icon: "singer" }
+          }
     ]
   },
   {
     // 免费api接口调用
-    path: '/apiInterface',
+    path: "/apiInterface",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/apiInterface/phone-attribution',
-    name: 'apiInterface',
+    redirect: "/apiInterface/phone-attribution",
+    name: "apiInterface",
     meta: {
-      title: 'apiInterface',
-      icon: 'music',
-      roles: ['admin', 'editor','test'], // you can set roles in root nav
+      title: "apiInterface",
+      icon: "music",
+      roles: ["admin", "editor", "test"], // you can set roles in root nav
       alwaysShow: true, // will always show the root menu
       noCache: true
     },
     children: [
-          { 
-            path: 'apiInterface/phone-attribution',
-            component: () => import(/* webpackChunkName: "apiInterface/phone-attribution" */ '@/views/apiInterface/phone-attribution.vue'),
+          {
+            path: "apiInterface/phone-attribution",
+            component: () => import(/* webpackChunkName: "apiInterface/phone-attribution" */ "@/views/apiInterface/phone-attribution.vue"),
             // componentUrl: 'apiInterface/phone-attribution',
-            name: 'phoneAttribution',
-            meta: { title: 'phoneAttribution', noCache: true, icon: 'singer' }
-          },
+            name: "phoneAttribution",
+            meta: { title: "phoneAttribution", noCache: true, icon: "singer" }
+          }
     ]
   },
   {
-    path: '/icon',
+    path: "/icon",
     component: Layout,
     // componentUrl: 'Layout',
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "icons" */ '@/views/icons/index.vue'),
+        path: "index",
+        component: () => import(/* webpackChunkName: "icons" */ "@/views/icons/index.vue"),
         // componentUrl: 'icons/index',
-        name: 'Icons',
+        name: "Icons",
         meta: {
-          title: 'icons',
-          icon: 'icon',
+          title: "icons",
+          icon: "icon",
           noCache: true
         }
       }
@@ -566,288 +590,286 @@ export const asyncRoutes: RouteConfig[] = [
   nestedRouter,
   tableRouter,
   {
-    path: '/example',
+    path: "/example",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/example/list',
+    redirect: "/example/list",
     meta: {
-      title: 'example',
-      icon: 'example'
+      title: "example",
+      icon: "example"
     },
     children: [
       {
-        path: 'create',
-        component: () => import(/* webpackChunkName: "example-create" */ '@/views/example/create.vue'),
+        path: "create",
+        component: () => import(/* webpackChunkName: "example-create" */ "@/views/example/create.vue"),
         // componentUrl: 'example/create',
-        name: 'CreateArticle',
+        name: "CreateArticle",
         meta: {
-          title: 'createArticle',
-          icon: 'edit'
+          title: "createArticle",
+          icon: "edit"
         }
       },
       {
-        path: 'edit/:id(\\d+)',
-        component: () => import(/* webpackChunkName: "example-edit" */ '@/views/example/edit.vue'),
+        path: "edit/:id(\\d+)",
+        component: () => import(/* webpackChunkName: "example-edit" */ "@/views/example/edit.vue"),
         // componentUrl: 'example/edit',
-        name: 'EditArticle',
+        name: "EditArticle",
         meta: {
-          title: 'editArticle',
+          title: "editArticle",
           noCache: true,
-          activeMenu: '/example/list',
+          activeMenu: "/example/list",
           hidden: true
         }
       },
       {
-        path: 'list',
-        component: () => import(/* webpackChunkName: "example-list" */ '@/views/example/list.vue'),
+        path: "list",
+        component: () => import(/* webpackChunkName: "example-list" */ "@/views/example/list.vue"),
         // componentUrl: 'example/list',
-        name: 'ArticleList',
+        name: "ArticleList",
         meta: {
-          title: 'articleList',
-          icon: 'list'
+          title: "articleList",
+          icon: "list"
         }
       }
     ]
   },
   {
-    path: '/tab',
+    path: "/tab",
     component: Layout,
     // componentUrl: 'Layout',
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "tab" */ '@/views/tab/index.vue'),
+        path: "index",
+        component: () => import(/* webpackChunkName: "tab" */ "@/views/tab/index.vue"),
         // componentUrl: 'tab/index',
-        name: 'Tab',
+        name: "Tab",
         meta: {
-          title: 'tab',
-          icon: 'tab'
+          title: "tab",
+          icon: "tab"
         }
       }
     ]
   },
   {
-    path: '/error',
+    path: "/error",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: 'noredirect',
+    redirect: "noredirect",
     meta: {
-      title: 'errorPages',
-      icon: '404'
+      title: "errorPages",
+      icon: "404"
     },
     children: [
       {
-        path: '401',
-        component: () => import(/* webpackChunkName: "error-page-401" */ '@/views/error-page/401.vue'),
+        path: "401",
+        component: () => import(/* webpackChunkName: "error-page-401" */ "@/views/error-page/401.vue"),
         // componentUrl: 'error-page/401',
-        name: 'Page401',
+        name: "Page401",
         meta: {
-          title: 'page401',
+          title: "page401",
           noCache: true
         }
       },
       {
-        path: '404',
-        component: () => import(/* webpackChunkName: "error-page-404" */ '@/views/error-page/404.vue'),
+        path: "404",
+        component: () => import(/* webpackChunkName: "error-page-404" */ "@/views/error-page/404.vue"),
         // componentUrl: 'error-page/404',
-        name: 'Page404',
+        name: "Page404",
         meta: {
-          title: 'page404',
+          title: "page404",
           noCache: true
         }
       }
     ]
   },
   {
-    path: '/error-log',
+    path: "/error-log",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: 'noredirect',
+    redirect: "noredirect",
     children: [
       {
-        path: 'log',
-        component: () => import(/* webpackChunkName: "error-log" */ '@/views/error-log/index.vue'),
+        path: "log",
+        component: () => import(/* webpackChunkName: "error-log" */ "@/views/error-log/index.vue"),
         // componentUrl: 'error-log/index',
-        name: 'ErrorLog',
+        name: "ErrorLog",
         meta: {
-          title: 'errorLog',
-          icon: 'bug'
+          title: "errorLog",
+          icon: "bug"
         }
       }
     ]
   },
   {
-    path: '/excel',
+    path: "/excel",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/excel/export-excel',
+    redirect: "/excel/export-excel",
     meta: {
-      title: 'excel',
-      icon: 'excel'
+      title: "excel",
+      icon: "excel"
     },
     children: [
       {
-        path: 'export-excel',
-        component: () => import(/* webpackChunkName: "export-excel" */ '@/views/excel/export-excel.vue'),
+        path: "export-excel",
+        component: () => import(/* webpackChunkName: "export-excel" */ "@/views/excel/export-excel.vue"),
         // componentUrl: 'excel/export-excel',
-        name: 'ExportExcel',
-        meta: { title: 'exportExcel' }
+        name: "ExportExcel",
+        meta: { title: "exportExcel" }
       },
       {
-        path: 'export-selected-excel',
-        component: () => import(/* webpackChunkName: "select-excel" */ '@/views/excel/select-excel.vue'),
+        path: "export-selected-excel",
+        component: () => import(/* webpackChunkName: "select-excel" */ "@/views/excel/select-excel.vue"),
         // componentUrl: 'excel/select-excel',
-        name: 'SelectExcel',
-        meta: { title: 'selectExcel' }
+        name: "SelectExcel",
+        meta: { title: "selectExcel" }
       },
       {
-        path: 'export-merge-header',
-        component: () => import(/* webpackChunkName: "merge-header" */ '@/views/excel/merge-header.vue'),
+        path: "export-merge-header",
+        component: () => import(/* webpackChunkName: "merge-header" */ "@/views/excel/merge-header.vue"),
         // componentUrl: 'excel/merge-header',
-        name: 'MergeHeader',
-        meta: { title: 'mergeHeader' }
+        name: "MergeHeader",
+        meta: { title: "mergeHeader" }
       },
       {
-        path: 'upload-excel',
-        component: () => import(/* webpackChunkName: "upload-excel" */ '@/views/excel/upload-excel.vue'),
+        path: "upload-excel",
+        component: () => import(/* webpackChunkName: "upload-excel" */ "@/views/excel/upload-excel.vue"),
         // componentUrl: 'excel/upload-excel',
-        name: 'UploadExcel',
-        meta: { title: 'uploadExcel' }
+        name: "UploadExcel",
+        meta: { title: "uploadExcel" }
       }
     ]
   },
   {
-    path: '/zip',
+    path: "/zip",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/zip/download',
+    redirect: "/zip/download",
     meta: {
-      title: 'zip',
-      icon: 'zip',
+      title: "zip",
+      icon: "zip",
       alwaysShow: true // will always show the root menu
     },
     children: [
       {
-        path: 'download',
-        component: () => import(/* webpackChunkName: "zip" */ '@/views/zip/index.vue'),
+        path: "download",
+        component: () => import(/* webpackChunkName: "zip" */ "@/views/zip/index.vue"),
         // componentUrl: 'zip/index',
-        name: 'ExportZip',
-        meta: { title: 'exportZip' }
+        name: "ExportZip",
+        meta: { title: "exportZip" }
       }
     ]
   },
   {
-    path: '/pdf',
+    path: "/pdf",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: '/pdf/index',
+    redirect: "/pdf/index",
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "pdf" */ '@/views/pdf/index.vue'),
+        path: "index",
+        component: () => import(/* webpackChunkName: "pdf" */ "@/views/pdf/index.vue"),
         // componentUrl: 'pdf/index',
-        name: 'PDF',
+        name: "PDF",
         meta: {
-          title: 'pdf',
-          icon: 'pdf'
+          title: "pdf",
+          icon: "pdf"
         }
       }
     ]
   },
   {
-    path: '/pdf-download-example',
-    component: () => import(/* webpackChunkName: "pdf-download-example" */ '@/views/pdf/download.vue'),
+    path: "/pdf-download-example",
+    component: () => import(/* webpackChunkName: "pdf-download-example" */ "@/views/pdf/download.vue"),
     // componentUrl: 'pdf/download',
     meta: { hidden: true }
   },
   {
-    path: '/theme',
+    path: "/theme",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: 'noredirect',
+    redirect: "noredirect",
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "theme" */ '@/views/theme/index.vue'),
+        path: "index",
+        component: () => import(/* webpackChunkName: "theme" */ "@/views/theme/index.vue"),
         // componentUrl: 'theme/index',
-        name: 'Theme',
+        name: "Theme",
         meta: {
-          title: 'theme',
-          icon: 'theme'
+          title: "theme",
+          icon: "theme"
         }
       }
     ]
   },
   {
-    path: '/clipboard',
+    path: "/clipboard",
     component: Layout,
     // componentUrl: 'Layout',
-    redirect: 'noredirect',
+    redirect: "noredirect",
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "clipboard" */ '@/views/clipboard/index.vue'),
+        path: "index",
+        component: () => import(/* webpackChunkName: "clipboard" */ "@/views/clipboard/index.vue"),
         // componentUrl: 'clipboard/index',
-        name: 'Clipboard',
+        name: "Clipboard",
         meta: {
-          title: 'clipboard',
-          icon: 'clipboard'
+          title: "clipboard",
+          icon: "clipboard"
         }
       }
     ]
   },
   {
-    path: '/i18n',
+    path: "/i18n",
     component: Layout,
     // componentUrl: 'Layout',
     children: [
       {
-        path: 'index',
-        component: () => import(/* webpackChunkName: "i18n-demo" */ '@/views/i18n-demo/index.vue'),
+        path: "index",
+        component: () => import(/* webpackChunkName: "i18n-demo" */ "@/views/i18n-demo/index.vue"),
         // componentUrl: 'i18n-demo/index',
-        name: 'I18n',
+        name: "I18n",
         meta: {
-          title: 'i18n',
-          icon: 'international'
+          title: "i18n",
+          icon: "international"
         }
       }
     ]
   },
   {
-    path: 'https://github.com/Armour/vue-typescript-admin-template',
+    path: "https://github.com/Armour/vue-typescript-admin-template",
     meta: {
-      title: 'externalLink',
-      icon: 'link'
+      title: "externalLink",
+      icon: "link"
     }
   },
   {
     // path为*代表匹配任何页面，前提是你的路由的配置里面没有其他项能匹配上用户的输入的，这是一个权重问题，
     // *的权重是最低的，放最后面的原因仅仅是为了好看，符合逻辑，
     // 实际上你放哪都一样，当你输入正确的地址仍然会跳转到正确的页面。
-    path: '*',
-    redirect: '/404',
+    path: "*",
+    redirect: "/404",
     meta: { hidden: true }
   }
-]
+];
 
 const createRouter = () => new Router({
-  mode: 'history',  // Disabled due to Github Pages doesn't support this, enable this if you need.
+  mode: "history", // Disabled due to Github Pages doesn't support this, enable this if you need.
   scrollBehavior: (to, from, savedPosition) => {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { x: 0, y: 0 }
+      return { x: 0, y: 0 };
     }
   },
   base: process.env.BASE_URL,
   routes: constantRoutes
-})
+});
 
-const router = createRouter()
+const router = createRouter();
 
-
-
-// 
+//
 
 // Personal utils. Can be replaced with `Function` and `(e: Error) => any;` respectively.
 export type AnyFunction<RETURN_T = any> = (...args: any[]) => RETURN_T;
@@ -879,22 +901,18 @@ export function augmentVueRouterPush(): void {
 		}
   }
 
-
   Router.prototype.push = augmentedPush;
-  
 }
 
-augmentVueRouterPush()
-
+augmentVueRouterPush();
 
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter();
-  (router as any).matcher = (newRouter as any).matcher // reset router
+  (router as any).matcher = (newRouter as any).matcher; // reset router
 }
 
-export default router
-
+export default router;
 
 // 登录要点两下才可登录成功
 

@@ -1,3 +1,3 @@
-import SearchFeatures from './SearchFeatures.vue'
+import SearchFeatures from "./SearchFeatures.vue";
 
-export default SearchFeatures
+export default SearchFeatures;

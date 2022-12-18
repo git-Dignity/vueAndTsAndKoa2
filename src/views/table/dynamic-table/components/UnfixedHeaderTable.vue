@@ -40,27 +40,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'UnfixedHeaderTable'
+  name: "UnfixedHeaderTable"
 })
 export default class extends Vue {
   private tableData = [
     {
-      name: 'fruit-1',
-      apple: 'apple-10',
-      banana: 'banana-10',
-      orange: 'orange-10'
+      name: "fruit-1",
+      apple: "apple-10",
+      banana: "banana-10",
+      orange: "orange-10"
     },
     {
-      name: 'fruit-2',
-      apple: 'apple-20',
-      banana: 'banana-20',
-      orange: 'orange-20'
+      name: "fruit-2",
+      apple: "apple-20",
+      banana: "banana-20",
+      orange: "orange-20"
     }
   ]
 
-  private formThead = ['apple', 'banana']
+  private formThead = ["apple", "banana"]
 }
 </script>

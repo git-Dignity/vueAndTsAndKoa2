@@ -1,9 +1,8 @@
-import request from '@/utils/request'
-import axios from 'axios';
+import request from "@/utils/request";
+import axios from "axios";
 
-// const url = "http://localhost"  
-const url = "http://zhengzemin.cn"
-
+// const url = "http://localhost"
+const url = "http://zhengzemin.cn";
 
 // 先拿到歌手的清单
 export const getArtistList = (data: any) => {
@@ -17,9 +16,9 @@ export const getArtistList = (data: any) => {
                 reject(err.data);
             });
     });
-}
+};
 
-// 歌手的全部歌曲 
+// 歌手的全部歌曲
 export const getArtistTopSong = (data: any) => {
     return new Promise((resolve, reject) => {
         axios
@@ -31,8 +30,7 @@ export const getArtistTopSong = (data: any) => {
                 reject(err.data);
             });
     });
-}
-
+};
 
 // 歌手的某条歌曲
 export const getSongUrl = (data: any) => {
@@ -46,8 +44,7 @@ export const getSongUrl = (data: any) => {
                 reject(err.data);
             });
     });
-}
-
+};
 
 // 歌手的某条歌曲的歌词
 export const getLyric = (data: any) => {
@@ -61,15 +58,11 @@ export const getLyric = (data: any) => {
                 reject(err.data);
             });
     });
-}
-
-
-
-
+};
 
 /**
  * 获取歌曲歌词
- * @param data  
+ * @param data
  * data = {
  *    type: 1,
       area: 7,
@@ -94,11 +87,10 @@ export const getSongLyric = (data: any) => {
     // console.log(unit_title);
 
     return new Promise((resolve, reject) => {
-
         getArtistList({
             type: data.type,
             area: data.area,
-            limit: data.limit,
+            limit: data.limit
         }).then((res: any) => {
             const artist = res.artists.find((value: any) => value.name.search(data.singerName) != -1); // 获取歌手
             // console.log(artist)
@@ -108,7 +100,7 @@ export const getSongLyric = (data: any) => {
             }).then((res: any) => {
                 // console.log(res);
                 const songUrlTmp = res.songs.find((value: any) => value.name.search(data.songName) != -1);
-                // console.log(songUrlTmp)  
+                // console.log(songUrlTmp)
                 if (songUrlTmp) {
                     getSongUrl({
                         id: songUrlTmp.id
@@ -119,18 +111,12 @@ export const getSongLyric = (data: any) => {
                         }).then((res: any) => {
                             // console.log(res)
                             resolve(res);
-                        })
-                    })
+                        });
+                    });
                 } else {
                     reject("查无此歌曲歌词");
                 }
-
-
             });
-
-
         });
-
-
     });
-}
+};

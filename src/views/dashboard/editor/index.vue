@@ -28,31 +28,31 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { UserModule } from '@/store/modules/user'
-import PanThumb from '@/components/PanThumb/index.vue'
-import GithubCorner from '@/components/GithubCorner/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import { UserModule } from "@/store/modules/user";
+import PanThumb from "@/components/PanThumb/index.vue";
+import GithubCorner from "@/components/GithubCorner/index.vue";
 
 @Component({
-  name: 'DashboardEditor',
+  name: "DashboardEditor",
   components: {
     PanThumb,
     GithubCorner
   }
 })
 export default class extends Vue {
-  private emptyGif = 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
+  private emptyGif = "https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3"
 
   get name() {
-    return UserModule.name
+    return UserModule.name;
   }
 
   get avatar() {
-    return UserModule.avatar
+    return UserModule.avatar;
   }
 
   get roles() {
-    return UserModule.roles
+    return UserModule.roles;
   }
 }
 </script>

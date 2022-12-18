@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="btn ml8" :class="{ 'btnClick': isClick }" @click="searchPhone">查询</div>
+    <div
+      class="btn ml8"
+      :class="{'btnClick': isClick}"
+      @click="searchPhone"
+    >
+      查询
+    </div>
   </div>
 </template>
 
@@ -74,7 +80,6 @@ export default class extends Vue {
   }
 }
 </style>
-
 
 <!--  写组件，写规范
   实现点击按钮后CSS加载效果: https://mp.weixin.qq.com/s/82HRpX5WpDVt7DTsdDsyzA

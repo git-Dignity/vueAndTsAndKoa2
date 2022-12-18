@@ -5,18 +5,15 @@ export interface ISysRoleData {
     roleKey: string
     roleType: string
     isSys: number
-    remarks: string 
+    remarks: string
     routes: Array<any>
-  } 
-
-
+  }
 
   export interface IRoutesTreeData {
     children: IRoutesTreeData[]
     title: string
     path: string
   }
-
 
   export interface ISysUserData {
     id: string
@@ -26,7 +23,3 @@ export interface ISysRoleData {
     roles: string
     token: string
   }
-
-
-
-  

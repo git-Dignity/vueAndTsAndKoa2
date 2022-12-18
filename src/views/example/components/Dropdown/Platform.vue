@@ -26,26 +26,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'PlatformDropdown'
+  name: "PlatformDropdown"
 })
 export default class extends Vue {
   @Prop({ required: true }) private value!: string[]
 
   private platformsOptions = [
-    { key: 'a-platform', name: 'a-platform' },
-    { key: 'b-platform', name: 'b-platform' },
-    { key: 'c-platform', name: 'c-platform' }
+    { key: "a-platform", name: "a-platform" },
+    { key: "b-platform", name: "b-platform" },
+    { key: "c-platform", name: "c-platform" }
   ]
 
   get platforms() {
-    return this.value
+    return this.value;
   }
 
   set platforms(value) {
-    this.$emit('input', value)
+    this.$emit("input", value);
   }
 }
 </script>

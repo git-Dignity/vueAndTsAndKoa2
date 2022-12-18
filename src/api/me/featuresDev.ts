@@ -1,5 +1,4 @@
-import request from '@/utils/request'
-
+import request from "@/utils/request";
 
 /**
  * 查询
@@ -7,12 +6,10 @@ import request from '@/utils/request'
  */
 export const get = (params: any) =>
     request({
-        url: '/featuresDev/',
-        method: 'get',
+        url: "/featuresDev/",
+        method: "get",
         params
-    })
-
-  
+    });
 
 /**
  * 添加
@@ -20,11 +17,10 @@ export const get = (params: any) =>
  */
 export const create = (data: any) =>
     request({
-        url: '/featuresDev/',
-        method: 'post',
+        url: "/featuresDev/",
+        method: "post",
         data
-    })
-  
+    });
 
     /**
      * 更新
@@ -32,10 +28,10 @@ export const create = (data: any) =>
      */
 export const update = (data: any) =>
     request({
-        url: `/featuresDev/`,
-        method: 'put',
+        url: "/featuresDev/",
+        method: "put",
         data
-    })
+    });
 
     /**
      * 删除
@@ -43,7 +39,7 @@ export const update = (data: any) =>
      */
 export const del = (params: any) =>
     request({
-        url: `/featuresDev/`,
-        method: 'delete',
+        url: "/featuresDev/",
+        method: "delete",
         params
-    })
+    });

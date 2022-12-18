@@ -7,16 +7,14 @@
  * @FilePath: \vue-typescript-admin-template-master\src\views\dashboard\admin\components\tool.ts
  */
 
-
- 
   /**
    * @description: 给我一个数组data，根据特定字段field，返回flag有效的数组、失效的数组
    * @param {Array} data
    * @return {Array}
    */
-  const getEfficientAndFail = (data: Array<any>, field: string, fun: Function) =>{
+  const getEfficientAndFail = (data: Array<any>, field: string, fun: Function) => {
     // console.log(data, field, fun);
-    
+
     const efficient: any = []; // 有效
     const fail: any = []; // 失效
 
@@ -38,10 +36,8 @@
     });
 
     return [Object.values(efficient), Object.values(fail), Object.keys(efficient), Object.keys(fail)];
-  }
-
-
+  };
 
   export {
     getEfficientAndFail
-  }
+  };

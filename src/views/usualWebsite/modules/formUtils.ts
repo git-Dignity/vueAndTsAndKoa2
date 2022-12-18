@@ -8,39 +8,37 @@
  */
 // Form工具方法
 
-import { programTypeOptions, designTypeOptions, toolTypeOptions, movieTypeOptions,otherTypeOptions, githubTypeOptions } from './options';
+import { programTypeOptions, designTypeOptions, toolTypeOptions, movieTypeOptions, otherTypeOptions, githubTypeOptions } from "./options";
 
 /**
  * 设置表单的type类型的option
  * @param type 类别（前端：1；后端：2）
  */
-const setType = (type:number, Form:any) =>{
-    switch(type){
+const setType = (type: number, Form: any) => {
+    switch (type) {
         case 1:
-            Form.info.type.options = programTypeOptions
-            break
+            Form.info.type.options = programTypeOptions;
+            break;
         case 2:
-            Form.info.type.options = designTypeOptions
-            break
+            Form.info.type.options = designTypeOptions;
+            break;
         case 3:
-            Form.info.type.options = toolTypeOptions
-            break
+            Form.info.type.options = toolTypeOptions;
+            break;
         case 4:
-            Form.info.type.options = movieTypeOptions
-            break
+            Form.info.type.options = movieTypeOptions;
+            break;
         case 5:
-            Form.info.type.options = otherTypeOptions
-            break
+            Form.info.type.options = otherTypeOptions;
+            break;
         case 6:
-            Form.info.type.options = githubTypeOptions
-            break
+            Form.info.type.options = githubTypeOptions;
+            break;
         default:
-            Form.info.type.options = programTypeOptions
+            Form.info.type.options = programTypeOptions;
     }
-}
-
-
+};
 
 export {
     setType
-}
+};

@@ -1,15 +1,14 @@
-import { setType } from './formUtils';
-
+import { setType } from "./formUtils";
 
 // 功能开发表单数据（添加、修改）
 const Form = {
     name: "undoneForm",
     position: "right",
-    labelWidth: 140, 
+    labelWidth: 140,
     size: "medium",
     info: {
-        "id": {
-            label: 'id',
+        id: {
+            label: "id",
             name: "id",
             value: "",
             disabled: true,
@@ -18,8 +17,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "title": {
-            label: 'table.title',
+        title: {
+            label: "table.title",
             name: "title",
             value: "",
             disabled: false,
@@ -29,8 +28,8 @@ const Form = {
                 required: true, message: "标题不能为空"
             }
         },
-        "front_end": {
-            label: 'route.frontEnd',
+        front_end: {
+            label: "route.frontEnd",
             name: "front_end",
             value: "",
             disabled: false,
@@ -40,8 +39,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "node": {
-            label: 'route.node',
+        node: {
+            label: "route.node",
             name: "node",
             value: "",
             disabled: false,
@@ -51,8 +50,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "java": {
-            label: 'route.java',
+        java: {
+            label: "route.java",
             name: "java",
             value: "",
             disabled: false,
@@ -62,8 +61,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "database_sql": {
-            label: 'route.sql',
+        database_sql: {
+            label: "route.sql",
             name: "database_sql",
             value: "",
             isTextarea: true,
@@ -73,8 +72,8 @@ const Form = {
                 required: false, message: ""
             }
         },
-        "remarks": {
-            label: 'sys.remarks',
+        remarks: {
+            label: "sys.remarks",
             name: "remarks",
             value: "",
             isTextarea: true,
@@ -85,12 +84,10 @@ const Form = {
             }
         }
     },
-    file:""
-}
+    file: ""
+};
 
-
-
-const initForm = (id="", title = "", front_end = "", node = "",java="",database_sql="",remarks = "") =>{
+const initForm = (id = "", title = "", front_end = "", node = "", java = "", database_sql = "", remarks = "") => {
     Form.info.id.value = id;
     Form.info.title.value = title;
     Form.info.front_end.value = front_end;
@@ -98,24 +95,18 @@ const initForm = (id="", title = "", front_end = "", node = "",java="",database_
     Form.info.java.value = java;
     Form.info.database_sql.value = database_sql;
     Form.info.remarks.value = remarks;
-}
-
-
+};
 
 /**
  * 设置表单的type类型的option
  * @param type 类别（前端：1；后端：2）
  */
-const setFormType = (type:number) =>{
-    setType(type, Form)
-}
-
-
+const setFormType = (type: number) => {
+    setType(type, Form);
+};
 
 export {
     Form,
     initForm,
     setFormType
-}
-
-
+};

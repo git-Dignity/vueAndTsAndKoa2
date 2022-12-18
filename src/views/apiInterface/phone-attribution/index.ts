@@ -21,14 +21,11 @@ const itemList = [
         name: "邮编",
         value: 0
     }
-]
-
+];
 
 const myCheck = new Check();
-
-
 
 export {
     itemList,
     myCheck
-}
+};

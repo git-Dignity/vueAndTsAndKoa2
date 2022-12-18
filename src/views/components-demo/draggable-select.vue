@@ -27,32 +27,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import DraggableSelect from '@/components/DraggableSelect/index.vue'
+import { Component, Vue } from "vue-property-decorator";
+import DraggableSelect from "@/components/DraggableSelect/index.vue";
 
 @Component({
-  name: 'DraggableSelectDemo',
+  name: "DraggableSelectDemo",
   components: {
     DraggableSelect
   }
 })
 export default class extends Vue {
-  private value = ['Apple', 'Banana', 'Orange']
+  private value = ["Apple", "Banana", "Orange"]
   private options = [{
-    value: 'Apple',
-    label: 'Apple'
+    value: "Apple",
+    label: "Apple"
   }, {
-    value: 'Banana',
-    label: 'Banana'
+    value: "Banana",
+    label: "Banana"
   }, {
-    value: 'Orange',
-    label: 'Orange'
+    value: "Orange",
+    label: "Orange"
   }, {
-    value: 'Pear',
-    label: 'Pear'
+    value: "Pear",
+    label: "Pear"
   }, {
-    value: 'Strawberry',
-    label: 'Strawberry'
+    value: "Strawberry",
+    label: "Strawberry"
   }]
 }
 </script>

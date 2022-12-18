@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-table
-      v-loading="listLoading" 
+      v-loading="listLoading"
       :data="list"
       border
       fit
@@ -120,12 +120,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
-import { IArticleData } from '@/api/types'
+import { Component, Vue } from "vue-property-decorator";
+import { getArticles } from "@/api/articles";
+import { IArticleData } from "@/api/types";
 
 @Component({
-  name: 'InlineEditTable'
+  name: "InlineEditTable"
 })
 export default class extends Vue {
   private list: IArticleData[] = []
@@ -136,40 +136,40 @@ export default class extends Vue {
   }
 
   created() {
-    this.getList()
+    this.getList();
   }
 
   private async getList() {
-    this.listLoading = true
-    const { data } = await getArticles(this.listQuery)
-    const items = data.items
+    this.listLoading = true;
+    const { data } = await getArticles(this.listQuery);
+    const items = data.items;
     this.list = items.map((v: any) => {
-      this.$set(v, 'edit', false) // https://vuejs.org/v2/guide/reactivity.html
-      v.originalTitle = v.title // will be used when user click the cancel botton
-      return v
-    })
+      this.$set(v, "edit", false); // https://vuejs.org/v2/guide/reactivity.html
+      v.originalTitle = v.title; // will be used when user click the cancel botton
+      return v;
+    });
     // Just to simulate the time of the request
     setTimeout(() => {
-      this.listLoading = false
-    }, 0.5 * 1000)
+      this.listLoading = false;
+    }, 0.5 * 1000);
   }
 
   private cancelEdit(row: any) {
-    row.title = row.originalTitle
-    row.edit = false
+    row.title = row.originalTitle;
+    row.edit = false;
     this.$message({
-      message: 'The title has been restored to the original value',
-      type: 'warning'
-    })
+      message: "The title has been restored to the original value",
+      type: "warning"
+    });
   }
 
   private confirmEdit(row: any) {
-    row.edit = false
-    row.originalTitle = row.title
+    row.edit = false;
+    row.originalTitle = row.title;
     this.$message({
-      message: 'The title has been edited',
-      type: 'success'
-    })
+      message: "The title has been edited",
+      type: "success"
+    });
   }
 }
 </script>

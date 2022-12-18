@@ -42,8 +42,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { ElUploadInternalRawFile } from 'element-ui/types/upload'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { ElUploadInternalRawFile } from "element-ui/types/upload";
 
 export interface IUploadObject {
   hasSuccess: boolean
@@ -54,7 +54,7 @@ export interface IUploadObject {
 }
 
 @Component({
-  name: 'EditorImageUpload'
+  name: "EditorImageUpload"
 })
 export default class extends Vue {
   @Prop({ required: true }) private color!: string
@@ -64,57 +64,57 @@ export default class extends Vue {
   private defaultFileList = []
 
   private checkAllSuccess() {
-    return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
+    return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess);
   }
 
   private handleSubmit() {
-    const arr = Object.keys(this.listObj).map(v => this.listObj[v])
+    const arr = Object.keys(this.listObj).map(v => this.listObj[v]);
     if (!this.checkAllSuccess()) {
-      this.$message('Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!')
-      return
+      this.$message("Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!");
+      return;
     }
-    this.$emit('successCBK', arr)
-    this.listObj = {}
-    this.defaultFileList = []
-    this.dialogVisible = false
+    this.$emit("successCBK", arr);
+    this.listObj = {};
+    this.defaultFileList = [];
+    this.dialogVisible = false;
   }
 
   private handleSuccess(response: any, file: ElUploadInternalRawFile) {
-    const uid = file.uid
-    const objKeyArr = Object.keys(this.listObj)
+    const uid = file.uid;
+    const objKeyArr = Object.keys(this.listObj);
     for (let i = 0, len = objKeyArr.length; i < len; i++) {
       if (this.listObj[objKeyArr[i]].uid === uid) {
-        this.listObj[objKeyArr[i]].url = response.files.file
-        this.listObj[objKeyArr[i]].hasSuccess = true
-        return
+        this.listObj[objKeyArr[i]].url = response.files.file;
+        this.listObj[objKeyArr[i]].hasSuccess = true;
+        return;
       }
     }
   }
 
   private handleRemove(file: ElUploadInternalRawFile) {
-    const uid = file.uid
-    const objKeyArr = Object.keys(this.listObj)
+    const uid = file.uid;
+    const objKeyArr = Object.keys(this.listObj);
     for (let i = 0, len = objKeyArr.length; i < len; i++) {
       if (this.listObj[objKeyArr[i]].uid === uid) {
-        delete this.listObj[objKeyArr[i]]
-        return
+        delete this.listObj[objKeyArr[i]];
+        return;
       }
     }
   }
 
   private beforeUpload(file: ElUploadInternalRawFile) {
-    const fileName = file.uid
-    const img = new Image()
-    img.src = window.URL.createObjectURL(file)
+    const fileName = file.uid;
+    const img = new Image();
+    img.src = window.URL.createObjectURL(file);
     img.onload = () => {
       this.listObj[fileName] = {
         hasSuccess: false,
         uid: file.uid,
-        url: '',
+        url: "",
         width: img.width,
         height: img.height
-      }
-    }
+      };
+    };
   }
 }
 </script>

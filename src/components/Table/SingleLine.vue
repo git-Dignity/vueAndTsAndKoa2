@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div class="content-item" v-for="(item, key) in childData" :key="key">
-      <div class="content-item-left">{{item.name}}</div>
-      <div class="content-item-right">{{item.value || '--'}}</div>
+    <div
+      v-for="(item, key) in childData"
+      :key="key"
+      class="content-item"
+    >
+      <div class="content-item-left">
+        {{ item.name }}
+      </div>
+      <div class="content-item-right">
+        {{ item.value || '--' }}
+      </div>
     </div>
   </div>
 </template>

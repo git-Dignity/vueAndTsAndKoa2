@@ -7,14 +7,13 @@
  * @FilePath: \vue-typescript-admin-template-master\src\api\pTypes.ts
  */
 
- 
 /**
  * @description P：公用
  * @description: object类型的公用接口定义
  * @param {*}
  * @return {*}
- */ 
+ */
 export interface IPObject {
   num: number
   data: any
-}  
+}

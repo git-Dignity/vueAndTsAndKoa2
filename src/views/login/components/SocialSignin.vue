@@ -23,14 +23,14 @@
 
 <script lang="ts">
 // import openWindow from '@/utils/openWindow'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'SocialSignin'
+  name: "SocialSignin"
 })
 export default class extends Vue {
   private wechatHandleClick(param: string) {
-    alert('handle ' + param + ' here')
+    alert("handle " + param + " here");
     // const appid = 'xxxxx'
     // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
     // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
@@ -38,7 +38,7 @@ export default class extends Vue {
   }
 
   private tencentHandleClick(param: string) {
-    alert('handle ' + param + ' here')
+    alert("handle " + param + " here");
     // const client_id = 'xxxxx'
     // const redirect_uri = encodeURIComponent('xxx/redirect?redirect=' + window.location.origin + '/auth-redirect')
     // const url = 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri

@@ -1,8 +1,15 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
+    <el-form
+      :inline="true"
+      :model="formInline"
+      class="demo-form-inline"
+    >
       <el-form-item label="圖片名">
-        <el-input v-model="formInline.fileName" placeholder="圖片名"></el-input>
+        <el-input
+          v-model="formInline.fileName"
+          placeholder="圖片名"
+        />
       </el-form-item>
       <el-form-item>
         <el-date-picker
@@ -15,10 +22,15 @@
           end-placeholder="结束日期"
           value-format="yyyy-MM-dd"
           :picker-options="pickerOptions"
-        ></el-date-picker>
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button
+          type="primary"
+          @click="onSubmit"
+        >
+          查询
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -32,33 +44,48 @@
         :before-upload="beforeAvatarUpload"
         multiple
       >
-        <i class="el-icon-upload"></i>
+        <i class="el-icon-upload" />
         <div class="el-upload__text">
           将文件拖到此处，或
           <em>点击上传</em>
         </div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        <div
+          slot="tip"
+          class="el-upload__tip"
+        >
+          只能上传jpg/png文件，且不超过500kb
+        </div>
       </el-upload>
     </el-row>
 
     <!-- <pan-thumb :image="image" /> -->
 
     <el-row>
-      <el-col :span="8" v-for="data in certificateData" :key="data.id" :offset="2">
-        <el-card :body-style="{ padding: '0px' }">
+      <el-col
+        v-for="data in certificateData"
+        :key="data.id"
+        :span="8"
+        :offset="2"
+      >
+        <el-card :body-style="{padding: '0px'}">
           <!-- <img :src="data.imgUrl" class="image"> -->
-          <el-avatar shape="square" :size="200" fit="fill" :src="data.imgUrl"></el-avatar>
+          <el-avatar
+            shape="square"
+            :size="200"
+            fit="fill"
+            :src="data.imgUrl"
+          />
           <div style="padding: 14px;">
-            <span>{{data.file_name}}</span>
+            <span>{{ data.file_name }}</span>
             <div class="bottom clearfix">
-              <time class="time">{{data.upload_time}}</time>
+              <time class="time">{{ data.upload_time }}</time>
             </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
     <el-pagination
-      
+
       :current-page="currentPage"
       :page-sizes="[6, 12, 18, 100]"
       :page-size="6"
@@ -66,14 +93,14 @@
       :total="total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-    ></el-pagination>
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import PanThumb from "@/components/PanThumb/index.vue";
-import { UserModule } from '@/store/modules/user'
+import { UserModule } from "@/store/modules/user";
 import {
   getCertificate,
   uploadFile
@@ -90,13 +117,15 @@ export default class extends Vue {
   private certificateData = [];
   private image =
     "https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191";
+
     // public userLocal: any = localStorage.getItem("user")
-  private currentPage = 1; //当前页码
-  private total = 0; //查出来这个条件全部多少条
+  private currentPage = 1; // 当前页码
+  private total = 0; // 查出来这个条件全部多少条
   formInline = {
     fileName: "",
     date: ""
   };
+
   pickerOptions = {
     shortcuts: [
       {
@@ -135,14 +164,14 @@ export default class extends Vue {
 
   private async onSubmit() {
     // console.log(this.formInline);
-    
+
     const { data } = await getCertificate({
       // username: JSON.parse(this.userLocal).username,
       username: UserModule.name,
       pageNum: this.currentPage,
       form: this.formInline
     });
-    
+
     this.$message({
       message: "查询成功",
       type: "success"
@@ -207,6 +236,7 @@ export default class extends Vue {
   private handleSizeChange(val: number) {
     console.log(`每页 ${val} 条`);
   }
+
   private handleCurrentChange(val: number) {
     console.log(`当前页: ${val}`);
     this.currentPage = val;

@@ -70,47 +70,47 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { getArticles } from '@/api/articles'
-import { IArticleData } from '@/api/types'
-import { formatJson } from '@/utils'
-import { exportTxt2Zip } from '@/utils/zip'
+import { Component, Vue } from "vue-property-decorator";
+import { getArticles } from "@/api/articles";
+import { IArticleData } from "@/api/types";
+import { formatJson } from "@/utils";
+import { exportTxt2Zip } from "@/utils/zip";
 
 @Component({
-  name: 'ExportZip'
+  name: "ExportZip"
 })
 export default class extends Vue {
   private list: IArticleData[] = []
   private listLoading = true
   private downloadLoading = false
-  private filename = ''
+  private filename = ""
 
   created() {
-    this.fetchData()
+    this.fetchData();
   }
 
   private async fetchData() {
-    this.listLoading = true
-    const { data } = await getArticles({ /* Your params here */ })
-    this.list = data.items
+    this.listLoading = true;
+    const { data } = await getArticles({ /* Your params here */ });
+    this.list = data.items;
     // Just to simulate the time of the request
     setTimeout(() => {
-      this.listLoading = false
-    }, 0.5 * 1000)
+      this.listLoading = false;
+    }, 0.5 * 1000);
   }
 
   private handleDownload() {
-    this.downloadLoading = true
-    const tHeader = ['Id', 'Title', 'Author', 'Readings', 'Date']
-    const filterVal = ['id', 'title', 'author', 'pageviews', 'timestamp']
-    const list = this.list
-    const data = formatJson(filterVal, list)
-    if (this.filename !== '') {
-      exportTxt2Zip(tHeader, data, this.filename, this.filename)
+    this.downloadLoading = true;
+    const tHeader = ["Id", "Title", "Author", "Readings", "Date"];
+    const filterVal = ["id", "title", "author", "pageviews", "timestamp"];
+    const list = this.list;
+    const data = formatJson(filterVal, list);
+    if (this.filename !== "") {
+      exportTxt2Zip(tHeader, data, this.filename, this.filename);
     } else {
-      exportTxt2Zip(tHeader, data)
+      exportTxt2Zip(tHeader, data);
     }
-    this.downloadLoading = false
+    this.downloadLoading = false;
   }
 }
 </script>

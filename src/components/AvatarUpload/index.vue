@@ -18,12 +18,12 @@
 </template>
 
 <script lang="ts">
-import ImageCropUpload from 'vue-image-crop-upload'
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { AppModule } from '@/store/modules/app'
+import ImageCropUpload from "vue-image-crop-upload";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { AppModule } from "@/store/modules/app";
 
 @Component({
-  name: 'AvatarUpload',
+  name: "AvatarUpload",
   components: {
     ImageCropUpload
   }
@@ -40,39 +40,39 @@ export default class extends Vue {
 
   // https://github.com/dai-siki/vue-image-crop-upload#language-package
   private languageTypeList: { [key: string]: string } = {
-    en: 'en',
-    zh: 'zh',
-    es: 'es-MX',
-    ja: 'ja',
-    ko: 'ko'
+    en: "en",
+    zh: "zh",
+    es: "es-MX",
+    ja: "ja",
+    ko: "ko"
   }
 
   get show() {
-    return this.value
+    return this.value;
   }
 
   set show(value) {
-    this.$emit('input', value)
+    this.$emit("input", value);
   }
 
   get language() {
-    return this.languageTypeList[AppModule.language]
+    return this.languageTypeList[AppModule.language];
   }
 
   private srcFileSet(fileName: string, fileType: string, fileSize: number) {
-    this.$emit('src-file-set', fileName, fileType, fileSize)
+    this.$emit("src-file-set", fileName, fileType, fileSize);
   }
 
   private cropSuccess(imgDataUrl: string, field: string) {
-    this.$emit('crop-success', imgDataUrl, field)
+    this.$emit("crop-success", imgDataUrl, field);
   }
 
   private cropUploadSuccess(jsonData: any, field: string) {
-    this.$emit('crop-upload-success', jsonData, field)
+    this.$emit("crop-upload-success", jsonData, field);
   }
 
   private cropUploadFail(status: boolean, field: string) {
-    this.$emit('crop-upload-fail', status, field)
+    this.$emit("crop-upload-fail", status, field);
   }
 }
 </script>

@@ -1,5 +1,4 @@
-import { setType } from './formUtils';
-
+import { setType } from "./formUtils";
 
 // 前端表单数据
 const searchForm = {
@@ -8,8 +7,8 @@ const searchForm = {
     size: "medium",
     inline: true,
     info: {
-        "id": { 
-            label: 'id',
+        id: {
+            label: "id",
             name: "id",
             value: "",
             disabled: false,
@@ -19,8 +18,8 @@ const searchForm = {
                 required: false, message: ""
             }
         },
-        "title": { 
-            label: 'table.title',
+        title: {
+            label: "table.title",
             name: "title",
             value: "",
             disabled: false,
@@ -30,8 +29,8 @@ const searchForm = {
                 required: false, message: ""
             }
         },
-        "front_end": {
-            label: 'route.frontEnd',
+        front_end: {
+            label: "route.frontEnd",
             name: "front_end",
             value: "",
             disabled: false,
@@ -40,8 +39,8 @@ const searchForm = {
                 required: false, message: ""
             }
         },
-        "node": {
-            label: 'route.node',
+        node: {
+            label: "route.node",
             name: "node",
             value: "",
             disabled: false,
@@ -50,8 +49,8 @@ const searchForm = {
                 required: false, message: ""
             }
         },
-        "java":{
-            label: 'route.java',
+        java: {
+            label: "route.java",
             name: "java",
             value: "",
             disabled: false,
@@ -60,8 +59,8 @@ const searchForm = {
                 required: false, message: ""
             }
         },
-        "database_sql":{
-            label: 'route.sql',
+        database_sql: {
+            label: "route.sql",
             name: "database_sql",
             value: "",
             disabled: false,
@@ -70,8 +69,8 @@ const searchForm = {
                 required: false, message: ""
             }
         },
-        "remarks": {
-            label: 'sys.remarks',
+        remarks: {
+            label: "sys.remarks",
             name: "remarks",
             value: "",
             disabled: false,
@@ -81,34 +80,27 @@ const searchForm = {
             }
         }
     },
-    isSlot:true // 一般显示查询重置按钮
-}
+    isSlot: true // 一般显示查询重置按钮
+};
 
-
-
-
-
-const initSearchForm = (title = "", auth = "", type = "",uploadTime="",remarks = "") =>{
+const initSearchForm = (title = "", auth = "", type = "", uploadTime = "", remarks = "") => {
     searchForm.info.title.value = title;
     (searchForm as any).info.type.value = type;
     (searchForm as any).info.auth.value = auth;
     (searchForm as any).info.uploadTime.value = uploadTime;
     searchForm.info.remarks.value = remarks;
-}
-
+};
 
 /**
  * 设置表单的type类型的option
  * @param type 类别（前端：1；后端：2）
  */
-const setFormType = (type:number) =>{
-    setType(type, searchForm)
-}
-
-
+const setFormType = (type: number) => {
+    setType(type, searchForm);
+};
 
 export {
     searchForm,
     initSearchForm,
     setFormType
-}
+};

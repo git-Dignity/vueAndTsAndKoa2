@@ -1,3 +1,3 @@
-export const removeSession = () =>{
+export const removeSession = () => {
     sessionStorage.clear();
-}
+};

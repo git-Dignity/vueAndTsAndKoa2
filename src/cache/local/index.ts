@@ -1,3 +1,3 @@
-export const removeLocal = () =>{
+export const removeLocal = () => {
     localStorage.clear();
-}
+};

@@ -25,19 +25,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
-  name: 'DropdownMenu'
+  name: "DropdownMenu"
 })
 export default class extends Vue {
   @Prop({ default: () => [] }) private items!: any[]
-  @Prop({ default: 'vue' }) private title!: string
+  @Prop({ default: "vue" }) private title!: string
 
   private isActive = false
 
   private clickTitle() {
-    this.isActive = !this.isActive
+    this.isActive = !this.isActive;
   }
 }
 </script>

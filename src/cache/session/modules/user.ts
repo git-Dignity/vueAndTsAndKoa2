@@ -4,31 +4,22 @@
 
 const userSession: string = sessionStorage.getItem("user") || "";
 
-
 export const getUserSessionName = () => {
     if (userSession !== "") {
         return JSON.parse(userSession).name;
     }
     return "";
-}
+};
 
 export const setUserSessionName = (name: string) => {
     sessionStorage.setItem("user", JSON.stringify({
         name: name
-    }))
-}
-
-
-
-
-
-
-
+    }));
+};
 
 // class UserSessionTmp {
 //     name: string;
 //     userSession: string;
-
 
 //     constructor(name: string) {
 //         this.name = name;
@@ -50,7 +41,6 @@ export const setUserSessionName = (name: string) => {
 
 // }
 
-
 // //工厂
 // class UserSession {
 //     create(name: string) {
@@ -58,11 +48,6 @@ export const setUserSessionName = (name: string) => {
 //     }
 // }
 
-
-
 // export const userSessionClass = new UserSession()
 
 // 使用userSessionClass.create("zheng").getUserSessionName()，报错说不是一个函数，所以就没有用class
-
-
-

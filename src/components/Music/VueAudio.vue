@@ -13,93 +13,113 @@
       @pause="onPause"
       @timeupdate="onTimeupdate"
       @loadedmetadata="onLoadedmetadata"
-    ></audio>
-    <!--      @waiting="onWaiting"--> 
+    />
+    <!--      @waiting="onWaiting"-->
 
     <!-- 音频播放控件 -->
     <div>
-      <i class="el-icon-circle-close" v-on:click.prevent="close()"></i>
+      <i
+        class="el-icon-circle-close"
+        @click.prevent="close()"
+      />
       <fieldset class="layui-elem-field layui-field-title">
         <legend>
           <div style="font-family:Hiragino Sans GB;font-weight:bold;display:flex;">
-            <div style="font-size:22px;">{{songName}}</div>&nbsp; - &nbsp;
-            <div style="font-size:18px;">{{singerName}}</div>
+            <div style="font-size:22px;">
+              {{ songName }}
+            </div>&nbsp; - &nbsp;
+            <div style="font-size:18px;">
+              {{ singerName }}
+            </div>
             <!-- <div style="font-size:14px;">{{uploadTime}}</div> -->
           </div>
         </legend>
-        
       </fieldset>
 
       <blockquote class="layui-elem-quote layui-quote-nm">
-        <el-button ref="btn_play_pause" type="text" @click="startPlayOrPause">{{audio.playing | transPlayPause}}</el-button>
+        <el-button
+          ref="btn_play_pause"
+          type="text"
+          @click="startPlayOrPause"
+        >
+          {{ audio.playing | transPlayPause }}
+        </el-button>
 
-        <el-tag type="info">{{ audio.currentTime | formatSecond}}</el-tag>
+        <el-tag type="info">
+          {{ audio.currentTime | formatSecond }}
+        </el-tag>
 
         <!--     进度条ui-->
         <el-slider
           v-show="!controlList.noProcess"
           v-model="sliderTime"
           :format-tooltip="formatProcessToolTip"
-          @change="changeCurrentTime"
           class="slider"
-        ></el-slider>
+          @change="changeCurrentTime"
+        />
 
-        <el-tag type="info">{{ audio.maxTime | formatSecond }}</el-tag>
+        <el-tag type="info">
+          {{ audio.maxTime | formatSecond }}
+        </el-tag>
 
         <el-button
           v-show="!controlList.noSpeed"
           type="text"
           @click="changeSpeed"
-        >{{audio.speed | transSpeed}}</el-button>
+        >
+          {{ audio.speed | transSpeed }}
+        </el-button>
 
         <el-button
           v-show="!controlList.noMuted"
           type="text"
           @click="startMutedOrNot"
-        >{{audio.muted | transMutedOrNot}}</el-button>
+        >
+          {{ audio.muted | transMutedOrNot }}
+        </el-button>
 
         <el-slider
           v-show="!controlList.noVolume"
           v-model="volume"
           :format-tooltip="formatVolumeToolTip"
-          @change="changeVolume"
           class="slider"
-        ></el-slider>
+          @change="changeVolume"
+        />
 
         <el-button
           v-if="disPlayIsAllBtn"
           style="margin:0 20px"
           type="text"
           @click="AllPlayOrSingle"
-        >{{playIsAll | allOrSingle}}</el-button>
+        >
+          {{ playIsAll | allOrSingle }}
+        </el-button>
 
         <a
-          :href="url"
           v-show="!controlList.noDownload"
+          :href="url"
           target="_blank"
           title="下载"
           download
         >
-          <i class="el-icon-download"></i>
+          <i class="el-icon-download" />
         </a>
       </blockquote>
     </div>
   </div>
 </template>
 
-
-
 <script>
 // 整数格式化成时:分:秒
 function realFormatSecond(second) {
-  var secondType = typeof second;
+  const secondType = typeof second;
 
   if (secondType === "number" || secondType === "string") {
     second = parseInt(second);
 
-    var hours = Math.floor(second / 3600);
+    const hours = Math.floor(second / 3600);
     second = second - hours * 3600;
-    var mimute = Math.floor(second / 60);
+    const mimute = Math.floor(second / 60);
     second = second - mimute * 60;
 
     return (
@@ -111,6 +131,28 @@ function realFormatSecond(second) {
 }
 
 export default {
+  name: "VueAudio",
+  filters: {
+    // 将整数转化成时分秒
+    formatSecond(second = 0) {
+      return realFormatSecond(second);
+    },
+    // 使用组件过滤器来动态改变按钮的显示
+    transPlayPause(value) {
+      // console.log(value);
+      return value ? "暂停" : "播放";
+    },
+    transMutedOrNot(value) {
+      return value ? "放音" : "静音";
+    },
+    transSpeed(value) {
+      return "快进: x" + value;
+    },
+    allOrSingle(value) {
+      // console.log(value)
+      return value ? "随机" : "单曲";
+    }
+  },
   props: {
     theUrl: {
       type: String,
@@ -139,7 +181,6 @@ export default {
       default: ""
     }
   },
-  name: "VueAudio",
   data() {
     return {
       songName: this.theSongName || "",
@@ -160,8 +201,8 @@ export default {
       volume: 100, // 音频音量控制
       speeds: this.theSpeeds,
 
-      playIsAll: (this.$store.state.music.musicPlayerState && this.$store.state.music.musicPlayerState.playIsAll) || false, //随机或者单曲
-      disPlayIsAllBtn: true, //是否显示随机按钮
+      playIsAll: (this.$store.state.music.musicPlayerState && this.$store.state.music.musicPlayerState.playIsAll) || false, // 随机或者单曲
+      disPlayIsAllBtn: true, // 是否显示随机按钮
 
       controlList: {
         // 不显示下载
@@ -179,62 +220,40 @@ export default {
       }
     };
   },
-  created() {
-    // console.log(this.$store.state)
-    // console.log(this.audioName)
-
-    //显示歌曲名字
-    // if (this.url != null || this.url != "") {
-    //   this.audioName = this.url.substring(this.url.lastIndexOf("/") + 1);
-
-    //   this.audioName = this.audioName.substring(
-    //     0,
-    //     this.audioName.lastIndexOf(".")
-    //   );
-    // }
-    // console.log(this.$store.state.music.musicPlayerState)
-    
-
-    this.setControlList();
-    // if (this.url == "https://zhengzemin.cn/nodeJs/audio/说好不哭-周杰伦.m4a") {
-    //   this.disPlayIsAllBtn = false;
-    // }
-  },
   computed: {
     getUrl() {
       return this.theUrl;
       // return this.$store.state.music.url;
     },
-    getSingerName(){
-      return this.theSingerName
+    getSingerName() {
+      return this.theSingerName;
     },
-    getSongName(){
-      return this.theSongName
+    getSongName() {
+      return this.theSongName;
     }
   },
- 
+
   watch: {
-    getSingerName: function(nl,ol) {
-      console.log(nl)
-      this.singerName = nl
+    getSingerName: function(nl, ol) {
+      console.log(nl);
+      this.singerName = nl;
     },
-    getSongName: function(nl, ol){
-      console.log(nl)
-      this.songName = nl
+    getSongName: function(nl, ol) {
+      console.log(nl);
+      this.songName = nl;
     },
 
-    getUrl: function(nl,ol) {
+    getUrl: function(nl, ol) {
       this.url = nl;
-      console.log(nl)
+      console.log(nl);
 
       // setTimeout(() =>{
       // this.$refs.audio.play();
       // },1000)
 
-     
     this.$nextTick(() => {
       this.$refs.audio.play();
-    })
+    });
 
       // this.startPlayOrPause()
 
@@ -245,12 +264,53 @@ export default {
       // this.$refs.audio.play();
     }
   },
-  updated(){
+  created() {
+    // console.log(this.$store.state)
+    // console.log(this.audioName)
+
+    // 显示歌曲名字
+    // if (this.url != null || this.url != "") {
+    //   this.audioName = this.url.substring(this.url.lastIndexOf("/") + 1);
+
+    //   this.audioName = this.audioName.substring(
+    //     0,
+    //     this.audioName.lastIndexOf(".")
+    //   );
+    // }
+    // console.log(this.$store.state.music.musicPlayerState)
+
+    this.setControlList();
+    // if (this.url == "https://zhengzemin.cn/nodeJs/audio/说好不哭-周杰伦.m4a") {
+    //   this.disPlayIsAllBtn = false;
+    // }
+  },
+  updated() {
     // console.log(159)
+  },
+  mounted() {
+    this.$refs.audio.play();
+
+    const target = this.$refs.audio;
+
+    const audios = document.getElementsByTagName("audio");
+    // 如果设置了排他性，当前音频播放是，其他音频都要暂停       [...audios]可以把一个类数组转化成数组   就是我全部的音频的数组
+    [...audios].forEach(item => {
+      if (item !== target) {
+        // 暂停别的歌
+        item.pause();
+      }
+    });
+
+    // 判断音乐是否在播放
+    if (this.$refs.audio.paused) {
+      this.$emit("audioState", "pause");
+    } else {
+      this.$emit("audioState", "play");
+    }
   },
   methods: {
     setControlList() {
-      let controlList = this.theControlList.split(" ");
+      const controlList = this.theControlList.split(" ");
       controlList.forEach(item => {
         if (this.controlList[item] !== undefined) {
           this.controlList[item] = true;
@@ -259,7 +319,7 @@ export default {
     },
     // 快进
     changeSpeed() {
-      let index = this.speeds.indexOf(this.audio.speed) + 1;
+      const index = this.speeds.indexOf(this.audio.speed) + 1;
       this.audio.speed = this.speeds[index % this.speeds.length];
       /*
             console.log(index,this.audio.speed);
@@ -324,7 +384,7 @@ export default {
     },
     // 当发生错误, 就出现loading状态
     onError() {
-      this.audio.waiting = false; //false
+      this.audio.waiting = false; // false
       console.log("当发生错误, 就出现loading状态");
       this.$emit("audioState", "pause");
     },
@@ -335,7 +395,7 @@ export default {
     },
     // 当音频开始播放
     onPlay(res) {
-      console.log(res)
+      console.log(res);
       this.audio.playing = true;
       this.audio.loading = false;
 
@@ -343,17 +403,16 @@ export default {
         return;
       }
 
-      let target = res.target;
+      const target = res.target;
 
-      let audios = document.getElementsByTagName("audio");
+      const audios = document.getElementsByTagName("audio");
       // 如果设置了排他性，当前音频播放是，其他音频都要暂停       [...audios]可以把一个类数组转化成数组   就是我全部的音频的数组
       [...audios].forEach(item => {
         if (item !== target) {
-          //暂停别的歌
+          // 暂停别的歌
           item.pause();
         }
       });
-     
     },
     // 当timeupdate事件大概每秒一次，用来更新音频流的当前播放时间
     // 当音频当前时间改变后，进度条也要改变
@@ -387,68 +446,21 @@ export default {
     close() {
       this.$emit("musicClose", "0");
     },
-    //播放全部
+    // 播放全部
     playAll() {
       this.playIsAll = false;
       // console.log('all')
       this.$emit("playAll", 1);
     },
-    //单曲
+    // 单曲
     playSingle() {
       this.playIsAll = true;
       // console.log('single');
       this.$emit("playSingle", 2);
     }
-  },
-  filters: {
-    // 将整数转化成时分秒
-    formatSecond(second = 0) {
-      return realFormatSecond(second);
-    },
-    // 使用组件过滤器来动态改变按钮的显示
-    transPlayPause(value) {
-      // console.log(value);
-      return value ? "暂停" : "播放";
-    },
-    transMutedOrNot(value) {
-      return value ? "放音" : "静音";
-    },
-    transSpeed(value) {
-      return "快进: x" + value;
-    },
-    allOrSingle(value) {
-      // console.log(value)
-      return value ? "随机" : "单曲";
-    }
-  },
-  mounted() {
-    
-
-    this.$refs.audio.play();
-
-    let target = this.$refs.audio;
-
-    let audios = document.getElementsByTagName("audio");
-    // 如果设置了排他性，当前音频播放是，其他音频都要暂停       [...audios]可以把一个类数组转化成数组   就是我全部的音频的数组
-    [...audios].forEach(item => {
-      if (item !== target) {
-        //暂停别的歌
-        item.pause();
-      }
-    });
-
-    // 判断音乐是否在播放
-    if (this.$refs.audio.paused) {
-      this.$emit("audioState", "pause");
-    } else {
-      this.$emit("audioState", "play");
-    }
-
-  
   }
 };
 </script>
-
 
 <style scoped>
 .main-wrap {
@@ -465,7 +477,6 @@ export default {
 .di {
   display: inline-block;
 }
-
 
 .dn {
   display: none;

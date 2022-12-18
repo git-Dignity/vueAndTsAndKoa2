@@ -1,1 +1,1 @@
-export const qiniuUrl = "http://dignity.zhengzemin.cn/"
+export const qiniuUrl = "http://dignity.zhengzemin.cn/";

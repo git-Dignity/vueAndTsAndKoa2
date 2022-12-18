@@ -7,83 +7,83 @@
 </template>
 
 <script lang="ts">
-import echarts, { EChartOption } from 'echarts'
-import { Component, Prop } from 'vue-property-decorator'
-import { mixins } from 'vue-class-component'
-import ResizeMixin from './mixins/resize'
+import echarts, { EChartOption } from "echarts";
+import { Component, Prop } from "vue-property-decorator";
+import { mixins } from "vue-class-component";
+import ResizeMixin from "./mixins/resize";
 
 @Component({
-  name: 'MixedChart'
+  name: "MixedChart"
 })
 export default class extends mixins(ResizeMixin) {
-  @Prop({ default: 'chart' }) private className!: string
-  @Prop({ default: 'chart' }) private id!: string
-  @Prop({ default: '200px' }) private width!: string
-  @Prop({ default: '200px' }) private height!: string
+  @Prop({ default: "chart" }) private className!: string
+  @Prop({ default: "chart" }) private id!: string
+  @Prop({ default: "200px" }) private width!: string
+  @Prop({ default: "200px" }) private height!: string
 
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
-    })
+      this.initChart();
+    });
   }
 
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   }
 
   private initChart() {
-    this.chart = echarts.init(document.getElementById(this.id) as HTMLDivElement)
+    this.chart = echarts.init(document.getElementById(this.id) as HTMLDivElement);
     const xData = (function() {
-      const data = []
+      const data = [];
       for (let i = 1; i < 13; i++) {
-        data.push(i + 'month')
+        data.push(i + "month");
       }
-      return data
-    }())
+      return data;
+    }());
     this.chart.setOption({
-      backgroundColor: '#344b58',
+      backgroundColor: "#344b58",
       title: {
-        text: 'statistics',
-        top: '20',
+        text: "statistics",
+        top: "20",
         textStyle: {
-          color: '#fff',
+          color: "#fff",
           fontSize: 22
         },
         subtextStyle: {
-          color: '#90979c',
+          color: "#90979c",
           fontSize: 16
         }
       },
       tooltip: {
-        trigger: 'axis'
+        trigger: "axis"
       },
       grid: {
-        left: '5%',
-        right: '5%',
+        left: "5%",
+        right: "5%",
         borderWidth: 0,
         top: 150,
         bottom: 95,
         textStyle: {
-          color: '#fff'
+          color: "#fff"
         }
       },
       legend: {
-        x: '5%',
-        top: '10%',
+        x: "5%",
+        top: "10%",
         textStyle: {
-          color: '#90979c'
+          color: "#90979c"
         },
-        data: ['female', 'male', 'average']
+        data: ["female", "male", "average"]
       },
       xAxis: [{
-        type: 'category',
+        type: "category",
         axisLine: {
           lineStyle: {
-            color: '#90979c'
+            color: "#90979c"
           }
         },
         splitLine: {
@@ -102,13 +102,13 @@ export default class extends mixins(ResizeMixin) {
         data: xData
       }],
       yAxis: [{
-        type: 'value',
+        type: "value",
         splitLine: {
           show: false
         },
         axisLine: {
           lineStyle: {
-            color: '#90979c'
+            color: "#90979c"
           }
         },
         axisTick: {
@@ -129,38 +129,38 @@ export default class extends mixins(ResizeMixin) {
         bottom: 30,
         start: 10,
         end: 80,
-        handleIcon: 'path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z',
-        handleSize: '110%',
+        handleIcon: "path://M306.1,413c0,2.2-1.8,4-4,4h-59.8c-2.2,0-4-1.8-4-4V200.8c0-2.2,1.8-4,4-4h59.8c2.2,0,4,1.8,4,4V413z",
+        handleSize: "110%",
         handleStyle: {
-          color: '#d3dee5'
+          color: "#d3dee5"
 
         },
         textStyle: {
-          color: '#fff'
+          color: "#fff"
         },
-        borderColor: '#90979c'
+        borderColor: "#90979c"
       }, {
-        type: 'inside',
+        type: "inside",
         show: true,
         start: 1,
         end: 35
       }],
       series: [{
-        name: 'female',
-        type: 'bar',
-        stack: 'total',
+        name: "female",
+        type: "bar",
+        stack: "total",
         barMaxWidth: 35,
-        barGap: '10%',
+        barGap: "10%",
         itemStyle: {
-          color: 'rgba(255,144,128,1)',
+          color: "rgba(255,144,128,1)",
           label: {
             show: true,
             textStyle: {
-              color: '#fff'
+              color: "#fff"
             },
-            position: 'insideTop',
+            position: "insideTop",
             formatter(p: any) {
-              return p.value > 0 ? p.value : ''
+              return p.value > 0 ? p.value : "";
             }
           }
         },
@@ -181,17 +181,17 @@ export default class extends mixins(ResizeMixin) {
       },
 
       {
-        name: 'male',
-        type: 'bar',
-        stack: 'total',
+        name: "male",
+        type: "bar",
+        stack: "total",
         itemStyle: {
-          color: 'rgba(0,191,183,1)',
+          color: "rgba(0,191,183,1)",
           barBorderRadius: 0,
           label: {
             show: true,
-            position: 'top',
+            position: "top",
             formatter(p: any) {
-              return p.value > 0 ? p.value : ''
+              return p.value > 0 ? p.value : "";
             }
           }
         },
@@ -210,19 +210,19 @@ export default class extends mixins(ResizeMixin) {
           220
         ]
       }, {
-        name: 'average',
-        type: 'line',
-        stack: 'total',
+        name: "average",
+        type: "line",
+        stack: "total",
         symbolSize: 10,
-        symbol: 'circle',
+        symbol: "circle",
         itemStyle: {
-          color: 'rgba(252,230,48,1)',
+          color: "rgba(252,230,48,1)",
           barBorderRadius: 0,
           label: {
             show: true,
-            position: 'top',
+            position: "top",
             formatter(p: any) {
-              return p.value > 0 ? p.value : ''
+              return p.value > 0 ? p.value : "";
             }
           }
         },
@@ -242,7 +242,7 @@ export default class extends mixins(ResizeMixin) {
         ]
       }
       ]
-    } as EChartOption<EChartOption.SeriesLine | EChartOption.SeriesBar>)
+    } as EChartOption<EChartOption.SeriesLine | EChartOption.SeriesBar>);
   }
 }
 </script>

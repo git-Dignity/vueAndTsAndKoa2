@@ -41,15 +41,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { handleClipboard, clipboardSuccess } from '@/utils/clipboard' // use clipboard directly
+import { Component, Vue } from "vue-property-decorator";
+import { handleClipboard, clipboardSuccess } from "@/utils/clipboard"; // use clipboard directly
 
 @Component({
-  name: 'Clipboard'
+  name: "Clipboard"
 })
 export default class extends Vue {
-  private activeName = 'directly'
-  private inputData = 'https://github.com/Armour/vue-typescript-admin-template'
+  private activeName = "directly"
+  private inputData = "https://github.com/Armour/vue-typescript-admin-template"
   private clipboardSuccess = clipboardSuccess
   private handleClipboard = handleClipboard
 }

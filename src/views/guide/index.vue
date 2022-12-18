@@ -18,25 +18,25 @@
 </template>
 
 <script lang="ts">
-import Driver from 'driver.js'
-import 'driver.js/dist/driver.min.css'
-import { Component, Vue } from 'vue-property-decorator'
-import steps from './steps'
+import Driver from "driver.js";
+import "driver.js/dist/driver.min.css";
+import { Component, Vue } from "vue-property-decorator";
+import steps from "./steps";
 
 @Component({
-  name: 'Guide'
+  name: "Guide"
 })
 export default class extends Vue {
   private driver: Driver | null = null
 
   mounted() {
-    this.driver = new Driver()
+    this.driver = new Driver();
   }
 
   private guide() {
     if (this.driver) {
-      this.driver.defineSteps(steps)
-      this.driver.start()
+      this.driver.defineSteps(steps);
+      this.driver.start();
     }
   }
 }

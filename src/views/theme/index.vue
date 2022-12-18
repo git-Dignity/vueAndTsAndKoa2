@@ -94,29 +94,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { toggleClass } from '@/utils'
-import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { toggleClass } from "@/utils";
+import "@/assets/custom-theme/index.css"; // the theme changed version element-ui css
 
 @Component({
-  name: 'Theme'
+  name: "Theme"
 })
 export default class extends Vue {
   private theme = false
   private tags = [
-    { name: 'Tag One', type: '' },
-    { name: 'Tag Two', type: 'info' },
-    { name: 'Tag Three', type: 'success' },
-    { name: 'Tag Four', type: 'warning' },
-    { name: 'Tag Five', type: 'danger' }
+    { name: "Tag One", type: "" },
+    { name: "Tag Two", type: "info" },
+    { name: "Tag Three", type: "success" },
+    { name: "Tag Four", type: "warning" },
+    { name: "Tag Five", type: "danger" }
   ]
 
   private slideValue = 50
   private radio = 3
 
-  @Watch('theme')
+  @Watch("theme")
   private onThemeChange() {
-    toggleClass(document.body, 'custom-theme')
+    toggleClass(document.body, "custom-theme");
   }
 }
 </script>

@@ -7,58 +7,51 @@
  * @FilePath: \vueAndTsAndKoa2\src\views\usualWebsite\modules\tableData.ts
  */
 
- 
 const columns = {
-    "serialNum": {
+    serialNum: {
         prop: "serialNum",
         label: "序号",
         width: "5%"
     },
-    "title": {
+    title: {
         prop: "title",
         label: "标题",
         width: "5%"
     },
-    "content": {
+    content: {
         prop: "content",
         label: "内容",
         width: "10%"
     },
-    "type": {
+    type: {
         prop: "type",
         label: "类型",
         width: "5%"
     },
-    "photo":{
+    photo: {
         prop: "photo",
         label: "照片",
         width: "5%",
         isPhoto: true
     },
-    "auth": {
+    auth: {
         prop: "auth",
         label: "作者",
         width: "5%"
     },
-    "remarks": {
+    remarks: {
         prop: "remarks",
         width: "10%",
         label: "备注"
     },
-    "handSolt": {
-        prop: "handSolt",   
-        width: "20%", 
+    handSolt: {
+        prop: "handSolt",
+        width: "20%",
         label: "操作"
     }
-}
-
-
-
-
-
-
+};
 
 export {
-    columns,
-   
-}
+    columns
+
+};
