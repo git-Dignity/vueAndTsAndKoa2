@@ -1,8 +1,8 @@
 /*
  * @Author: zemin zheng
  * @Date: 2021-09-04 17:39:18
- * @LastEditTime: 2022-01-22 15:28:27
- * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2022-12-18 18:05:18
+ * @LastEditors: zemin zheng
  * @Description: IT知识 -- option类型下拉框选项
  * @FilePath: \vueAndTsAndKoa2\src\views\itKnowledge\modules\options.ts
  */
@@ -21,6 +21,7 @@ const frontEndTypeOptions = [
     { value: "elementUi", label: "ElementUi" },
     { value: "svg", label: "Svg" },
     { value: "网络", label: "网络" },
+    { value: "微前端", label: "微前端" },
     { value: "移动端", label: "移动端" },
     { value: "可视化", label: "可视化" },
     { value: "地图", label: "地图" },
@@ -36,10 +37,12 @@ const rearEndTypeOptions = [
     { value: "mysql", label: "Mysql" },
     { value: "oracle", label: "Oracle" },
     { value: "nginx", label: "Nginx" },
+    { value: "linux", label: "Linux" },
     { value: "redis", label: "Redis" },
     { value: "python", label: "Python" },
     { value: "minio", label: "Minio" },
     { value: "docker", label: "Docker" },
+    { value: "websoket", label: "Websoket" },
     { value: "面试", label: "面试" },
     { value: "后端", label: "后端" }
 ];
@@ -60,6 +63,7 @@ const frontRearEndTypeOptions = [
 const toolTypeOptions = [
     { value: "tool", label: "工具" },
     { value: "git", label: "Git" },
+    { value: "vscode", label: "VSCODE" },
     { value: "杂七杂八", label: "杂七杂八" }
 ];
 
