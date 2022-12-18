@@ -112,7 +112,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator"; // Watch
 import ElemenetTable from "@/components/ElTable/index.vue";
 import Pagination from "@/components/Pagination/index.vue";
 import { IItKnowledge } from "@/api/itKnowledge/types";
@@ -219,6 +219,8 @@ export default class extends Vue {
    * 对话框提交的回调函数
    */
   private async parentDialogSubmit(data: any) {
+    console.log(data);
+
     if (!validateForm(this.refsForm).includes("false")) {
       const paramet = getFormValue(this.undoneForm.info);
       paramet.auth = this.name;
